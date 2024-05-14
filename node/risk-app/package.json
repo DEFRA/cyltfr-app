@@ -19,7 +19,8 @@
     "test:lint": "standard",
     "test:watch": "npm run test -- --watch",
     "debug": "node --inspect-brk=0.0.0.0:9229 index.js",
-    "pre-commit": "npm run test && lint-staged"
+    "pre-commit": "npm run test && lint-staged",
+    "dev": "nodemon -L index.js"
   },
   "author": "",
   "license": "ISC",
@@ -52,6 +53,7 @@
     "sass": "^1.71.1",
     "standard": "^17.0.0",
     "webpack": "^5.90.3",
+    "nodemon": "^3.1.0",
     "webpack-cli": "^5.1.4"
   },
   "standard": {
