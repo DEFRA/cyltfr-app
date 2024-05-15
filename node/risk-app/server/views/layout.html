@@ -13,12 +13,57 @@
 {% if noIndex %}<meta name="robots" content="noindex" />{% endif %}
 <link href="{{ assetPath }}/stylesheets/application.css" rel="stylesheet" />
 
+{% if G4AnalyticsAccount %}
+<!-- Google tag (gtag.js) -->
+<script>
+
+window.loadAnalytics = () => {
+  const script = document.createElement("script")
+  script.type = "text/javascript"
+  script.async = true
+  script.src = "https://www.googletagmanager.com/gtag/js?id={{G4AnalyticsAccount}}"
+  document.getElementsByTagName("head")[0].appendChild(script)
+  const stageprompt = document.createElement("script")
+  stageprompt.type = "text/javascript"
+  stageprompt.async = true
+  stageprompt.src = "{{ assetPath }}/js/vendor/stageprompt.js"
+  document.getElementsByTagName("head")[0].appendChild(stageprompt)
+  
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  globalThis.gtag = gtag
+  gtag('js', new Date());
+  gtag('config', '{{G4AnalyticsAccount}}');
+  {% if GTagManagerId %}
+<!-- Google Tag Manager -->
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','{{GTagManagerId}}')
+  {% endif %}
+
+  window.addEventListener("load", () => {GOVUK.performance.stageprompt.setupForGoogleAnalytics()})
+
+  window.loadAnalytics = () => { return false }
+}
+</script>
+{% endif %}  
+{% if G4AnalyticsAccount and cookiesPolicy.analytics %}
+<script>loadAnalytics()</script>
+{% endif %}
 <!-- Stage: {{serviceRef}}-{{appStage}} -->
 <!-- Application version: {{appVersion}} -->
 {% endblock %}
 
 {% block header %}
-{{ govukHeader({
+{% if G4AnalyticsAccount and cookiesPolicy.analytics %}
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCRVQCCW"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  {% endif %}
+  {{ govukHeader({
     homepageUrl: "https://www.gov.uk",
     containerClasses: "govuk-width-container",
     serviceName: serviceName,
@@ -86,7 +131,6 @@
 
 {% block bodyEnd %}
 {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
-<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha384-mlceH9HlqLp7GMKHrj5Ara1+LvdTZVMx4S1U43/NxCvAkzIo8WJ0FE7duLel3wVo" crossorigin="anonymous"></script>
 <script type="module" src="{{ assetPath }}/govuk-frontend.min.js"></script>
 <script>
   if(window.location.pathname === "/postcode") {
@@ -98,15 +142,6 @@
         window.history.replaceState({ path: newUrl }, '', newUrl);
     }
   }
-
-  const riskDataLink = document.getElementsByClassName('govuk-footer__link');
-
-  if (riskDataLink && riskDataLink.length >= 5) {
-      riskDataLink[4].setAttribute('data-journey-click', 'ltfri:footer:risk-data-link');
-  } else {
-      console.error("Error: Unable to find the required elements. Unable to update footer link attribute.");
-  }
-
 </script>
 <script type="module">
   import {
@@ -114,45 +149,4 @@
   } from '{{ assetPath }}/govuk-frontend.min.js'
   initAll()
 </script>
-{% if (analyticsAccount or G4AnalyticsAccount)  and cookiesPolicy.analytics %}
-<script src="{{ assetPath }}/js/vendor/stageprompt.js"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id={{G4AnalyticsAccount}}"></script>
-<script type="text/javascript">
-  var analyticsAccount = '{{ analyticsAccount }}'
-  var G4AnalyticsAccount = '{{G4AnalyticsAccount}}'
-
-  if (analyticsAccount && G4AnalyticsAccount) {
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    // Native tracking initialisation
-    ga('create', analyticsAccount, 'auto', { allowLinker: true })
-    ga('require', 'linker')
-    ga('linker:autoLink', ['floodsdestroy.campaign.gov.uk'])
-
-    // Cross domain tracking initialisation
-    ga('create', 'UA-145652997-1', 'auto', 'govuk_shared', {'allowLinker': true})
-    ga('govuk_shared.require', 'linker')
-    ga('govuk_shared.linker.set', 'anonymizeIp', true)
-    ga('govuk_shared.linker:autoLink', ['www.gov.uk'])
-
-    ga('send', 'pageview')
-    ga('govuk_shared.send', 'pageview')
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){
-      dataLayer.push(arguments)
-    }
-
-    gtag('js', new Date())
-    gtag('config',G4AnalyticsAccount)
-    
-    $(function() {
-      GOVUK.performance.stageprompt.setupForGoogleAnalytics()
-    })
-  }
-</script>
-{% endif %}
 {% endblock %}

@@ -13,6 +13,7 @@ const schema = joi.object().keys({
   httpTimeoutMs: joi.number().required().min(0).max(30000),
   analyticsAccount: joi.string().default(''),
   G4AnalyticsAccount: joi.string().default(''),
+  GTagManagerId: joi.string().default(''),
   floodWarningsUrl: joi.string().uri().required(),
   floodRiskUrl: joi.string().uri().required(),
   osUprnUrl: joi.string().uri().required(),

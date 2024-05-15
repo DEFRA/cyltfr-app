@@ -24,6 +24,11 @@ acceptButton.addEventListener('click', function (event) {
   showBanner(acceptedBanner)
   event.preventDefault()
   submitPreference(true)
+  try {
+    window.loadAnalytics()
+  } catch (error) {
+
+  }
   return false
 })
 

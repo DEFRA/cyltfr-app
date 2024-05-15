@@ -23,7 +23,6 @@
 
 ;(function (global) {
   'use strict'
-  var $ = global.jQuery
   var GOVUK = global.GOVUK || {}
 
   GOVUK.performance = GOVUK.performance || {}
@@ -38,15 +37,13 @@
     }
 
     setup = function (analyticsCallback) {
-      var journeyStage = $('[data-journey]').attr('data-journey')
-      var journeyHelpers = $('[data-journey-click]')
+      var journeyHelpers = document.querySelectorAll('[data-journey-click]')
 
-      if (journeyStage) {
-        analyticsCallback.apply(null, splitAction(journeyStage))
-      }
-
-      journeyHelpers.on('click', function (event) {
-        analyticsCallback.apply(null, splitAction($(this).data('journey-click')))
+      journeyHelpers.forEach((journeyHelper) => {
+        const action = journeyHelper.attributes['data-journey-click']
+        journeyHelper.addEventListener('click', function (event) {
+          analyticsCallback.apply(null, splitAction(action.value))
+        })
       })
     }
 
@@ -61,22 +58,13 @@
   }())
 
   GOVUK.performance.sendGoogleAnalyticsEvent = function (category, event, label) {
-    if (global.ga && typeof global.ga === 'function') {
-      global.ga('send', 'event', category, event, label, {
-        nonInteraction: true
-      })
-      
-    }else {
-      global._gaq.push(['_trackEvent', category, event, label, undefined, true])
-    }
-    if(global.gtag && typeof global.gtag === 'function'){
-      global.gtag('event',event,{
-        'send_to': global.G4AnalyticsAccount,
+    if(gtag && typeof gtag === 'function'){
+      gtag('event',event,{
         'event_category': category,
         'event_label': label
       })
     }
   }
 
-  global.GOVUK = GOVUK
+  globalThis.GOVUK = GOVUK
 })(window)
