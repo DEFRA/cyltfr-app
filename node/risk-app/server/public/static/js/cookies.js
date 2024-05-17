@@ -50,10 +50,16 @@ rejectedBanner.querySelector('.js-hide').addEventListener('click', function () {
 })
 
 function submitPreference (accepted) {
-  window.$.post('/cookies', {
-    analytics: accepted,
-    async: true
-  }, function (data) {
-    console.log(data)
-  })
+  fetch('/cookies', {
+    method: 'POST',
+    mode: 'same-origin',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      analytics: accepted,
+      async: true
+    })
+  }).then(async (x) => { console.log(await x.text()) })
 }
