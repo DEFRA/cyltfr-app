@@ -2,6 +2,12 @@ const util = require('../util')
 const config = require('../config')
 const { osPostcodeUrl, osSearchKey } = config
 
+async function simulatedFind (_postcode) {
+  const simulatedData = require('../routes/simulated/data/address-service.json')
+
+  return simulatedData
+}
+
 async function find (postcode) {
   const uri = `${osPostcodeUrl}${postcode}&key=${osSearchKey}`
   const payload = await util.getJson(uri, true)
@@ -46,4 +52,8 @@ function capitaliseAddress (address) {
 module.exports = {
   find,
   capitaliseAddress
+}
+
+if (config.simulateAddressService) {
+  module.exports.find = simulatedFind
 }

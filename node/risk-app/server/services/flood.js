@@ -8,6 +8,18 @@ async function findWarnings (location) {
   return util.getJson(url, true)
 }
 
-module.exports = {
-  findWarnings
+async function simulateFindWarnings (_location) {
+  const simulatedData = require('../routes/simulated/data/warnings-service.json')
+
+  return simulatedData
+}
+
+if (config.simulateAddressService) {
+  module.exports = {
+    findWarnings: simulateFindWarnings
+  }
+} else {
+  module.exports = {
+    findWarnings
+  }
 }

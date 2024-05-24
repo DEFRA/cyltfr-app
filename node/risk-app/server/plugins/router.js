@@ -1,3 +1,4 @@
+const config = require('../config')
 const routes = [].concat(
   require('../routes/home'),
   require('../routes/postcode'),
@@ -9,8 +10,6 @@ const routes = [].concat(
   require('../routes/managing-flood-risk'),
   require('../routes/public'),
   require('../routes/gwc-proxy'),
-  require('../routes/os-maps-proxy'),
-  require('../routes/os-get-capabilities'),
   require('../routes/feedback'),
   require('../routes/os-terms'),
   require('../routes/geocode'),
@@ -20,6 +19,13 @@ const routes = [].concat(
   require('../routes/terms-and-conditions'),
   require('../routes/healthcheck')
 )
+if (config.simulateAddressService) {
+  routes.push(require('../routes/simulated/os-maps-proxy'))
+  routes.push(require('../routes/simulated/os-get-capabilities'))
+} else {
+  routes.push(require('../routes/os-maps-proxy'))
+  routes.push(require('../routes/os-get-capabilities'))
+}
 
 module.exports = {
   plugin: {

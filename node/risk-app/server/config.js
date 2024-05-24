@@ -9,7 +9,7 @@ const schema = joi.object().keys({
   port: joi.number().required(),
   geoserverUrl: joi.string().uri().required(),
   serviceUrl: joi.string().uri().required(),
-  mockAddressService: joi.boolean().required(),
+  simulateAddressService: joi.boolean().default(false),
   httpTimeoutMs: joi.number().required().min(0).max(30000),
   analyticsAccount: joi.string().default(''),
   G4AnalyticsAccount: joi.string().default(''),
