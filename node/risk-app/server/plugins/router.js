@@ -27,6 +27,12 @@ if (config.simulateAddressService) {
   routes.push(require('../routes/os-get-capabilities'))
 }
 
+if (config.riskPageFlag) {
+  routes.push(require('../routes/surface-water'))
+  routes.push(require('../routes/rivers-and-sea'))
+  routes.push(require('../routes/ground-water'))
+}
+
 module.exports = {
   plugin: {
     name: 'router',

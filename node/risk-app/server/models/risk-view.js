@@ -1,4 +1,5 @@
 const { capitaliseAddress } = require('../services/address.js')
+const config = require('../config.js')
 
 const RiskLevel = {
   VeryLow: 'Very Low',
@@ -23,55 +24,105 @@ const suitabilities = [
   'town to street'
 ]
 
-function RiskViewModel (risk, address, backLinkUri) {
+function riskViewModel (risk, address, backLinkUri) {
   const riverAndSeaRisk = risk.riverAndSeaRisk
     ? risk.riverAndSeaRisk.probabilityForBand
     : RiskLevel.VeryLow
   const surfaceWaterRisk = risk.surfaceWaterRisk || RiskLevel.VeryLow
-  const reservoirDryRisk = !!(risk.reservoirDryRisk && risk.reservoirDryRisk.length)
-  const reservoirWetRisk = !!(risk.reservoirWetRisk && risk.reservoirWetRisk.length)
+  const reservoirDryRisk = !!(risk.reservoirDryRisk?.length)
+  const reservoirWetRisk = !!(risk.reservoirWetRisk?.length)
   const reservoirRisk = reservoirDryRisk || reservoirWetRisk
 
   this.riverAndSeaRisk = riverAndSeaRisk
   this.surfaceWaterRisk = surfaceWaterRisk
   this.riverAndSeaClassName = riverAndSeaRisk.toLowerCase().replace(' ', '-')
   this.surfaceWaterClassName = surfaceWaterRisk.toLowerCase().replace(' ', '-')
+  this.riversSeaRiskStyle = riverAndSeaRisk.replace(/ /g, '-')
+  this.surfaceWaterStyle = surfaceWaterRisk.replace(/ /g, '-')
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
 
   if (reservoirRisk) {
-    const reservoirs = []
-
-    const add = function (item) {
-      reservoirs.push({
-        name: item.reservoirName,
-        owner: item.undertaker,
-        authority: item.leadLocalFloodAuthority,
-        location: item.location,
-        riskDesignation: item.riskDesignation,
-        comments: item.comments
-      })
-    }
-
-    if (reservoirDryRisk) {
-      risk.reservoirDryRisk.forEach(add)
-    }
-
-    if (reservoirWetRisk) {
-      risk.reservoirWetRisk.forEach(function (item) {
-        const exists = !!reservoirs.find(r => r.location === item.location)
-
-        if (!exists) {
-          add(item)
-        }
-      })
-    }
-
-    this.reservoirs = reservoirs
+    processReservoirs.call(this, reservoirDryRisk, risk, reservoirWetRisk)
   }
 
   // River and sea suitability
-  const riverAndSeaSuitability = risk.riverAndSeaRisk && risk.riverAndSeaRisk.suitability
+  processSuitability.call(this, risk)
+
+  // Groundwater area
+  this.isGroundwaterArea = risk.isGroundwaterArea
+  this.extraInfo = risk.extraInfo
+
+  this.hasHoldingComments = false
+  this.hasLlfaComments = false
+
+  // Extra info
+  processExtraInfo.call(this, risk)
+
+  this.easting = address.x
+  this.northing = address.y
+  this.postcode = address.postcode
+  this.lines = address.address.split(', ')
+  this.address = address
+  this.fullAddress = capitaliseAddress(address.address)
+  this.leadLocalFloodAuthority = risk.leadLocalFloodAuthority
+  this.date = Date.now()
+  this.year = new Date().getFullYear()
+  this.riversAndSeaTitle = RiskTitles[riverAndSeaRisk]
+  this.surfaceWaterTitle = RiskTitles[surfaceWaterRisk]
+
+  if (riverAndSeaRisk) {
+    const name = riverAndSeaRisk.toLowerCase()
+    this.riversAndSeaTextName = `partials/riskdescriptions/${name.replace(/ /g, '-')}.html`
+  }
+
+  if (surfaceWaterRisk) {
+    const name = surfaceWaterRisk.toLowerCase()
+    this.surfaceWaterTextName = `partials/riskdescriptions/${name.replace(/ /g, '-')}.html`
+  }
+
+  const riversAndSeaLevel = Levels.indexOf(riverAndSeaRisk)
+  const surfaceWaterLevel = Levels.indexOf(surfaceWaterRisk)
+  const surfaceWaterIsFirst = surfaceWaterLevel >= riversAndSeaLevel
+
+  processHighestRisk.call(this, surfaceWaterLevel, riversAndSeaLevel, riverAndSeaRisk)
+
+  if (surfaceWaterIsFirst) {
+    this.firstSource = 'surface-water.html'
+    this.secondSource = 'rivers-sea.html'
+  } else {
+    this.firstSource = 'rivers-sea.html'
+    this.secondSource = 'surface-water.html'
+  }
+  if (config.riskPageFlag) {
+    this.firstSource = 'partials/flagged/' + this.firstSource
+    this.secondSource = 'partials/flagged/' + this.secondSource
+    this.additionalInformation = 'partials/flagged/groundwaterAndReservoirs.html'
+  } else {
+    this.firstSource = 'partials/' + this.firstSource
+    this.secondSource = 'partials/' + this.secondSource
+    this.additionalInformation = 'partials/groundwaterAndReservoirs.html'
+  }
+  this.surfaceWaterIsFirst = surfaceWaterIsFirst
+  this.testInfo = JSON.stringify({
+    riverAndSeaRisk,
+    surfaceWaterRisk,
+    reservoirRisk,
+    isGroundwaterArea: risk.isGroundwaterArea
+  })
+}
+
+module.exports = riskViewModel
+
+function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel, riverAndSeaRisk) {
+  this.highestRisk = 'partials/flagged/blank.html'
+  if ((surfaceWaterLevel < riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/rsl.html' }
+  if ((surfaceWaterLevel > riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/w.html' }
+  if ((surfaceWaterLevel === riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/rsl-sw.html' }
+}
+
+function processSuitability (risk) {
+  const riverAndSeaSuitability = risk.riverAndSeaRisk?.suitability
   if (riverAndSeaSuitability) {
     const name = riverAndSeaSuitability.toLowerCase()
     if (suitabilities.includes(name)) {
@@ -87,15 +138,36 @@ function RiskViewModel (risk, address, backLinkUri) {
       this.surfaceWaterSuitabilityName = `partials/suitability/${name.replace(/ /g, '-')}.html`
     }
   }
+}
 
-  // Groundwater area
-  this.isGroundwaterArea = risk.isGroundwaterArea
-  this.extraInfo = risk.extraInfo
+function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
+  const reservoirs = []
 
-  this.hasHoldingComments = false
-  this.hasLlfaComments = false
+  const add = function (item) {
+    reservoirs.push({
+      name: item.reservoirName,
+      owner: item.undertaker,
+      authority: item.leadLocalFloodAuthority,
+      location: item.location,
+      riskDesignation: item.riskDesignation,
+      comments: item.comments
+    })
+  }
 
-  // Extra info
+  if (reservoirDryRisk) {
+    risk.reservoirDryRisk.forEach(add)
+  }
+
+  if (reservoirWetRisk) {
+    risk.reservoirWetRisk
+      .filter(item => !reservoirs.find(r => r.location === item.location))
+      .forEach(item => add(item))
+  }
+
+  this.reservoirs = reservoirs
+}
+
+function processExtraInfo (risk) {
   if (Array.isArray(risk.extraInfo) && risk.extraInfo.length) {
     const maxComments = 3
     const llfaDescriptions = {
@@ -124,47 +196,4 @@ function RiskViewModel (risk, address, backLinkUri) {
     this.hasHoldingComments = !!this.holdingComments.length
     this.hasLlfaComments = !!this.llfaComments.length
   }
-
-  this.easting = address.x
-  this.northing = address.y
-  this.postcode = address.postcode
-  this.lines = address.address.split(', ')
-  this.address = address
-  this.fullAddress = capitaliseAddress(address.address)
-  this.leadLocalFloodAuthority = risk.leadLocalFloodAuthority
-  this.date = Date.now()
-  this.year = new Date().getFullYear()
-  this.riversAndSeaTitle = RiskTitles[riverAndSeaRisk]
-  this.surfaceWaterTitle = RiskTitles[surfaceWaterRisk]
-
-  if (riverAndSeaRisk) {
-    const name = riverAndSeaRisk.toLowerCase()
-    this.riversAndSeaTextName = `partials/riskdescriptions/${name.replace(/ /g, '-')}.html`
-  }
-
-  if (surfaceWaterRisk) {
-    const name = surfaceWaterRisk.toLowerCase()
-    this.surfaceWaterTextName = `partials/riskdescriptions/${name.replace(/ /g, '-')}.html`
-  }
-
-  const riversAndSeaLevel = Levels.indexOf(riverAndSeaRisk)
-  const surfaceWaterLevel = Levels.indexOf(surfaceWaterRisk)
-  const riversAndSeaIsFirst = riversAndSeaLevel >= surfaceWaterLevel
-
-  if (riversAndSeaIsFirst) {
-    this.firstSource = 'partials/rivers-sea.html'
-    this.secondSource = 'partials/surface-water.html'
-  } else {
-    this.firstSource = 'partials/surface-water.html'
-    this.secondSource = 'partials/rivers-sea.html'
-  }
-
-  this.testInfo = JSON.stringify({
-    riverAndSeaRisk,
-    surfaceWaterRisk,
-    reservoirRisk,
-    isGroundwaterArea: risk.isGroundwaterArea
-  })
 }
-
-module.exports = RiskViewModel

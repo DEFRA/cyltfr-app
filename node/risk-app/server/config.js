@@ -38,6 +38,7 @@ const schema = joi.object().keys({
   friendlyCaptchaUrl: joi.string().when('friendlyCaptchaEnabled', { is: true, then: joi.required() }),
   friendlyCaptchaBypass: joi.string().default(''),
   sessionTimeout: joi.number().default(10),
+  riskPageFlag: joi.boolean().default(false),
   errbit: joi.object().required().keys({
     postErrors: joi.boolean().required(),
     options: {

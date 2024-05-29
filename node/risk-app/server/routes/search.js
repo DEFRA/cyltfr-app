@@ -28,7 +28,10 @@ module.exports = [
     path: '/search',
     handler: async (request, h) => {
       let addresses
-      const { postcode } = request.query
+      let { postcode } = request.query
+      if (!postcode) {
+        postcode = request.yar.get('postcode')
+      }
       const path = request.path
 
       // Our Address service doesn't support NI addresses
@@ -53,7 +56,8 @@ module.exports = [
 
         // Set addresses to session
         request.yar.set({
-          addresses
+          addresses,
+          postcode
         })
 
         if (!addresses || !addresses.length) {
@@ -78,8 +82,8 @@ module.exports = [
       },
       validate: {
         query: joi.object().keys({
-          postcode: joi.string().trim().regex(postcodeRegex).required()
-        }).required()
+          postcode: joi.string().trim().regex(postcodeRegex).default('')
+        })
       }
     }
   },
@@ -87,7 +91,10 @@ module.exports = [
     method: 'POST',
     path: '/search',
     handler: async (request, h) => {
-      const { postcode } = request.query
+      let { postcode } = request.query
+      if (!postcode) {
+        postcode = request.yar.get('postcode')
+      }
       const { address } = request.payload
       const addresses = request.yar.get('addresses')
 
@@ -121,7 +128,7 @@ module.exports = [
       description: 'Post to the search page',
       validate: {
         query: joi.object().keys({
-          postcode: joi.string().trim().regex(postcodeRegex).required()
+          postcode: joi.string().trim().regex(postcodeRegex).default('')
         }),
         payload: joi.object().keys({
           address: joi.number().required()

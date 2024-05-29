@@ -10,6 +10,7 @@ module.exports = [
     path: '/postcode',
     handler: (request, h) => {
       request.yar.set('address', null)
+      request.yar.set('postcode', null)
       const error = request.query.error
 
       if (error) {

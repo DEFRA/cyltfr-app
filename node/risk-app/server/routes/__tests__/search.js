@@ -132,17 +132,6 @@ describe('search page route', () => {
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
   })
 
-  test('/search - Invalid query', async () => {
-    const options = {
-      method: 'GET',
-      url: '/search?invalid=foo',
-      headers: { cookie }
-    }
-    floodService.__updateReturnValue({})
-    const getResponse = await server.inject(options)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
-  })
-
   test('/search - Address service error', async () => {
     const { getOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
     floodService.__updateReturnValue({})
@@ -216,18 +205,5 @@ describe('search page route', () => {
     floodService.__updateReturnValue({})
     const getResponse = await server.inject(options)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-  })
-
-  test('400 for missing expected query parameter', async () => {
-    const options = {
-      method: 'GET',
-      url: '/search?test=test',
-      headers: {
-        cookie
-      }
-    }
-    floodService.__updateReturnValue({})
-    const getResponse = await server.inject(options)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
   })
 })
