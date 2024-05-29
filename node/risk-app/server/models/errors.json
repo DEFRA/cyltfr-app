@@ -20,6 +20,9 @@
   "osMapsProxy": {
     "message": "Ordnance survey maps proxy call failed"
   },
+  "pageNotAvailable": {
+    "message": "This page is currently unavailable"
+  },
   "riskProfile": {
     "message": "An error occurred finding the risk profile"
   },
