@@ -117,7 +117,7 @@ module.exports = riskViewModel
 function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel, riverAndSeaRisk) {
   this.highestRisk = 'partials/flagged/blank.html'
   if ((surfaceWaterLevel < riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/rsl.html' }
-  if ((surfaceWaterLevel > riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/w.html' }
+  if ((surfaceWaterLevel > riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/sw.html' }
   if ((surfaceWaterLevel === riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/rsl-sw.html' }
 }
 

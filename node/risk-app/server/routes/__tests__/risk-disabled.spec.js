@@ -2,6 +2,7 @@ const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const riskService = require('../../services/risk')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
+const config = require('../../config')
 const defaultOptions = {
   method: 'GET',
   url: '/risk'
@@ -14,6 +15,7 @@ jest.mock('../../services/address')
 jest.mock('../../services/risk')
 
 beforeAll(async () => {
+  config.setConfigOptions({ riskPageFlag: false })
   server = await createServer()
   await server.initialize()
   const initial = mockOptions()
