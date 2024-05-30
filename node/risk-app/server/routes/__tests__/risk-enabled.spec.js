@@ -693,5 +693,4 @@ describe('Risk page test', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(payload).not.toMatch(/The highest risks of flooding at this location/g)
   })
-
 })
