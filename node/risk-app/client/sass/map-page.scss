@@ -1,7 +1,7 @@
 $govuk-assets-path: '/assets/';
 
-@import "govuk-frontend/dist/govuk/settings/all";
-@import "govuk-frontend/dist/govuk/helpers/all";
+@import "govuk-frontend/dist/govuk/settings/index";
+@import "govuk-frontend/dist/govuk/helpers/index";
 @import './map-controls.scss';
 @import './map-key.scss';
 @import './map-scenario-bars.scss';
