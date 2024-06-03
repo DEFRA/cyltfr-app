@@ -244,14 +244,6 @@ svg:not(:root) {
   margin-top: 6px;
 }
 
-#sw-velocity-desc-container {
-  display: none;
-}
-
-#sw-depth-desc-container {
-  display: none;
-}
-
 .extent-desc-container {
   display: none;
 }
@@ -259,4 +251,14 @@ svg:not(:root) {
 .scenarios {
   display: flex;
   justify-content: flex-end;
+}
+
+.key-container {
+  display: block;
+  margin-top: 40px;
+}
+
+.key-adv-options-container {
+  display: block;
+  margin-top: 0px;
 }

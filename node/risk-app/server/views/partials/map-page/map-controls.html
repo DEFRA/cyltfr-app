@@ -23,7 +23,7 @@
   <div class="defra-map-controls-bottom">
 
     <!-- open map on mobile -->
-    <button class="defra-map__open-key" focusable="true" id="open-key">
+    <button class="defra-map__open-key hide" focusable="true" id="open-key">
       <div class="button-content">
         <svg id="open-btn" viewBox="0 0 2 2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
           <use xlink:href="{{ assetPath }}/images/open-key.svg#open-icon"/>
@@ -49,7 +49,7 @@
     <div class="scenarios">
 
     <!-- Depth scenarios -->
-    <div class="defra-map-scenarios horizontal-overflow scenario-float-right v6-width-fix-depth"
+    <div class="defra-map-scenarios horizontal-overflow scenario-float-right v6-width-fix-depth hide"
       id="scenario-container-depth">
 
       <div class="scenario-arrows left-scenario-arrow hide">
@@ -65,7 +65,7 @@
       </div>
 
       <div class="defra-map-scenarios-v3_container" id="scenarios-controls-depth">
-        <div class="govuk-radios govuk-radios--small" id="scenario-selection-depth" data-module="govuk-radios">
+        <div class="govuk-radios govuk-radios--small hide" id="scenario-selection-depth" data-module="govuk-radios">
           <div id="high-risk-depth" class="govuk-radios__item selected-scenario">
             <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="risk-radio-high-depth"
               name="scenarios-depth" type="radio" value="{{maps.categories[1].maps[1].ref}}" checked="">
@@ -96,7 +96,7 @@
     </div>
 
     <!-- Velocity scenarios -->
-    <div class="defra-map-scenarios horizontal-overflow scenario-float-right v6-width-fix"
+    <div class="defra-map-scenarios horizontal-overflow scenario-float-right v6-width-fix hide"
       id="scenario-container-velocity">
 
       <div class="scenario-arrows left-scenario-arrow hide">
@@ -112,7 +112,7 @@
       </div>
       
       <div class="defra-map-scenarios-v3_container" id="scenarios-controls-velocity">
-        <div class="govuk-radios govuk-radios--small" id="scenario-selection-velocity" data-module="govuk-radios">
+        <div class="govuk-radios govuk-radios--small hide" id="scenario-selection-velocity" data-module="govuk-radios">
 
           <div class="govuk-radios__item selected-scenario">
             <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="risk-radio-high-velocity"
