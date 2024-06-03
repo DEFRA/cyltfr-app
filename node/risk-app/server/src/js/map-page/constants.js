@@ -57,10 +57,17 @@ const lowRadioVelocity = document.getElementById('risk-radio-low-velocity')
 const rightMove = 150
 const leftMove = -150
 
+const keyContainer = 'key-container'
+const keyAdvOptionsContainer = 'key-adv-options-container'
+const extentDesc = 'extent-desc-container'
+const keyAdvButtonDisplay = 'key-adv-button-display'
+const olZoomChecked = 'ol-zoom-checked'
+
 export const mapPageConsts = {
   advancedToggle,
   boundaryContainer,
   closeKeyBtn,
+  deviceScreenWidth,
   exitMapBtn,
   extentInfoReservoirs,
   extentInfoRs,
@@ -84,7 +91,9 @@ export const mapPageConsts = {
   swContainer,
   velocityContainer,
   rightMove,
-  leftMove
+  leftMove,
+  keyContainer,
+  extentDesc
 }
 
 export const mapControlsConsts = {
@@ -117,6 +126,7 @@ export const mapControlsConsts = {
   velocityInfo,
   boundaryContainer,
   olZoom,
+  olZoomChecked,
   topCopyrightContainer,
   bottomCopyrightContainer,
   depthRadio,
@@ -128,7 +138,11 @@ export const mapControlsConsts = {
   mediumRadioDepth,
   lowRadioDepth,
   mediumRadioVelocity,
-  lowRadioVelocity
+  lowRadioVelocity,
+  keyContainer,
+  keyAdvOptionsContainer,
+  extentDesc,
+  keyAdvButtonDisplay
 }
 
 export const screenAdjustConsts = {
@@ -137,6 +151,7 @@ export const screenAdjustConsts = {
   advancedToggle,
   deviceScreenWidth,
   zoomBtns,
+  olZoomChecked,
   scenarioBarDepth,
   scenarioBarVelocity,
   depthRadio,
@@ -144,5 +159,6 @@ export const screenAdjustConsts = {
   osLogo,
   topCopyrightContainer,
   bottomCopyrightContainer,
-  keyDisplay
+  keyDisplay,
+  keyAdvButtonDisplay
 }

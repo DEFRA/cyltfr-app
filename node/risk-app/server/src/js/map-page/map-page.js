@@ -206,31 +206,29 @@ function getInitialKeyOptions () {
 }
 
 function surfaceWaterInitialOptions () {
-  mapPageConsts.velocityContainer.style.display = 'none'
-  mapPageConsts.rsContainer.style.display = 'none'
-  mapPageConsts.reservoirsContainer.style.display = 'none'
+  mapPageConsts.velocityContainer.classList.add('hide')
+  mapPageConsts.rsContainer.classList.add('hide')
+  mapPageConsts.reservoirsContainer.classList.add('hide')
 }
 
 function riversAndTheSeaInitialOptions () {
-  mapPageConsts.swContainer.style.display = 'none'
-  mapPageConsts.extentInfoSw.style.display = 'none'
-  mapPageConsts.rsContainer.style.display = 'block'
-  mapPageConsts.rsContainer.style.marginTop = '40px'
+  mapPageConsts.swContainer.classList.add('hide')
+  mapPageConsts.extentInfoSw.classList.add(mapPageConsts.extentDesc)
+  mapPageConsts.rsContainer.classList.add(mapPageConsts.keyContainer)
   mapPageConsts.rsRadio.checked = true
-  mapPageConsts.extentInfoRs.style.display = 'block'
-  mapPageConsts.reservoirsContainer.style.display = 'none'
-  mapPageConsts.boundaryContainer.style.display = 'none'
+  mapPageConsts.extentInfoRs.classList.remove(mapPageConsts.extentDesc)
+  mapPageConsts.reservoirsContainer.classList.add('hide')
+  mapPageConsts.boundaryContainer.classList.add('hide')
 }
 
 function reservoirsInitialOptions () {
-  mapPageConsts.swContainer.style.display = 'none'
-  mapPageConsts.extentInfoSw.style.display = 'none'
-  mapPageConsts.rsContainer.style.display = 'none'
-  mapPageConsts.reservoirsContainer.style.display = 'block'
-  mapPageConsts.reservoirsContainer.style.marginTop = '40px'
+  mapPageConsts.swContainer.classList.add('hide')
+  mapPageConsts.extentInfoSw.classList.add(mapPageConsts.extentDesc)
+  mapPageConsts.rsContainer.classList.add('hide')
+  mapPageConsts.reservoirsContainer.classList.add(mapPageConsts.keyContainer)
   mapPageConsts.reservoirsRadio.checked = true
-  mapPageConsts.extentInfoReservoirs.style.display = 'block'
-  mapPageConsts.boundaryContainer.style.display = 'none'
+  mapPageConsts.extentInfoReservoirs.classList.remove(mapPageConsts.extentDesc)
+  mapPageConsts.boundaryContainer.classList.add('hide')
 }
 
 window.onresize = adjustPosition

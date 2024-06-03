@@ -36,7 +36,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   .defra-map__open-key {
     float: right;
     position: relative;
-    display: none;
+    display: block;
     margin-left: 0px;
     margin-top: 0px;
     height: 40px;
@@ -352,6 +352,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   .defra-map__advanced::-moz-focus-inner {
     border: 0;
   }
+
+  .key-adv-button-display {
+  display: block;
+}
   
   .ol-zoom {
     float: right;
@@ -373,4 +377,16 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     /* Ensures the focus boarder overlaps the other zoom button rather than hides behind */
     z-index: 12;
   }
+}
+
+.ol-zoom.ol-zoom-checked {
+  top: calc(100% - 200px);
+}
+
+.zoom-disabled {
+  fill: #c7c7c7;
+  pointer-events: none;
+  cursor: auto;
+  outline: none;
+  box-shadow: none;
 }
