@@ -79,7 +79,7 @@
     "collectCoverageFrom": [
       "server/**/*.js",
       "!server/public/**/*",
-      "!server/src/js/*.js"
+      "!server/src/js/**/*.js"
     ],
     "coverageReporters": [
       "text",

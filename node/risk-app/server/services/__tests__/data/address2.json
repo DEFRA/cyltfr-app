@@ -1,0 +1,42 @@
+[
+  {
+    "DPA": {
+        "UPRN": "10093088549",
+        "ADDRESS": "OLD WILLOW HOUSE, WEST PARK, SELBY, YO8 4JL",
+        "POSTCODE": "DPA 4JL",
+        "X_COORDINATE": 459974.88,
+        "Y_COORDINATE": 431638.77,
+        "POSTAL_ADDRESS_CODE": "D"
+    }
+},
+{
+    "LPI": {
+        "UPRN": "10093088549",
+        "ADDRESS": "OLD WILLOW HOUSE, WEST PARK, SELBY, NORTH YORKSHIRE, YO8 4JL",
+        "POSTCODE_LOCATOR": "LPI 4JL",
+        "X_COORDINATE": 459974.88,
+        "Y_COORDINATE": 431638.77,
+        "POSTAL_ADDRESS_CODE": "D"
+    }
+},
+{
+    "LPI": {
+        "UPRN": "10013453848",
+        "ADDRESS": "STREET RECORD, WEST PARK, SELBY, NORTH YORKSHIRE, YO8 4JL",
+        "POSTCODE_LOCATOR": "YO8 4JL",
+        "X_COORDINATE": 460211.0,
+        "Y_COORDINATE": 431737.0,
+        "POSTAL_ADDRESS_CODE": "N"
+    }
+},
+{
+    "LPI": {
+        "UPRN": "100050522998",
+        "ADDRESS": "1, WEST PARK, SELBY, NORTH YORKSHIRE, YO8 4JL",
+        "POSTCODE_LOCATOR": "YO8 LPI",
+        "X_COORDINATE": 460034.0,
+        "Y_COORDINATE": 431789.0,
+        "POSTAL_ADDRESS_CODE": "D"
+    }
+}
+]
