@@ -173,6 +173,32 @@ describe('GET /surface-water - enabled', () => {
     expect(response.result).toContain('Your lead local flood authority is <strong>North Yorkshire')
   })
 
+  it('returns 200 OK and renders surface water page with llfa comments', async () => {
+    const mockRequest = {
+      method: 'GET',
+      url: '/surface-water',
+      headers: defaultOptions.headers
+    }
+    riskService.__updateReturnValue({
+      leadLocalFloodAuthority: 'North Yorkshire',
+      extraInfo: [{
+        info: 'Proposed schemes',
+        apply: 'llfa',
+        riskoverride: null
+      },
+      {
+        info: 'Flood action plan',
+        apply: 'llfa',
+        riskoverride: null
+      }]
+    })
+
+    const response = await server.inject(mockRequest)
+
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(response.result).toContain('They have the following information about surface water flooding:')
+  })
+
   it('should show an error page if an error occurs', async () => {
     const mockRequest = {
       method: 'GET',
