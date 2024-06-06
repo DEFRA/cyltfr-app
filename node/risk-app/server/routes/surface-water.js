@@ -1,5 +1,4 @@
 const boom = require('@hapi/boom')
-const riskService = require('../services/risk')
 const SurfaceWaterViewModel = require('../models/risk-view')
 const errors = require('../models/errors.json')
 
@@ -19,7 +18,7 @@ module.exports = {
       const backLinkUri = '/risk'
 
       try {
-        const risk = await riskService.getByCoordinates(x, y, radius)
+        const risk = await request.server.methods.riskService(x, y, radius)
 
         if (!risk.inEngland) {
           return h.redirect('/england-only')

@@ -7,7 +7,7 @@ if (!redisCacheEnabled) { CatboxMemory = require('@hapi/catbox-memory') }
 
 module.exports = redisCacheEnabled
   ? {
-      name: 'redis_cache',
+      name: 'server_cache',
       provider: {
         constructor: CatboxRedis.Engine,
         options: {
@@ -17,7 +17,7 @@ module.exports = redisCacheEnabled
       }
     }
   : {
-      name: 'memory_cache',
+      name: 'server_cache',
       provider: {
         constructor: CatboxMemory.Engine
       }
