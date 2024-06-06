@@ -51,7 +51,7 @@
     <p class="govuk-body">This information tells you the highest chance of flooding on the land 15 metres around a property.</p>
     {% include 'partials/floodRatings.html' %}
 
-    <h2 class="govuk-heading-m">See a map of surface water flood risk</h2>
+    <h2 class="govuk-heading-m">See surface water flood risk on a map</h2>
 
     <p class="govuk-body"><a class="govuk-link" href="/map?easting={{easting}}&northing={{northing}}&map=SurfaceWater"
         previewlistener="true">View a surface water map</a> for information on: </p>
@@ -66,7 +66,17 @@
       <p class="govuk-body">It's a good idea to check your flood risk regularly because the information may change.</p>
       <p class="govuk-body">You can also read about <a href="https://www.gov.uk/prepare-for-flooding">how to prepare yourself and your property</a>.</p>
       <p class="govuk-body">Lead local flood authorities are responsible for managing flood risk from surface water. They may hold more detailed information.</p>
-      <p class="govuk-body">Your lead local flood authority is <strong>{{leadLocalFloodAuthority}}</strong>.</p>
+      <p class="govuk-body">Your lead local flood authority is <strong>{{leadLocalFloodAuthority}}</strong>.
+        {% if hasLlfaComments %}
+        They have the following information about surface water flooding:
+        <br>
+        <ul class="govuk-list govuk-list--bullet surface-water" id="llfa-comments-list">
+          {% for comment in llfaComments %}
+          <li id="llfa-comments">{{ comment }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+</p>
       
     <hr
       class="govuk-section-break govuk-section-break--m govuk-section-break--visible  govuk-!-margin-top-6 govuk-!-margin-bottom-3">

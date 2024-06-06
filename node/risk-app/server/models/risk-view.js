@@ -85,7 +85,7 @@ function riskViewModel (risk, address, backLinkUri) {
   const surfaceWaterLevel = Levels.indexOf(surfaceWaterRisk)
   const surfaceWaterIsFirst = surfaceWaterLevel >= riversAndSeaLevel
 
-  processHighestRisk.call(this, surfaceWaterLevel, riversAndSeaLevel, riverAndSeaRisk)
+  processHighestRisk.call(this, surfaceWaterLevel, riversAndSeaLevel)
 
   if (surfaceWaterIsFirst) {
     this.firstSource = 'surface-water.html'
@@ -114,11 +114,11 @@ function riskViewModel (risk, address, backLinkUri) {
 
 module.exports = riskViewModel
 
-function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel, riverAndSeaRisk) {
+function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel) {
   this.highestRisk = 'partials/flagged/blank.html'
-  if ((surfaceWaterLevel < riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/rsl.html' }
-  if ((surfaceWaterLevel > riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/sw.html' }
-  if ((surfaceWaterLevel === riversAndSeaLevel) && (riverAndSeaRisk !== 'Very Low')) { this.highestRisk = 'partials/flagged/rsl-sw.html' }
+  if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/flagged/rsl.html' }
+  if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/flagged/sw.html' }
+  if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/flagged/rsl-sw.html' }
 }
 
 function processSuitability (risk) {

@@ -649,12 +649,42 @@ describe('Risk page test', () => {
     expect(payload).toMatch(/The highest risk of flooding at this location[^]* is from <strong>surface water<\/strong>./g)
   })
 
+  test('Include sentence about highest risk - Surface water with Very Low Rivers and Sea', async () => {
+    riskService.__updateReturnValue({
+      inEngland: true,
+      isGroundwaterArea: true,
+      riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
+      surfaceWaterRisk: 'Medium',
+      surfaceWaterSuitability: 'National to County',
+      extraInfo: null
+    })
+    const response = await server.inject(defaultOptions)
+    const { payload } = response
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(payload).toMatch(/The highest risk of flooding at this location[^]* is from <strong>surface water<\/strong>./g)
+  })
+
   test('Include sentence about highest risk - Rivers and Sea', async () => {
     riskService.__updateReturnValue({
       inEngland: true,
       isGroundwaterArea: true,
       riverAndSeaRisk: { probabilityForBand: 'Medium', suitability: 'County to Town' },
       surfaceWaterRisk: 'Low',
+      surfaceWaterSuitability: 'National to County',
+      extraInfo: null
+    })
+    const response = await server.inject(defaultOptions)
+    const { payload } = response
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(payload).toMatch(/The highest risk of flooding at this location[^]* is from <strong>rivers and the sea<\/strong>./g)
+  })
+
+  test('Include sentence about highest risk - Rivers and Sea with Very Low surface water', async () => {
+    riskService.__updateReturnValue({
+      inEngland: true,
+      isGroundwaterArea: true,
+      riverAndSeaRisk: { probabilityForBand: 'Medium', suitability: 'County to Town' },
+      surfaceWaterRisk: 'Very Low',
       surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
