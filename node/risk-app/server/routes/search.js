@@ -3,7 +3,6 @@ const boom = require('@hapi/boom')
 const { postcodeRegex, redirectToHomeCounty } = require('../helpers')
 const config = require('../config')
 const floodService = require('../services/flood')
-const addressService = require('../services/address')
 const SearchViewModel = require('../models/search-view')
 const errors = require('../models/errors.json')
 const { captchaCheck } = require('../services/captchacheck')
@@ -49,7 +48,7 @@ module.exports = [
         }
 
         try {
-          addresses = await addressService.find(postcode)
+          addresses = await request.server.methods.find(postcode)
         } catch {
           return h.redirect('/postcode?error=postcode_does_not_exist')
         }

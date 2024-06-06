@@ -35,6 +35,13 @@ async function createServer () {
   await server.register(require('./plugins/cookies'))
   await server.register(require('blipp'))
 
+  // Register the server methods
+  const serverMethods = require('./server-methods/server-methods')
+
+  for (const method of serverMethods) {
+    server.method(method.name, method.method, method.options)
+  }
+
   if (config.errbit.postErrors) {
     await server.register({
       plugin: require('./plugins/airbrake'),

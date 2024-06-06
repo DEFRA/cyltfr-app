@@ -1,4 +1,3 @@
-const riskService = require('../services/risk')
 const boom = require('@hapi/boom')
 const errors = require('../models/errors.json')
 const RiversAndSeaViewModel = require('../models/risk-view')
@@ -18,7 +17,7 @@ module.exports = {
     const backLinkUri = '/risk'
 
     try {
-      const risk = await riskService.getByCoordinates(x, y, radius)
+      const risk = await request.server.methods.riskService(x, y, radius)
       const model = new RiversAndSeaViewModel(risk, address, backLinkUri)
       return h.view('rivers-and-sea', model)
     } catch (err) {

@@ -11,4 +11,8 @@ addressService.find.mockImplementation((postcode) => {
     : Promise.reject(new Error(`findByPostcode mock not found for postcode [${postcode}]`))
 })
 
+addressService.updateAddress = (postcode, newAddress) => {
+  findByPostcode[postcode.toUpperCase().replace(' ', '')] = newAddress
+}
+
 module.exports = addressService
