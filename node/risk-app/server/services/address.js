@@ -8,21 +8,41 @@ async function simulatedFind (_postcode) {
   return simulatedData
 }
 
-async function find (postcode) {
-  const uri = `${osPostcodeUrl}${postcode}&key=${osSearchKey}`
+async function callOsApi (postcode, offset = 0) {
+  const uri = `${osPostcodeUrl}lr=EN&fq=logical_status_code:1&postcode=${postcode}&key=${osSearchKey}&dataset=DPA,LPI&offset=${offset}&maxresults=100`
   const payload = await util.getJson(uri, true)
 
-  if (!payload || !payload.results || !payload.results.length) {
-    return []
-  }
+  return payload
+}
 
-  const results = payload.results.map(item => item.DPA)
+function processPayload (results, payload) {
+  const allItems = payload.results.map(item => item.DPA ? item.DPA : item.LPI).filter(item => item.POSTAL_ADDRESS_CODE !== 'N')
+  allItems.forEach((item) => {
+    if (!(results.find(result => result.UPRN === item.UPRN))) {
+      results.push(item)
+    }
+  })
+}
+
+async function find (postcode) {
+  const results = []
+  let offset = 0
+  let maxresults = 0
+  let totalresults = 1
+
+  while (totalresults > (maxresults + offset)) {
+    offset += maxresults
+    const payload = await callOsApi(postcode, offset)
+    processPayload(results, payload)
+    maxresults = payload.header.maxresults
+    totalresults = payload.header.totalresults
+  }
 
   return results
     .map(item => {
       return {
         uprn: item.UPRN,
-        postcode: item.POSTCODE,
+        postcode: item.POSTCODE ? item.POSTCODE : item.POSTCODE_LOCATOR,
         address: item.ADDRESS,
         x: item.X_COORDINATE,
         y: item.Y_COORDINATE
