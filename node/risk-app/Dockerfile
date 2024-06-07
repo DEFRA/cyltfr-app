@@ -1,4 +1,8 @@
-FROM node:20-alpine
+ARG PARENT_VERSION=2.2.2-node20.11.1
+
+FROM defradigital/node-development:${PARENT_VERSION} AS node
+
+USER root
 
 RUN set -xe \
     && apk update && apk upgrade \

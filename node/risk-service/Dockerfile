@@ -1,12 +1,14 @@
-FROM node:20-alpine AS node
+ARG PARENT_VERSION=2.2.2-node20.11.1
+
+FROM defradigital/node-development:${PARENT_VERSION} AS node
+
+USER root
 
 RUN set -xe \
     && apk update && apk upgrade \
     && apk add bash make gcc g++ py-pip curl npm \
     && npm install --ignore-scripts -g npm \
     && rm -rf /var/cache/apk/* \
-    && addgroup -S node \
-    && adduser -S -D -G node node \
     && mkdir /home/node/app \
     && chown -R node:node /home/node/
 
