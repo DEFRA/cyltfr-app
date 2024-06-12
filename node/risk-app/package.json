@@ -10,17 +10,25 @@
     "prepare": "cd ../.. && husky node/risk-app/.husky",
     "start": "pm2 start config/pm2.json",
     "build:webpack": "webpack",
-    "build:js": "bin/build-js",
-    "build:css": "bin/build-css",
-    "watch": "bin/watch",
-    "build": "bin/build",
+    "build:js": "./bin/build-js",
+    "build:css": "./bin/build-css",
+    "watch": "npx nodemon index.js",
+    "build": "./bin/build",
     "test": "npm run test:lint && npm run test:jest",
     "test:jest": "jest --no-cache  --detectOpenHandles --runInBand --forceExit",
     "test:lint": "standard",
     "test:watch": "npm run test -- --watch",
     "debug": "node --inspect-brk=0.0.0.0:9229 index.js",
     "pre-commit": "npm run test && lint-staged",
-    "dev": "nodemon -L index.js"
+    "dev": "nodemon -L index.js",
+    "container:build": "docker build -t cyltfr-risk-app --target production .",
+    "container:start": "docker run -d --rm --env-file .env -p 3000:3000 --name risk-app cyltfr-risk-app",
+    "container:stop": "docker container kill risk-app",
+    "container:builddebug": "docker build -t cyltfr-risk-app-debug --target development .",
+    "container:debug": "docker run -d --name risk-app-debug -p 3000:3000 -p 9229:9229 --rm --env-file .env.dev -v `pwd`:/home/node/app cyltfr-risk-app-debug npx nodemon --inspect=0.0.0.0 index.js",
+    "container:stopdebug": "docker container kill risk-app-debug",
+    "cd": "npm run container:debug",
+    "cx": "npm run container:stopdebug"
   },
   "author": "",
   "license": "ISC",
@@ -36,6 +44,7 @@
     "@hapi/wreck": "^18.0.0",
     "@hapi/yar": "^11.0.0",
     "blipp": "4.0.2",
+    "dotenv": "^16.4.5",
     "friendly-challenge": "^0.9.12",
     "govuk-frontend": "^5.2.0",
     "hapi-pino": "^12.0.0",
@@ -50,10 +59,10 @@
     "husky": "^9.0.0",
     "jest": "^29.7.0",
     "lint-staged": "^15.0.1",
+    "nodemon": "^3.1.0",
     "sass": "^1.71.1",
     "standard": "^17.0.0",
     "webpack": "^5.90.3",
-    "nodemon": "^3.1.0",
     "webpack-cli": "^5.1.4"
   },
   "standard": {
@@ -74,6 +83,9 @@
     "*.js": "standard --fix"
   },
   "jest": {
+    "setupFiles": [
+      "dotenv/config"
+    ],
     "automock": false,
     "collectCoverage": true,
     "collectCoverageFrom": [
