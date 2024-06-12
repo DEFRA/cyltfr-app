@@ -42,16 +42,9 @@ function postJson (url, ext = false) {
   return post(url, { json: true }, ext)
 }
 
-function cleanseLocation (location) {
-  if (location) {
-    return location.replace(/[^a-zA-Z0-9',-.& ]/g, '')
-  }
-}
-
 module.exports = {
   get,
   getJson,
   post,
-  postJson,
-  cleanseLocation
+  postJson
 }

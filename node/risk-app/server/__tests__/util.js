@@ -132,24 +132,4 @@ describe('util.js tests', () => {
       expect(error.message).toEqual('Requested resource returned a non 200 status code')
     }
   })
-
-  test('cleanseLocation does not disrupt a clean url', async () => {
-    const originalUrl = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890&-'
-    const response = await util.cleanseLocation(originalUrl)
-
-    expect(response).toEqual(originalUrl)
-  })
-
-  test('cleanseLocation cleans the url', async () => {
-    const originalUrl = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890&-'
-    const response = await util.cleanseLocation(originalUrl + '<>')
-
-    expect(response).toEqual(originalUrl)
-  })
-
-  test('cleanseLocation called with no input still works', async () => {
-    const response = await util.cleanseLocation()
-
-    expect(response).toBeUndefined()
-  })
 })
