@@ -1,42 +1,66 @@
 ARG PARENT_VERSION=2.2.2-node20.11.1
 
-FROM defradigital/node-development:${PARENT_VERSION} AS node
+FROM defradigital/node:${PARENT_VERSION} AS base
+ARG PORT=3000
+ENV PORT ${PORT}
 
 USER root
 
 RUN set -xe \
     && apk update && apk upgrade \
-    && apk add bash make gcc g++ py-pip curl npm \
-    && npm install --ignore-scripts -g npm \
-    && npm install --ignore-scripts -g nodemon \
+    && apk add curl \
     && rm -rf /var/cache/apk/* \
     && mkdir /home/node/app \
     && chown -R node:node /home/node/
 
 WORKDIR /home/node/app
 
-RUN mkdir -p ./node_modules
-
 COPY --chown=root:root ./package*.json ./
-
-COPY --chown=root:root ./bin ./bin
 
 COPY --chown=root:root ./index.js .
 
-COPY --chown=root:root ./client ./client
+FROM base AS development
 
-COPY --chown=root:root ./.husky ./.husky
+COPY --chown=root:root ./bin/ ./bin/
+
+COPY --chown=root:root ./client/ ./client/
+
+COPY --chown=root:root ./.husky/ ./.husky/
 
 COPY --chown=root:root ./webpack.config.js .
 
-RUN npm ci --ignore-scripts
+RUN npm ci --ignore-scripts --include dev
 
-COPY --chown=root:root ./server ./server
+COPY --chown=root:root ./server/ ./server/
 
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE ${PORT} 9229 9230
 
 USER node
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "node", "index.js" ]
+
+FROM base AS production
+
+RUN npm ci --ignore-scripts --omit dev
+
+COPY --chown=root:root ./server/*.js ./server/
+COPY --chown=root:root ./server/models/*.js ./server/models/*.json ./server/models/
+COPY --chown=root:root ./server/plugins/*.js ./server/plugins/
+COPY --chown=root:root ./server/routes/*.js ./server/routes/
+COPY --chown=root:root ./server/routes/simulated/*.js ./server/routes/simulated/
+COPY --chown=root:root ./server/routes/simulated/data/*.* ./server/routes/simulated/data/
+COPY --chown=root:root ./server/server-methods/*.js ./server/server-methods/
+COPY --chown=root:root ./server/services/*.js ./server/services/
+COPY --chown=root:root ./server/views/ ./server/views/
+
+COPY --from=development --chown=root:root /home/node/app/server/public/ ./server/public/
+
+EXPOSE ${PORT}
+
+USER node
+
+HEALTHCHECK --timeout=5s CMD curl --fail http://localhost:${PORT}/healthcheck || exit 1
+
+CMD [ "node", "index.js" ]

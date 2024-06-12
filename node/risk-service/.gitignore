@@ -6,3 +6,5 @@ server/public/build
 lcov.info
 config/server.json
 test/output/*
+.env
+.env.*

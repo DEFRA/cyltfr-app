@@ -7,3 +7,5 @@ config/*.json
 lcov.info
 test/output/*
 test/output.html
+.env
+.env.*
