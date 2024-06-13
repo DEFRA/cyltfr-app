@@ -71,7 +71,7 @@ const names = {
   osMapsUrl: 'OS_MAPS_URL',
   osSearchKey: 'OS_SEARCH_KEY',
   osMapsKey: 'OS_MAPS_KEY',
-  http_proxy: 'HTTP_PROXY',
+  http_proxy: 'http_proxy',
   rateLimitEnabled: 'RATE_LIMIT_ENABLED',
   rateLimitRequests: 'RATE_LIMIT_REQUESTS',
   rateLimitExpiresIn: 'RATE_LIMIT_EXPIRES_IN',
@@ -131,6 +131,7 @@ let result = schema.validate(config, {
 if (result.error) {
   // read from config file
   readConfigFile()
+
   result = schema.validate(config, {
     abortEarly: false
   })
