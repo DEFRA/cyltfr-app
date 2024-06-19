@@ -17,7 +17,7 @@
     "test": "npm run test:lint && npm run test:jest",
     "test:jest": "jest --no-cache  --detectOpenHandles --runInBand --forceExit",
     "test:lint": "standard",
-    "test:watch": "npm run test -- --watch",
+    "test:watch": "jest --watch",
     "debug": "node --inspect-brk=0.0.0.0:9229 index.js",
     "pre-commit": "npm run test && lint-staged",
     "dev": "nodemon -L index.js",

@@ -2,7 +2,6 @@ const joi = require('joi')
 const boom = require('@hapi/boom')
 const { postcodeRegex, redirectToHomeCounty } = require('../helpers')
 const config = require('../config')
-const floodService = require('../services/flood')
 const SearchViewModel = require('../models/search-view')
 const errors = require('../models/errors.json')
 const { captchaCheck } = require('../services/captchacheck')
@@ -10,7 +9,7 @@ const { defineBackLink } = require('../services/defineBackLink')
 
 const getWarnings = async (postcode, request) => {
   try {
-    let warnings = await floodService.findWarnings(postcode)
+    let warnings = await request.server.methods.floodService(postcode)
     if (warnings?.address === 'England') {
       warnings = {}
     }
