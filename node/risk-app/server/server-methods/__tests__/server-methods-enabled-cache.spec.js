@@ -2,6 +2,7 @@ const STATUS_CODES = require('http2').constants
 const createServer = require('../..')
 const addressService = require('../../services/address')
 const riskService = require('../../services/risk')
+const floodService = require('../../services/flood')
 const mockConfig = require('../../__mocks__/config')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
 const defaultOptions = {
@@ -12,6 +13,7 @@ const defaultOptions = {
 const x = 40.7128
 const y = -74.0060
 const radius = 15
+const location = 'WA4 1AB'
 
 jest.mock('../../services/flood')
 jest.mock('../../services/address')
@@ -126,6 +128,43 @@ describe('server methods', () => {
           riverAndSeaRisk: null,
           surfaceWaterRisk: 'Very Low',
           surfaceWaterSuitability: 'County to Town'
+        })
+      )
+    })
+
+    it('should return original cached flood service warnings', async () => {
+      // Setting initial values
+      floodService.__updateReturnValue({
+        address: '',
+        floods: [],
+        severity: 5,
+        message: 'There are currently no flood warnings or alerts in force at this location.'
+      })
+      const response = await server.methods.floodService(location)
+
+      expect(response).toEqual(
+        expect.objectContaining({
+          address: '',
+          floods: [],
+          severity: 5,
+          message: 'There are currently no flood warnings or alerts in force at this location.'
+        })
+      )
+      floodService.__updateReturnValue({
+        address: '',
+        floods: [],
+        severity: 4,
+        message: 'There are currently no flood warnings or alerts in force at this location.'
+      })
+
+      const changedResponse = await server.methods.floodService(location)
+
+      expect(changedResponse).toEqual(
+        expect.objectContaining({
+          address: '',
+          floods: [],
+          severity: 5,
+          message: 'There are currently no flood warnings or alerts in force at this location.'
         })
       )
     })
