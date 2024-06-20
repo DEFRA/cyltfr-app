@@ -24,7 +24,7 @@ do http `GET` on `http://{host}:{port}/floodrisk/{x}/{y}/radius`
 
 # Prerequisites
 
-Node v12+
+Node v20+
 
 # Running the application locally
 
