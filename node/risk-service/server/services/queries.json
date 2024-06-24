@@ -1,4 +1,0 @@
-{
-  "calculateFloodRisk": "select u_ltfri.calculate_flood_risk($1, $2, $3)",
-  "isEngland": "select ((select count(1) from u_ltfri.england_010k e where st_intersects(st_setsrid(st_makepoint($1, $2), 27700), e.wkb_geometry)) > 0) as is_england"
-}

@@ -1,9 +1,0 @@
-#map:not(:empty) {
-  height: 400px;
-  margin-bottom: 20px;
-}
-
-.comment-map {
-  height: 240px;
-  padding-bottom: 20px;
-}

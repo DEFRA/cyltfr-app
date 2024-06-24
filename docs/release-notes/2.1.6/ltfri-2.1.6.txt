@@ -1,6 +1,0 @@
-# LTFRI release 2.1.6 23rd February 2022
-
-# Instructions
-Run LTF_{stage}_99_UPDATE_TARGET_AREAS to load new target area data.
-
-Followed up with code deployment to update release version and auto test completion.

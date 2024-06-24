@@ -1,5 +1,0 @@
-#!/bin/bash
-
-npx sass --style=expanded \
-  --load-path=node_modules/ \
-  client/sass:server/public/build/stylesheets

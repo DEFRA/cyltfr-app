@@ -1,6 +1,0 @@
-BEGIN;
-DROP SEQUENCE u_ltfri.rof_reservoir_extent_dry_bv_bng_ogc_fid_seq;
-DROP SEQUENCE u_ltfri.rof_reservoir_extent_wet_bv_bng_ogc_fid_seq;
-DROP TABLE u_ltfri.rof_reservoir_extent_dry_bv_bng CASCADE;
-DROP TABLE u_ltfri.rof_reservoir_extent_wet_bv_bng CASCADE;
-COMMIT;
