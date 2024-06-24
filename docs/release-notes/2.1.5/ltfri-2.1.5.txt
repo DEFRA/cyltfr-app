@@ -1,9 +1,0 @@
-# LTFRI 2.1.5 Thursday 27th January 2021
-
-# Instructions
-
-Content changes (privacy notice and T&C's)
-
-A full code build needs to be performed to update the RISK-APP and RISK-SERVICE.
-
-No data changes.
