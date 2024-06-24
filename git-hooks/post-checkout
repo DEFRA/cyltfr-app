@@ -1,3 +1,0 @@
-#!/bin/bash
-
-${HOME}/ltfri/.git/hooks/post-merge

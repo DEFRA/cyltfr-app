@@ -1,1 +1,0 @@
-﻿CLUSTER u_ltfri.rofrs_england_bv_bng USING rofrs_england_bv_bng_wkb_geometry_geom_idx;

@@ -1,9 +1,0 @@
-# LTFRI release 1.1.5 28 August 2019
-
-# tickets
-FCRM-611
-
-# Instructions
-Run LTF_{stage}_99_UPDATE_TARGET_AREAS to load new target area data.
-
-Followed up with code deployment to update release version and auto test completion.

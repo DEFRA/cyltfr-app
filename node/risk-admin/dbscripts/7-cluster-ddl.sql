@@ -1,1 +1,0 @@
-﻿CLUSTER u_ltfri.extra_info_bv_bng USING extra_info_bv_bng_wkb_geometry_geom_idx;

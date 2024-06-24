@@ -1,6 +1,0 @@
-#!/bin/sh 
-# Ensure all javascript files staged for commit pass standard code style (requires standard to be installed globally)
-#git diff --name-only --cached --relative | grep '\.js\?$' | xargs standard
-#if [ $? -ne 0 ]; then exit 1; fi
-
-cd node/risk-app && npm run lint && cd ../risk-service && npm run lint && cd ../risk-app-tests && npm run lint
