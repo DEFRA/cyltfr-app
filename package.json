@@ -7,7 +7,7 @@
     "node": ">=20.11.0"
   },
   "scripts": {
-    "prepare": "cd ../.. && husky node/risk-app/.husky",
+    "prepare": "husky .husky",
     "start": "pm2 start config/pm2.json",
     "build:webpack": "webpack",
     "build:js": "./bin/build-js",
@@ -31,7 +31,7 @@
     "cx": "npm run container:stopdebug"
   },
   "author": "",
-  "license": "ISC",
+  "license": "OGL-UK-3.0",
   "dependencies": {
     "@airbrake/node": "^2.1.8",
     "@hapi/boom": "^10.0.0",
