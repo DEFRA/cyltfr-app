@@ -1,9 +1,0 @@
-# LTFRI 4.1.0 Wednesday 13th Mar 2024
-
-# Instructions
-
-Copy database and tile updates
-
-# Data changes
-
-Reservoir flood map data update
