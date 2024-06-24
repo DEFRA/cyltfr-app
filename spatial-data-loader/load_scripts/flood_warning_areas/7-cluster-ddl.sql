@@ -1,1 +1,0 @@
-﻿CLUSTER u_ltfri.flood_warning_area_bv_bng USING flood_warning_area_bv_bng_wkb_geometry_geom_idx;

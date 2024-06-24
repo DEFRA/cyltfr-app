@@ -1,8 +1,0 @@
-# LTFRI 2.0.17 Wednesday 29th June 2021
-
-# Instructions
-
-This release adds a PECR cookie page and banner to LTFRI (risk-app)
-
-
-A full code build also needs to be performed as normal to update the RISK-APP and RISK-SERVICE.

@@ -1,1 +1,0 @@
-﻿CLUSTER u_ltfri.ufmfsw_depth_1_in_30_bv_bng USING ufmfsw_depth_1_in_30_bv_bng_wkb_geometry_geom_idx;

@@ -1,1 +1,0 @@
-﻿CLUSTER u_ltfri.rof_reservoir_velocity_bv_bng USING rof_reservoir_velocity_bv_bng_wkb_geometry_geom_idx;
