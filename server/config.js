@@ -129,6 +129,7 @@ let result = schema.validate(config, {
 
 // Remove this after the move to env vars
 if (result.error) {
+  console.log('Error in config. Fallback to server.json file. : %s', [result.error.message])
   // read from config file
   readConfigFile()
 
