@@ -81,7 +81,6 @@ describe('Risk page test', () => {
       }],
       riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
       surfaceWaterRisk: 'High',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
 
@@ -106,7 +105,6 @@ describe('Risk page test', () => {
       reservoirWetRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
       surfaceWaterRisk: 'Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
 
@@ -139,7 +137,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -159,7 +156,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -178,7 +174,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -197,7 +192,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: 'Error',
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -216,7 +210,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Error',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -235,7 +228,6 @@ describe('Risk page test', () => {
       reservoirDryRisk: 'Error',
       riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: null,
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -254,26 +246,6 @@ describe('Risk page test', () => {
       reservoirWetRisk: 'Error',
       riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: null,
-      extraInfo: null
-    })
-    const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
-  })
-
-  test('/risk surfaceWaterSuitability error', async () => {
-    riskService.__updateReturnValue({
-      inEngland: true,
-      isGroundwaterArea: false,
-      floodAlertArea: [],
-      floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
-      leadLocalFloodAuthority: 'Cheshire West and Chester',
-      reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
-      surfaceWaterRisk: null,
-      surfaceWaterSuitability: 'Error',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -292,7 +264,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: null,
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -315,7 +286,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -334,7 +304,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -353,7 +322,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -372,7 +340,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -399,7 +366,6 @@ describe('Risk page test', () => {
       }],
       riverAndSeaRisk: null,
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -418,7 +384,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'High' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -437,7 +402,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Medium' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -456,7 +420,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'High',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -475,7 +438,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -494,7 +456,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: null,
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -513,7 +474,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
       surfaceWaterRisk: 'High',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -534,7 +494,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -555,7 +514,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
       surfaceWaterRisk: 'Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -576,7 +534,6 @@ describe('Risk page test', () => {
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -598,7 +555,6 @@ describe('Risk page test', () => {
       reservoirWetRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'High',
-      surfaceWaterSuitability: 'Town to Street',
       extraInfo: [{
         info: '',
         apply: 'holding',
@@ -640,7 +596,6 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -655,7 +610,6 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -670,7 +624,6 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       riverAndSeaRisk: { probabilityForBand: 'Medium', suitability: 'County to Town' },
       surfaceWaterRisk: 'Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -685,7 +638,6 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       riverAndSeaRisk: { probabilityForBand: 'Medium', suitability: 'County to Town' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -700,7 +652,6 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       riverAndSeaRisk: { probabilityForBand: 'Medium', suitability: 'County to Town' },
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -715,7 +666,6 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)

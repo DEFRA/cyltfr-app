@@ -11,7 +11,6 @@ const originalReturnValue = {
   reservoirRisk: null,
   riverAndSeaRisk: null,
   surfaceWaterRisk: 'Very Low',
-  surfaceWaterSuitability: 'County to Town',
   extraInfo: null
 }
 let returnValue = { ...originalReturnValue }

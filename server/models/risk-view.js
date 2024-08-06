@@ -129,15 +129,6 @@ function processSuitability (risk) {
       this.riverAndSeaSuitabilityName = `partials/suitability/${name.replace(/ /g, '-')}.html`
     }
   }
-
-  // Surface water suitability
-  const surfaceWaterSuitability = risk.surfaceWaterSuitability
-  if (surfaceWaterSuitability) {
-    const name = surfaceWaterSuitability.toLowerCase()
-    if (suitabilities.includes(name)) {
-      this.surfaceWaterSuitabilityName = `partials/suitability/${name.replace(/ /g, '-')}.html`
-    }
-  }
 }
 
 function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {

@@ -28,7 +28,6 @@ module.exports = {
           risk.surfaceWaterRisk === 'Error' ||
           risk.reservoirDryRisk === 'Error' ||
           risk.reservoirWetRisk === 'Error' ||
-          risk.surfaceWaterSuitability === 'Error' ||
           risk.leadLocalFloodAuthority === 'Error' ||
           risk.extraInfo === 'Error'
 
