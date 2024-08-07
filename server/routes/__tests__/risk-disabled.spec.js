@@ -77,7 +77,7 @@ describe('Risk page test', () => {
         environmentAgencyArea: 'Environment Agency - Staffordshire, Warwickshire and West Midlands',
         comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
       }],
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: 'High',
       extraInfo: null
     })
@@ -99,7 +99,7 @@ describe('Risk page test', () => {
       reservoirDryRisk: null,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirWetRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: 'Low',
       extraInfo: null
     })
@@ -178,7 +178,7 @@ describe('Risk page test', () => {
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirDryRisk: 'Error',
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
       extraInfo: null
     })
@@ -194,7 +194,7 @@ describe('Risk page test', () => {
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirWetRisk: 'Error',
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
       extraInfo: null
     })
@@ -210,7 +210,7 @@ describe('Risk page test', () => {
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Error',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
       extraInfo: null
     })
@@ -382,7 +382,7 @@ describe('Risk page test', () => {
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
       extraInfo: null
     })
@@ -398,7 +398,7 @@ describe('Risk page test', () => {
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Croydon',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
       surfaceWaterRisk: 'High',
       extraInfo: null
     })
@@ -416,7 +416,7 @@ describe('Risk page test', () => {
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Croydon',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
       surfaceWaterRisk: 'Medium',
       extraInfo: null
     })
@@ -434,7 +434,7 @@ describe('Risk page test', () => {
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Suffolk',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
       surfaceWaterRisk: 'Low',
       extraInfo: null
     })
@@ -452,7 +452,7 @@ describe('Risk page test', () => {
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Hertfordshire',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: 'Very Low',
       extraInfo: null
     })
