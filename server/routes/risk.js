@@ -22,8 +22,7 @@ module.exports = {
       try {
         const risk = await request.server.methods.riskService(x, y, radius)
         // FLO-1139 If query 1 to 6 errors then throw default error page
-        const hasError = risk.inFloodWarningArea === 'Error' ||
-          risk.riverAndSeaRisk === 'Error' ||
+        const hasError = risk.riverAndSeaRisk === 'Error' ||
           risk.surfaceWaterRisk === 'Error' ||
           risk.reservoirDryRisk === 'Error' ||
           risk.reservoirWetRisk === 'Error' ||

@@ -5,7 +5,6 @@ const originalReturnValue = {
   isGroundwaterArea: false,
   floodAlertArea: [],
   floodWarningArea: [],
-  inFloodWarningArea: false,
   leadLocalFloodAuthority: 'Cheshire West and Chester',
   reservoirRisk: null,
   riverAndSeaRisk: null,
