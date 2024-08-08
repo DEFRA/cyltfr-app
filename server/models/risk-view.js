@@ -17,13 +17,6 @@ const RiskTitles = {
 
 const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
 
-const suitabilities = [
-  'county to town',
-  'national to county',
-  'street to parcels of land',
-  'town to street'
-]
-
 function riskViewModel (risk, address, backLinkUri) {
   const riverAndSeaRisk = risk.riverAndSeaRisk
     ? risk.riverAndSeaRisk.probabilityForBand
@@ -45,9 +38,6 @@ function riskViewModel (risk, address, backLinkUri) {
   if (reservoirRisk) {
     processReservoirs.call(this, reservoirDryRisk, risk, reservoirWetRisk)
   }
-
-  // River and sea suitability
-  processSuitability.call(this, risk)
 
   // Groundwater area
   this.isGroundwaterArea = risk.isGroundwaterArea
@@ -119,16 +109,6 @@ function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel) {
   if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/flagged/rsl.html' }
   if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/flagged/sw.html' }
   if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/flagged/rsl-sw.html' }
-}
-
-function processSuitability (risk) {
-  const riverAndSeaSuitability = risk.riverAndSeaRisk?.suitability
-  if (riverAndSeaSuitability) {
-    const name = riverAndSeaSuitability.toLowerCase()
-    if (suitabilities.includes(name)) {
-      this.riverAndSeaSuitabilityName = `partials/suitability/${name.replace(/ /g, '-')}.html`
-    }
-  }
 }
 
 function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
