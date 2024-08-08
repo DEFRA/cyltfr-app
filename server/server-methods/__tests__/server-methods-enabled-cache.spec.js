@@ -99,14 +99,11 @@ describe('server methods', () => {
           floodAlertArea: [],
           floodWarningArea: [],
           inEngland: true,
-          inFloodAlertArea: false,
-          inFloodWarningArea: false,
           isGroundwaterArea: false,
           leadLocalFloodAuthority: 'Cheshire West and Chester',
           reservoirRisk: null,
           riverAndSeaRisk: null,
-          surfaceWaterRisk: 'Very Low',
-          surfaceWaterSuitability: 'County to Town'
+          surfaceWaterRisk: 'Very Low'
         })
       )
 
@@ -120,14 +117,11 @@ describe('server methods', () => {
           floodAlertArea: [],
           floodWarningArea: [],
           inEngland: true,
-          inFloodAlertArea: false,
-          inFloodWarningArea: false,
           isGroundwaterArea: false,
           leadLocalFloodAuthority: 'Cheshire West and Chester',
           reservoirRisk: null,
           riverAndSeaRisk: null,
-          surfaceWaterRisk: 'Very Low',
-          surfaceWaterSuitability: 'County to Town'
+          surfaceWaterRisk: 'Very Low'
         })
       )
     })

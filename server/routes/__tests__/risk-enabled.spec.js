@@ -57,8 +57,6 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       floodAlertArea: ['AnyArea'],
       floodWarningArea: [],
-      inFloodAlertArea: true,
-      inFloodWarningArea: true,
       reservoirDryRisk: [
         {
           reservoirName: 'Agden',
@@ -79,9 +77,8 @@ describe('Risk page test', () => {
         environmentAgencyArea: 'Environment Agency - Staffordshire, Warwickshire and West Midlands',
         comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
       }],
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: 'High',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
 
@@ -99,14 +96,11 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: ['AnyArea'],
       floodWarningArea: [],
-      inFloodAlertArea: true,
-      inFloodWarningArea: true,
       reservoirDryRisk: null,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirWetRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: 'Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
 
@@ -133,56 +127,15 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(response.headers.location).toMatch('/england-only')
-  })
-
-  test('/risk - inFloodWarningArea error', async () => {
-    riskService.__updateReturnValue({
-      inEngland: true,
-      isGroundwaterArea: false,
-      floodAlertArea: [],
-      floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: 'Error',
-      leadLocalFloodAuthority: 'Cheshire West and Chester',
-      reservoirRisk: null,
-      riverAndSeaRisk: null,
-      surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
-      extraInfo: null
-    })
-    const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
-  })
-
-  test('/risk - inFloodAlertArea error', async () => {
-    riskService.__updateReturnValue({
-      inEngland: true,
-      isGroundwaterArea: false,
-      floodAlertArea: [],
-      floodWarningArea: [],
-      inFloodAlertArea: 'Error',
-      inFloodWarningArea: false,
-      leadLocalFloodAuthority: 'Cheshire West and Chester',
-      reservoirRisk: null,
-      riverAndSeaRisk: null,
-      surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
-      extraInfo: null
-    })
-    const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
   })
 
   test('/risk - riverAndSeaRisk error', async () => {
@@ -191,13 +144,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: 'Error',
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -210,13 +160,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Error',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -229,13 +176,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirDryRisk: 'Error',
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: null,
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -248,32 +192,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirWetRisk: 'Error',
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: null,
-      extraInfo: null
-    })
-    const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
-  })
-
-  test('/risk surfaceWaterSuitability error', async () => {
-    riskService.__updateReturnValue({
-      inEngland: true,
-      isGroundwaterArea: false,
-      floodAlertArea: [],
-      floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
-      leadLocalFloodAuthority: 'Cheshire West and Chester',
-      reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
-      surfaceWaterRisk: null,
-      surfaceWaterSuitability: 'Error',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -286,13 +208,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Error',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: null,
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -309,13 +228,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -328,13 +244,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: true,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -347,13 +260,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: true,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -366,13 +276,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: true,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -385,8 +292,6 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: true,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: [{
         reservoirName: 'Draycote Water',
@@ -399,7 +304,6 @@ describe('Risk page test', () => {
       }],
       riverAndSeaRisk: null,
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -412,13 +316,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'High' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -431,13 +332,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Medium' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -450,13 +348,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'High',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -469,13 +364,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'County to Town',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -488,13 +380,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
-      surfaceWaterSuitability: null,
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -507,13 +396,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       floodAlertArea: ['064FAG99SElondon'],
       floodWarningArea: [],
-      inFloodAlertArea: true,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Croydon',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
       surfaceWaterRisk: 'High',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -528,13 +414,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       floodAlertArea: ['064FAG99SElondon'],
       floodWarningArea: [],
-      inFloodAlertArea: true,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Croydon',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -549,13 +432,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       floodAlertArea: ['064FAG99SElondon'],
       floodWarningArea: [],
-      inFloodAlertArea: true,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Suffolk',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
       surfaceWaterRisk: 'Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -570,13 +450,10 @@ describe('Risk page test', () => {
       isGroundwaterArea: true,
       floodAlertArea: ['064FAG99SElondon'],
       floodWarningArea: [],
-      inFloodAlertArea: true,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Hertfordshire',
       reservoirRisk: null,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -591,14 +468,11 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      inFloodAlertArea: false,
-      inFloodWarningArea: false,
       leadLocalFloodAuthority: 'Bath and North East Somerset',
       reservoirDryRisk: null,
       reservoirWetRisk: null,
       riverAndSeaRisk: null,
       surfaceWaterRisk: 'High',
-      surfaceWaterSuitability: 'Town to Street',
       extraInfo: [{
         info: '',
         apply: 'holding',
@@ -638,9 +512,8 @@ describe('Risk page test', () => {
     riskService.__updateReturnValue({
       inEngland: true,
       isGroundwaterArea: true,
-      riverAndSeaRisk: { probabilityForBand: 'Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -653,9 +526,8 @@ describe('Risk page test', () => {
     riskService.__updateReturnValue({
       inEngland: true,
       isGroundwaterArea: true,
-      riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -668,9 +540,8 @@ describe('Risk page test', () => {
     riskService.__updateReturnValue({
       inEngland: true,
       isGroundwaterArea: true,
-      riverAndSeaRisk: { probabilityForBand: 'Medium', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Medium' },
       surfaceWaterRisk: 'Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -683,9 +554,8 @@ describe('Risk page test', () => {
     riskService.__updateReturnValue({
       inEngland: true,
       isGroundwaterArea: true,
-      riverAndSeaRisk: { probabilityForBand: 'Medium', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Medium' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -698,9 +568,8 @@ describe('Risk page test', () => {
     riskService.__updateReturnValue({
       inEngland: true,
       isGroundwaterArea: true,
-      riverAndSeaRisk: { probabilityForBand: 'Medium', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Medium' },
       surfaceWaterRisk: 'Medium',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -713,9 +582,8 @@ describe('Risk page test', () => {
     riskService.__updateReturnValue({
       inEngland: true,
       isGroundwaterArea: true,
-      riverAndSeaRisk: { probabilityForBand: 'Very Low', suitability: 'County to Town' },
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
       surfaceWaterRisk: 'Very Low',
-      surfaceWaterSuitability: 'National to County',
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
