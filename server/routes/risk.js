@@ -1,7 +1,6 @@
 const boom = require('@hapi/boom')
 const RiskViewModel = require('../models/risk-view')
 const errors = require('../models/errors.json')
-const config = require('../config')
 const { defineBackLink } = require('../services/defineBackLink.js')
 
 module.exports = {
@@ -40,7 +39,7 @@ module.exports = {
           return h.redirect('/england-only')
         }
         const backLinkUri = defineBackLink(path, address.postcode)
-        const htmlFile = config.riskPageFlag ? 'risk-flagged' : 'risk'
+        const htmlFile = 'risk'
         return h.view(htmlFile, new RiskViewModel(risk, address, backLinkUri))
       } catch (err) {
         return boom.badRequest(errors.riskProfile.message, err)
