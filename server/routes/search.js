@@ -29,6 +29,9 @@ module.exports = [
       let { postcode } = request.query
       if (!postcode) {
         postcode = request.yar.get('postcode')
+        if (!postcode) {
+          return h.redirect('/postcode')
+        }
       }
       const path = request.path
 
