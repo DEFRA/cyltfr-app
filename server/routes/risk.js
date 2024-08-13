@@ -39,8 +39,7 @@ module.exports = {
           return h.redirect('/england-only')
         }
         const backLinkUri = defineBackLink(path, address.postcode)
-        const htmlFile = 'risk'
-        return h.view(htmlFile, new RiskViewModel(risk, address, backLinkUri))
+        return h.view('risk', new RiskViewModel(risk, address, backLinkUri))
       } catch (err) {
         return boom.badRequest(errors.riskProfile.message, err)
       }
