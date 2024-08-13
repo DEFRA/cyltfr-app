@@ -1,20 +1,28 @@
+const config = require('../config')
 const joi = require('joi')
+const { ApplicationCredentialsManager } = require('@esri/arcgis-rest-request')
 const MapViewModel = require('../models/map-view')
 const { defineBackLink } = require('../services/defineBackLink.js')
+
+const appManager = ApplicationCredentialsManager.fromCredentials({
+  clientId: config.esriClientID,
+  clientSecret: config.esriClientSecret
+})
 
 module.exports = {
   method: 'GET',
   path: '/map',
   options: {
     description: 'Get the map page',
-    handler: (request, h) => {
+    handler: async (request, h) => {
       const { query } = request
       const { easting, northing } = query
       const address = request.yar.get('address')
       const path = request.path
       const backLinkUri = defineBackLink(path)
+      const mapToken = await appManager.refreshToken()
 
-      return h.view('map', new MapViewModel(easting, northing, address, backLinkUri))
+      return h.view('map', new MapViewModel(easting, northing, address, backLinkUri, mapToken))
     },
     validate: {
       query: joi.object().keys({

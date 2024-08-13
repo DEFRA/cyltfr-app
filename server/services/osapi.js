@@ -11,7 +11,7 @@ async function osGetCapabilities () {
 
   // replace secret key in capabilities
   const regex = new RegExp(osMapsKey, 'g')
-  const payload = await response.text().replace(regex, '***')
+  const payload = (await response.text()).replace(regex, '***')
   return payload
 }
 

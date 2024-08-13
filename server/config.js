@@ -46,7 +46,9 @@ const schema = joi.object().keys({
       host: joi.string().required(),
       proxy: joi.string().allow('')
     }
-  })
+  }),
+  esriClientID: joi.string(),
+  esriClientSecret: joi.string()
 })
 
 const names = {
@@ -89,7 +91,9 @@ const names = {
   errbitenv: 'ERRBIT_ENV',
   errbitkey: 'ERRBIT_KEY',
   errbithost: 'ERRBIT_HOST',
-  errbitproxy: 'ERRBIT_PROXY'
+  errbitproxy: 'ERRBIT_PROXY',
+  esriClientID: 'ESRI_CLIENT_ID',
+  esriClientSecret: 'ESRI_CLIENT_SECRET'
 }
 
 const config = {}
