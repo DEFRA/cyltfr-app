@@ -26,7 +26,6 @@ function checkCookie (response) {
 describe('GET /surface-water - enabled', () => {
   beforeAll(async () => {
     config.setConfigOptions({
-      riskPageFlag: true,
       friendlyCaptchaEnabled: false
     })
     server = await createServer()

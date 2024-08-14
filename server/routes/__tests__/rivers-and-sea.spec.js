@@ -26,7 +26,6 @@ function checkCookie (response) {
 describe('GET /rivers-and-sea - flag enabled', () => {
   beforeAll(async () => {
     config.setConfigOptions({
-      riskPageFlag: true,
       friendlyCaptchaEnabled: false
     })
     server = await createServer()
