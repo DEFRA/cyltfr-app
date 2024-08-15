@@ -28,13 +28,13 @@
   <nav aria-label="Pages with more detail" class="gem-c-contents-list" role="navigation">
     <ol class="gem-c-contents-list__list">
       {% if surfaceWaterIsFirst %}
-      {% include 'partials/flagged/nav-sw.njk' %}
+      {% include 'partials/nav-sw.njk' %}
       {% endif %}
-      {% include 'partials/flagged/nav-rs.njk' %}
+      {% include 'partials/nav-rs.njk' %}
       {% if not surfaceWaterIsFirst %}
-      {% include 'partials/flagged/nav-sw.njk' %}
+      {% include 'partials/nav-sw.njk' %}
       {% endif %}
-      {% include 'partials/flagged/nav-gw.njk' %}
+      {% include 'partials/nav-gw.njk' %}
         </ol>
   </nav>
   

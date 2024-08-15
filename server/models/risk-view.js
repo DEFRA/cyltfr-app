@@ -1,5 +1,4 @@
 const { capitaliseAddress } = require('../services/address.js')
-const config = require('../config.js')
 
 const RiskLevel = {
   VeryLow: 'Very Low',
@@ -84,15 +83,10 @@ function riskViewModel (risk, address, backLinkUri) {
     this.firstSource = 'rivers-sea.html'
     this.secondSource = 'surface-water.html'
   }
-  if (config.riskPageFlag) {
-    this.firstSource = 'partials/flagged/' + this.firstSource
-    this.secondSource = 'partials/flagged/' + this.secondSource
-    this.additionalInformation = 'partials/flagged/groundwaterAndReservoirs.html'
-  } else {
-    this.firstSource = 'partials/' + this.firstSource
-    this.secondSource = 'partials/' + this.secondSource
-    this.additionalInformation = 'partials/groundwaterAndReservoirs.html'
-  }
+
+  this.firstSource = 'partials/' + this.firstSource
+  this.secondSource = 'partials/' + this.secondSource
+  this.additionalInformation = 'partials/groundwaterAndReservoirs.html'
   this.surfaceWaterIsFirst = surfaceWaterIsFirst
   this.testInfo = JSON.stringify({
     riverAndSeaRisk,
@@ -105,10 +99,10 @@ function riskViewModel (risk, address, backLinkUri) {
 module.exports = riskViewModel
 
 function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel) {
-  this.highestRisk = 'partials/flagged/blank.html'
-  if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/flagged/rsl.html' }
-  if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/flagged/sw.html' }
-  if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/flagged/rsl-sw.html' }
+  this.highestRisk = 'partials/blank.html'
+  if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl.html' }
+  if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/sw.html' }
+  if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl-sw.html' }
 }
 
 function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
