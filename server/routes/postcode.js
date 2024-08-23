@@ -12,6 +12,7 @@ module.exports = [
       request.yar.set('address', null)
       request.yar.set('postcode', null)
       const error = request.query.error
+      request.yar.set('previousPage', request.path)
 
       if (error) {
         const errorMessage = 'This postcode does not appear to exist'
