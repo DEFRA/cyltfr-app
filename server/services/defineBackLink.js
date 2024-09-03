@@ -1,9 +1,6 @@
-function defineBackLink (currentPage, postcode) {
-  if ((currentPage === '/risk') && (postcode)) {
-    return '/search?postcode=' + postcode.split(' ').join('%20')
-  }
+function defineBackLink (currentPage, previousPage) {
   if (currentPage === '/map') {
-    return '/risk'
+    return previousPage || '/postcode'
   }
   return '/postcode'
 }

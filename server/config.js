@@ -36,7 +36,6 @@ const schema = joi.object().keys({
   friendlyCaptchaUrl: joi.string().when('friendlyCaptchaEnabled', { is: true, then: joi.required() }),
   friendlyCaptchaBypass: joi.string().default(''),
   sessionTimeout: joi.number().default(10),
-  riskPageFlag: joi.boolean().default(false),
   cacheEnabled: joi.boolean().default(true),
   errbit: joi.object().required().keys({
     postErrors: joi.boolean().required(),
@@ -85,7 +84,6 @@ const names = {
   friendlyCaptchaUrl: 'FRIENDLY_CAPTCHA_URL',
   friendlyCaptchaBypass: 'FRIENDLY_CAPTCHA_BYPASS',
   sessionTimeout: 'SESSION_TIMEOUT',
-  riskPageFlag: 'RISK_PAGE_FLAG',
   cacheEnabled: 'CACHE_ENABLED',
   errbitpostErrors: 'ERRBIT_POST_ERRORS',
   errbitenv: 'ERRBIT_ENV',

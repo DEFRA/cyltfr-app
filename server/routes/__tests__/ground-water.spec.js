@@ -26,7 +26,6 @@ function checkCookie (response) {
 describe('GET /ground-water', () => {
   beforeAll(async () => {
     config.setConfigOptions({
-      riskPageFlag: true,
       friendlyCaptchaEnabled: false
     })
     server = await createServer()

@@ -1,108 +1,86 @@
-<!-- Surface water -->
-<div class="govuk-summary-card govuk-!-margin-top-3 surface-water">
-  <div class="govuk-summary-card__title-wrapper surface-water {{ surfaceWaterClassName }}">
-    <h2 class="govuk-summary-card__title surface-water">Surface water<span class="chance-content risk" id="surface-water-{{ surfaceWaterClassName }}-title">{{ surfaceWaterTitle }} of flooding</span></h2>
+<div class="govuk-summary-card govuk-!-margin-top-3" id="surface-water">
+  <div class="govuk-summary-card__title-wrapper vlow card-padding-left">
+    <h2 class="govuk-summary-card__title card-title__font-size">Surface water</h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="/surface-water">
+          More about your surface water flood risk
+      </a>
+      </li>
+    </ul>
   </div>
-  <div class="govuk-summary-card__content surface-water">
-    <dl class="govuk-summary-list surface-water">
+  <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key" style="width: 100%;">
+          Yearly chance of flooding
+              <div class="risk-label-group govuk-!-margin-bottom-3">
+                {% if surfaceWaterRisk === "Very Low" %}
+                <strong class="govuk-tag govuk-tag--Very-Low label-mod label-border">
+                  Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+                </strong>
+                {% else %}
+                <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+                  Very low
+                </strong>
+                {% endif %}
 
-      <div class="govuk-summary-list__row surface-water">
-        <dt class="govuk-summary-list__key surface-water-dt-title" id="likeliness-surface-water">
-          How likely a flood is
-        </dt>
-        <dd class="govuk-summary-list__value risk-description surface-water" id="likeliness-surface-water{{ surfaceWaterClassName }}-desc">
-          {% if surfaceWaterTextName %}
-        {% include surfaceWaterTextName %}
-        {% endif %}
-          <br><br>
-          <details class="govuk-details surface-water" data-module="govuk-details">
-            <summary class="govuk-details__summary surface-water" data-journey-click="ltfri:risk:surface-water-details">
-              <span class="govuk-details__summary-text surface-water">
-                What makes an area more likely to flood from surface water
+                {% if surfaceWaterRisk === "Low" %}
+                <strong class="govuk-tag govuk-tag--Low label-mod label-border">
+                  Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+                </strong>
+                {% else %}
+                <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+                  Low
+                </strong>
+                {% endif %}
+
+                {% if surfaceWaterRisk === "Medium" %}
+                <strong class="govuk-tag govuk-tag--Medium label-mod label-border">
+                  Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+                </strong>
+                {% else %}
+                <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+                  Medium
+                </strong>
+                {% endif %}
+
+                {% if surfaceWaterRisk === "High" %}
+                <strong class="govuk-tag govuk-tag--High label-mod label-border">
+                  High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+                </strong>
+                {% else %}
+                <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+                  High
+                </strong>
+                {% endif %}
+              </div>
+          </dt>
+      </div>
+    
+       <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What surface water is
+          <p class="govuk-body govuk-!-margin-top-2">Surface water flooding is sometimes known as flash flooding. It happens when rainwater cannot drain away through normal drainage systems.
+          </p>
+          <details class="govuk-details govuk-!-margin-top-2 govuk-!-margin-bottom-2" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Why surface water flooding is a problem
               </span>
             </summary>
-            <div class="govuk-details__text surface-water">
-              <p> Surface water flooding is sometimes known as flash flooding. It happens when rainwater cannot drain
-                away through normal drainage systems.</p>
-              <p>It's a problem because:</p>
-              <ul class="govuk-list--bullet surface-water">
+            <div class="govuk-details__text">
+              <p class="govuk-body">Surface water flooding is a problem because:</p>
+              <ul class="govuk-list--bullet">
                 <li>it often happens in places you don't expect, like up hills</li>
                 <li>it's hard to predict, as heavy rain sometimes only affects a small part of an area</li>
                 <li>where there's lots of tarmac and concrete the water has nowhere to go</li>
               </ul>
             </div>
           </details>
-
-        </dd>
-
+          </dt>
+       </div>
+      
+      
       </div>
-      <div class="govuk-summary-list__row surface-water">
-        <dt class="govuk-summary-list__key surface-water-dt-title" id="managing-surface-water">
-          Manage your flood risk from surface water
-        </dt>
-        <dd class="govuk-summary-list__value surface-water" id="managing-surface-water-{{ surfaceWaterClassName }}-desc">
-          An area can still be at risk of flooding even if it has not flooded in the past. You should check your long term flood risk regularly because the information may change.
-          <br><br>
-          Find out <a class="govuk-link surface-water" id="surface-water-prepare-for-flood-link" href="https://www.gov.uk/prepare-for-flooding">how to prepare for flooding.</a>
-          <br><br>
-          Lead local flood authorities (LLFAs) are responsible for managing the flood risk from surface water. They may hold more detailed information.
-          <br><br>
-          <span id="llfa-flood-authority">Your LLFA is {{leadLocalFloodAuthority}} council.</span>
-          <!-- LLFA Comments -->
-          {% if hasLlfaComments %}
-          They have the following information about surface water flooding:
-          <br><br>
-          <ul class="govuk-list govuk-list--bullet surface-water" id="llfa-comments-list">
-            {% for comment in llfaComments %}
-            <li id="llfa-comments">{{ comment }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row surface-water">
-        <dt class="govuk-summary-list__key surface-water-dt-title" id="info-covers-surface-water">
-          What this information covers
-        </dt>
-        <dd class="govuk-summary-list__value surface-water" id="info-covers-surface-water-{{ surfaceWaterClassName }}-desc">
-          This information tells you the highest chance of flooding on the land 15 metres around a property.
-
-          It is not specific to a property.
-          <br><br>
-          <details class="govuk-details surface-water" data-module="govuk-details">
-            <summary class="govuk-details__summary surface-water" data-journey-click="ltfri:risk:surface-water-details">
-              <span class="govuk-details__summary-text surface-water">
-                What you can use this information for
-              </span>
-            </summary>
-            <div class="govuk-details__text surface-water">
-              The information is an estimate based on the best data we have available. It is suitable for identifying:
-              <ul class="govuk-list--bullet surface-water">
-                <li>which parts of towns or streets are at risk, or have the most risk</li>
-                <li>the approximate extent and depth of flooding</li>
-              </ul>
-              <p>
-                It's likely to be reliable for a local area but not for identifying individual properties at risk.</p>
-            </div>
-          </details>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row surface-water">
-        <dt class="govuk-summary-list__key surface-water-dt-title" id="see-map-surface-water">
-          See surface water flood risk on a map
-        </dt>
-        <dd class="govuk-summary-list__value surface-water" id="see-map-{{ surfaceWaterClassName }}-surface-water-desc">
-          <a class="govuk-link surface-water" id="surface-water-map-link" href="/map?easting={{easting}}&northing={{northing}}&map=SurfaceWater" data-journey-click="ltfri:risk:surface-water-details">
-            View a map of surface water flood risk
-          </a>
-          for information on:
-          <ul class="govuk-list--bullet surface-water">
-            <li>where any flood water might spread to (extent)</li>
-            <li>how deep any flood water could be (depth)</li>
-            <li>the speed and direction of any flood water (velocity)</li>
-          </ul>
-        </dd>
-      </div>
-    </dl>
-  </div>
 </div>

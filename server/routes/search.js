@@ -5,7 +5,6 @@ const config = require('../config')
 const SearchViewModel = require('../models/search-view')
 const errors = require('../models/errors.json')
 const { captchaCheck } = require('../services/captchacheck')
-const { defineBackLink } = require('../services/defineBackLink')
 
 const getWarnings = async (postcode, request) => {
   try {
@@ -33,7 +32,6 @@ module.exports = [
           return h.redirect('/postcode')
         }
       }
-      const path = request.path
 
       // Our Address service doesn't support NI addresses
       // but all NI postcodes start with BT so redirect to
@@ -68,7 +66,7 @@ module.exports = [
         try {
           warnings = await getWarnings(postcode, request)
         } catch {}
-        const backLinkUri = defineBackLink(path)
+        const backLinkUri = '/postcode'
         return h.view('search', new SearchViewModel(postcode, addresses, null, warnings, backLinkUri))
       } catch (err) {
         return boom.badRequest(errors.addressByPostcode.message, err)
