@@ -62,8 +62,12 @@ function mapPage () {
   const easting = parseInt(getParameterByName('easting'), 10)
   const northing = parseInt(getParameterByName('northing'), 10)
   const hasLocation = !!easting
-
-  mapPageConsts.maps.loadMap((hasLocation && [easting, northing]))
+  const stateCheck = setInterval(() => {
+    if (document.readyState === 'complete') {
+      clearInterval(stateCheck)
+      mapPageConsts.maps.loadMap((hasLocation && [easting, northing]))
+    }
+  }, 100)
 
   // This function updates the map to the radio button you select (extent, depth, velocity)
   function setCurrent (ref) {
@@ -74,9 +78,9 @@ function mapPage () {
     const mapReferenceValue = selectedOption()
 
     if (showFloodingCheckbox.checked) {
-      mapPageConsts.maps.showMap(`risk:${mapReferenceValue.substring(mapReferenceValue.indexOf('_') + 1)}`, selectedAddressCheckbox.checked)
+      mapPageConsts.maps.showMap(`${mapReferenceValue}`, selectedAddressCheckbox.checked)
     } else {
-      mapPageConsts.maps.showMap(`risk:${mapReferenceValue.substring(mapReferenceValue.indexOf('_') + 1)}DONOTDISPLAY`, selectedAddressCheckbox.checked)
+      mapPageConsts.maps.showMap(`${mapReferenceValue}DONOTDISPLAY`, selectedAddressCheckbox.checked)
     }
   }
 
@@ -192,12 +196,15 @@ handleArrowClick(mapPageConsts.leftArrow, mapPageConsts.leftMove)
 handleScroll(mapPageConsts.scenarioSelectionDepth, [mapPageConsts.rightArrow[0], mapPageConsts.leftArrow[0]])
 handleScroll(mapPageConsts.scenarioSelectionVelocity, [mapPageConsts.rightArrow[1], mapPageConsts.leftArrow[1]])
 
+const searchParams = new URLSearchParams(window.location.search)
+const currentMapPage = searchParams.get('map')
+
 function getInitialKeyOptions () {
-  if (window.location.href.includes('map=SurfaceWater')) {
+  if (currentMapPage === 'SurfaceWater') {
     surfaceWaterInitialOptions()
-  } else if (window.location.href.includes('map=RiversOrSea')) {
+  } else if (currentMapPage === 'RiversOrSea') {
     riversAndTheSeaInitialOptions()
-  } else if (window.location.href.includes('map=Reservoirs')) {
+  } else if (currentMapPage === 'Reservoirs') {
     reservoirsInitialOptions()
   } else {
     mapPageConsts.advancedToggle.classList.add('hide')

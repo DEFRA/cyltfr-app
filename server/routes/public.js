@@ -38,7 +38,8 @@ module.exports = [
           'server/public/static',
           'server/public/build',
           'node_modules/govuk-frontend/dist/govuk/assets',
-          'node_modules/nunjucks/browser'
+          'node_modules/nunjucks/browser',
+          'node_modules/@arcgis/core/assets/'
         ]
       }
     },

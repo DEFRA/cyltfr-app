@@ -22,14 +22,17 @@ function adjustLogoAndCopyright () {
   }
 }
 
+const searchParams = new URLSearchParams(window.location.search)
+const currentMapPage = searchParams.get('map')
+
 function keyToggleAdjustments () {
   if (!screenAdjustConsts.keyDisplay.classList.contains('hide') && window.innerWidth <= screenAdjustConsts.deviceScreenWidth) {
     screenAdjustConsts.scenarioSelectionDepth.classList.add('hide')
     screenAdjustConsts.scenarioSelectionVelocity.classList.add('hide')
   } else if (!screenAdjustConsts.keyDisplay.classList.contains('hide') && window.innerWidth > screenAdjustConsts.deviceScreenWidth) {
-    if (window.location.href.includes('map=RiversOrSea') ||
-    window.location.href.includes('map=SurfaceWater') ||
-    window.location.href.includes('map=Reservoirs')) {
+    if (currentMapPage === 'RiversOrSea' ||
+    currentMapPage === 'SurfaceWater' ||
+    currentMapPage === 'Reservoirs') {
       screenAdjustConsts.advancedToggle.classList.add(screenAdjustConsts.keyAdvButtonDisplay)
     }
     if (screenAdjustConsts.depthRadio.checked) {
