@@ -9,7 +9,8 @@ module.exports = {
   path: '/os-maps-proxy',
   handler: async (request, h) => {
     try {
-      const url = `${osMapsUrl}${request.url.search}&key=${osMapsKey}`
+      const requestParams = decodeURIComponent(request.url.search.slice(1, -1))
+      const url = `${osMapsUrl}${requestParams}?key=${osMapsKey}`
       const payload = await util.get(url, {}, true)
       return h.response(payload).type('image/png')
     } catch (err) {

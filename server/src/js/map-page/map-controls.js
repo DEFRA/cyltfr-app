@@ -174,7 +174,6 @@ function depthRadioChanges () {
     mapControlsConsts.bottomCopyrightContainer.classList.add('hide')
     mapControlsConsts.topCopyrightContainer.classList.remove('hide')
   }
-  mapControlsConsts.olZoom[0].classList.add(mapControlsConsts.olZoomChecked)
 }
 
 function velocityRadioChanges () {
@@ -199,7 +198,6 @@ function velocityRadioChanges () {
     mapControlsConsts.bottomCopyrightContainer.classList.add('hide')
     mapControlsConsts.topCopyrightContainer.classList.remove('hide')
   }
-  mapControlsConsts.olZoom[0].classList.add(mapControlsConsts.olZoomChecked)
 }
 
 function extentReservoirChanges () {
@@ -210,7 +208,6 @@ function extentReservoirChanges () {
   mapControlsConsts.velocityInfo.classList.add('hide')
   mapControlsConsts.scenarioBarDepth.classList.add('hide')
   mapControlsConsts.scenarioBarVelocity.classList.add('hide')
-  mapControlsConsts.olZoom[0].classList.remove(mapControlsConsts.olZoomChecked)
   mapControlsConsts.boundaryContainer.classList.add('hide')
 }
 
@@ -222,7 +219,6 @@ function extentRiversAndTheSeaChanges () {
   mapControlsConsts.velocityInfo.classList.add('hide')
   mapControlsConsts.scenarioBarDepth.classList.add('hide')
   mapControlsConsts.scenarioBarVelocity.classList.add('hide')
-  mapControlsConsts.olZoom[0].classList.remove(mapControlsConsts.olZoomChecked)
   mapControlsConsts.boundaryContainer.classList.add('hide')
 }
 
@@ -234,6 +230,5 @@ function extentSurfaceWaterChanges () {
   mapControlsConsts.velocityInfo.classList.add('hide')
   mapControlsConsts.scenarioBarDepth.classList.add('hide')
   mapControlsConsts.scenarioBarVelocity.classList.add('hide')
-  mapControlsConsts.olZoom[0].classList.remove(mapControlsConsts.olZoomChecked)
   mapControlsConsts.boundaryContainer.classList.remove('hide')
 }

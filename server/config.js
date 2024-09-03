@@ -12,7 +12,6 @@ const schema = joi.object().keys({
   env: joi.string().valid('dev', 'test', 'prod-green', 'prod-blue'),
   host: joi.string().hostname().required(),
   port: joi.number().required(),
-  geoserverUrl: joi.string().uri().required(),
   serviceUrl: joi.string().uri().required(),
   simulateAddressService: joi.boolean().default(false),
   httpTimeoutMs: joi.number().required().min(0).max(30000),
@@ -50,14 +49,15 @@ const schema = joi.object().keys({
       host: joi.string().required(),
       proxy: joi.string().allow('')
     }
-  })
+  }),
+  esriClientID: joi.string(),
+  esriClientSecret: joi.string()
 })
 
 const names = {
   env: 'NODE_ENV',
   host: 'RISK_APP_HOST',
   port: 'PORT',
-  geoserverUrl: 'GEOSERVER_URL',
   serviceUrl: 'SERVICE_URL',
   simulateAddressService: 'SIMULATE_ADDRESS_SERVICE',
   httpTimeoutMs: 'HTTP_TIMEOUT_MS',
@@ -90,7 +90,9 @@ const names = {
   errbitenv: 'ERRBIT_ENV',
   errbitkey: 'ERRBIT_KEY',
   errbithost: 'ERRBIT_HOST',
-  errbitproxy: 'ERRBIT_PROXY'
+  errbitproxy: 'ERRBIT_PROXY',
+  esriClientID: 'ESRI_CLIENT_ID',
+  esriClientSecret: 'ESRI_CLIENT_SECRET'
 }
 
 const config = {}

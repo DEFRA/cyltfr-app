@@ -34,6 +34,8 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@airbrake/node": "^2.1.8",
+    "@arcgis/core": "^4.30.9",
+    "@esri/arcgis-rest-request": "^4.2.3",
     "@hapi/boom": "^10.0.0",
     "@hapi/catbox-memory": "^6.0.1",
     "@hapi/catbox-redis": "7.0.2",

@@ -9,7 +9,6 @@ const routes = [].concat(
   require('../routes/map'),
   require('../routes/managing-flood-risk'),
   require('../routes/public'),
-  require('../routes/gwc-proxy'),
   require('../routes/feedback'),
   require('../routes/os-terms'),
   require('../routes/accessibility-statement'),
