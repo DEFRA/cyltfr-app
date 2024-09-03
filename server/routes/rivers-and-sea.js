@@ -7,6 +7,7 @@ module.exports = {
   path: '/rivers-and-sea',
   handler: async (request, h) => {
     const address = request.yar.get('address')
+    request.yar.set('previousPage', request.path)
 
     if (!address) {
       return h.redirect('/postcode')
