@@ -67,13 +67,14 @@ Docker v20.10.0+
 | FRIENDLY_CAPTCHA_URL        | Friendly Captcha API                    |    no     |             |                             |       |
 | FRIENDLY_CAPTCHA_BYPASS     | Friendly Capctha bypass key             |    no     |             |                             |       |
 | SESSION_TIMEOUT             | Timeout for session cookies of 10 minutes |    no     | 10          |                             |       |
-| RISK_PAGE_FLAG              | Flag to allow view of updated risk pages |   no    | false       |                             |       |
 | CACHE_ENABLED               | If disabled external APIs will not be cahced |    no     | true        |                             |       |
 | ERRBIT_POST_ERRORS          | Allow Errbit errors to be sent for post requests |   yes     |             |                             |       |
 | ERRBIT_ENV                  | Option for info of of which environment is sent to Errbit |   yes     |             |                             |       |
 | ERRBIT_KEY                  | Key for Errbit error logging            |   yes     |             |                             |       |
 | ERRBIT_HOST                 | Server IP for where Errbit is hosted    |   yes     |             |                             |       |
 | ERRBIT_PROXY                | Errbit proxy                            |    no     |             |                             |       |
+| ESRI_CLIENT_ID              | ESRI Client ID                          |   yes     |             |                             |       |
+| ESRI_CLIENT_SECRET          | ESRI Client Secret                      |   yes     |             |                             |       |
 
 # Running the application locally
 
