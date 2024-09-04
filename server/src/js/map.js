@@ -9,6 +9,7 @@ import WebTileLayer from '@arcgis/core/layers/WebTileLayer.js'
 import esriConfig from '@arcgis/core/config.js'
 
 let map, callback, currentLayer, tokenFetchRunning
+const TOKEN_PREFETCH_SECS = 30
 
 async function refreshOsToken () {
   tokenFetchRunning = true
@@ -19,7 +20,7 @@ async function refreshOsToken () {
     tokenFetchRunning = false
     setTimeout(() => {
       refreshOsToken()
-    }, (tokenValues.expires_in - 30) * 1000)
+    }, (tokenValues.expires_in - TOKEN_PREFETCH_SECS) * 1000)
   }
 }
 
@@ -127,7 +128,7 @@ function createBaseLayer () {
     }
   })
 
-  setTimeout(() => { refreshOsToken() }, window.osTokenExpires * 1000)
+  setTimeout(() => { refreshOsToken() }, (window.osTokenExpires - TOKEN_PREFETCH_SECS) * 1000)
 
   esriConfig.request.interceptors.push({
     urls: 'https://api.os.uk/',
@@ -138,13 +139,11 @@ function createBaseLayer () {
       }
     },
     error: (e) => {
-      if (e.name === 'request:server') {
-        if (!tokenFetchRunning) {
-          tokenFetchRunning = setTimeout(async () => {
-            await refreshOsToken()
-            layer.refresh()
-          }, 0)
-        }
+      if ((e.name === 'request:server') && (!tokenFetchRunning)) {
+        tokenFetchRunning = setTimeout(async () => {
+          await refreshOsToken()
+          layer.refresh()
+        }, 0)
       }
     }
   })

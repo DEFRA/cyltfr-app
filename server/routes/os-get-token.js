@@ -5,7 +5,7 @@ const osApi = require('../services/osapi')
 module.exports = {
   method: 'GET',
   path: '/os-get-token',
-  handler: async (request, h) => {
+  handler: async (_request, h) => {
     try {
       // Add check that use has come from map
       const payload = await osApi.osGetAccessToken()

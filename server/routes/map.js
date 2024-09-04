@@ -28,7 +28,7 @@ module.exports = {
       const previousPage = request.yar.get('previousPage')
       const backLinkUri = defineBackLink(path, previousPage)
 
-      return h.view('map', new MapViewModel(easting, northing, address, backLinkUri, mapToken, osToken.access_token, osToken.expires_in - 20))
+      return h.view('map', new MapViewModel(easting, northing, address, backLinkUri, mapToken, osToken.access_token, osToken.expires_in))
     },
     validate: {
       query: joi.object().keys({
