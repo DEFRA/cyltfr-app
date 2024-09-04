@@ -17,6 +17,9 @@
   "osGetCapabilities": {
     "message": "Ordnance survey getcapabilities failed"
   },
+  "osGetToken": {
+    "message": "Ordnance survey Token fetch failed"
+  },
   "osMapsProxy": {
     "message": "Ordnance survey maps proxy call failed"
   },

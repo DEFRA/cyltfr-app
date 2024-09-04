@@ -18,7 +18,8 @@ const routes = [].concat(
   require('../routes/healthcheck'),
   require('../routes/surface-water'),
   require('../routes/rivers-and-sea'),
-  require('../routes/ground-water')
+  require('../routes/ground-water'),
+  require('../routes/os-get-token')
 )
 if (config.simulateAddressService) {
   routes.push(require('../routes/simulated/os-maps-proxy'))

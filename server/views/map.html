@@ -61,6 +61,8 @@
 <script>
   window.mapCategories = {{ maps | dump | safe }}
   window.mapToken = "{{ mapToken }}"
+  window.osToken = "{{ osToken }}"
+  window.osTokenExpires = "{{ osTokenExpiry }}"
 </script>
 <script src="{{ assetPath }}/nunjucks-slim.js"></script>
 <script src="{{ assetPath }}/js/map.js"></script>

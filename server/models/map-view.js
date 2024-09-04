@@ -1,7 +1,7 @@
 const maps = require('./maps.json')
 
 class MapViewModel {
-  constructor (easting, northing, address, backLinkUri, mapToken) {
+  constructor (easting, northing, address, backLinkUri, mapToken, osToken, osTokenExpiry) {
     this.maps = maps
     this.easting = easting
     this.northing = northing
@@ -11,6 +11,8 @@ class MapViewModel {
     this.year = new Date().getFullYear()
     this.backLink = backLinkUri
     this.mapToken = mapToken
+    this.osToken = osToken
+    this.osTokenExpiry = osTokenExpiry
   }
 }
 

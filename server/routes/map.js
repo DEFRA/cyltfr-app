@@ -1,6 +1,7 @@
 const config = require('../config')
 const joi = require('joi')
 const { ApplicationCredentialsManager } = require('@esri/arcgis-rest-request')
+const osApi = require('../services/osapi')
 const MapViewModel = require('../models/map-view')
 const { defineBackLink } = require('../services/defineBackLink.js')
 
@@ -19,11 +20,15 @@ module.exports = {
       const { easting, northing } = query
       const address = request.yar.get('address')
       const path = request.path
-      const mapToken = await appManager.refreshToken()
+      // TODO: add error checking
+      const responses = await Promise.all([appManager.refreshToken(), osApi.osGetAccessToken()])
+      const mapToken = responses[0]
+      const osToken = responses[1]
+      //
       const previousPage = request.yar.get('previousPage')
       const backLinkUri = defineBackLink(path, previousPage)
 
-      return h.view('map', new MapViewModel(easting, northing, address, backLinkUri, mapToken))
+      return h.view('map', new MapViewModel(easting, northing, address, backLinkUri, mapToken, osToken.access_token, osToken.expires_in - 20))
     },
     validate: {
       query: joi.object().keys({

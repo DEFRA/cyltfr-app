@@ -52,6 +52,7 @@ Docker v20.10.0+
 | OS_MAPS_URL                 | OS map API                              |   yes     |             |                             |       |
 | OS_SEARCH_KEY               | OS search key                           |   yes     |             |                             |       |
 | OS_MAPS_KEY                 | OS map key                              |   yes     |             |                             |       |
+| OS_MAPS_SECRET              | OS map secret key                       |   yes     |             |                             |       |
 | http_proxy                  | Proxy that is used for external calls by the service |    no     |             |                             |       |
 | RATE_LIMIT_ENABLED          | Enable limit on postcode requests       |    no     | false       |                             |       |
 | RATE_LIMIT_REQUESTS         | Amount of requests per user             |    no     |             |                             |       |
