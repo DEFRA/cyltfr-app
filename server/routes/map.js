@@ -20,15 +20,21 @@ module.exports = {
       const { easting, northing } = query
       const address = request.yar.get('address')
       const path = request.path
+      const mapUrl = new URL(config.osMapsUrl)
       // TODO: add error checking
       const responses = await Promise.all([appManager.refreshToken(), osApi.osGetAccessToken()])
-      const mapToken = responses[0]
-      const osToken = responses[1]
+      const mapConfig = {
+        mapToken: responses[0],
+        osToken: responses[1].access_token,
+        osTokenExpiry: responses[1].expires_in,
+        osMapUrl: config.osMapsUrl,
+        osMapHost: `${mapUrl.protocol}//${mapUrl.host}/`
+      }
       //
       const previousPage = request.yar.get('previousPage')
       const backLinkUri = defineBackLink(path, previousPage)
 
-      return h.view('map', new MapViewModel(easting, northing, address, backLinkUri, mapToken, osToken.access_token, osToken.expires_in))
+      return h.view('map', new MapViewModel(easting, northing, address, backLinkUri, mapConfig))
     },
     validate: {
       query: joi.object().keys({

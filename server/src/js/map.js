@@ -16,7 +16,7 @@ async function refreshOsToken () {
   const response = await fetch('/os-get-token')
   if (response.ok) {
     const tokenValues = await response.json()
-    window.osToken = tokenValues.access_token
+    window.mapConfig.osToken = tokenValues.access_token
     tokenFetchRunning = false
     setTimeout(() => {
       refreshOsToken()
@@ -81,7 +81,7 @@ function createFeatureLayers (layers) {
         layers.push(new VectorTileLayer({
           id: featureMap.ref,
           url: featureMap.url,
-          apiKey: window.mapToken,
+          apiKey: window.mapConfig.mapToken,
           visible: false
         }))
       }
@@ -103,7 +103,7 @@ function createBaseLayer () {
   const layer = new WebTileLayer({
     id: 'base-map',
     // urlTemplate: window.location.origin + '/os-maps-proxy?{level}/{col}/{row}.png',
-    urlTemplate: 'https://api.os.uk/maps/raster/v1/zxy/Outdoor_27700/{level}/{col}/{row}.png',
+    urlTemplate: window.mapConfig.osMapUrl + '{level}/{col}/{row}.png',
     fullExtent: extent,
     spatialReference: bng,
     tileInfo: {
@@ -128,14 +128,14 @@ function createBaseLayer () {
     }
   })
 
-  setTimeout(() => { refreshOsToken() }, (window.osTokenExpires - TOKEN_PREFETCH_SECS) * 1000)
+  setTimeout(() => { refreshOsToken() }, (window.mapConfig.osTokenExpires - TOKEN_PREFETCH_SECS) * 1000)
 
   esriConfig.request.interceptors.push({
-    urls: 'https://api.os.uk/',
-    headers: { Authorization: `Bearer ${window.osToken}` },
+    urls: window.mapConfig.osMapHost,
+    headers: { Authorization: `Bearer ${window.mapConfig.osToken}` },
     before: (params) => {
       if (params.requestOptions.headers) {
-        params.requestOptions.headers.Authorization = `Bearer ${window.osToken}`
+        params.requestOptions.headers.Authorization = `Bearer ${window.mapConfig.osToken}`
       }
     },
     error: (e) => {

@@ -22,10 +22,8 @@ const routes = [].concat(
   require('../routes/os-get-token')
 )
 if (config.simulateAddressService) {
-  routes.push(require('../routes/simulated/os-maps-proxy'))
   routes.push(require('../routes/simulated/os-get-capabilities'))
 } else {
-  routes.push(require('../routes/os-maps-proxy'))
   routes.push(require('../routes/os-get-capabilities'))
 }
 
