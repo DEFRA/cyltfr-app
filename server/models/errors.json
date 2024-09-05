@@ -14,9 +14,6 @@
   "javascriptError": {
     "message": "JavaScript is not enabled"
   },
-  "osGetCapabilities": {
-    "message": "Ordnance survey getcapabilities failed"
-  },
   "osGetToken": {
     "message": "Ordnance survey Token fetch failed"
   },

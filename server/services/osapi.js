@@ -1,19 +1,6 @@
 const config = require('../config')
-const { osMapsUrl, osMapsKey, osGetCapabilitiesUrl } = config
 const { Headers } = require('node-fetch')
 const fetch = require('node-fetch')
-
-async function osGetCapabilities () {
-  const url = `${osMapsUrl}?key=${osMapsKey}&${osGetCapabilitiesUrl}`
-  const response = await fetch(url, {
-    method: 'GET'
-  })
-
-  // replace secret key in capabilities
-  const regex = new RegExp(osMapsKey, 'g')
-  const payload = (await response.text()).replace(regex, '***')
-  return payload
-}
 
 async function osGetAccessToken () {
   const authorisation = `${config.osMapsKey}:${config.osMapsSecret}`
@@ -30,6 +17,5 @@ async function osGetAccessToken () {
 }
 
 module.exports = {
-  osGetCapabilities,
   osGetAccessToken
 }
