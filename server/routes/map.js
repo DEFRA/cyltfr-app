@@ -21,8 +21,10 @@ module.exports = {
       const address = request.yar.get('address')
       const path = request.path
       const mapUrl = new URL(config.osMapsUrl)
-      // TODO: add error checking
       const responses = await Promise.all([appManager.refreshToken(), osApi.osGetAccessToken()])
+      const HOUR = 60 * 60 * 1000
+      const mapTokenExpiry = Date.now() + (HOUR * 2)
+      request.yar.set('mapTokenExpiry', mapTokenExpiry)
       const mapConfig = {
         mapToken: responses[0],
         osToken: responses[1].access_token,

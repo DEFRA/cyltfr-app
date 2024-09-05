@@ -14,13 +14,15 @@ const TOKEN_PREFETCH_SECS = 30
 async function refreshOsToken () {
   tokenFetchRunning = true
   const response = await fetch('/os-get-token')
+  tokenFetchRunning = false
   if (response.ok) {
     const tokenValues = await response.json()
     window.mapConfig.osToken = tokenValues.access_token
-    tokenFetchRunning = false
     setTimeout(() => {
       refreshOsToken()
     }, (tokenValues.expires_in - TOKEN_PREFETCH_SECS) * 1000)
+  } else {
+    throw new Error('os-get-token failed')
   }
 }
 
@@ -102,7 +104,6 @@ function createBaseLayer () {
 
   const layer = new WebTileLayer({
     id: 'base-map',
-    // urlTemplate: window.location.origin + '/os-maps-proxy?{level}/{col}/{row}.png',
     urlTemplate: window.mapConfig.osMapUrl + '{level}/{col}/{row}.png',
     fullExtent: extent,
     spatialReference: bng,
@@ -128,7 +129,7 @@ function createBaseLayer () {
     }
   })
 
-  setTimeout(() => { refreshOsToken() }, (window.mapConfig.osTokenExpires - TOKEN_PREFETCH_SECS) * 1000)
+  setTimeout(() => { refreshOsToken() }, (window.mapConfig.osTokenExpiry - TOKEN_PREFETCH_SECS) * 1000)
 
   esriConfig.request.interceptors.push({
     urls: window.mapConfig.osMapHost,

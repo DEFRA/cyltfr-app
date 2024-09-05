@@ -20,8 +20,8 @@
   "osGetToken": {
     "message": "Ordnance survey Token fetch failed"
   },
-  "osMapsProxy": {
-    "message": "Ordnance survey maps proxy call failed"
+  "osGetTokenMapExpired": {
+    "message": "Ordnance survey Token fetch failed. Map token expired."
   },
   "pageNotAvailable": {
     "message": "This page is currently unavailable"
