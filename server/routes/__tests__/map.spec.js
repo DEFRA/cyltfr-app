@@ -2,6 +2,8 @@ const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 let server
 
+jest.mock('@esri/arcgis-rest-request')
+
 beforeAll(async () => {
   server = await createServer()
   await server.initialize()
