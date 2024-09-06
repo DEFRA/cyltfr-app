@@ -1,32 +1,44 @@
 import Extent from '@arcgis/core/geometry/Extent.js'
 import ArcMap from '@arcgis/core/Map.js'
+import Basemap from '@arcgis/core/Basemap.js'
 import MapView from '@arcgis/core/views/MapView.js'
 import Point from '@arcgis/core/geometry/Point.js'
 import SpatialReference from '@arcgis/core/geometry/SpatialReference.js'
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer.js'
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer.js'
+import esriConfig from '@arcgis/core/config.js'
 
-let map, callback, currentLayer
+let map, callback, currentLayer, tokenFetchRunning
+const TOKEN_PREFETCH_SECS = 30
 
-const config = {
-  projection: new SpatialReference({ wkid: 27700 }),
-  OSGetCapabilities: 'os-get-capabilities',
-  OSWMTS: 'os-maps-proxy',
-  OSAttribution: "&#169; Crown copyright and database rights {{year}} <a class='govuk-link' href='http://www.ordnancesurvey.co.uk'>OS</a> AC0000807064. Use of this mapping data is subject to terms and conditions",
-  OSLayer: 'Outdoor_27700',
-  OSMatrixSet: 'EPSG:27700'
+async function refreshOsToken () {
+  tokenFetchRunning = true
+  const response = await fetch('/os-get-token')
+  tokenFetchRunning = false
+  if (response.ok) {
+    const tokenValues = await response.json()
+    window.mapConfig.osToken = tokenValues.access_token
+    setTimeout(() => {
+      refreshOsToken()
+    }, (tokenValues.expires_in - TOKEN_PREFETCH_SECS) * 1000)
+  } else {
+    throw new Error('os-get-token failed')
+  }
 }
 
 export async function loadMap (point) {
   // Add the base layer map
+
   const { layer } = createBaseLayer()
   const layers = []
-  layers.push(layer)
 
   // Create the vector layers
   createFeatureLayers(layers)
 
   map = new ArcMap({
+    basemap: new Basemap({
+      baseLayers: [layer]
+    }),
     layers
   })
 
@@ -35,7 +47,7 @@ export async function loadMap (point) {
   const centrePoint = new Point({
     x: point[0] || DEFAULT_X,
     y: point[1] || DEFAULT_Y,
-    spatialReference: config.projection
+    spatialReference: new SpatialReference({ wkid: 27700 })
   })
 
   const mapView = new MapView({
@@ -71,7 +83,7 @@ function createFeatureLayers (layers) {
         layers.push(new VectorTileLayer({
           id: featureMap.ref,
           url: featureMap.url,
-          apiKey: window.mapToken,
+          apiKey: window.mapConfig.mapToken,
           visible: false
         }))
       }
@@ -91,9 +103,8 @@ function createBaseLayer () {
   })
 
   const layer = new WebTileLayer({
-    // initial commit, using OS Proxy but needs to be reviewed or maybe use OAuth2.0 instead
     id: 'base-map',
-    urlTemplate: window.location.origin + '/os-maps-proxy?{level}/{col}/{row}.png',
+    urlTemplate: window.mapConfig.osMapUrl + '{level}/{col}/{row}.png',
     fullExtent: extent,
     spatialReference: bng,
     tileInfo: {
@@ -117,6 +128,27 @@ function createBaseLayer () {
       spatialReference: bng
     }
   })
+
+  setTimeout(() => { refreshOsToken() }, (window.mapConfig.osTokenExpiry - TOKEN_PREFETCH_SECS) * 1000)
+
+  esriConfig.request.interceptors.push({
+    urls: window.mapConfig.osMapHost,
+    headers: { Authorization: `Bearer ${window.mapConfig.osToken}` },
+    before: (params) => {
+      if (params.requestOptions.headers) {
+        params.requestOptions.headers.Authorization = `Bearer ${window.mapConfig.osToken}`
+      }
+    },
+    error: (e) => {
+      if ((e.name === 'request:server') && (!tokenFetchRunning)) {
+        tokenFetchRunning = setTimeout(async () => {
+          await refreshOsToken()
+          layer.refresh()
+        }, 0)
+      }
+    }
+  })
+
   return { layer }
 }
 

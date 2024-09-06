@@ -44,7 +44,6 @@ const serverMethods = [
           }
         }
       : undefined
-  }
-]
+  }]
 
 module.exports = serverMethods

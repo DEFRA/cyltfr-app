@@ -1,12 +1,5 @@
 const joi = require('joi')
 
-function readConfigFile () {
-  const fileValues = require('../config/server.json')
-  Object.keys(fileValues).forEach(function (key) {
-    config[key] = fileValues[key]
-  })
-}
-
 // Define config schema
 const schema = joi.object().keys({
   env: joi.string().valid('dev', 'test', 'prod-green', 'prod-blue'),
@@ -21,10 +14,11 @@ const schema = joi.object().keys({
   floodWarningsUrl: joi.string().uri().required(),
   floodRiskUrl: joi.string().uri().required(),
   osPostcodeUrl: joi.string().uri().required(),
-  osGetCapabilitiesUrl: joi.string().required().allow(''),
   osMapsUrl: joi.string().uri().required(),
   osSearchKey: joi.string().required().allow(''),
   osMapsKey: joi.string().required().allow(''),
+  osMapsSecret: joi.string().required().allow(''),
+  osTokenEndpoint: joi.string().default('https://api.os.uk/oauth2/token/v1'),
   http_proxy: joi.string(),
   rateLimitEnabled: joi.boolean().default(false),
   rateLimitRequests: joi.number().integer().when('rateLimitEnabled', { is: true, then: joi.required() }),
@@ -66,10 +60,11 @@ const names = {
   floodWarningsUrl: 'FLOOD_WARNINGS_URL',
   floodRiskUrl: 'FLOOD_RISK_URL',
   osPostcodeUrl: 'OS_POSTCODE_URL',
-  osGetCapabilitiesUrl: 'OS_CAPABILITIES_URL',
   osMapsUrl: 'OS_MAPS_URL',
   osSearchKey: 'OS_SEARCH_KEY',
   osMapsKey: 'OS_MAPS_KEY',
+  osMapsSecret: 'OS_MAPS_SECRET',
+  osTokenEndpoint: 'OS_TOKEN_ENDPOINT',
   http_proxy: 'http_proxy',
   rateLimitEnabled: 'RATE_LIMIT_ENABLED',
   rateLimitRequests: 'RATE_LIMIT_REQUESTS',
@@ -123,21 +118,9 @@ delete config.errbitproxy
 config.rateLimitWhitelist = config.rateLimitWhitelist ? config.rateLimitWhitelist.split(',') : []
 
 // Validate config
-let result = schema.validate(config, {
+const result = schema.validate(config, {
   abortEarly: false
 })
-
-// Remove this after the move to env vars
-if (result.error) {
-  console.log('Error in config. Fallback to server.json file. : %s', [result.error.message])
-  // read from config file
-  readConfigFile()
-
-  result = schema.validate(config, {
-    abortEarly: false
-  })
-}
-//
 
 // Throw if config is invalid
 if (result.error) {

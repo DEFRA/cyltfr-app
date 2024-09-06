@@ -1,4 +1,3 @@
-const config = require('../config')
 const routes = [].concat(
   require('../routes/home'),
   require('../routes/postcode'),
@@ -18,15 +17,9 @@ const routes = [].concat(
   require('../routes/healthcheck'),
   require('../routes/surface-water'),
   require('../routes/rivers-and-sea'),
-  require('../routes/ground-water')
+  require('../routes/ground-water'),
+  require('../routes/os-get-token')
 )
-if (config.simulateAddressService) {
-  routes.push(require('../routes/simulated/os-maps-proxy'))
-  routes.push(require('../routes/simulated/os-get-capabilities'))
-} else {
-  routes.push(require('../routes/os-maps-proxy'))
-  routes.push(require('../routes/os-get-capabilities'))
-}
 
 module.exports = {
   plugin: {
