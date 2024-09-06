@@ -39,7 +39,6 @@ Docker v20.10.0+
 | NODE_ENV                    | Node environment                        |    no     | development | development,test,production |       |
 | RISK_APP_HOST               | Host server IP                          |   yes     |             |                             |       |
 | PORT                        | Server port #                           |   yes     |             |                             |       |
-| GEOSERVER_URL               | Geoserver API                           |   yes     |             |                             |       |
 | SERVICE_URL                 | Service API                             |   yes     |             |                             |       |
 | SIMULATE_ADDRESS_SERVICE    | Mocks address service for testing       |    no     | false       |                             |       |
 | HTTP_TIMEOUT_MS             | Timeout in ms                           |   yes     |             |                             |       |
@@ -48,7 +47,6 @@ Docker v20.10.0+
 | FLOOD_WARNINGS_URL          | Flood warning API                       |   yes     |             |                             |       |
 | FLOOD_RISK_URL              | Flood risk API                          |   yes     |             |                             |       |
 | OS_POSTCODE_URL             | OS postcode API                         |   yes     |             |                             |       |
-| OS_CAPABILITIES_URL         | OS capabilites API                      |   yes     |             |                             |       |
 | OS_MAPS_URL                 | OS map API                              |   yes     |             |                             |       |
 | OS_SEARCH_KEY               | OS search key                           |   yes     |             |                             |       |
 | OS_MAPS_KEY                 | OS map key                              |   yes     |             |                             |       |
@@ -69,7 +67,7 @@ Docker v20.10.0+
 | FRIENDLY_CAPTCHA_URL        | Friendly Captcha API                    |    no     |             |                             |       |
 | FRIENDLY_CAPTCHA_BYPASS     | Friendly Capctha bypass key             |    no     |             |                             |       |
 | SESSION_TIMEOUT             | Timeout for session cookies of 10 minutes |    no     | 10          |                             |       |
-| CACHE_ENABLED               | If disabled external APIs will not be cahced |    no     | true        |                             |       |
+| CACHE_ENABLED               | If disabled external APIs will not be cached |    no     | true        |                             |       |
 | ERRBIT_POST_ERRORS          | Allow Errbit errors to be sent for post requests |   yes     |             |                             |       |
 | ERRBIT_ENV                  | Option for info of of which environment is sent to Errbit |   yes     |             |                             |       |
 | ERRBIT_KEY                  | Key for Errbit error logging            |   yes     |             |                             |       |

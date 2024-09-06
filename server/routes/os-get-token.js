@@ -7,7 +7,6 @@ module.exports = {
   path: '/os-get-token',
   handler: async (request, h) => {
     try {
-      // Add check that use has come from map
       const payload = await osApi.osGetAccessToken()
       const mapTokenExpiry = request.yar.get('mapTokenExpiry')
       if (Date.now() > mapTokenExpiry) {
