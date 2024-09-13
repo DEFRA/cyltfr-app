@@ -202,6 +202,8 @@ const currentMapPage = searchParams.get('map')
 function getInitialKeyOptions () {
   if (currentMapPage === 'SurfaceWater') {
     surfaceWaterInitialOptions()
+  } else if (currentMapPage === 'RiversOrSea') {
+    riversAndTheSeaInitialOptions()
   } else if (currentMapPage === 'Reservoirs') {
     reservoirsInitialOptions()
   } else {
@@ -212,12 +214,24 @@ function getInitialKeyOptions () {
 
 function surfaceWaterInitialOptions () {
   mapPageConsts.velocityContainer.classList.add('hide')
+  mapPageConsts.rsContainer.classList.add('hide')
   mapPageConsts.reservoirsContainer.classList.add('hide')
+}
+
+function riversAndTheSeaInitialOptions () {
+  mapPageConsts.swContainer.classList.add('hide')
+  mapPageConsts.extentInfoSw.classList.add(mapPageConsts.extentDesc)
+  mapPageConsts.rsContainer.classList.add(mapPageConsts.keyContainer)
+  mapPageConsts.rsRadio.checked = true
+  mapPageConsts.extentInfoRs.classList.remove(mapPageConsts.extentDesc)
+  mapPageConsts.reservoirsContainer.classList.add('hide')
+  mapPageConsts.boundaryContainer.classList.add('hide')
 }
 
 function reservoirsInitialOptions () {
   mapPageConsts.swContainer.classList.add('hide')
   mapPageConsts.extentInfoSw.classList.add(mapPageConsts.extentDesc)
+  mapPageConsts.rsContainer.classList.add('hide')
   mapPageConsts.reservoirsContainer.classList.add(mapPageConsts.keyContainer)
   mapPageConsts.reservoirsRadio.checked = true
   mapPageConsts.extentInfoReservoirs.classList.remove(mapPageConsts.extentDesc)

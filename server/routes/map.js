@@ -16,6 +16,7 @@ module.exports = {
   options: {
     description: 'Get the map page',
     handler: async (request, h) => {
+      let view
       const { query } = request
       const { easting, northing } = query
       const address = request.yar.get('address')
@@ -36,7 +37,12 @@ module.exports = {
       const previousPage = request.yar.get('previousPage')
       const backLinkUri = defineBackLink(path, previousPage)
 
-      return h.view('map', new MapViewModel(easting, northing, address, backLinkUri, mapConfig))
+      if (query.map === 'SurfaceWater') {
+        console.log('in if')
+        view = 'map-surface-water'
+      }
+
+      return h.view(view, new MapViewModel(easting, northing, address, backLinkUri, mapConfig))
     },
     validate: {
       query: joi.object().keys({
