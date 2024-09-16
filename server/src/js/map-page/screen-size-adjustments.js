@@ -1,4 +1,3 @@
-import { showOrHideAdvancedToggleText } from './map-controls'
 import { screenAdjustConsts } from './constants'
 
 export function adjustPosition () {
@@ -6,7 +5,6 @@ export function adjustPosition () {
   keyToggleAdjustments()
   scenarioBarAdjustments()
   zoomBtnAdjustments()
-  showOrHideAdvancedToggleText()
 }
 
 function adjustLogoAndCopyright () {
@@ -22,19 +20,11 @@ function adjustLogoAndCopyright () {
   }
 }
 
-const searchParams = new URLSearchParams(window.location.search)
-const currentMapPage = searchParams.get('map')
-
 function keyToggleAdjustments () {
   if (!screenAdjustConsts.keyDisplay.classList.contains('hide') && window.innerWidth <= screenAdjustConsts.deviceScreenWidth) {
     screenAdjustConsts.scenarioSelectionDepth.classList.add('hide')
     screenAdjustConsts.scenarioSelectionVelocity.classList.add('hide')
   } else if (!screenAdjustConsts.keyDisplay.classList.contains('hide') && window.innerWidth > screenAdjustConsts.deviceScreenWidth) {
-    if (currentMapPage === 'RiversOrSea' ||
-    currentMapPage === 'SurfaceWater' ||
-    currentMapPage === 'Reservoirs') {
-      screenAdjustConsts.advancedToggle.classList.add(screenAdjustConsts.keyAdvButtonDisplay)
-    }
     if (screenAdjustConsts.depthRadio.checked) {
       screenAdjustConsts.scenarioSelectionDepth.classList.remove('hide')
     }

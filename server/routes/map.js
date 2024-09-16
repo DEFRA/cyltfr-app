@@ -16,7 +16,7 @@ module.exports = {
   options: {
     description: 'Get the map page',
     handler: async (request, h) => {
-      let view
+      let view = 'map'
       const { query } = request
       const { easting, northing } = query
       const address = request.yar.get('address')
