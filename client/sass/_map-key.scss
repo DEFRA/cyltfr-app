@@ -23,8 +23,8 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     line-height: 2.125;
     height: 40px;
     width: 237px;
-    padding: 0px 18px 0 20px;
-    font-size: 19px;
+    padding: 18px 18px 0 20px;
+    font-size: 24px;
     margin: 0;
     z-index: 15;
 
@@ -43,6 +43,15 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   font-size: 16px;
 }
 
+.risk-severity-text {
+  font-size: 14px;
+}
+
+#defra-map-key__section-title-top-title {
+  padding-top: 18px;
+  margin-top: 66px;
+}
+
 .defra-map-key__section-title {
   position: relative;
   font-family: $gov-font;
@@ -52,11 +61,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   font-size: 16px !important;
   line-height: 1.1428571429;
   display: block;
-  margin-top: 45px;
   margin-bottom: 0;
-  padding: 10px 15px 0px 0px;
+  padding: 20px 15px 0px 0px;
   box-sizing: border-box;
-  width: 260px;
+  width: 230px;
 
   &::before {
     position: absolute;
@@ -119,6 +127,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 .risk-colour-square {
   width: 22px;
   height: 22px;
+}
+
+#sw-extent-desc-container {
+  padding-left: 30px;
 }
 
 .high-symbol {
@@ -212,7 +224,6 @@ svg:not(:root) {
 
 .defra-map-key__symbol-container--multi {
   margin-top: 19px;
-
 }
 
 .sw-depth-container {

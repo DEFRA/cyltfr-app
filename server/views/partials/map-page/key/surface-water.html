@@ -2,7 +2,7 @@
 <div id="sw-section-container">
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-      <h3 class="defra-map-key__section-title" ontoken="this.onscrolling = false">Yearly chance of flooding</h3>
+      <h2 id="defra-map-key__section-title-top-title" class="defra-map-key__section-title" ontoken="this.onscrolling = false">Yearly chance of flooding</h2>
     </legend>
 
     <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
@@ -18,33 +18,44 @@
               class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
               id="sw-extent-high">
               <span class="defra-map-key__symbol">
-                <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+                <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
                   <rect class="high-symbol risk-colour-square" x="5" y="5"></rect>
                 </svg>
               </span>
-              <span id="risk-severity">High chance</span>
+              <span id="risk-severity" class="risk-severity-text">High chance</span>
             </span>
 
             <span
               class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
               id="sw-extent-med">
               <span class="defra-map-key__symbol">
-                <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+                <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
                   <rect class="medium-symbol risk-colour-square" x="5" y="5"></rect>
                 </svg>
               </span>
-              Medium chance
+              <span class="risk-severity-text">Medium chance</span>
             </span>
 
             <span
               class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
               id="sw-extent-low">
               <span class="defra-map-key__symbol">
-                <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+                <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
                   <rect class="low-symbol risk-colour-square" x="5" y="5"></rect>
                 </svg>
               </span>
-              Low chance
+              <span class="risk-severity-text">Low chance</span>
+            </span>
+            
+            <span
+              class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+              id="sw-extent-low">
+              <span class="defra-map-key__symbol">
+                <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                  <rect class="very-low-symbol risk-colour-square" x="5" y="5"></rect>
+                </svg>
+              </span>
+              <span class="risk-severity-text">Very low chance</span>
             </span>
           </div>
         </label>
