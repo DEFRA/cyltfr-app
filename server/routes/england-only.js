@@ -14,9 +14,9 @@ module.exports = {
     }
     const backLinkUri = '/postcode'
     const model = {
-      isWales: request.query.region === 'wales',
-      isScotland: request.query.region === 'scotland',
-      isNorthernIreland: request.query.region === 'northern-ireland',
+      isWales: ['wales', 'W'].includes(request.query.region),
+      isScotland: ['scotland', 'S'].includes(request.query.region),
+      isNorthernIreland: ['northern-ireland', 'N'].includes(request.query.region),
       backLinkUri
     }
 

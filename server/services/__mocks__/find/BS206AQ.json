@@ -3,12 +3,14 @@
     "uprn": "24084542",
     "postcode": "BS20 6AQ",
     "address": "FLAT, 26, VICTORIA SQUARE, PORTISHEAD, BRISTOL, BS20 6AQ",
-    "country": "ENGLAND"
+    "country": "ENGLAND",
+    "country_code": "E"
   },
   {
     "uprn": "24065132",
     "postcode": "BS20 6AQ",
     "address": "LLOYDS PHARMACY, 26, VICTORIA SQUARE, PORTISHEAD, BRISTOL, BS20 6AQ",
-    "country": "ENGLAND"
+    "country": "ENGLAND",
+    "country_code": "E"
   }
 ]

@@ -116,9 +116,14 @@ module.exports = [
 
         return h.view('search', model)
       }
+
+      const addressRecord = addresses[address]
+      if (addressRecord.country_code !== 'E') {
+        return redirectToHomeCounty(h, postcode, addressRecord.country_code)
+      }
       // Set addresses to session
       request.yar.set({
-        address: addresses[address]
+        address: addressRecord
       })
 
       return h.redirect('/risk#')

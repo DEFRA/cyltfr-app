@@ -28,14 +28,14 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  const { getOptions, postOptions } = mockSearchOptions('NP18 3EZ', cookie)
+  const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
   let postResponse = await server.inject(postOptions)
   expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-  expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP18 3EZ')}`)
+  expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('CV37 6YZ')}`)
 
   const getResponse = await server.inject(getOptions)
   expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-  postOptions.url = `/search?postcode=${encodeURIComponent('NP18 3EZ')}`
+  postOptions.url = `/search?postcode=${encodeURIComponent('CV37 6YZ')}`
   postOptions.payload = 'address=0'
 
   postResponse = await server.inject(postOptions)
@@ -51,7 +51,6 @@ afterEach(async () => {
 describe('Risk page test', () => {
   test('print risk-summary page for reservoir risk and surface water', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: true,
       floodAlertArea: ['AnyArea'],
       floodWarningArea: [],
@@ -83,14 +82,13 @@ describe('Risk page test', () => {
     const response = await server.inject(defaultOptions)
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(payload).toMatch(/<caption class="govuk-table__caption">3, NORTHFIELD CLOSE, CAERLEON, NEWPORT, NP18 3EZ<\/caption>/g)
+    expect(payload).toMatch(/<caption class="govuk-table__caption">11, BANCROFT PLACE, STRATFORD-UPON-AVON, CV37 6YZ<\/caption>/g)
     expect(payload).toMatch(/There is a risk of flooding from reservoirs in this area./g)
     expect(payload).toMatch(/Flooding is possible when groundwater levels are high/g)
   })
 
   test('print risk-summary page for low reservoir risk and low surface water', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: ['AnyArea'],
       floodWarningArea: [],
@@ -105,7 +103,7 @@ describe('Risk page test', () => {
     const response = await server.inject(defaultOptions)
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(payload).toMatch(/<caption class="govuk-table__caption">3, NORTHFIELD CLOSE, CAERLEON, NEWPORT, NP18 3EZ<\/caption>/g)
+    expect(payload).toMatch(/<caption class="govuk-table__caption">11, BANCROFT PLACE, STRATFORD-UPON-AVON, CV37 6YZ<\/caption>/g)
     expect(payload).toMatch(/Flooding from reservoirs is unlikely in this area/g)
     expect(payload).toMatch(/Flooding from groundwater is unlikely in this area/g)
   })
@@ -119,26 +117,8 @@ describe('Risk page test', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
   })
 
-  test('/risk - Not inEngland', async () => {
-    riskService.__updateReturnValue({
-      inEngland: false,
-      isGroundwaterArea: false,
-      floodAlertArea: [],
-      floodWarningArea: [],
-      leadLocalFloodAuthority: 'Cheshire West and Chester',
-      reservoirRisk: null,
-      riverAndSeaRisk: null,
-      surfaceWaterRisk: 'Very Low',
-      extraInfo: null
-    })
-    const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(response.headers.location).toMatch('/england-only')
-  })
-
   test('/risk - riverAndSeaRisk error', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -154,7 +134,6 @@ describe('Risk page test', () => {
 
   test('/risk - surfaceWaterRisk error', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -170,7 +149,6 @@ describe('Risk page test', () => {
 
   test('/risk reservoirDryRisk error', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -186,8 +164,6 @@ describe('Risk page test', () => {
 
   test('/risk reservoirWetRisk error', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
-      isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Cheshire West and Chester',
@@ -202,7 +178,6 @@ describe('Risk page test', () => {
 
   test('/risk leadLocalFloodAuthority error', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -222,7 +197,6 @@ describe('Risk page test', () => {
    */
   test('/risk 1', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -238,7 +212,6 @@ describe('Risk page test', () => {
 
   test('/risk 2', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -254,7 +227,6 @@ describe('Risk page test', () => {
 
   test('/risk 3', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -270,7 +242,6 @@ describe('Risk page test', () => {
 
   test('/risk 4', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -286,7 +257,6 @@ describe('Risk page test', () => {
 
   test('/risk 5', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -310,7 +280,6 @@ describe('Risk page test', () => {
 
   test('/risk 6', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -326,7 +295,6 @@ describe('Risk page test', () => {
 
   test('/risk 7', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -342,7 +310,6 @@ describe('Risk page test', () => {
 
   test('/risk 8', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -358,7 +325,6 @@ describe('Risk page test', () => {
 
   test('/risk 9', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -374,7 +340,6 @@ describe('Risk page test', () => {
 
   test('/risk 10', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
@@ -390,7 +355,6 @@ describe('Risk page test', () => {
 
   test('should include text specifically for high flood risk', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: true,
       floodAlertArea: ['064FAG99SElondon'],
       floodWarningArea: [],
@@ -408,7 +372,6 @@ describe('Risk page test', () => {
 
   test('should include text specifically for medium flood risk', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: true,
       floodAlertArea: ['064FAG99SElondon'],
       floodWarningArea: [],
@@ -426,7 +389,6 @@ describe('Risk page test', () => {
 
   test('should include text specifically for low flood risk', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: true,
       floodAlertArea: ['064FAG99SElondon'],
       floodWarningArea: [],
@@ -444,7 +406,6 @@ describe('Risk page test', () => {
 
   test('should include text specifically for very low flood risk', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: true,
       floodAlertArea: ['064FAG99SElondon'],
       floodWarningArea: [],
@@ -462,7 +423,6 @@ describe('Risk page test', () => {
 
   test('/risk with holding comments', async () => {
     riskService.__updateReturnValue({
-      inEngland: true,
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],

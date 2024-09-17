@@ -2,7 +2,7 @@ const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const floodService = require('../../services/flood')
 const addressService = require('../../services/address')
-const DEFAULT_POSTCODE = 'NP18 3EZ'
+const DEFAULT_POSTCODE = 'CV37 6YZ'
 const SEARCH_REDIRECT = '/search?postcode='
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
 let server, cookie

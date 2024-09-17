@@ -1,7 +1,6 @@
 const riskService = jest.createMockFromModule('../risk')
 
 const originalReturnValue = {
-  inEngland: true,
   isGroundwaterArea: false,
   floodAlertArea: [],
   floodWarningArea: [],
