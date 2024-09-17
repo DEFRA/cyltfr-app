@@ -20,26 +20,5 @@ export function openKey () {
 export function closeKey () {
   mapControlsConsts.keyDisplay.classList.add('hide')
 
-  if (mapControlsConsts.depthRadio.checked) {
-    mapControlsConsts.scenarioBarDepth.classList.remove('hide')
-    mapControlsConsts.scenarioSelectionDepth.classList.remove('hide')
-    mapControlsConsts.scenarioSelectionDepth.style.top = null
-  }
-
-  if (mapControlsConsts.velocityRadio.checked) {
-    mapControlsConsts.scenarioBarVelocity.classList.remove('hide')
-    mapControlsConsts.scenarioSelectionVelocity.classList.remove('hide')
-    mapControlsConsts.scenarioSelectionVelocity.style.top = null
-  }
-
-  const depthDisplay = window.getComputedStyle(mapControlsConsts.scenarioBarDepth).display
-  const velocityDisplay = window.getComputedStyle(mapControlsConsts.scenarioBarVelocity).display
-
   mapControlsConsts.openKeyBtn.classList.remove('hide')
-
-  if (depthDisplay === 'block' || velocityDisplay === 'block') {
-    mapControlsConsts.osLogo.classList.add('os-logo-position-change')
-  } else {
-    mapControlsConsts.osLogo.classList.remove('os-logo-position-change')
-  }
 }

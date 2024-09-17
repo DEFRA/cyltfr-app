@@ -18,7 +18,7 @@
 {% block main %}
 <div class="map-container">
   <div id="map" tabindex="0" aria-label="Use your arrows to navigate the map. To zoom in and out cycle back to the zoom buttons."></div>
-  {% include 'partials/map-page/map-controls.html' %}
+  {% include 'partials/map-page/map-controls-original.html' %}
   <!-- Key -->
   <!-- map-key inline styling required for ability to click off key on devices -->
   <div id="map-key" class="defra-map-key" style="display: block;">
@@ -38,7 +38,7 @@
           {% include 'partials/map-page/key/surface-water.html' %}
           {% include 'partials/map-page/key/rivers-and-sea.html' %}
           {% include 'partials/map-page/key/reservoirs.html' %}
-          {% include 'partials/map-page/key/toggles.html' %}
+          {% include 'partials/map-page/key/toggles-original.html' %}
           
           <div class="data-message">
             <h2 class="data-message">Pause to updates of flood risk data</h2>
@@ -64,7 +64,7 @@
 </script>
 <script src="{{ assetPath }}/nunjucks-slim.js"></script>
 <script src="{{ assetPath }}/js/map.js"></script>
-<script src="{{ assetPath }}/js/mapPage.js"></script>
+<script src="{{ assetPath }}/js/mapPageOriginal.js"></script>
 
 {% endblock %}
 

@@ -1,7 +1,7 @@
-import { scenarioDisplayUpdate, handleScroll, handleArrowClick } from './scenario-bars.js'
-import { openKey, closeKey, showOrHideAdvancedToggleText, toggleAdvancedOptions, handleRadioChange, selectedOption } from './map-controls.js'
-import { adjustPosition } from './screen-size-adjustments.js'
-import { mapPageConsts } from './constants.js'
+import { scenarioDisplayUpdate, handleScroll, handleArrowClick } from '../map-page/scenario-bars.js'
+import { openKey, closeKey, showOrHideAdvancedToggleText, toggleAdvancedOptions, handleRadioChange, selectedOption } from '../map-page/map-controls.js'
+import { adjustPosition } from '../map-page/screen-size-adjustments.js'
+import { mapPageConsts } from '../map-page/constants.js'
 
 class MapController {
   constructor (categories) {
