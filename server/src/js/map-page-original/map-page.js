@@ -1,7 +1,7 @@
-import { scenarioDisplayUpdate, handleScroll, handleArrowClick } from '../map-page/scenario-bars.js'
-import { openKey, closeKey, showOrHideAdvancedToggleText, toggleAdvancedOptions, handleRadioChange, selectedOption } from '../map-page/map-controls.js'
-import { adjustPosition } from '../map-page/screen-size-adjustments.js'
-import { mapPageConsts } from '../map-page/constants.js'
+import { scenarioDisplayUpdate, handleScroll, handleArrowClick } from '../map-page-original/scenario-bars.js'
+import { openKey, closeKey, showOrHideAdvancedToggleText, toggleAdvancedOptions, handleRadioChange, selectedOption } from '../map-page-original/map-controls.js'
+import { adjustPosition } from '../map-page-original/screen-size-adjustments.js'
+import { mapPageConsts } from '../map-page-original/constants.js'
 
 class MapController {
   constructor (categories) {
@@ -83,7 +83,6 @@ function mapPage () {
       mapPageConsts.maps.showMap(`${mapReferenceValue}DONOTDISPLAY`, selectedAddressCheckbox.checked)
     }
   }
-
   // Default to the first category/map
   mapPageConsts.maps.onReady(function () {
     measurements.forEach(function (measurement) {

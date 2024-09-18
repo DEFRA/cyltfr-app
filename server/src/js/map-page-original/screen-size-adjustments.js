@@ -1,5 +1,5 @@
-import { showOrHideAdvancedToggleText } from '../map-page/map-controls'
-import { screenAdjustConsts } from '../map-page/constants'
+import { showOrHideAdvancedToggleText } from '../map-page-original/map-controls'
+import { screenAdjustConsts } from '../map-page-original/constants'
 
 export function adjustPosition () {
   adjustLogoAndCopyright()

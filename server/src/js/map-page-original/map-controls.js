@@ -1,4 +1,4 @@
-import { mapControlsConsts } from '../map-page/constants'
+import { mapControlsConsts } from '../map-page-original/constants'
 
 export function selectedOption () {
   // The below const cannot be removed from the file otherwise it breaks reservoirs and rivers and the sea

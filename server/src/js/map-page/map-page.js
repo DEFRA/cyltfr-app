@@ -40,7 +40,6 @@ class MapController {
         }
       }
     }
-
     this.currMap = defaultMap
     this.currCategory = defaultCategory
   }
