@@ -46,6 +46,7 @@ const scenariosRadiosVelocity = document.querySelector('input[name="scenarios-ve
 
 const extentRadioReservoirs = document.getElementById('reservoirs-radio')
 const extentRadioSw = document.getElementById('sw-extent-radio')
+const extentRadioRs = document.getElementById('rs-extent-radio')
 const depthRadio = document.getElementById('sw-depth-radio')
 const velocityRadio = document.getElementById('sw-velocity-radio')
 
@@ -135,6 +136,7 @@ export const mapControlsConsts = {
   scenariosRadiosVelocity,
   extentRadioReservoirs,
   extentRadioSw,
+  extentRadioRs,
   mediumRadioDepth,
   lowRadioDepth,
   mediumRadioVelocity,
