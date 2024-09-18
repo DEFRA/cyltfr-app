@@ -38,7 +38,6 @@ module.exports = {
       const backLinkUri = defineBackLink(path, previousPage)
 
       if (query.map === 'SurfaceWater') {
-        console.log('in if')
         view = 'map-surface-water'
       }
 
