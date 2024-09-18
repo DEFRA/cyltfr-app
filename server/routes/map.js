@@ -40,6 +40,9 @@ module.exports = {
       if (query.map === 'SurfaceWater') {
         view = 'map-surface-water'
       }
+      if (query.map === 'RiversOrSea') {
+        view = 'map-rivers-and-sea'
+      }
 
       return h.view(view, new MapViewModel(easting, northing, address, backLinkUri, mapConfig))
     },
