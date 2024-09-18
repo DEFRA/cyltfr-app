@@ -7,6 +7,7 @@ import SpatialReference from '@arcgis/core/geometry/SpatialReference.js'
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer.js'
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer.js'
 import esriConfig from '@arcgis/core/config.js'
+import Graphic from '@arcgis/core/Graphic.js'
 
 let map, callback, currentLayer, tokenFetchRunning
 const TOKEN_PREFETCH_SECS = 30
@@ -61,6 +62,42 @@ export async function loadMap (point) {
       rotationEnabled: false
     }
   })
+
+  const markerPoint = new Point({
+    x: 387764.37,
+    y: 360948.42,
+    spatialReference: { wkid: 27700 }
+  })
+
+  const markerSymbol = {
+    type: 'picture-marker',
+    url: 'data:image/svg+xml,' + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#160000" class="w-6 h-6" id="pointer">
+        <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+      </svg>
+    `),
+    width: '44px',
+    height: '44px'
+  }
+
+  /* const markerSymbol = {
+    type: 'simple-marker',
+    color: 'blue',
+    size: '12px',
+    outline: {
+      color: [255, 255, 255],
+      width: 1
+    }
+  } */
+
+  const markerGraphic = new Graphic({
+    geometry: markerPoint,
+    symbol: markerSymbol
+  })
+
+  console.log('Marker Graphic:', markerGraphic)
+
+  mapView.graphics.add(markerGraphic)
 
   mapView.when(function () {
     // MapView is now ready for display and can be used. Here we will
