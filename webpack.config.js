@@ -5,6 +5,7 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     mapPage: './server/src/js/map-page/map-page.js',
+    mapPageOriginal: './server/src/js/map-page-original/map-page.js',
     map: {
       dependOn: 'mapPage',
       import: './server/src/js/map.js'

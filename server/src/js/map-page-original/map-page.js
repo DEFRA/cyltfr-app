@@ -1,7 +1,7 @@
-import { scenarioDisplayUpdate, handleScroll, handleArrowClick } from './scenario-bars.js'
-import { openKey, closeKey, selectedOption } from './map-controls.js'
-import { adjustPosition } from './screen-size-adjustments.js'
-import { mapPageConsts } from './constants.js'
+import { scenarioDisplayUpdate, handleScroll, handleArrowClick } from '../map-page-original/scenario-bars.js'
+import { openKey, closeKey, showOrHideAdvancedToggleText, toggleAdvancedOptions, handleRadioChange, selectedOption } from '../map-page-original/map-controls.js'
+import { adjustPosition } from '../map-page-original/screen-size-adjustments.js'
+import { mapPageConsts } from '../map-page-original/constants.js'
 
 class MapController {
   constructor (categories) {
@@ -40,12 +40,15 @@ class MapController {
         }
       }
     }
+
     this.currMap = defaultMap
     this.currCategory = defaultCategory
   }
 }
 
 function mapPage () {
+  getInitialKeyOptions()
+
   function getParameterByName (name) {
     name = name.replace(/[[]/, '\\[').replace(/\]/, '\\]')
     const regex = new RegExp(`[\\?&]${name}=([^&#]*)`)
@@ -80,7 +83,6 @@ function mapPage () {
       mapPageConsts.maps.showMap(`${mapReferenceValue}DONOTDISPLAY`, selectedAddressCheckbox.checked)
     }
   }
-
   // Default to the first category/map
   mapPageConsts.maps.onReady(function () {
     measurements.forEach(function (measurement) {
@@ -98,6 +100,16 @@ function mapPage () {
     })
 
     setCurrent(getParameterByName('map'))
+  })
+
+  mapPageConsts.advancedToggle.addEventListener('click', function (event) {
+    event.stopPropagation()
+    if (window.innerWidth <= mapPageConsts.deviceScreenWidth) {
+      openKey()
+    }
+    toggleAdvancedOptions()
+    selectedOption()
+    setCurrent()
   })
 
   // ensures mouse cursor returns to default if feature was at edge of map
@@ -121,6 +133,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
   })
+
+  showOrHideAdvancedToggleText()
 })
 
 mapPageConsts.exitMapBtn.addEventListener('click', function () {
@@ -141,6 +155,34 @@ mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
   }
 })
 
+mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
+  let eventType
+  let extentType
+
+  if (radio.id.includes('sw-extent')) {
+    eventType = 'extent'
+    extentType = mapPageConsts.surfaceWater
+  } else if (radio.id.includes('sw-depth')) {
+    eventType = 'depth'
+  } else if (radio.id.includes('sw-velocity')) {
+    eventType = 'velocity'
+  } else if (radio.id.includes('reservoirs')) {
+    eventType = 'extent'
+    extentType = 'reservoirs'
+  } else if (radio.id.includes('rs-radio')) {
+    eventType = 'extent'
+    extentType = mapPageConsts.riversAndTheSea
+  } else {
+    console.log('No type selected.')
+  }
+
+  if (eventType) {
+    radio.addEventListener('change', function () {
+      handleRadioChange(eventType, extentType)
+    })
+  }
+})
+
 mapPageConsts.closeKeyBtn.addEventListener('click', closeKey)
 mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   event.stopPropagation()
@@ -152,6 +194,48 @@ handleArrowClick(mapPageConsts.leftArrow, mapPageConsts.leftMove)
 
 handleScroll(mapPageConsts.scenarioSelectionDepth, [mapPageConsts.rightArrow[0], mapPageConsts.leftArrow[0]])
 handleScroll(mapPageConsts.scenarioSelectionVelocity, [mapPageConsts.rightArrow[1], mapPageConsts.leftArrow[1]])
+
+const searchParams = new URLSearchParams(window.location.search)
+const currentMapPage = searchParams.get('map')
+
+function getInitialKeyOptions () {
+  if (currentMapPage === 'SurfaceWater') {
+    surfaceWaterInitialOptions()
+  } else if (currentMapPage === 'RiversOrSea') {
+    riversAndTheSeaInitialOptions()
+  } else if (currentMapPage === 'Reservoirs') {
+    reservoirsInitialOptions()
+  } else {
+    mapPageConsts.advancedToggle.classList.add('hide')
+    mapPageConsts.selectedAddressInput.classList.add('hide')
+  }
+}
+
+function surfaceWaterInitialOptions () {
+  mapPageConsts.velocityContainer.classList.add('hide')
+  mapPageConsts.rsContainer.classList.add('hide')
+  mapPageConsts.reservoirsContainer.classList.add('hide')
+}
+
+function riversAndTheSeaInitialOptions () {
+  mapPageConsts.swContainer.classList.add('hide')
+  mapPageConsts.extentInfoSw.classList.add(mapPageConsts.extentDesc)
+  mapPageConsts.rsContainer.classList.add(mapPageConsts.keyContainer)
+  mapPageConsts.rsRadio.checked = true
+  mapPageConsts.extentInfoRs.classList.remove(mapPageConsts.extentDesc)
+  mapPageConsts.reservoirsContainer.classList.add('hide')
+  mapPageConsts.boundaryContainer.classList.add('hide')
+}
+
+function reservoirsInitialOptions () {
+  mapPageConsts.swContainer.classList.add('hide')
+  mapPageConsts.extentInfoSw.classList.add(mapPageConsts.extentDesc)
+  mapPageConsts.rsContainer.classList.add('hide')
+  mapPageConsts.reservoirsContainer.classList.add(mapPageConsts.keyContainer)
+  mapPageConsts.reservoirsRadio.checked = true
+  mapPageConsts.extentInfoReservoirs.classList.remove(mapPageConsts.extentDesc)
+  mapPageConsts.boundaryContainer.classList.add('hide')
+}
 
 window.onresize = adjustPosition
 mapPage()
