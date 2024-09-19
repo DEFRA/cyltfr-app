@@ -118,6 +118,26 @@ describe('search page route', () => {
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
   })
 
+  test('/search - Stored postcode', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch(SEARCH_REDIRECT)
+
+    getOptions.url = '/search'
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+  })
+
+  test('/search - No postcode', async () => {
+    const { getOptions } = mockSearchOptions('invalid')
+    getOptions.url = '/search'
+    floodService.__updateReturnValue({})
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+  })
+
   test('/search - Invalid postcode - fails regexp', async () => {
     const { getOptions } = mockSearchOptions('invalid', cookie)
     floodService.__updateReturnValue({})
