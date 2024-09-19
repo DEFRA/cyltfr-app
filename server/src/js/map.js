@@ -64,8 +64,8 @@ export async function loadMap (point) {
   })
 
   const markerPoint = new Point({
-    x: 387764.37,
-    y: 360948.42,
+    x: 360948.42,
+    y: 387764.37,
     spatialReference: { wkid: 27700 }
   })
 
@@ -77,7 +77,8 @@ export async function loadMap (point) {
       </svg>
     `),
     width: '44px',
-    height: '44px'
+    height: '44px',
+    yoffset: 11
   }
 
   /* const markerSymbol = {
@@ -97,7 +98,18 @@ export async function loadMap (point) {
 
   console.log('Marker Graphic:', markerGraphic)
 
+  console.log('Marker Coordinates:', markerGraphic.geometry.x, markerGraphic.geometry.y)
+
   mapView.graphics.add(markerGraphic)
+
+  const markerCheckbox = document.getElementById('selected-address-checkbox')
+  markerCheckbox.addEventListener('change', function () {
+    if (markerCheckbox.checked) {
+      mapView.graphics.add(markerGraphic)
+    } else {
+      mapView.graphics.remove(markerGraphic)
+    }
+  })
 
   mapView.when(function () {
     // MapView is now ready for display and can be used. Here we will
