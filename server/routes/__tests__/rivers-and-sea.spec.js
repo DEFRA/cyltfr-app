@@ -121,4 +121,35 @@ describe('GET /rivers-and-sea - flag enabled', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(response.result).toContain('govuk-tag--Very-Low')
   })
+
+  test('risk address not in england', async () => {
+    const initial = mockOptions()
+
+    const homepageresponse = await server.inject(initial)
+    expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    const cookie = homepageresponse.headers['set-cookie'][0].split(';')[0]
+
+    const { getOptions, postOptions } = mockSearchOptions('NP18 3EZ', cookie)
+    let postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP18 3EZ')}`)
+
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    postOptions.url = `/search?postcode=${encodeURIComponent('NP18 3EZ')}`
+    postOptions.payload = 'address=0'
+
+    postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch('/england-only')
+
+    const mockRequest = {
+      method: 'GET',
+      url: '/rivers-and-sea',
+      headers: { cookie }
+    }
+    const response = await server.inject(mockRequest)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(response.headers.location).toMatch('/england-only')
+  })
 })

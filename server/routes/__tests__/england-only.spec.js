@@ -54,18 +54,6 @@ describe('england-only router', () => {
     expect(postResponse.headers.location).toMatch(ENGLAND_ONLY_URL)
   })
 
-  test('requesting the england-only page after a search should not display', async () => {
-    const options = {
-      method: 'GET',
-      url: ENGLAND_ONLY_URL,
-      headers: {
-        cookie
-      }
-    }
-    const response = await server.inject(options)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-  })
-
   test('should not get the /england-only page if an address in England', async () => {
     const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
     let postResponse = await server.inject(postOptions)
