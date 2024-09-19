@@ -64,8 +64,8 @@ export async function loadMap (point) {
   })
 
   const markerPoint = new Point({
-    x: 360948.42,
-    y: 387764.37,
+    x: point[0],
+    y: point[1],
     spatialReference: { wkid: 27700 }
   })
 
@@ -97,7 +97,6 @@ export async function loadMap (point) {
   })
 
   console.log('Marker Graphic:', markerGraphic)
-
   console.log('Marker Coordinates:', markerGraphic.geometry.x, markerGraphic.geometry.y)
 
   mapView.graphics.add(markerGraphic)
