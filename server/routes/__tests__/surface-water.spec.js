@@ -38,15 +38,15 @@ describe('GET /surface-water - enabled', () => {
   })
 
   beforeEach(async () => {
-    const { getOptions, postOptions } = mockSearchOptions('NP18 3EZ', cookie)
+    const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP18 3EZ')}`)
+    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('CV37 6YZ')}`)
 
     const getResponse = await server.inject(getOptions)
     checkCookie(getResponse)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    postOptions.url = `/search?postcode=${encodeURIComponent('NP18 3EZ')}`
+    postOptions.url = `/search?postcode=${encodeURIComponent('CV37 6YZ')}`
     postOptions.payload = 'address=0'
 
     postResponse = await server.inject(postOptions)
@@ -210,5 +210,36 @@ describe('GET /surface-water - enabled', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+  })
+
+  test('risk address not in england', async () => {
+    const initial = mockOptions()
+
+    const homepageresponse = await server.inject(initial)
+    expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    const cookie = homepageresponse.headers['set-cookie'][0].split(';')[0]
+
+    const { getOptions, postOptions } = mockSearchOptions('NP18 3EZ', cookie)
+    let postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP18 3EZ')}`)
+
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    postOptions.url = `/search?postcode=${encodeURIComponent('NP18 3EZ')}`
+    postOptions.payload = 'address=0'
+
+    postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch('/england-only')
+
+    const mockRequest = {
+      method: 'GET',
+      url: '/surface-water',
+      headers: { cookie }
+    }
+    const response = await server.inject(mockRequest)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(response.headers.location).toMatch('/england-only')
   })
 })

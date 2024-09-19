@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom')
 const errors = require('../models/errors.json')
+const { redirectToHomeCounty } = require('../helpers')
 const RiversAndSeaViewModel = require('../models/risk-view')
 
 module.exports = {
@@ -11,6 +12,9 @@ module.exports = {
 
     if (!address) {
       return h.redirect('/postcode')
+    }
+    if (address.country_code !== 'E') {
+      return redirectToHomeCounty(h, address.postcode, address.country_code)
     }
 
     const { x, y } = address

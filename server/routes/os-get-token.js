@@ -7,11 +7,11 @@ module.exports = {
   path: '/os-get-token',
   handler: async (request, h) => {
     try {
-      const payload = await osApi.osGetAccessToken()
       const mapTokenExpiry = request.yar.get('mapTokenExpiry')
       if (Date.now() > mapTokenExpiry) {
         return Boom.badRequest(errors.osGetTokenMapExpired.message)
       }
+      const payload = await osApi.osGetAccessToken()
       return h.response(payload).type('application/json')
     } catch (err) {
       return Boom.badRequest(errors.osGetToken, err)
