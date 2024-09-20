@@ -5,17 +5,15 @@
       <li class="govuk-summary-card__action">
         <a class="govuk-link card-link__font-size" href="/rivers-and-sea">
           More about your rivers and sea flood risk
-      </a>
+        </a>
       </li>
     </ul>
   </div>
   <div class="govuk-summary-card__content">
     <dl class="govuk-summary-list">
-      
       <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key" style="width: 100%;">
-          Yearly chance of flooding
-         <div class="risk-label-group govuk-!-margin-bottom-3">
+        <h3 class="govuk-heading-s">Yearly chance of flooding</h3>
+        <div class="risk-label-group-2 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
           {% if riverAndSeaRisk === "Very Low" %}
           <strong class="govuk-tag govuk-tag--Very-Low label-mod label-border">
             Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
@@ -55,34 +53,68 @@
             High
           </strong>
           {% endif %}
-  </dt>
-     
-       
+        </div>
+        <h3 class="govuk-heading-s govuk-!-padding-top-6 govuk-!-margin-bottom-0">Yearly chance of flooding between 2036 and 2069</h3>
+        <div class="risk-label-group-2 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
+          {% if riverAndSeaRisk === "Very Low" %}
+          <strong class="govuk-tag govuk-tag--Very-Low label-mod label-border">
+            Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+          </strong>
+          {% else %}
+          <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+            Very low
+          </strong>
+          {% endif %}
+
+          {% if riverAndSeaRisk === "Low" %}
+          <strong class="govuk-tag govuk-tag--Low label-mod label-border">
+            Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+          </strong>
+          {% else %}
+          <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+            Low
+          </strong>
+          {% endif %}
+
+          {% if riverAndSeaRisk === "Medium" %}
+          <strong class="govuk-tag govuk-tag--Medium label-mod label-border">
+            Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+          </strong>
+          {% else %}
+          <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+            Medium
+          </strong>
+          {% endif %}
+
+          {% if riverAndSeaRisk === "High" %}
+          <strong class="govuk-tag govuk-tag--High label-mod label-border">
+            High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+          </strong>
+          {% else %}
+          <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+            High
+          </strong>
+          {% endif %}
+        </div>
+
+        <h3 class="govuk-heading-s govuk-!-padding-top-6 govuk-!-margin-bottom-0">What makes rivers and sea flooding
+          more likely</h3>
+        <p class="govuk-body govuk-!-margin-top-2">Low-lying areas that are close to rivers or the sea are more likely
+          to flood when water levels rise.
+        </p>
+        <p class="govuk-body">This information takes into account any flood defences.
+        </p>
+
+        {{ govukDetails({
+        summaryText: "Why flood defences cannot completely prevent flooding",
+        html: "<p class='govuk-body'>Flood defences can help reduce the chance of flooding but cannot completely prevent
+          it because:</p>
+        <ul class='govuk-list--bullet'>
+          <li>they can fail</li>
+          <li>water could spill over the top if it is deep enough</li>
+        </ul>"
+        }) }}
       </div>
-      
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          What makes rivers and sea flooding more likely
-          <p class="govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2">Low-lying areas that are close to rivers or the sea are more likely to flood when water levels rise.
-          </p>
-          <p class="govuk-body">This information takes into account any flood defences.
-          </p>
-          
-          <details class="govuk-details govuk-!-margin-top-2 govuk-!-margin-bottom-3" data-module="govuk-details">
-            <summary class="govuk-details__summary">
-              <span class="govuk-details__summary-text">
-                Why flood defences cannot completely prevent flooding
-              </span>
-            </summary>
-            <div class="govuk-details__text">
-              <p class="govuk-body">Flood defences can help reduce the chance of flooding but cannot completely prevent it because:</p>
-              <ul class="govuk-list--bullet">
-                <li>they can fail</li>
-                <li>water could spill over the top if it is deep enough</li>
-              </ul>
-            </div>
-          </details>
-          </dt>
-       </div>
-      </div> 
+    </dl>
+  </div>
 </div>
