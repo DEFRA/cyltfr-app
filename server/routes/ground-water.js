@@ -27,6 +27,6 @@ module.exports = {
     }
   },
   options: {
-    description: 'Understand rivers and the sea page'
+    description: 'Understand groundwater page'
   }
 }
