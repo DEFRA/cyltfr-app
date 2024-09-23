@@ -13,6 +13,7 @@ module.exports = [
       request.yar.set('postcode', null)
       const error = request.query.error
       request.yar.set('previousPage', request.path)
+      const backLinkUri = 'https://www.gov.uk/check-long-term-flood-risk'
 
       if (error) {
         const errorMessage = 'This postcode does not appear to exist'
@@ -29,7 +30,7 @@ module.exports = [
         }
         return h.view('postcode', new PostcodeViewModel(null, null, config.sessionTimeout))
       }
-      return h.view('postcode', new PostcodeViewModel())
+      return h.view('postcode', new PostcodeViewModel(null, null, null, backLinkUri))
     },
     options: {
       description: 'Get the postcode page'
