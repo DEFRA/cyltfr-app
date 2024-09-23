@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% from "components/details/macro.njk" import govukDetails %}
 
 {% set pageTitle = "Your long term flood risk assessment" %}
 
@@ -20,38 +21,40 @@
   <div class="page-summary ">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l govuk-!-padding-top-0">
-          {{ fullAddress }}
+        <h1 class="govuk-heading-xl govuk-!-padding-top-0">
+          Flood risk summary
         </h1>
+        <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
+        <p class="govuk-body">This information tells you the flood risk of the land around a building, not the building itself.</p>
+        {{ govukDetails({
+          summaryText: "How we assess an area's flood risk",
+          html: "<p class='govuk-body'>Our data does not include every feature like kerbs, or fences and walls around a building. 
+            That means we cannot tell you the flood risk of every individual property.</p>
+          <p class='govuk-body'>Neighbouring houses may have different levels of flood risk. 
+            This could be because one is on higher land or is nearer water, for example.</p>
+          <p class='govuk-body'>An area can be at risk even if it has not flooded before. 
+            If an area has flooded before, any future flooding might not cover the same area.</p>
+          <p class='govuk-body'>Flooding is hard to predict, especially further into the future. 
+            Flood risks could be bigger or smaller than what we show, and could change over time.</p>"
+        }) }}
+        
         {% include highestRisk %}
-        <p class="govuk-body">This information tells you the flood risk of an area, not a specific property.</p>
-        <p class="govuk-body">We have <a
-            href="https://www.gov.uk/guidance/updates-to-national-flood-and-coastal-erosion-risk-information"
-            class="govuk-link" data-journey-click="ltfri:risk:datapause">
-            paused updates to information about flood risk</a>
-          from rivers and the sea and surface water while we get ready for new data.</p>
 
-        <details class="govuk-details govuk-!-margin-bottom-3" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              How we assess an area's flood risk
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <p class="govuk-body">We use computer models to estimate flood risk, based on the best data we have
-              available.</p>
-            <p class="govuk-body">The models do not include every local feature like kerbs, fences and walls. That means
-              we can only tell you the flood risk of the area around a building, not the building itself.</p>
-            <p class="govuk-body">Neighbouring houses in a street may have different levels of flood risk. This could be
-              because one is on higher land or is nearer water, for example.</p>
-            <p class="govuk-body">An area can still be at risk of flooding even if it has not flooded before.</p>
-            <p class="govuk-body">Any future flooding might not cover the same area as past flooding in the same
-              location.</p>
-            <p class="govuk-body">Flooding is hard to predict, especially further into the future. Flood risks could be
-              bigger or smaller than what we show, and could change over time.</p>
-          </div>
-        </details>
-
+        {{ govukDetails({
+          summaryText: "Flood risk and climate change",
+          html: "<p class='govuk-body'>Climate change is increasing the chances of flooding.</p>
+          <p class='govuk-body'>Climate models project we will see warmer and wetter winters, and more frequent and
+            intense weather events.</p>
+          <p class='govuk-body'>The models use projected rainfall totals, sea levels and river flows. They estimate
+            flood risk in different ways, with different time periods.</p>
+          <p class='govuk-body'>Our flood risk data covers the following time periods:</p>
+          <ul class='govuk-list govuk-list--bullet'>
+            <li>2040 to 2060 for surface water</li>
+            <li>2036 to 2069 for rivers and the sea</li>
+          </ul>
+          <p class='govuk-body'> But the models cannot predict exactly when the chance of flooding will go up. 
+            Any increase in flood risk could happen at any time during these time periods.</p>"
+        }) }}
         <!-- Holding Comments -->
         {% if hasHoldingComments %}
         <div class="govuk-warning-text">
