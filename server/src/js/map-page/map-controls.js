@@ -15,7 +15,7 @@ export function selectedOption () {
     if (mapControlsConsts.extentRadioRs.checked) {
       return measurementsRadios.value
     }
-  } else {
+  } else if (mapPageQuery === 'Reservoirs') {
     if (mapControlsConsts.reservoirsRadio.checked) {
       return measurementsRadios.value
     }
