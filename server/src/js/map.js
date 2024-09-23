@@ -81,23 +81,10 @@ export async function loadMap (point) {
     yoffset: 12
   }
 
-  /* const markerSymbol = {
-    type: 'simple-marker',
-    color: 'blue',
-    size: '12px',
-    outline: {
-      color: [255, 255, 255],
-      width: 1
-    }
-  } */
-
   const markerGraphic = new Graphic({
     geometry: markerPoint,
     symbol: markerSymbol
   })
-
-  console.log('Marker Graphic:', markerGraphic)
-  console.log('Marker Coordinates:', markerGraphic.geometry.x, markerGraphic.geometry.y)
 
   mapView.graphics.add(markerGraphic)
 
