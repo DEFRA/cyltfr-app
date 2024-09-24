@@ -150,6 +150,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   margin-top: 5px;
 }
 
+.extent-desc-container {
+  padding-left: 30px;
+}
+
 #rs-title {
   margin-top: 5px;
 }
@@ -258,10 +262,6 @@ svg:not(:root) {
   background-size: 12px;
   margin-left: -25px;
   margin-top: 6px;
-}
-
-.extent-desc-container {
-  display: none;
 }
 
 .scenarios {
