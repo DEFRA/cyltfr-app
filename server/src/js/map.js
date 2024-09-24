@@ -7,6 +7,7 @@ import SpatialReference from '@arcgis/core/geometry/SpatialReference.js'
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer.js'
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer.js'
 import esriConfig from '@arcgis/core/config.js'
+import Graphic from '@arcgis/core/Graphic.js'
 
 let map, callback, currentLayer, tokenFetchRunning
 const TOKEN_PREFETCH_SECS = 30
@@ -59,6 +60,36 @@ export async function loadMap (point) {
       minZoom: 0,
       maxZoom: 9,
       rotationEnabled: false
+    }
+  })
+
+  const markerPoint = new Point({
+    x: point[0],
+    y: point[1],
+    spatialReference: { wkid: 27700 }
+  })
+
+  const markerSymbol = {
+    type: 'picture-marker',
+    url: '/assets/images/pointer-icon.png',
+    width: '40px',
+    height: '40px',
+    yoffset: 12
+  }
+
+  const markerGraphic = new Graphic({
+    geometry: markerPoint,
+    symbol: markerSymbol
+  })
+
+  mapView.graphics.add(markerGraphic)
+
+  const markerCheckbox = document.getElementById('selected-address-checkbox')
+  markerCheckbox.addEventListener('change', function () {
+    if (markerCheckbox.checked) {
+      mapView.graphics.add(markerGraphic)
+    } else {
+      mapView.graphics.remove(markerGraphic)
     }
   })
 

@@ -191,6 +191,12 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   border: 0;
 }
 
+.defra-map-key__symbol img {
+  display: block; 
+  box-sizing: border-box;
+  top: 10px;
+}
+
 .defra-map-key__symbol svg {
   display: block; 
   box-sizing: border-box;
