@@ -44,6 +44,7 @@ async function find (postcode) {
         uprn: item.UPRN,
         postcode: item.POSTCODE ? item.POSTCODE : item.POSTCODE_LOCATOR,
         address: item.ADDRESS,
+        country_code: item.COUNTRY_CODE,
         x: item.X_COORDINATE,
         y: item.Y_COORDINATE
       }
