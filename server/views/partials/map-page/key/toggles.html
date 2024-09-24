@@ -8,7 +8,7 @@
       <div class="govuk-checkboxes__item">
         <input class="govuk-checkboxes__input govuk-radios__inputs" id="display-layers-checkbox" name="map-toggle" type="checkbox"
           value="30" checked="">
-        <label class="govuk-label  govuk-checkboxes__label" for="display-layers-checkbox">
+        <label class="govuk-label govuk-checkboxes__label" for="display-layers-checkbox">
           Show flooding
         </label>
       </div>
@@ -18,10 +18,7 @@
         <label class="govuk-label govuk-checkboxes__label" for="selected-address-checkbox">
           <span class="defra-map-key__symbol-container">
             <span class="defra-map-key__symbol">
-              <svg id="pointer-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" 
-                aria-hidden="true" focusable="false">
-                <use xlink:href="{{ assetPath }}/images/pointer-icon.svg#pointer"/>
-              </svg>
+              <img id="pointer-icon" src="{{ assetPath }}/images/pointer-icon.png" alt="Pointer Icon" aria-hidden="true">
             </span>
             Selected address
           </span>
