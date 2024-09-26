@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% from "components/details/macro.njk" import govukDetails %} <!-- may not be required -->
 
 {% set pageTitle = "Surface water: possible flood depths" %}
 {% set currentpage = "surface-water-depth" %}
@@ -11,7 +12,7 @@
 
 {% block beforeContent %}
 <div class="top-page-links">
-  <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back</a>
+  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
 </div>
 {% endblock %}
 
@@ -25,31 +26,9 @@
       <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
       <p class="govuk-body">This information tells you the flood risk of the land around a building, not the building itself.</p>
       <p class="govuk-body">Flooding is hard to predict and there is always a chance any flood water could be deeper than what we show.</p>
-      {{ govukDetails({
-        summaryText: "What the flood risk ratings mean",
-        html: "<p class='govuk-body'>Our data does not include every feature like kerbs, or fences and walls around a building. 
-          That means we cannot tell you the flood risk of every individual property.</p>
-        <p class='govuk-body'>Neighbouring houses may have different levels of flood risk. 
-          This could be because one is on higher land or is nearer water, for example.</p>
-        <p class='govuk-body'>An area can be at risk even if it has not flooded before. 
-          If an area has flooded before, any future flooding might not cover the same area.</p>
-        <p class='govuk-body'>Flooding is hard to predict, especially further into the future. 
-          Flood risks could be bigger or smaller than what we show, and could change over time.</p>"
-      }) }}
+      {% include 'partials/floodRatings.html' %}
     </div>
   </div>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-    <h2 class="govuk-heading-m">Yearly chance of flooding</h2>
-    <p class="govuk-body">The yearly chance of surface water flooding is:
-      <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod-depth">
-        <span>{{ surfaceWaterRisk }}</span>
-      </strong>
-    </p>
-    <p class="govuk-body">This information tells you the highest chance of flooding on the land 15 metres around a property.</p>
-    {% include 'partials/floodRatings.html' %}
 
     <h2 class="govuk-heading-m">See surface water flood risk on a map</h2>
 

@@ -6,7 +6,6 @@ module.exports = {
   path: '/surface-water-depth',
   handler: async (request, h) => {
     const address = request.yar.get('address')
-    request.yar.set('previousPage', request.path)
 
     if (!address) {
       return h.redirect('/postcode')
