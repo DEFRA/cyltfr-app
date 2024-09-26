@@ -102,6 +102,37 @@
           }
         },
         {
+          "ref": "SurfaceWater_6-SW-Extent-cc",
+          "name": "Extent of flooding climate change",
+          "title": "Extent of flooding from surface water climate change",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_Depth_CCSW3_0mm/VectorTileServer",
+          "legend": {
+            "title": "Flood risk",
+            "keys": [
+              {
+                "text": "High",
+                "icon": "purple",
+                "id": "surface-water-high"
+              },
+              {
+                "text": "Medium",
+                "icon": "dark-blue",
+                "id": "surface-water-medium"
+              },
+              {
+                "text": "Low",
+                "icon": "blue",
+                "id": "surface-water-low"
+              },
+              {
+                "text": "Very low",
+                "icon": "white",
+                "id": "surface-water-very-low"
+              }
+            ]
+          }
+        },
+        {
           "ref": "SurfaceWater_9-SWDH",
           "name": "High risk: depth",
           "title": "Surface water flood risk: water depth in a high risk scenario",
