@@ -94,7 +94,8 @@ export const mapPageConsts = {
   rightMove,
   leftMove,
   keyContainer,
-  extentDesc
+  extentDesc,
+  extentRadioSw
 }
 
 export const mapControlsConsts = {
