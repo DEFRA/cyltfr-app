@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
-{% set pageTitle = "Surface water: understand your flood risk" %}
-{% set currentpage = "surface-water" %}
+{% set pageTitle = "Surface water: possible flood depths" %}
+{% set currentpage = "surface-water-depth" %}
 
 {% block head %}
 {{ super() }}
@@ -11,7 +11,7 @@
 
 {% block beforeContent %}
 <div class="top-page-links">
-  <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back to summary</a>
+  <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back</a>
 </div>
 {% endblock %}
 
@@ -20,24 +20,24 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-l govuk-!-padding-top-0 h1-gap">
-        Surface water: understand your flood risk
+        Surface water: possible flood depths
       </h1>
+      <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
+      <p class="govuk-body">This information tells you the flood risk of the land around a building, not the building itself.</p>
+      <p class="govuk-body">Flooding is hard to predict and there is always a chance any flood water could be deeper than what we show.</p>
+      {{ govukDetails({
+        summaryText: "What the flood risk ratings mean",
+        html: "<p class='govuk-body'>Our data does not include every feature like kerbs, or fences and walls around a building. 
+          That means we cannot tell you the flood risk of every individual property.</p>
+        <p class='govuk-body'>Neighbouring houses may have different levels of flood risk. 
+          This could be because one is on higher land or is nearer water, for example.</p>
+        <p class='govuk-body'>An area can be at risk even if it has not flooded before. 
+          If an area has flooded before, any future flooding might not cover the same area.</p>
+        <p class='govuk-body'>Flooding is hard to predict, especially further into the future. 
+          Flood risks could be bigger or smaller than what we show, and could change over time.</p>"
+      }) }}
     </div>
-  </div>   
-    
-  <nav aria-label="Pages with more detail on this service" class="gem-c-contents-list govuk-!-margin-bottom-3"
-  role="navigation">
-  <ol class="gem-c-contents-list__list">
-    {% if surfaceWaterIsFirst %}
-    {% include 'partials/nav-sw.njk' %}
-    {% endif %}
-    {% include 'partials/nav-rs.njk' %}
-    {% if not surfaceWaterIsFirst %}
-    {% include 'partials/nav-sw.njk' %}
-    {% endif %}
-    {% include 'partials/nav-gw.njk' %}
-</ol>
-</nav>
+  </div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -50,10 +50,6 @@
     </p>
     <p class="govuk-body">This information tells you the highest chance of flooding on the land 15 metres around a property.</p>
     {% include 'partials/floodRatings.html' %}
-
-    <a class="govuk-link" href="/surface-water-depth">
-      Temporary Link to surface water depth page
-    </a>
 
     <h2 class="govuk-heading-m">See surface water flood risk on a map</h2>
 
@@ -72,7 +68,7 @@
         {% if hasLlfaComments %}
         They have the following information about surface water flooding:
         <br>
-        <ul class="govuk-list govuk-list--bullet surface-water" id="llfa-comments-list">
+        <ul class="govuk-list govuk-list--bullet surface-water-depth" id="llfa-comments-list">
           {% for comment in llfaComments %}
           <li id="llfa-comments">{{ comment }}</li>
           {% endfor %}
