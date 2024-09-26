@@ -2,8 +2,6 @@ import { screenAdjustConsts } from './constants'
 
 export function adjustPosition () {
   adjustLogoAndCopyright()
-  keyToggleAdjustments()
-  scenarioBarAdjustments()
   zoomBtnAdjustments()
 }
 
@@ -17,28 +15,6 @@ function adjustLogoAndCopyright () {
     screenAdjustConsts.osLogo.classList.remove('os-logo-position-change')
     screenAdjustConsts.bottomCopyrightContainer.classList.remove('hide')
     screenAdjustConsts.topCopyrightContainer.classList.add('hide')
-  }
-}
-
-function keyToggleAdjustments () {
-  if (!screenAdjustConsts.keyDisplay.classList.contains('hide') && window.innerWidth <= screenAdjustConsts.deviceScreenWidth) {
-    screenAdjustConsts.scenarioSelectionDepth.classList.add('hide')
-    screenAdjustConsts.scenarioSelectionVelocity.classList.add('hide')
-  } else if (!screenAdjustConsts.keyDisplay.classList.contains('hide') && window.innerWidth > screenAdjustConsts.deviceScreenWidth) {
-    if (screenAdjustConsts.depthRadio.checked) {
-      screenAdjustConsts.scenarioSelectionDepth.classList.remove('hide')
-    }
-    if (screenAdjustConsts.velocityRadio.checked) {
-      screenAdjustConsts.scenarioSelectionVelocity.classList.remove('hide')
-    }
-  }
-}
-
-function scenarioBarAdjustments () {
-  if (screenAdjustConsts.depthRadio.checked && window.innerWidth > screenAdjustConsts.deviceScreenWidth) {
-    screenAdjustConsts.scenarioSelectionDepth.classList.remove('hide')
-  } else if (screenAdjustConsts.velocityRadio.checked && window.innerWidth > screenAdjustConsts.deviceScreenWidth) {
-    screenAdjustConsts.scenarioSelectionVelocity.classList.remove('hide')
   }
 }
 

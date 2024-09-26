@@ -43,6 +43,9 @@ module.exports = {
       if (query.map === 'RiversOrSea') {
         view = 'map-rivers-and-sea'
       }
+      if (query.map === 'Reservoirs') {
+        view = 'map-reservoirs'
+      }
 
       return h.view(view, new MapViewModel(easting, northing, address, backLinkUri, mapConfig))
     },
