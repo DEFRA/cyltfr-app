@@ -123,6 +123,24 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 })
 
+mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
+  const extentDescContainer = document.getElementsByClassName('extent-desc-container')
+  const extentDescCcContainer = document.getElementsByClassName('extent-desc-container-cc')
+  const extentRadio = document.getElementsByClassName('extent-radio')
+  const extentRadioCC = document.getElementById('extent-radio-cc')
+
+  radio.addEventListener('change', () => {
+    if (extentRadioCC.checked) {
+      extentDescCcContainer[0].classList.remove('hide')
+      extentDescContainer[0].classList.add('hide')
+    }
+    if (extentRadio[0].checked) {
+      extentDescCcContainer[0].classList.add('hide')
+      extentDescContainer[0].classList.remove('hide')
+    }
+  })
+})
+
 mapPageConsts.exitMapBtn.addEventListener('click', function () {
   const backLink = mapPageConsts.exitMapBtn.getAttribute('data-backlink')
 
