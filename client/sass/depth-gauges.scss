@@ -1,0 +1,302 @@
+.defra-flood-impact-list {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+@media print {
+  .defra-flood-impact-list {
+    font-family: sans-serif;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list {
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+  }
+}
+
+@media print {
+  .defra-flood-impact-list {
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+}
+
+.defra-flood-impact-list__key {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  position: absolute;
+  left: -3.65em;
+  width: 3.65em;
+  top: 0px;
+  text-align: right;
+}
+
+@media print {
+  .defra-flood-impact-list__key {
+    font-family: sans-serif;
+  }
+}
+
+.defra-flood-impact-list__value {
+  position: relative;
+  margin: 0;
+  padding-left: 16%;
+  padding-bottom: 10px;
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list__value {
+    padding-left: 8%;
+    padding-bottom: 15px;
+  }
+}
+
+.defra-flood-impact-list__value:nth-child(2):before {
+  position: absolute;
+  content: "";
+  width: 22px;
+  height: 5px;
+  border-top: 0px solid white;
+  border-bottom: 0px solid white;
+  background-color: #b1b4b6;
+  margin-left: -10px;
+  top: 8px;
+  left: 8%;
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list__value:nth-child(2):before {
+    top: 11px;
+    left: 4%;
+  }
+}
+
+.defra-flood-impact-list__container {
+  padding-bottom: 10px;
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list__container {
+    padding-right: 28%;
+    padding-bottom: 15px;
+  }
+}
+
+.defra-flood-impact-list__action {
+  display: block;
+  margin-top: 5px;
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list__action {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    margin-top: 0px;
+  }
+}
+
+.defra-flood-impact-list .defra-button-text-s {
+  display: block;
+}
+
+.depth-chance-info {
+  padding-left: 10px;
+  margin-bottom: 3px;
+}
+
+@media (max-width: 40.0525em) {
+  .depth-chance-info {
+    display: block;
+    padding-left: 0px;
+    margin-top: 10px;
+  }
+}
+
+.unbold-depth {
+  font-weight: normal;
+}
+
+.defra-flood-impact-list-v13 {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+@media print {
+  .defra-flood-impact-list-v13 {
+    font-family: sans-serif;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list-v13 {
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+  }
+}
+
+@media print {
+  .defra-flood-impact-list-v13 {
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+}
+
+.defra-flood-impact-list-v13__row {
+  position: relative;
+  margin-left: 3.65em;
+  overflow: visible;
+}
+
+.defra-flood-impact-list-v13__row:before {
+  position: absolute;
+  content: "";
+  width: 15px;
+  top: 11px;
+  bottom: -20px;
+  background-color: #b1b4b6;
+  margin-left: -1.5px;
+  margin-bottom: -1px;
+  left: 8%;
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list-v13__row:before {
+    left: 7%;
+  }
+}
+
+.defra-flood-impact-list-v13__key {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  position: absolute;
+  left: -3.65em;
+  width: 3.65em;
+  top: 0px;
+  text-align: right;
+}
+
+@media print {
+  .defra-flood-impact-list-v13__key {
+    font-family: sans-serif;
+  }
+}
+
+.defra-flood-impact-list-v13__value {
+  position: relative;
+  margin: 0;
+  padding-left: 16%;
+  padding-bottom: 10px;
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list-v13__value {
+    padding-left: 8%;
+    padding-bottom: 15px;
+  }
+}
+
+.defra-flood-impact-list-v13__value:nth-child(2):before {
+  position: absolute;
+  content: "";
+  width: 32px;
+  height: 5px;
+  border-top: 0px solid white;
+  border-bottom: 0px solid white;
+  background-color: #b1b4b6;
+  margin-left: -10px;
+  top: 8px;
+  left: 8%;
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list-v13__value:nth-child(2):before {
+    top: 11px;
+    left: 7%;
+  }
+}
+
+.defra-flood-impact-list-v13__row:last-child:before {
+  bottom: 0px;
+}
+
+.defra-flood-impact-list-v13__row:last-child .defra-flood-impact-list-v13__value:last-child {
+  padding-bottom: 0;
+}
+
+.defra-flood-impact-list-v13__row:last-child .defra-flood-impact-list-v13__value:last-child {
+  padding-bottom: 0;
+}
+
+.defra-flood-impact-list-v13__row:last-child .defra-flood-impact-list-v13__value:last-child .defra-flood-impact-list-v13__container {
+  border-bottom: 0px;
+}
+
+.defra-flood-impact-list-v13__container {
+  padding-bottom: 10px;
+}
+
+@media (min-width: 40.0625em) {
+  .defra-flood-impact-list-v13__container {
+    padding-right: 28%;
+    padding-bottom: 15px;
+  }
+}
+
+.defra-flood-impact-list-v13 .defra-button-text-s {
+  display: block;
+}
+
+.defra-flood-impact-list-v13__row--current:before {
+  background-color: #1d70b8;
+}
+
+.defra-flood-impact-list-v13__row--current .defra-flood-impact-list-v13__value:before {
+  background-color: #1d70b8;
+  border: 0px;
+}
+
+.gauge-display {
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+
+.gauge-display__item {
+  position: relative;
+  width: 50%;
+  min-width: 226px;
+  margin-bottom: 20px;
+}
+
+.defra-flood-impact-list__key {
+  text-align: left;
+}
+
+.gauge-display__item-all-gauges {
+  position: relative;
+  width: 50%;
+  min-width: 226px;
+  margin-bottom: 10px;
+}
+
+.label-mod-depth-14 {
+  padding: 2px 4px 2px 4px;
+  white-space: nowrap;
+}

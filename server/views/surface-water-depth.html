@@ -8,6 +8,7 @@
 {{ super() }}
 <link href="{{ assetPath }}/stylesheets/risk-data.css" rel="stylesheet" />
 <link href="{{ assetPath }}/stylesheets/rivers-and-sea.css" rel="stylesheet" />
+<link href="{{ assetPath }}/stylesheets/depth-gauges.css" rel="stylesheet" />
 {% endblock %}
 
 {% block beforeContent %}
@@ -19,84 +20,63 @@
 {% block content %}
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l govuk-!-padding-top-0 h1-gap">
+    <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-9">
+      <h1 class="govuk-heading-xl">
         Surface water: possible flood depths
       </h1>
-      <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
-      <p class="govuk-body">This information tells you the flood risk of the land around a building, not the building itself.</p>
-      <p class="govuk-body">Flooding is hard to predict and there is always a chance any flood water could be deeper than what we show.</p>
+      <p class="govuk-body govuk-!-margin-bottom-2"><strong>Your selected location:</strong> {{ fullAddress }}</p>
+      <p class="govuk-body govuk-!-margin-bottom-6">This information tells you the flood risk of the land around a
+        building, not the building
+        itself.</p>
+      <p class="govuk-body">Flooding is hard to predict and there is always a chance any flood water could be deeper
+        than what we show.</p>
       {% include 'partials/floodRatings.html' %}
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-8 govuk-!-padding-bottom-2">Chance of flooding to 20cm</h2>
+
+      {% include 'partials/sw-depth-gauge-20.html' %}
+
+      <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>medium</strong> chance of flooding
+        to
+        <strong>20cm</strong> (or 8 inches).
+      </p>
+      <p class="govuk-body">Between 2040 and 2060 this increases to a <strong>high</strong> chance of flooding to
+        <strong>20cm</strong> (or 8 inches).
+      </p>
+      <p class="govuk-body">At 20cm, flood water can get into some homes and buildings, especially if the property has a
+        basement. At this level, water can also damage your car or cause a breakdown.</p>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-8 govuk-!-padding-bottom-2">Chance of flooding to 30cm</h2>
+
+      {% include 'partials/sw-depth-gauge-30.html' %}
+
+      <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>
+          low</strong> chance of flooding to <strong>30cm</strong> (or 1ft)</p>
+      <p class="govuk-body">Between 2040 and 2060 this increases to a <strong>
+          medium</strong> chance of flooding to <strong>30cm</strong> (or 1ft)</p>
+      <p class="govuk-body govuk-!-margin-bottom-6">At 30cm, flood water can get into homes
+        and buildings. Water at this level can also move a car, damage roads and cause major traffic disruption.
+      </p>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-8 govuk-!-padding-bottom-2">Chance of flooding to 60cm</h2>
+
+      {% include 'partials/sw-depth-gauge-60.html' %}
+
+      <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>
+        very low</strong> chance of flooding to <strong>60cm</strong> (or 2ft)</p>
+      <p class="govuk-body">Between 2040 and 2060 this increases to a <strong>
+          low</strong> chance of flooding to <strong>60cm</strong> (or 2ft)</p>
+      <p class="govuk-body">At 60cm, we expect flood water to get into homes and buildings.
+        Water at this level can float most vehicles, including 4x4s.
+      </p>
+      <p class="govuk-body">Flood protection measures are usually effective up to 60cm. You should not try and keep
+        flood
+        water out of buildings if it's over 90cm. Water at this level can cause collapse or permanent structural damage.
+      </p>
+      <p class="govuk-body">Return to <a class="govuk-link" href="/surface-water" previewlistener="true">surface
+          water</a> to
+        read advice on how to manage your risk from flooding.</p>
     </div>
   </div>
-
-    <h2 class="govuk-heading-m">See surface water flood risk on a map</h2>
-
-    <p class="govuk-body"><a class="govuk-link" href="/map?easting={{easting}}&northing={{northing}}&map=SurfaceWater"
-        previewlistener="true">View a surface water map</a> for information on: </p>
-        <ul class="govuk-list--bullet govuk-body">
-          <li>where any flood water might spread to (extent)</li>
-          <li>how deep any flood water could be (depth)</li>
-        </ul>
-
-    <h2 class="govuk-heading-m">What you can do</h2>
-      <p class="govuk-body">It's a good idea to check your flood risk regularly because the information may change.</p>
-      <p class="govuk-body">You can also read about <a href="https://www.gov.uk/prepare-for-flooding">how to prepare yourself and your property</a>.</p>
-      <p class="govuk-body">Lead local flood authorities are responsible for managing flood risk from surface water. They may hold more detailed information.</p>
-      <p class="govuk-body">Your lead local flood authority is <strong>{{leadLocalFloodAuthority}}</strong>.
-        {% if hasLlfaComments %}
-        They have the following information about surface water flooding:
-        <br>
-        <ul class="govuk-list govuk-list--bullet surface-water-depth" id="llfa-comments-list">
-          {% for comment in llfaComments %}
-          <li id="llfa-comments">{{ comment }}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-</p>
-      
-    <hr
-      class="govuk-section-break govuk-section-break--m govuk-section-break--visible  govuk-!-margin-top-6 govuk-!-margin-bottom-3">
-
-    <nav class="govuk-pagination govuk-pagination--block" role="navigation" aria-label="results">
-      {% if surfaceWaterIsFirst %}
-      <div class="govuk-pagination__next">
-        <a class="govuk-link govuk-pagination__link" href="/rivers-and-sea" rel="next"
-          previewlistener="true"> <svg class="govuk-pagination__icon govuk-pagination__icon--next"
-            xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false"
-            viewBox="0 0 15 13">
-            <path
-              d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
-            </path>
-          </svg> <span class="govuk-pagination__link-title">Next</span><span class="govuk-visually-hidden">:</span>
-          <span class="govuk-pagination__link-label">Rivers and the sea </span></a>
-      </div>
-      {% else %}
-      <nav class="govuk-pagination govuk-pagination--block" role="navigation" aria-label="results">
-        <div class="govuk-pagination__prev">
-          <a class="govuk-link govuk-pagination__link" href="/rivers-and-sea" rel="prev" previewlistener="true">
-            <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg"
-              height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-              <path
-                d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z">
-              </path>
-            </svg>
-            <span class="govuk-pagination__link-title">Previous</span><span class="govuk-visually-hidden">:</span>
-            <span class="govuk-pagination__link-label">Rivers and Sea</span></a>
-        </div>
-        <div class="govuk-pagination__next">
-          <a class="govuk-link govuk-pagination__link" href="/ground-water" rel="next"
-            previewlistener="true"> <svg class="govuk-pagination__icon govuk-pagination__icon--next"
-              xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false"
-              viewBox="0 0 15 13">
-              <path
-                d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
-              </path>
-            </svg> <span class="govuk-pagination__link-title">Next</span><span class="govuk-visually-hidden">:</span>
-            <span class="govuk-pagination__link-label">Groundwater and reservoirs</span></a>
-        </div>
-  {% endif %}
-    </nav>
-  </div>
-
+</div>
 {% endblock %}
