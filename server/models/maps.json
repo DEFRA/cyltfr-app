@@ -42,6 +42,41 @@
           }
         },
         {
+          "ref": "RiversOrSea_1-ROFRS-cc",
+          "name": "Extent of flooding climate change",
+          "title": "Extent of flooding from rivers or the sea climate change",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_Depth_CCRS2_0mm/VectorTileServer",
+          "legend": {
+            "title": "Flood risk climate change",
+            "keys": [
+              {
+                "text": "High",
+                "desc": "High risk description",
+                "icon": "purple",
+                "id": "rivers-seas-high"
+              },
+              {
+                "text": "Medium",
+                "desc": "Medium risk description",
+                "icon": "dark-blue",
+                "id": "rivers-seas-medium"
+              },
+              {
+                "text": "Low",
+                "desc": "Low risk description",
+                "icon": "blue",
+                "id": "rivers-seas-low"
+              },
+              {
+                "text": "Very low",
+                "desc": "Very low risk description",
+                "icon": "light-blue",
+                "id": "rivers-seas-very-low"
+              }
+            ]
+          }
+        },
+        {
           "ref": "RiversOrSea_2-FWLRSF",
           "name": "Depth and flow estimates at monitoring stations",
           "title": "Estimated depth and flow of water at river and sea level monitoring stations",
@@ -107,7 +142,7 @@
           "title": "Extent of flooding from surface water climate change",
           "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_Depth_CCSW3_0mm/VectorTileServer",
           "legend": {
-            "title": "Flood risk",
+            "title": "Flood risk climate change",
             "keys": [
               {
                 "text": "High",
