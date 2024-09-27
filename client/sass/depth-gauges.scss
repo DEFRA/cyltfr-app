@@ -37,7 +37,7 @@
   left: -3.65em;
   width: 3.65em;
   top: 0px;
-  text-align: right;
+  text-align: left;
 }
 
 @media print {
@@ -240,10 +240,6 @@
   padding-bottom: 0;
 }
 
-.defra-flood-impact-list-v13__row:last-child .defra-flood-impact-list-v13__value:last-child {
-  padding-bottom: 0;
-}
-
 .defra-flood-impact-list-v13__row:last-child .defra-flood-impact-list-v13__value:last-child .defra-flood-impact-list-v13__container {
   border-bottom: 0px;
 }
@@ -283,10 +279,6 @@
   width: 50%;
   min-width: 226px;
   margin-bottom: 20px;
-}
-
-.defra-flood-impact-list__key {
-  text-align: left;
 }
 
 .gauge-display__item-all-gauges {
