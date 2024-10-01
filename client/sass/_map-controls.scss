@@ -193,17 +193,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   // only generate after the JS imports the map and are contained
   // within the map element.
   #map {
-    height: 99%;
-    border: 5px solid transparent;
 
     @media screen and (max-width: $tablet-width) {
       height: 100dvh;
       width: 100dvw;
-    }
-
-    &:focus-visible {
-      outline: 0;
-      border: 5px solid #ffdd00;
     }
 
     .ol-control {
