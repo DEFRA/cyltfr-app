@@ -13,7 +13,7 @@ module.exports = [
       request.yar.set('postcode', null)
       const error = request.query.error
       request.yar.set('previousPage', request.path)
-      const backLinkUri = 'https://www.gov.uk/check-long-term-flood-risk'
+      const backLinkUri = config.floodRiskUrl
 
       if (error) {
         const errorMessage = 'This postcode does not appear to exist'
