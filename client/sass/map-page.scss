@@ -36,6 +36,12 @@ body {
   display: none !important;
 }
 
+.esri-view .esri-view-surface:focus-visible {
+  outline-color: #ffdd00 !important;
+  --esri-view-outline-color: #ffdd00 !important;
+  --esri-view-outline: 10px solid var(--esri-view-outline-color) !important;
+}
+
 .map-container {
   width: 100dvw;
   height: 100%;
@@ -78,6 +84,7 @@ body {
     float: right;
     clear: right;
     z-index: 11;
+    position: relative;
   }
 
   #copyright-text {
