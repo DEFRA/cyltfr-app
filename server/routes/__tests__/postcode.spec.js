@@ -98,46 +98,37 @@ describe('postcode page', () => {
       config.friendlyCaptchaEnabled = true
       config.friendlyCaptchaBypass = 'test-bypass-code'
     })
-    test('should set captchabypass to true if query parameter matches config value', async () => {
-      const options = {
-        method: 'GET',
-        url: '/postcode?captchabypass=test-bypass-code',
-        headers: {
-          cookie
-        }
+    const testCases = [
+      {
+        description: 'should set captchabypass to true if query parameter matches config value',
+        query: '?captchabypass=test-bypass-code',
+        expected: true
+      },
+      {
+        description: 'should set captchabypass to false if query parameter does not match config value',
+        query: '?captchabypass=invalid-code',
+        expected: false
+      },
+      {
+        description: 'should not set captchabypass if query parameter is absent',
+        query: '',
+        expected: false
       }
-      const response = await server.inject(options)
-      expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-      const sessionCaptchaBypass = response.request.yar.get('captchabypass')
-      expect(sessionCaptchaBypass).toEqual(true)
-    })
-
-    test('should set captchabypass to false if query parameter does not match config value', async () => {
-      const options = {
-        method: 'GET',
-        url: '/postcode?captchabypass=invalid-code',
-        headers: {
-          cookie
+    ]
+    testCases.forEach(({ description, query, expected }) => {
+      test(description, async () => {
+        const options = {
+          method: 'GET',
+          url: `/postcode${query}`,
+          headers: {
+            cookie
+          }
         }
-      }
-      const response = await server.inject(options)
-      expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-      const sessionCaptchaBypass = response.request.yar.get('captchabypass')
-      expect(sessionCaptchaBypass).toEqual(false)
-    })
-
-    test('should not set captchabypass if query parameter is absent', async () => {
-      const options = {
-        method: 'GET',
-        url: '/postcode',
-        headers: {
-          cookie
-        }
-      }
-      const response = await server.inject(options)
-      expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-      const sessionCaptchaBypass = response.request.yar.get('captchabypass')
-      expect(sessionCaptchaBypass).toEqual(false)
+        const response = await server.inject(options)
+        expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+        const sessionCaptchaBypass = response.request.yar.get('captchabypass')
+        expect(sessionCaptchaBypass).toEqual(expected)
+      })
     })
   })
 })
