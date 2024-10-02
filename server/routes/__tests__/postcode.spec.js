@@ -2,11 +2,13 @@ const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
 const config = require('../../config')
+const captchaCheck = require('../../services/captchacheck')
 let server, cookie
 
 jest.mock('../../config')
 jest.mock('../../services/flood')
 jest.mock('../../services/address')
+jest.mock('../../services/captchacheck')
 
 beforeAll(async () => {
   server = await createServer()
@@ -23,6 +25,10 @@ afterAll(async () => {
 })
 
 describe('postcode page', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('should return a view with error message when redirected to with an error', async () => {
     const options = {
       method: 'GET',
@@ -37,6 +43,7 @@ describe('postcode page', () => {
   })
 
   test('should redirect to search page when postcode submitted', async () => {
+    captchaCheck.captchaCheck.mockResolvedValue({ tokenValid: true })
     const { postOptions } = mockSearchOptions('NP18 3EZ', cookie)
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
@@ -62,6 +69,30 @@ describe('postcode page', () => {
     expect(response.result).toMatch('Enter a full postcode in England')
   })
 
+  test('should return error view when captcha validation fails', async () => {
+    const mockCaptchaCheck = {
+      tokenValid: false,
+      errorMessage: 'Captcha validation failed. Please try again.'
+    }
+
+    captchaCheck.captchaCheck.mockResolvedValue(mockCaptchaCheck)
+
+    const options = {
+      method: 'POST',
+      url: '/postcode',
+      headers: {
+        cookie
+      },
+      payload: {
+        'frc-captcha-solution': 'invalid',
+        postcode: 'NP18 3EZ'
+      }
+    }
+    const response = await server.inject(options)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(response.result).toContain('Captcha validation failed. Please try again.')
+  })
+
   describe('postcode page - captchabypass', () => {
     beforeEach(() => {
       config.friendlyCaptchaEnabled = true
@@ -85,6 +116,20 @@ describe('postcode page', () => {
       const options = {
         method: 'GET',
         url: '/postcode?captchabypass=invalid-code',
+        headers: {
+          cookie
+        }
+      }
+      const response = await server.inject(options)
+      expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+      const sessionCaptchaBypass = response.request.yar.get('captchabypass')
+      expect(sessionCaptchaBypass).toEqual(false)
+    })
+
+    test('should not set captchabypass if query parameter is absent', async () => {
+      const options = {
+        method: 'GET',
+        url: '/postcode',
         headers: {
           cookie
         }
