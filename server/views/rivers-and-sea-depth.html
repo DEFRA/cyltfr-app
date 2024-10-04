@@ -1,0 +1,122 @@
+{% extends 'layout.html' %}
+
+{% set pageTitle = "Rivers and the sea: understand your flood risk" %}
+{% set currentpage = "rivers-and-sea" %}
+
+{% block head %}
+{{ super() }}
+<link href="{{ assetPath }}/stylesheets/risk-data.css" rel="stylesheet" />
+<link href="{{ assetPath }}/stylesheets/rivers-and-sea.css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block beforeContent %}
+<div class="top-page-links">
+  <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back to summary</a>
+</div>
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l govuk-!-padding-top-0 h1-gap">
+          Rivers and the sea: understand your flood risk
+        </h1>
+      </div>
+    </div>
+  
+    <nav aria-label="Pages with more detail on this service" class="gem-c-contents-list govuk-!-margin-bottom-3"
+      role="navigation">
+      <ol class="gem-c-contents-list__list">
+        {% if surfaceWaterIsFirst %}
+        {% include 'partials/nav-sw.njk' %}
+        {% endif %}
+        {% include 'partials/nav-rs.njk' %}
+        {% if not surfaceWaterIsFirst %}
+        {% include 'partials/nav-sw.njk' %}
+        {% endif %}
+        {% include 'partials/nav-gw.njk' %}
+        </ol>
+    </nav>
+  
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+        <h2 class="govuk-heading-m">Yearly chance of flooding</h2>
+        <p class="govuk-body">The yearly chance of flooding from rivers and the sea is:
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod-depth">
+            <span>{{ riverAndSeaRisk }}</span>
+          </strong>
+        </p>
+        {% include 'partials/floodRatings.html' %}
+  
+        <h2 class="govuk-heading-m">See rivers and sea flood risk on a map</h2>
+        
+        <p class="govuk-body"><a class="govuk-link" href="/map?easting={{easting}}&northing={{northing}}&map=RiversOrSea"
+            previewlistener="true">View a rivers and
+            sea map</a> for information on where any flood water might spread to (extent).</p>
+            
+        <h2 class="govuk-heading-m">What you can do</h2>
+
+        {% if riverAndSeaRisk !== 'Very Low' %}
+        <p class="govuk-body">It's a good idea to check your flood risk regularly because the information may change.
+        </p>
+        <p class="govuk-body">You can also:</p>
+        <ul class="govuk-list--bullet">
+          <li class="govuk-body"><a class="govuk-link" href="https://www.gov.uk/sign-up-for-flood-warnings"
+              previewlistener="true">sign up
+              to receive flood warnings by phone, text or email</a></li>
+          <li class="govuk-body">read about <a class="govuk-link" href="https://www.gov.uk/prepare-for-flooding"
+              previewlistener="true">how
+              to prepare yourself and your property</a></li>
+  
+        </ul>
+        {% else %}
+        <p class="govuk-body">It's a good idea to check your flood risk regularly because the information may change.</p>
+        <p class="govuk-body">You can also read about <a href="https://www.gov.uk/prepare-for-flooding">how to prepare yourself and your property</a>.</p>
+        {% endif %}
+
+        <hr
+          class="govuk-section-break govuk-section-break--m govuk-section-break--visible  govuk-!-margin-top-6 govuk-!-margin-bottom-3">
+  
+        <nav class="govuk-pagination govuk-pagination--block" role="navigation" aria-label="results">
+          {% if surfaceWaterIsFirst %}
+          <div class="govuk-pagination__prev">
+            <a class="govuk-link govuk-pagination__link" href="/surface-water" rel="prev" previewlistener="true">
+              <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg"
+                height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                <path
+                  d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z">
+                </path>
+              </svg>
+              <span class="govuk-pagination__link-title">Previous</span><span class="govuk-visually-hidden">:</span>
+              <span class="govuk-pagination__link-label">Surface water</span></a>
+          </div>
+          <div class="govuk-pagination__next">
+            <a class="govuk-link govuk-pagination__link" href="/ground-water" rel="next"
+              previewlistener="true"> <svg class="govuk-pagination__icon govuk-pagination__icon--next"
+                xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false"
+                viewBox="0 0 15 13">
+                <path
+                  d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
+                </path>
+              </svg> <span class="govuk-pagination__link-title">Next</span><span class="govuk-visually-hidden">:</span>
+              <span class="govuk-pagination__link-label">Groundwater and reservoirs</span></a>
+          </div>
+          {% else %}
+          <div class="govuk-pagination__next">
+            <a class="govuk-link govuk-pagination__link" href="/surface-water" rel="next"
+              previewlistener="true"> <svg class="govuk-pagination__icon govuk-pagination__icon--next"
+                xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false"
+                viewBox="0 0 15 13">
+                <path
+                  d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
+                </path>
+              </svg> <span class="govuk-pagination__link-title">Next</span><span class="govuk-visually-hidden">:</span>
+              <span class="govuk-pagination__link-label">Surface water</span></a>
+          </div>
+          {% endif %}
+          </nav>
+      </div>
+{% endblock %}
