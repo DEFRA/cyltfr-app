@@ -35,7 +35,7 @@ role="navigation">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-      <h1 class="govuk-heading-xl govuk-!-padding-top-0 h1-gap">
+      <h1 class="govuk-heading-xl govuk-!-margin-top-6">
         Surface water: understand your flood risk
       </h1>
       <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
@@ -45,14 +45,18 @@ role="navigation">
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">How likely a surface water flood is</h2>
-    <p class="govuk-body">The yearly chance of surface water flooding is:</p>
+    <h2 class="govuk-heading-l govuk-!-padding-top-6 govuk-!-margin-bottom-4">How likely a surface water flood is</h2>
+    <p class="govuk-body govuk-!-padding-top-4">The yearly chance of surface water flooding is:</p>
     <p class="govuk-body">
       <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod-depth">
         <span>{{ surfaceWaterRisk }}</span>
       </strong>
-      increasing to 
-      <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod-depth">
+      {% if surfaceWaterRisk == surfaceWaterRiskCC %}
+        staying at
+      {% else %}
+        increasing to
+      {% endif %}
+      <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod-depth">
         <span>{{ surfaceWaterRiskCC }}</span>
       </strong>
       between 2040 to 2060
@@ -64,25 +68,25 @@ role="navigation">
     <p class="govuk-body"><a class="govuk-link" href="/map?easting={{easting}}&northing={{northing}}&map=SurfaceWater"
         previewlistener="true">View a surface water map</a> to see where any flood water might spread to.</p>
 
-    <h2 class="govuk-heading-l">How deep any flood water could be</h2>
+    <h2 class="govuk-heading-l govuk-!-padding-top-6">How deep any flood water could be</h2>
     <p class="govuk-body">Even a small amount of water can cause serious damage so it's a good idea to know how deep any flooding could be.</p>
     <p class="govuk-body">You cannot completely protect your property from flooding, but there's a lot you can do to reduce:</p>
-    <ul class="govuk-list--bullet govuk-body">
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
       <li>the amount of flood water that gets in</li>
       <li>the damage from flood water</li>
       <li>the cost and time of cleaning up after a flood</li>
     </ul>
     <p class="govuk-body">
-      <a class="govuk-link" href="/surface-water-depth">See how deep any flood water could be at your selected location.</a>
+      <a class="govuk-link" href="/surface-water-depth">See how deep any flood water could be at your selected location</a>.
     </p>
 
-    <h2 class="govuk-heading-l">What to do next</h2>
-      <p class="govuk-body">Read about how to <a href="https://www.gov.uk/prepare-for-flooding">prepare yourself and your property for flooding.</a></p>
+    <h2 class="govuk-heading-l govuk-!-padding-top-6">What to do next</h2>
+      <p class="govuk-body">Read about how to <a class="govuk-link" href="https://www.gov.uk/prepare-for-flooding">prepare yourself and your property for flooding.</a></p>
       <p class="govuk-body">You should check your flood risk regularly because the information may change.</p>
 
-    <h3 class="govuk-heading-m">If you need more details on surface water flood risk</h3>
+    <h3 class="govuk-heading-m govuk-!-padding-top-4">If you need more details on surface water flood risk</h3>
       <p class="govuk-body">Lead local flood authorities are responsible for managing flood risk from surface water. They may hold more detailed information.</p>
-      <p class="govuk-body">Your lead local flood authority is <strong>{{leadLocalFloodAuthority}}</strong>.
+      <p class="govuk-body govuk-!-padding-bottom-6 govuk-!-margin-bottom-6">Your lead local flood authority is <strong>{{leadLocalFloodAuthority}}</strong>.
         {% if hasLlfaComments %}
         They have the following information about surface water flooding:
         <br>
