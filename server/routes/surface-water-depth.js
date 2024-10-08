@@ -1,5 +1,5 @@
 const boom = require('@hapi/boom')
-const SurfaceWaterDepthViewModel = require('../models/risk-view')
+const surfaceWaterDepthViewModel = require('../models/depth-view')
 const errors = require('../models/errors.json')
 
 module.exports = {
@@ -17,9 +17,9 @@ module.exports = {
     const backLinkUri = '/surface-water'
 
     try {
-      const risk = await request.server.methods.riskService(x, y, radius)
+      const swDepth = await request.server.methods.swDepth(x, y, radius)
 
-      return h.view('surface-water-depth', new SurfaceWaterDepthViewModel(risk, address, backLinkUri))
+      return h.view('surface-water-depth', surfaceWaterDepthViewModel(swDepth, null, address, backLinkUri))
     } catch (err) {
       return boom.badRequest(errors.riskProfile.message, err)
     }

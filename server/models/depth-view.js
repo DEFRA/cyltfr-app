@@ -1,9 +1,11 @@
-// const RiskLevel = {
-//   VeryLow: 'Very Low',
-//   Low: 'Low',
-//   Medium: 'Medium',
-//   High: 'High'
-// }
+const { capitaliseAddress } = require('../services/address.js')
+
+const RiskLevel = {
+  VeryLow: 'Very Low',
+  Low: 'Low',
+  Medium: 'Medium',
+  High: 'High'
+}
 
 // const RiskTitles = {
 //   'Very Low': 'Very low risk',
@@ -12,8 +14,70 @@
 //   High: 'High risk'
 // }
 
-function depthViewModel (depthJson) {
+const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
+
+function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {
   const depthData = {}
+
+  depthData.easting = address.x
+  depthData.northing = address.y
+  depthData.postcode = address.postcode
+  depthData.lines = address.address.split(', ')
+  depthData.address = address
+  depthData.fullAddress = capitaliseAddress(address.address)
+  if (swDepthJson) {
+    depthData.sw200 = swDepthJson['200']?.current || RiskLevel.VeryLow
+    depthData.sw300 = swDepthJson['300']?.current || RiskLevel.VeryLow
+    depthData.sw600 = swDepthJson['600']?.current || RiskLevel.VeryLow
+    depthData.sw200cc = swDepthJson['200']?.cc || RiskLevel.VeryLow
+    depthData.sw300cc = swDepthJson['300']?.cc || RiskLevel.VeryLow
+    depthData.sw600cc = swDepthJson['600']?.cc || RiskLevel.VeryLow
+
+    depthData.sw200classname = depthData.sw200.replace(' ', '-')
+    depthData.sw300classname = depthData.sw300.replace(' ', '-')
+    depthData.sw600classname = depthData.sw600.replace(' ', '-')
+    depthData.sw200ccclassname = depthData.sw200cc.replace(' ', '-')
+    depthData.sw300ccclassname = depthData.sw300cc.replace(' ', '-')
+    depthData.sw600ccclassname = depthData.sw600cc.replace(' ', '-')
+
+    depthData.sw200Level = Levels.indexOf(depthData.sw200)
+    depthData.sw300Level = Levels.indexOf(depthData.sw300)
+    depthData.sw600Level = Levels.indexOf(depthData.sw600)
+    depthData.sw200ccLevel = Levels.indexOf(depthData.sw200cc)
+    depthData.sw300ccLevel = Levels.indexOf(depthData.sw300cc)
+    depthData.sw600ccLevel = Levels.indexOf(depthData.sw600cc)
+
+    depthData.sw200Change = depthData.sw200Level > depthData.sw200ccLevel ? -1 : depthData.sw200Level < depthData.sw200ccLevel ? 1 : 0
+    depthData.sw300Change = depthData.sw300Level > depthData.sw300ccLevel ? -1 : depthData.sw300Level < depthData.sw300ccLevel ? 1 : 0
+    depthData.sw600Change = depthData.sw600Level > depthData.sw600ccLevel ? -1 : depthData.sw600Level < depthData.sw600ccLevel ? 1 : 0
+  }
+  if (rsDepthJson) {
+    depthData.rs200 = rsDepthJson['200']?.current || RiskLevel.VeryLow
+    depthData.rs300 = rsDepthJson['300']?.current || RiskLevel.VeryLow
+    depthData.rs600 = rsDepthJson['600']?.current || RiskLevel.VeryLow
+    depthData.rs200cc = rsDepthJson['200']?.cc || RiskLevel.VeryLow
+    depthData.rs300cc = rsDepthJson['300']?.cc || RiskLevel.VeryLow
+    depthData.rs600cc = rsDepthJson['600']?.cc || RiskLevel.VeryLow
+
+    depthData.rs200classname = depthData.rs200.replace(' ', '-')
+    depthData.rs300classname = depthData.rs300.replace(' ', '-')
+    depthData.rs600classname = depthData.rs600.replace(' ', '-')
+    depthData.rs200ccclassname = depthData.rs200cc.replace(' ', '-')
+    depthData.rs300ccclassname = depthData.rs300cc.replace(' ', '-')
+    depthData.rs600ccclassname = depthData.rs600cc.replace(' ', '-')
+
+    depthData.rs200Level = Levels.indexOf(depthData.rs200)
+    depthData.rs300Level = Levels.indexOf(depthData.rs300)
+    depthData.rs600Level = Levels.indexOf(depthData.rs600)
+    depthData.rs200ccLevel = Levels.indexOf(depthData.rs200cc)
+    depthData.rs300ccLevel = Levels.indexOf(depthData.rs300cc)
+    depthData.rs600ccLevel = Levels.indexOf(depthData.rs600cc)
+
+    depthData.rs200Change = depthData.rs200Level > depthData.rs200ccLevel ? -1 : depthData.rs200Level < depthData.rs200ccLevel ? 1 : 0
+    depthData.rs300Change = depthData.rs300Level > depthData.rs300ccLevel ? -1 : depthData.rs300Level < depthData.rs300ccLevel ? 1 : 0
+    depthData.rs600Change = depthData.rs600Level > depthData.rs600ccLevel ? -1 : depthData.rs600Level < depthData.rs600ccLevel ? 1 : 0
+  }
+  depthData.backLink = backLinkUri
 
   return depthData
 }

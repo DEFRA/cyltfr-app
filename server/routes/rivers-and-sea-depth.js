@@ -1,7 +1,7 @@
 const boom = require('@hapi/boom')
 const errors = require('../models/errors.json')
 const { redirectToHomeCounty } = require('../helpers')
-const RiversAndSeaDepthViewModel = require('../models/depth-view')
+const riversAndSeaDepthViewModel = require('../models/depth-view')
 
 module.exports = {
   method: 'GET',
@@ -21,8 +21,8 @@ module.exports = {
     const backLinkUri = '/rivers-and-sea'
 
     try {
-      const risk = await request.server.methods.riskService(x, y)
-      const model = new RiversAndSeaDepthViewModel(risk, address, backLinkUri)
+      const rsDepth = await request.server.methods.rsDepth(x, y)
+      const model = riversAndSeaDepthViewModel(null, rsDepth, address, backLinkUri)
       return h.view('rivers-and-sea-depth', model)
     } catch (err) {
       return boom.badRequest(errors.riskProfile.message, err)

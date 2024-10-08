@@ -33,30 +33,30 @@
 
       {% include 'partials/sw-depth-gauge-20.html' %}
 
-      <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>medium</strong> chance of flooding
+      <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>{{ sw200 }}</strong> chance of flooding
         to <strong>20cm</strong> (or 8 inches).</p>
-      <p class="govuk-body">Between 2040 and 2060 this increases to a <strong>high</strong> chance of flooding to
-        <strong>20cm</strong> (or 8 inches).</p>
+      <p class="govuk-body">Between 2040 and 2060 this {{ "increases to" if sw200Change === 1 }}{{ "stays at" if sw200Change === 0 }}{{ "changes to" if sw200Change === -1 }}
+         a <strong>{{ sw200cc }}</strong> chance of flooding to <strong>20cm</strong> (or 8 inches). </p>
       <p class="govuk-body">At 20cm, flood water can get into some homes and buildings, especially if the property has a
         basement. At this level, water can also damage your car or cause a breakdown.</p>
       <h2 class="govuk-heading-l govuk-!-margin-top-8 govuk-!-padding-bottom-2">Chance of flooding to 30cm</h2>
 
       {% include 'partials/sw-depth-gauge-30.html' %}
 
-      <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>
-          low</strong> chance of flooding to <strong>30cm</strong> (or 1ft)</p>
-      <p class="govuk-body">Between 2040 and 2060 this increases to a <strong>
-          medium</strong> chance of flooding to <strong>30cm</strong> (or 1ft)</p>
+      <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>{{ sw300 }}</strong> chance of flooding
+        to <strong>30cm</strong> (or 1ft)</p>
+        <p class="govuk-body">Between 2040 and 2060 this {{ "increases to" if sw300Change === 1 }}{{ "stays at" if sw300Change === 0 }}{{ "changes to" if sw300Change === -1 }}
+          a <strong>{{ sw300cc }}</strong> chance of flooding to <strong>30cm</strong> (or 1ft)</p>
       <p class="govuk-body govuk-!-margin-bottom-6">At 30cm, flood water can get into homes
         and buildings. Water at this level can also move a car, damage roads and cause major traffic disruption.</p>
       <h2 class="govuk-heading-l govuk-!-margin-top-8 govuk-!-padding-bottom-2">Chance of flooding to 60cm</h2>
 
       {% include 'partials/sw-depth-gauge-60.html' %}
 
-      <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>
-          very low</strong> chance of flooding to <strong>60cm</strong> (or 2ft)</p>
-      <p class="govuk-body">Between 2040 and 2060 this increases to a <strong>
-          low</strong> chance of flooding to <strong>60cm</strong> (or 2ft)</p>
+      <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>{{ sw600 }}</strong> chance of flooding
+         to <strong>60cm</strong> (or 2ft)</p>
+         <p class="govuk-body">Between 2040 and 2060 this {{ "increases to" if sw600Change === 1 }}{{ "stays at" if sw600Change === 0 }}{{ "changes to" if sw600Change === -1 }}
+          a <strong>{{ sw600cc }}</strong> chance of flooding to <strong>60cm</strong> (or 2ft)</p>
       <p class="govuk-body">At 60cm, we expect flood water to get into homes and buildings.
         Water at this level can float most vehicles, including 4x4s.</p>
       <p class="govuk-body">Flood protection measures are usually effective up to 60cm. You should not try and keep flood 
