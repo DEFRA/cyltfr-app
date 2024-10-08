@@ -35,7 +35,7 @@
 
       <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>{{ rs200 }}</strong> chance of flooding
         to <strong>20cm</strong> (or 8 inches).</p>
-      <p class="govuk-body">Between 2036 and 2069 this {{ "increases to" if rs200Change === 1 }}{{ "stays at" if rs200Change === 0 }}{{ "changes to" if rs200Change === -1 }}
+      <p class="govuk-body">Between 2036 and 2069 this {{ "increases to" if rs200Change > 0 }}{{ "stays at" if rs200Change === 0 }}{{ "changes to" if rs200Change < 0 }}
          a <strong>{{ rs200cc }}</strong> chance of flooding to <strong>20cm</strong> (or 8 inches). </p>
       <p class="govuk-body">At 20cm, flood water can get into some homes and buildings, especially if the property has a
         basement. At this level, water can also damage your car or cause a breakdown.</p>
@@ -45,7 +45,7 @@
 
       <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>{{ rs300 }}</strong> chance of flooding
         to <strong>30cm</strong> (or 1ft)</p>
-        <p class="govuk-body">Between 2036 and 2069 this {{ "increases to" if rs300Change === 1 }}{{ "stays at" if rs300Change === 0 }}{{ "changes to" if rs300Change === -1 }}
+        <p class="govuk-body">Between 2036 and 2069 this {{ "increases to" if rs300Change > 0 }}{{ "stays at" if rs300Change === 0 }}{{ "changes to" if rs300Change < 0 }}
           a <strong>{{ rs300cc }}</strong> chance of flooding to <strong>30cm</strong> (or 1ft)</p>
       <p class="govuk-body govuk-!-margin-bottom-6">At 30cm, flood water can get into homes
         and buildings. Water at this level can also move a car, damage roads and cause major traffic disruption.</p>
@@ -55,7 +55,7 @@
 
       <p class="govuk-body govuk-!-padding-top-4">At this location there's a <strong>{{ rs600 }}</strong> chance of flooding
          to <strong>60cm</strong> (or 2ft)</p>
-         <p class="govuk-body">Between 2036 and 2069 this {{ "increases to" if rs600Change === 1 }}{{ "stays at" if rs600Change === 0 }}{{ "changes to" if rs600Change === -1 }}
+         <p class="govuk-body">Between 2036 and 2069 this {{ "increases to" if rs600Change > 0 }}{{ "stays at" if rs600Change === 0 }}{{ "changes to" if rs600Change < 0 }}
           a <strong>{{ rs600cc }}</strong> chance of flooding to <strong>60cm</strong> (or 2ft)</p>
       <p class="govuk-body">At 60cm, we expect flood water to get into homes and buildings.
         Water at this level can float most vehicles, including 4x4s.</p>

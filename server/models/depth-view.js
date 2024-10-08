@@ -47,9 +47,9 @@ function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {
     depthData.sw300ccLevel = Levels.indexOf(depthData.sw300cc)
     depthData.sw600ccLevel = Levels.indexOf(depthData.sw600cc)
 
-    depthData.sw200Change = depthData.sw200Level > depthData.sw200ccLevel ? -1 : depthData.sw200Level < depthData.sw200ccLevel ? 1 : 0
-    depthData.sw300Change = depthData.sw300Level > depthData.sw300ccLevel ? -1 : depthData.sw300Level < depthData.sw300ccLevel ? 1 : 0
-    depthData.sw600Change = depthData.sw600Level > depthData.sw600ccLevel ? -1 : depthData.sw600Level < depthData.sw600ccLevel ? 1 : 0
+    depthData.sw200Change = depthData.sw200ccLevel - depthData.sw200Level
+    depthData.sw300Change = depthData.sw300ccLevel - depthData.sw300Level
+    depthData.sw600Change = depthData.sw600ccLevel - depthData.sw600Level
   }
   if (rsDepthJson) {
     depthData.rs200 = rsDepthJson['200']?.current || RiskLevel.VeryLow
@@ -73,9 +73,9 @@ function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {
     depthData.rs300ccLevel = Levels.indexOf(depthData.rs300cc)
     depthData.rs600ccLevel = Levels.indexOf(depthData.rs600cc)
 
-    depthData.rs200Change = depthData.rs200Level > depthData.rs200ccLevel ? -1 : depthData.rs200Level < depthData.rs200ccLevel ? 1 : 0
-    depthData.rs300Change = depthData.rs300Level > depthData.rs300ccLevel ? -1 : depthData.rs300Level < depthData.rs300ccLevel ? 1 : 0
-    depthData.rs600Change = depthData.rs600Level > depthData.rs600ccLevel ? -1 : depthData.rs600Level < depthData.rs600ccLevel ? 1 : 0
+    depthData.rs200Change = depthData.rs200ccLevel - depthData.rs200Level
+    depthData.rs300Change = depthData.rs300ccLevel - depthData.rs300Level
+    depthData.rs600Change = depthData.rs600ccLevel - depthData.rs600Level
   }
   depthData.backLink = backLinkUri
 
