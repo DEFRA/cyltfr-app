@@ -17,15 +17,15 @@ const RiskLevel = {
 const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
 
 function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {
-  const depthData = {}
-
-  depthData.easting = address.x
-  depthData.northing = address.y
-  depthData.postcode = address.postcode
-  depthData.lines = address.address.split(', ')
-  depthData.address = address
-  depthData.fullAddress = capitaliseAddress(address.address)
-  depthData.backLink = backLinkUri
+  const depthData = {
+    easting: address.x,
+    northing: address.y,
+    postcode: address.postcode,
+    lines: address.address.split(', '),
+    address,
+    fullAddress: capitaliseAddress(address.address),
+    backLink: backLinkUri
+  }
 
   if (swDepthJson) {
     swDepthFlatten(depthData, swDepthJson)
