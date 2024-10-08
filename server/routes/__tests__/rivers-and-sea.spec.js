@@ -23,7 +23,7 @@ function checkCookie (response) {
   }
 }
 
-describe('GET /rivers-and-sea - flag enabled', () => {
+describe('GET /rivers-and-sea', () => {
   beforeAll(async () => {
     config.setConfigOptions({
       friendlyCaptchaEnabled: false
