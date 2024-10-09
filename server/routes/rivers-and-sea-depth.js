@@ -1,13 +1,14 @@
 const boom = require('@hapi/boom')
-const surfaceWaterDepthViewModel = require('../models/depth-view')
-const { redirectToHomeCounty } = require('../helpers')
 const errors = require('../models/errors.json')
+const { redirectToHomeCounty } = require('../helpers')
+const riversAndSeaDepthViewModel = require('../models/depth-view')
 
 module.exports = {
   method: 'GET',
-  path: '/surface-water-depth',
+  path: '/rivers-and-sea-depth',
   handler: async (request, h) => {
     const address = request.yar.get('address')
+    request.yar.set('previousPage', request.path)
 
     if (!address) {
       return h.redirect('/postcode')
@@ -17,17 +18,17 @@ module.exports = {
     }
 
     const { x, y } = address
-    const backLinkUri = '/surface-water'
+    const backLinkUri = '/rivers-and-sea'
 
     try {
-      const swDepth = await request.server.methods.swDepth(x, y)
-
-      return h.view('surface-water-depth', surfaceWaterDepthViewModel(swDepth, null, address, backLinkUri))
+      const rsDepth = await request.server.methods.rsDepth(x, y)
+      const model = riversAndSeaDepthViewModel(null, rsDepth, address, backLinkUri)
+      return h.view('rivers-and-sea-depth', model)
     } catch (err) {
       return boom.badRequest(errors.riskProfile.message, err)
     }
   },
   options: {
-    description: 'Surface water depth description'
+    description: 'Understand rivers and the sea page'
   }
 }

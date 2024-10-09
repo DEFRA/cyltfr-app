@@ -1,7 +1,7 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const riskService = require('../../services/risk')
-const { getByCoordinates } = require('../../services/risk')
+const { swDepthRisk } = require('../../services/risk')
 const config = require('../../config')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
 const defaultOptions = {
@@ -23,7 +23,7 @@ function checkCookie (response) {
   }
 }
 
-describe('GET /surface-water', () => {
+describe('GET /surface-water-depth', () => {
   beforeAll(async () => {
     config.setConfigOptions({
       friendlyCaptchaEnabled: false
@@ -74,7 +74,7 @@ describe('GET /surface-water', () => {
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
 
-    mockRequest.url = '/surface-water'
+    mockRequest.url = '/surface-water-depth'
     const swResponse = await server.inject(mockRequest)
     expect(swResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(swResponse.headers.location).toBe('/postcode')
@@ -83,128 +83,22 @@ describe('GET /surface-water', () => {
   it('returns 200 OK and renders surface water page if user has an address set in session', async () => {
     const mockRequest = {
       method: 'GET',
-      url: '/surface-water',
+      url: '/surface-water-depth',
       headers: defaultOptions.headers
     }
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('surface-water')
-  })
-
-  it('returns 200 OK and renders surface water page with high risk', async () => {
-    const mockRequest = {
-      method: 'GET',
-      url: '/surface-water',
-      headers: defaultOptions.headers
-    }
-    riskService.__updateReturnValue({
-      surfaceWaterRisk: 'High'
-    })
-
-    const response = await server.inject(mockRequest)
-
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--High')
-  })
-
-  it('returns 200 OK and renders surface water page with medium risk', async () => {
-    const mockRequest = {
-      method: 'GET',
-      url: '/surface-water',
-      headers: defaultOptions.headers
-    }
-    riskService.__updateReturnValue({
-      surfaceWaterRisk: 'Medium'
-    })
-
-    const response = await server.inject(mockRequest)
-
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--Medium')
-  })
-
-  it('returns 200 OK and renders surface water page with low risk', async () => {
-    const mockRequest = {
-      method: 'GET',
-      url: '/surface-water',
-      headers: defaultOptions.headers
-    }
-    riskService.__updateReturnValue({
-      surfaceWaterRisk: 'Low'
-    })
-
-    const response = await server.inject(mockRequest)
-
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--Low')
-  })
-
-  it('returns 200 OK and renders surface water page with very low risk', async () => {
-    const mockRequest = {
-      method: 'GET',
-      url: '/surface-water',
-      headers: defaultOptions.headers
-    }
-    riskService.__updateReturnValue({
-      surfaceWaterRisk: 'Very Low'
-    })
-
-    const response = await server.inject(mockRequest)
-
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--Very-Low')
-  })
-
-  it('returns 200 OK and renders surface water page with lead local flood authority', async () => {
-    const mockRequest = {
-      method: 'GET',
-      url: '/surface-water',
-      headers: defaultOptions.headers
-    }
-    riskService.__updateReturnValue({
-      leadLocalFloodAuthority: 'North Yorkshire'
-    })
-
-    const response = await server.inject(mockRequest)
-
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('Your lead local flood authority is <strong>North Yorkshire')
-  })
-
-  it('returns 200 OK and renders surface water page with llfa comments', async () => {
-    const mockRequest = {
-      method: 'GET',
-      url: '/surface-water',
-      headers: defaultOptions.headers
-    }
-    riskService.__updateReturnValue({
-      leadLocalFloodAuthority: 'North Yorkshire',
-      extraInfo: [{
-        info: 'Proposed schemes',
-        apply: 'llfa',
-        riskoverride: null
-      },
-      {
-        info: 'Flood action plan',
-        apply: 'llfa',
-        riskoverride: null
-      }]
-    })
-
-    const response = await server.inject(mockRequest)
-
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('They have the following information about surface water flooding:')
+    expect(response.result).toContain('surface-water-depth')
   })
 
   it('should show an error page if an error occurs', async () => {
     const mockRequest = {
       method: 'GET',
-      url: '/surface-water',
+      url: '/surface-water-depth',
       headers: defaultOptions.headers
     }
-    getByCoordinates.mockImplementationOnce(() => {
+    swDepthRisk.mockImplementationOnce(() => {
       throw new Error()
     })
     const response = await server.inject(mockRequest)
@@ -235,7 +129,7 @@ describe('GET /surface-water', () => {
 
     const mockRequest = {
       method: 'GET',
-      url: '/surface-water',
+      url: '/surface-water-depth',
       headers: { cookie }
     }
     const response = await server.inject(mockRequest)
