@@ -1,5 +1,5 @@
 const STATUS_CODES = require('http2').constants
-const createServer = require('../..')
+const createServer = require('../../../server')
 const { mockOptions } = require('../../../test/mock')
 let server, cookie
 

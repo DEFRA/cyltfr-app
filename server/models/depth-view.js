@@ -7,13 +7,6 @@ const RiskLevel = {
   High: 'High'
 }
 
-// const RiskTitles = {
-//   'Very Low': 'Very low risk',
-//   Low: 'Low risk',
-//   Medium: 'Medium risk',
-//   High: 'High risk'
-// }
-
 const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
 
 function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {

@@ -17,11 +17,10 @@ module.exports = {
     }
 
     const { x, y } = address
-    const radius = 15
     const backLinkUri = '/surface-water'
 
     try {
-      const swDepth = await request.server.methods.swDepth(x, y, radius)
+      const swDepth = await request.server.methods.swDepth(x, y)
 
       return h.view('surface-water-depth', surfaceWaterDepthViewModel(swDepth, null, address, backLinkUri))
     } catch (err) {
