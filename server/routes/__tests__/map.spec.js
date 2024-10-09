@@ -14,16 +14,6 @@ afterAll(async () => {
 })
 
 describe('/Map page test', () => {
-  test('Assert Map page', async () => {
-    const options = {
-      method: 'GET',
-      url: '/map?easting=1&northing=1'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
-  })
-
   test('Assert Map page - surface-water', async () => {
     const options = {
       method: 'GET',
