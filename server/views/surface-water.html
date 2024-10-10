@@ -16,59 +16,77 @@
 {% endblock %}
 
 {% block content %}
-<div class="govuk-width-container">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l govuk-!-padding-top-0 h1-gap">
-        Surface water: understand your flood risk
-      </h1>
-    </div>
-  </div>   
-    
-  <nav aria-label="Pages with more detail on this service" class="gem-c-contents-list govuk-!-margin-bottom-3"
-  role="navigation">
-  <ol class="gem-c-contents-list__list">
-    {% if surfaceWaterIsFirst %}
-    {% include 'partials/nav-sw.njk' %}
-    {% endif %}
-    {% include 'partials/nav-rs.njk' %}
-    {% if not surfaceWaterIsFirst %}
-    {% include 'partials/nav-sw.njk' %}
-    {% endif %}
-    {% include 'partials/nav-gw.njk' %}
+
+<nav aria-label="Pages with more detail on this service" class="gem-c-contents-list govuk-!-margin-bottom-3"
+role="navigation">
+<ol class="gem-c-contents-list__list">
+  {% if surfaceWaterIsFirst %}
+  {% include 'partials/nav-sw.njk' %}
+  {% endif %}
+  {% include 'partials/nav-rs.njk' %}
+  {% if not surfaceWaterIsFirst %}
+  {% include 'partials/nav-sw.njk' %}
+  {% endif %}
+  {% include 'partials/nav-gw.njk' %}
 </ol>
 </nav>
 
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <h1 class="govuk-heading-xl govuk-!-margin-top-6">
+        Surface water: understand your flood risk
+      </h1>
+      <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
+      <p class="govuk-body">This information tells you the flood risk of the land around a building, not the building itself.</p>
+    </div>
+  </div>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-    <h2 class="govuk-heading-m">Yearly chance of flooding</h2>
-    <p class="govuk-body">The yearly chance of surface water flooding is:
+    <h2 class="govuk-heading-l govuk-!-padding-top-6 govuk-!-margin-bottom-4">How likely a surface water flood is</h2>
+    <p class="govuk-body govuk-!-padding-top-4">The yearly chance of surface water flooding is:</p>
+    <p class="govuk-body">
       <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod-depth">
         <span>{{ surfaceWaterRisk }}</span>
       </strong>
+      {% if surfaceWaterRisk == surfaceWaterRiskCC %}
+        staying at
+      {% else %}
+        increasing to
+      {% endif %}
+      <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod-depth">
+        <span>{{ surfaceWaterRiskCC }}</span>
+      </strong>
+      between 2040 to 2060
     </p>
-    <p class="govuk-body">This information tells you the highest chance of flooding on the land 15 metres around a property.</p>
+    </p>
+
     {% include 'partials/floodRatings.html' %}
 
-    <a class="govuk-link" href="/surface-water-depth">
-      Temporary Link to surface water depth page
-    </a>
-
-    <h2 class="govuk-heading-m">See surface water flood risk on a map</h2>
-
     <p class="govuk-body"><a class="govuk-link" href="/map?easting={{easting}}&northing={{northing}}&map=SurfaceWater"
-        previewlistener="true">View a surface water map</a> for information on: </p>
-        <ul class="govuk-list--bullet govuk-body">
-          <li>where any flood water might spread to (extent)</li>
-          <li>how deep any flood water could be (depth)</li>
-        </ul>
+        previewlistener="true">View a surface water map</a> to see where any flood water might spread to.</p>
 
-    <h2 class="govuk-heading-m">What you can do</h2>
-      <p class="govuk-body">It's a good idea to check your flood risk regularly because the information may change.</p>
-      <p class="govuk-body">You can also read about <a href="https://www.gov.uk/prepare-for-flooding">how to prepare yourself and your property</a>.</p>
+    <h2 class="govuk-heading-l govuk-!-padding-top-6">How deep any flood water could be</h2>
+    <p class="govuk-body">Even a small amount of water can cause serious damage so it's a good idea to know how deep any flooding could be.</p>
+    <p class="govuk-body">You cannot completely protect your property from flooding, but there's a lot you can do to reduce:</p>
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
+      <li>the amount of flood water that gets in</li>
+      <li>the damage from flood water</li>
+      <li>the cost and time of cleaning up after a flood</li>
+    </ul>
+    <p class="govuk-body">
+      <a class="govuk-link" href="/surface-water-depth">See how deep any flood water could be at your selected location</a>.
+    </p>
+
+    <h2 class="govuk-heading-l govuk-!-padding-top-6">What to do next</h2>
+      <p class="govuk-body">Read about how to <a class="govuk-link" href="https://www.gov.uk/prepare-for-flooding">prepare yourself and your property for flooding</a>.</p>
+      <p class="govuk-body">You should check your flood risk regularly because the information may change.</p>
+
+    <h3 class="govuk-heading-m govuk-!-padding-top-4">If you need more details on surface water flood risk</h3>
       <p class="govuk-body">Lead local flood authorities are responsible for managing flood risk from surface water. They may hold more detailed information.</p>
-      <p class="govuk-body">Your lead local flood authority is <strong>{{leadLocalFloodAuthority}}</strong>.
+      <p class="govuk-body govuk-!-padding-bottom-6 govuk-!-margin-bottom-6">Your lead local flood authority is <strong>{{leadLocalFloodAuthority}}</strong>.
         {% if hasLlfaComments %}
         They have the following information about surface water flooding:
         <br>
@@ -107,7 +125,7 @@
               </path>
             </svg>
             <span class="govuk-pagination__link-title">Previous</span><span class="govuk-visually-hidden">:</span>
-            <span class="govuk-pagination__link-label">Rivers and Sea</span></a>
+            <span class="govuk-pagination__link-label">Rivers and sea</span></a>
         </div>
         <div class="govuk-pagination__next">
           <a class="govuk-link govuk-pagination__link" href="/ground-water" rel="next"
