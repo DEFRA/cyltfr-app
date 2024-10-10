@@ -25,10 +25,6 @@ afterAll(async () => {
 })
 
 describe('postcode page', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('should return a view with error message when redirected to with an error', async () => {
     const options = {
       method: 'GET',
