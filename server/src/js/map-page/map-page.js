@@ -1,6 +1,4 @@
-import { scenarioDisplayUpdate, handleScroll, handleArrowClick } from './scenario-bars.js'
 import { openKey, closeKey, selectedOption } from './map-controls.js'
-import { adjustPosition } from './screen-size-adjustments.js'
 import { mapPageConsts } from './constants.js'
 
 class MapController {
@@ -112,17 +110,6 @@ document.addEventListener('click', function (event) {
   }
 })
 
-document.addEventListener('DOMContentLoaded', function () {
-  mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
-    radio.addEventListener('change', function () {
-      const label = document.querySelector(`label[for="${this.id}"]`)
-      if (label) {
-        label.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-      }
-    })
-  })
-})
-
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
   const extentDescContainer = document.getElementsByClassName('extent-desc-container')
   const extentDescCcContainer = document.getElementsByClassName('extent-desc-container-cc')
@@ -147,29 +134,10 @@ mapPageConsts.exitMapBtn.addEventListener('click', function () {
   window.location.href = backLink
 })
 
-mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
-  if (radio.id.includes('depth')) {
-    radio.addEventListener('change', function () {
-      scenarioDisplayUpdate('depth')
-    })
-  } else {
-    radio.addEventListener('change', function () {
-      scenarioDisplayUpdate('velocity')
-    })
-  }
-})
-
 mapPageConsts.closeKeyBtn.addEventListener('click', closeKey)
 mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   event.stopPropagation()
   openKey()
 })
 
-handleArrowClick(mapPageConsts.rightArrow, mapPageConsts.rightMove)
-handleArrowClick(mapPageConsts.leftArrow, mapPageConsts.leftMove)
-
-handleScroll(mapPageConsts.scenarioSelectionDepth, [mapPageConsts.rightArrow[0], mapPageConsts.leftArrow[0]])
-handleScroll(mapPageConsts.scenarioSelectionVelocity, [mapPageConsts.rightArrow[1], mapPageConsts.leftArrow[1]])
-
-window.onresize = adjustPosition
 mapPage()
