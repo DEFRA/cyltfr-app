@@ -15,142 +15,132 @@
 </div>
 {% endblock %}
 
-{% block content %}          
-  <div class="govuk-width-container">
+{% block content %}
+<div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-        <h1 class="govuk-heading-l govuk-!-padding-top-0 h1-gap">
-       Groundwater and reservoirs: understand your flood risk
-        </h1>
-      </div>
-  </div>
-  
-  <nav aria-label="Pages with more detail" class="gem-c-contents-list" role="navigation">
-    <ol class="gem-c-contents-list__list">
-      {% if surfaceWaterIsFirst %}
-      {% include 'partials/nav-sw.njk' %}
-      {% endif %}
-      {% include 'partials/nav-rs.njk' %}
-      {% if not surfaceWaterIsFirst %}
-      {% include 'partials/nav-sw.njk' %}
-      {% endif %}
-      {% include 'partials/nav-gw.njk' %}
+      <nav aria-label="Pages with more detail" class="gem-c-contents-list" role="navigation">
+        <ol class="gem-c-contents-list__list">
+          {% if surfaceWaterIsFirst %}
+          {% include 'partials/nav-sw.njk' %}
+          {% endif %}
+          {% include 'partials/nav-rs.njk' %}
+          {% if not surfaceWaterIsFirst %}
+          {% include 'partials/nav-sw.njk' %}
+          {% endif %}
+          {% include 'partials/nav-gw.njk' %}
         </ol>
-  </nav>
-  
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-  <div class="govuk-summary-card" id="groundwater">
-    <div class="govuk-summary-card__title-wrapper vlow card-padding-left">
-      <h2 class="govuk-summary-card__title">Groundwater<span class="chance-content gw-context">{% if isGroundwaterArea %}
-        Flooding is possible when groundwater levels are high.
-        {% else %}
-        Flooding from groundwater is unlikely in this area.
-        {% endif %}</span></h2>
-      <ul class="govuk-summary-card__actions">
-      </ul>
-    </div>
-    <div class="govuk-summary-card__content">
-      <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            What groundwater is
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <p class="govuk-body">Groundwater is the water that is usually held in rocks and soil underground.</p> <p class="govuk-body">Groundwater flooding happens when this water rises and flows above the surface.</p>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            How we check an area's risk
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <p class="govuk-body govuk-!-margin-bottom-2">We use flood alert data to check the risk of flooding from groundwater.</p>
-          </dd>
-        </div>     
-      </dl>
-    </div>
-  </div>
-  
-  <div class="govuk-summary-card" id="reservoirs">
-    <div class="govuk-summary-card__title-wrapper vlow card-padding-left">
-      <h2 class="govuk-summary-card__title">Reservoirs<span class="chance-content gw-context">{% if reservoirRisk %}
-        There is a risk of flooding from reservoirs in this area.
-        {% else %}
-        Flooding from reservoirs is unlikely in this area.
-        {% endif %}</span></h2>
-      <ul class="govuk-summary-card__actions">
-      </ul>
-    </div>
-    <div class="govuk-summary-card__content">
-      <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            What a reservoir is
-          </dt>
-          <dd class="govuk-summary-list__value">
-            A reservoir is a large natural or artificial lake that is designed to collect and store water.
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            How we check an area's risk
-          </dt>
-          <dd class="govuk-summary-list__value">
-            We use predicted scenarios to understand the risk of flooding from reservoirs.
-            <br><br>
-            Flooding from reservoirs is extremely unlikely. An area is considered at risk if people’s lives could be threatened in the event of a dam or reservoir failure.
-            {% if (reservoirRisk) %}
-            <br><br>
-            <a class="govuk-link" href="/map?easting={{easting}}&northing={{northing}}&map=Reservoirs">View a map of the risk of flooding from reservoirs</a>
-            <br><br>
-            <details class="govuk-details reservoirs" data-module="govuk-details">
-              <summary class="govuk-details__summary reservoirs" data-journey-click="ltfri:risk:reservoir-details">
-                <span class="govuk-details__summary-text reservoirs">
-                  Reservoirs that could affect this area
-                </span>
-              </summary>
-              {% for reservoir in reservoirs %}
-              <ul class="govuk-list reservoirs" id="reservoirs-risk-reservoir-list">
-                <li><strong>{{reservoir.name}}</strong> (grid reference {{reservoir.location}})</li>
-                <li>Owner: {{reservoir.owner}}</li>
-                <li>Lead Local Flood Authority: {{reservoir.authority}}</li>
-                <li>Comments: {{reservoir.comments}}</li>
-              </ul>
-              {% endfor %}
-            </details>
-            {% endif %}
-          </dd>
-        </div>    
-      </dl>
-    </div>
-  </div>
-  </div>
-  </div>
-      
-      </div>
-  
-      <!-- end of details -->
-      <nav class="govuk-pagination govuk-pagination--block" role="navigation" aria-label="results">
-        {% if surfaceWaterIsFirst %}
-        <div class="govuk-pagination__prev">
-          <a class="govuk-link govuk-pagination__link" href="/rivers-and-sea" rel="prev" previewlistener="true">
-            <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-              <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
-            </svg>
-            <span class="govuk-pagination__link-title">Previous</span><span class="govuk-visually-hidden">:</span>
-            <span class="govuk-pagination__link-label">Rivers and the sea</span></a>
-        </div>
-        {% else %}
-        <div class="govuk-pagination__prev">
-          <a class="govuk-link govuk-pagination__link" href="/surface-water" rel="prev" previewlistener="true">
-            <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-              <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
-            </svg>
-            <span class="govuk-pagination__link-title">Previous</span><span class="govuk-visually-hidden">:</span>
-            <span class="govuk-pagination__link-label">Surface water</span></a>
-        </div>
-        {% endif %}
       </nav>
-      <!-- end of nav -->
+    </div>
+  </div>
+
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+
+      <div class="govuk-grid-column-two-thirds">
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-6">
+
+        <h1 class="govuk-heading-xl govuk-!-margin-top-6">
+          Groundwater and reservoirs: understand your flood risk
+        </h1>
+
+        <p class="govuk-body govuk-!-margin-bottom-2"><strong>Your selected location:</strong> {{fullAddress}}</p>
+
+        <p class="govuk-body govuk-!-margin-bottom-6">This information tells you the flood risk of the land around a
+          building, not the building itself.
+        </p>
+
+
+
+        <h2 class="govuk-heading-l govuk-!-padding-top-6">Groundwater</h2>
+
+        <p class="govuk-body">
+          {{ "Flooding is possible when groundwater levels are high." if isGroundwaterArea else
+          "Flooding from groundwater is unlikely in this area." }}
+        </p>
+
+        <h3 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">What groundwater is</h3>
+
+        <p class="govuk-body">Groundwater is the water that is usually held in rocks and soil underground.</p>
+
+        <p class="govuk-body">Groundwater flooding happens when this water rises and flows above the surface.</p>
+
+        <p class="govuk-body govuk-!-margin-bottom-6">We use flood alert data to check the risk of flooding from
+          groundwater.</p>
+
+
+
+        <h2 class="govuk-heading-l govuk-!-padding-top-6">Reservoirs</h2>
+
+        <p class="govuk-body">{{ "There is a risk of flooding from reservoirs in this area." if reservoirRisk else
+          "Flooding from reservoirs is unlikely in this area." }}</p>
+
+        <h3 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">What a reservoir is and how we
+          check an area's risk</h3>
+
+        <p class="govuk-body">A reservoir is a large natural or artificial lake that is designed to collect and
+          store water.</p>
+
+        <p class="govuk-body">We use predicted scenarios to understand the risk of flooding from reservoirs.</p>
+
+        <p class="govuk-body">Flooding from reservoirs is extremely
+          unlikely. An area is considered at risk if people's lives could be threatened in the event of a dam or
+          reservoir failure.</p>
+
+        {% if (reservoirRisk) %}
+        <a class="govuk-link govuk-body" href="/map?easting={{easting}}&northing={{northing}}&map=Reservoirs">View a map
+          of the risk of flooding from reservoirs</a>
+        <br><br>
+        <details class="govuk-details reservoirs" data-module="govuk-details">
+          <summary class="govuk-details__summary reservoirs" data-journey-click="ltfri:risk:reservoir-details">
+            <span class="govuk-details__summary-text reservoirs">
+              Reservoirs that could affect this area
+            </span>
+          </summary>
+          {% for reservoir in reservoirs %}
+          <ul class="govuk-list reservoirs" id="reservoirs-risk-reservoir-list">
+            <li><strong>{{reservoir.name}}</strong> (grid reference {{reservoir.location}})</li>
+            <li>Owner: {{reservoir.owner}}</li>
+            <li>Lead Local Flood Authority: {{reservoir.authority}}</li>
+            <li>Comments: {{reservoir.comments}}</li>
+          </ul>
+          {% endfor %}
+        </details>
+        {% endif %}
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- end of details -->
+<nav class="govuk-pagination govuk-pagination--block" role="navigation" aria-label="results">
+  {% if surfaceWaterIsFirst %}
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="/rivers-and-sea" rel="prev" previewlistener="true">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13"
+        width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path
+          d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z">
+        </path>
+      </svg>
+      <span class="govuk-pagination__link-title">Previous</span><span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">Rivers and the sea</span></a>
+  </div>
+  {% else %}
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="/surface-water" rel="prev" previewlistener="true">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13"
+        width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path
+          d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z">
+        </path>
+      </svg>
+      <span class="govuk-pagination__link-title">Previous</span><span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">Surface water</span></a>
+  </div>
+  {% endif %}
+</nav>
+<!-- end of nav -->
 {% endblock %}
