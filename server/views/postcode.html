@@ -5,6 +5,10 @@
 
 {% set pageTitle = "Where do you want to check?" %}
 
+{% block beforeContent %}
+<a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back</a>
+{% endblock %}
+
 {% block content %}
 <div id="postcode-page">
   <div class="govuk-grid-row">

@@ -1,7 +1,7 @@
 const { errorSummaryTitle } = require('../helpers')
 
 class PostcodeViewModel {
-  constructor (postcode, errorMessage, timeout) {
+  constructor (postcode, errorMessage, timeout, backLinkUri) {
     this.postcodeInput = {
       label: {
         text: 'Enter a postcode'
@@ -33,6 +33,8 @@ class PostcodeViewModel {
     if (timeout) {
       this.timeout = timeout
     }
+
+    this.backLink = backLinkUri
   }
 }
 
