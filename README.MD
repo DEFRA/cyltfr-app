@@ -59,6 +59,7 @@ Docker v20.10.0+
 | RATE_LIMIT_EXPIRES_IN       | Time user request limit expires         |    no     |             |                             |       |
 | RATE_LIMIT_WHITELIST        | Limit enabled user exceptions           |   yes     | []          |                             |       |
 | REDIS_CACHE_ENABLED         | Redis cache storing enabled             |    no     | false       |                             |       |
+| REDIS_TLS                   | Redis cache requires TLS for connection |    no     | false       |                             |       |
 | REDIS_CACHE_HOST            | Redis linked AWS server URI             |    no     |             |                             |       |
 | REDIS_CACHE_PORT            | Redis default port                      |    no     | 6379        |                             |       |
 | COOKIE_PASSWORD             | Password to prevent exposing cookie data |  yes    |             |                             |       |
