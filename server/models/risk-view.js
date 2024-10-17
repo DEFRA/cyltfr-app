@@ -37,6 +37,7 @@ function riskViewModel (risk, address, backLinkUri) {
   this.surfaceWaterClassName = surfaceWaterRisk.toLowerCase().replace(' ', '-')
   this.riversSeaRiskStyle = riverAndSeaRisk.replace(/ /g, '-')
   this.surfaceWaterStyle = surfaceWaterRisk.replace(/ /g, '-')
+  this.riversSeaRiskCCStyle = riverAndSeaRiskCC.replace(/ /g, '-')
   this.surfaceWaterCCStyle = surfaceWaterRiskCC.replace(/ /g, '-')
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
