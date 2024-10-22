@@ -34,7 +34,7 @@ Docker v20.10.0+
 
 `npm test`
 
-# Environment variables (TODO: These are currently loaded via the config/server.json file not env vars)
+# Environment variables
 | name                        |      description                        | required  |   default   |            valid            | notes |
 |-----------------------------|-----------------------------------------|:---------:|-------------|:---------------------------:|-------|
 | NODE_ENV                    | Node environment                        |    no     | development | development,test,production |       |
