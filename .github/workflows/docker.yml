@@ -47,7 +47,7 @@ jobs:
       - name: Generate raw tag
         id: raw-tag
         run: |
-          USER_TARGET=${{ github.events.inputs.buildtarget }}
+          USER_TARGET=${{ inputs.buildtarget }}
           echo "BUILD_TARGET=${USER_TARGET:-"production"}" >> $GITHUB_OUTPUT
           echo "raw_tag=$(git describe --always --tags)$USER_TARGET" >> $GITHUB_OUTPUT
 
