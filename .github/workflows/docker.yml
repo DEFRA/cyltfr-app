@@ -13,7 +13,7 @@ on:
         type: choice
         options:
         - development
-
+        -
   
 env:
   REPOSITORY: long_term_flood_risk/app
@@ -47,9 +47,9 @@ jobs:
       - name: Generate raw tag
         id: raw-tag
         run: |
-          USER_TARGET=${{ github.events.inputs.buildtarget }}
-          BUILD_TARGET=${USER_TARGET:-"production"}
-          echo "raw_tag=$(git describe --always --tags)$(USER_TARGET)" >> $GITHUB_OUTPUT
+          echo "USER_TARGET=${{ github.events.inputs.buildtarget }}" >> $GITHUB_OUTPUT
+          echo "BUILD_TARGET=${USER_TARGET:-"production"}" >> $GITHUB_OUTPUT
+          echo "raw_tag=$(git describe --always --tags)$USER_TARGET" >> $GITHUB_OUTPUT
 
       - name: Extract Docker metadata
         id: meta
