@@ -114,17 +114,21 @@ mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
   radio.addEventListener('change', () => {
     mapPageConsts.extentDescCcContainer[0].classList.add('hide')
     mapPageConsts.extentDescContainer[0].classList.add('hide')
-    mapPageConsts.depthDescCcContainer[0].classList.add('hide')
-    mapPageConsts.depthDescContainer[0].classList.add('hide')
+    if (!mapPageConsts.params.includes('SurfaceWater')) {
+      mapPageConsts.depthDescCcContainer[0].classList.add('hide')
+      mapPageConsts.depthDescContainer[0].classList.add('hide')
+    }
 
     if (mapPageConsts.extentRadioCC.checked) {
       mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
     } else if (mapPageConsts.extentRadio[0].checked) {
       mapPageConsts.extentDescContainer[0].classList.remove('hide')
-    } else if (mapPageConsts.depthRadioCC.checked) {
-      mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
-    } else if (mapPageConsts.depthRadio[0].checked) {
-      mapPageConsts.depthDescContainer[0].classList.remove('hide')
+    } else if (!mapPageConsts.params.includes('SurfaceWater')) {
+      if (mapPageConsts.depthRadioCC.checked) {
+        mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
+      } else if (mapPageConsts.depthRadio[0].checked) {
+        mapPageConsts.depthDescContainer[0].classList.remove('hide')
+      }
     }
   })
 })
@@ -141,8 +145,7 @@ mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   openKey()
 })
 
-const params = window.location.search
-if (params.includes('SurfaceWater')) {
+if (mapPageConsts.params.includes('SurfaceWater')) {
   mapPageConsts.selectedAddressCheckbox.classList.remove('hide')
 }
 

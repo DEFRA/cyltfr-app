@@ -19,7 +19,8 @@ const extentRadioCC = document.getElementById('extent-radio-cc')
 const depthDescContainer = document.getElementsByClassName('depth-desc-container')
 const depthDescCcContainer = document.getElementsByClassName('depth-desc-container-cc')
 const depthRadio = document.getElementsByClassName('depth-radio')
-const depthRadioCC = document.getElementsByClassName('depth-radio-cc')
+const depthRadioCC = document.getElementById('depth-radio-cc')
+const params = window.location.search
 
 export const mapPageConsts = {
   closeKeyBtn,
@@ -38,7 +39,8 @@ export const mapPageConsts = {
   depthDescContainer,
   depthDescCcContainer,
   depthRadio,
-  depthRadioCC
+  depthRadioCC,
+  params
 }
 
 export const mapControlsConsts = {
