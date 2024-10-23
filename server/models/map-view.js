@@ -1,8 +1,16 @@
-const maps = require('./maps.json')
+let mapDefinition
+const fs = require('fs')
+const path = require('path')
+const config = require('../config')
 
 class MapViewModel {
   constructor (easting, northing, address, backLinkUri, mapConfig) {
-    this.maps = maps
+    if (!mapDefinition) {
+      const filePath = path.join('./server/models/definition/', config.dataVersion)
+      const mapData = fs.readFileSync(path.join(filePath, 'maps.json'))
+      mapDefinition = JSON.parse(mapData)
+    }
+    this.maps = mapDefinition
     this.easting = easting
     this.northing = northing
     this.address = address

@@ -42,6 +42,7 @@ Docker v20.10.0+
 | PORT                        | Server port #                           |   yes     |             |                             |       |
 | SERVICE_URL                 | Service API                             |   yes     |             |                             |       |
 | SIMULATE_ADDRESS_SERVICE    | Mocks address service for testing       |    no     | false       |                             |       |
+| DATA_VERSION                | Which data version will be used for maps|    no     | 01          |                             |       |
 | HTTP_TIMEOUT_MS             | Timeout in ms                           |   yes     |             |                             |       |
 | G4_ANALYTICS_ACCOUNT        | GA ID                                   |    no     |             |                             |       |
 | GTAG_MANAGER_ID             | GTM ID                                  |    no     |             |                             |       |
