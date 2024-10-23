@@ -23,9 +23,8 @@ module.exports = {
       const path = request.path
       const mapUrl = new URL(config.osMapsUrl)
       const responses = await Promise.all([appManager.refreshToken(), osApi.osGetAccessToken()])
-      const mapTokenExpiry = config.osTokenExpiry
-      const expiryDate = new Date(mapTokenExpiry).toLocaleString()
-      console.log('mapTokenExpiry:', expiryDate)
+      const mapTokenExpiryTime = config.osTokenExpiryTime
+      const mapTokenExpiry = Date.now() + mapTokenExpiryTime
       request.yar.set('mapTokenExpiry', mapTokenExpiry)
       const mapConfig = {
         mapToken: responses[0],
