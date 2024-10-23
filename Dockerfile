@@ -54,6 +54,7 @@ COPY --chown=root:root ./server/routes/simulated/data/*.* ./server/routes/simula
 COPY --chown=root:root ./server/server-methods/*.js ./server/server-methods/
 COPY --chown=root:root ./server/services/*.js ./server/services/
 COPY --chown=root:root ./server/views/ ./server/views/
+COPY --chown=root:root ./server/models/definition/ ./server/models/definition/
 
 COPY --from=development --chown=root:root /home/node/app/server/public/ ./server/public/
 
