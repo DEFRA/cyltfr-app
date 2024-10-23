@@ -53,6 +53,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 }
 
 .defra-map-key__section-title {
+  margin-top: 66px;
   position: relative;
   font-family: $gov-font;
   -webkit-font-smoothing: antialiased;
@@ -62,7 +63,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   line-height: 1.1428571429;
   display: block;
   margin-bottom: 0;
-  padding: 20px 15px 0px 0px;
+  padding: 10px 15px 0px 0px;
   box-sizing: border-box;
   width: 230px;
 
