@@ -111,39 +111,20 @@ document.addEventListener('click', function (event) {
 })
 
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
-  const extentDescContainer = document.getElementsByClassName('extent-desc-container')
-  const extentDescCcContainer = document.getElementsByClassName('extent-desc-container-cc')
-  const extentRadio = document.getElementsByClassName('extent-radio')
-  const extentRadioCC = document.getElementById('extent-radio-cc')
-  const depthDescContainer = document.getElementsByClassName('depth-desc-container')
-  const depthDescCcContainer = document.getElementsByClassName('depth-desc-container-cc')
-  const depthRadio = document.getElementsByClassName('depth-radio')
-  const depthRadioCC = document.getElementsByClassName('depth-radio-cc')
-
   radio.addEventListener('change', () => {
-    if (extentRadioCC.checked) {
-      extentDescCcContainer[0].classList.remove('hide')
-      extentDescContainer[0].classList.add('hide')
-      depthDescCcContainer[0].classList.add('hide')
-      depthDescContainer[0].classList.add('hide')
-    }
-    if (extentRadio[0].checked) {
-      extentDescCcContainer[0].classList.add('hide')
-      extentDescContainer[0].classList.remove('hide')
-      depthDescCcContainer[0].classList.add('hide')
-      depthDescContainer[0].classList.add('hide')
-    }
-    if (depthRadioCC.checked) {
-      extentDescCcContainer[0].classList.add('hide')
-      extentDescContainer[0].classList.add('hide')
-      depthDescCcContainer[0].classList.remove('hide')
-      depthDescContainer[0].classList.add('hide')
-    }
-    if (depthRadio[0].checked) {
-      extentDescCcContainer[0].classList.add('hide')
-      extentDescContainer[0].classList.add('hide')
-      depthDescCcContainer[0].classList.add('hide')
-      depthDescContainer[0].classList.remove('hide')
+    mapPageConsts.extentDescCcContainer[0].classList.add('hide')
+    mapPageConsts.extentDescContainer[0].classList.add('hide')
+    mapPageConsts.depthDescCcContainer[0].classList.add('hide')
+    mapPageConsts.depthDescContainer[0].classList.add('hide')
+
+    if (mapPageConsts.extentRadioCC.checked) {
+      mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
+    } else if (mapPageConsts.extentRadio[0].checked) {
+      mapPageConsts.extentDescContainer[0].classList.remove('hide')
+    } else if (mapPageConsts.depthRadioCC.checked) {
+      mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
+    } else if (mapPageConsts.depthRadio[0].checked) {
+      mapPageConsts.depthDescContainer[0].classList.remove('hide')
     }
   })
 })
