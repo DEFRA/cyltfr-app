@@ -11,6 +11,7 @@ const extentRadioSw = document.getElementById('sw-extent-radio')
 const extentRadioRs = document.getElementById('rs-extent-radio')
 const keyContainer = 'key-container'
 const extentDesc = 'extent-desc-container'
+const selectedAddressCheckbox = document.getElementById('selected-address')
 
 export const mapPageConsts = {
   closeKeyBtn,
@@ -20,7 +21,8 @@ export const mapPageConsts = {
   maps,
   riskMeasurementRadio,
   keyContainer,
-  extentDesc
+  extentDesc,
+  selectedAddressCheckbox
 }
 
 export const mapControlsConsts = {
