@@ -6,6 +6,14 @@ on:
       - main
       - development
   workflow_dispatch:
+    inputs:
+      buildtarget:
+        description: 'Build Target'
+        required: false
+        type: choice
+        options:
+        - development
+        -
   
 env:
   REPOSITORY: long_term_flood_risk/app
@@ -38,8 +46,10 @@ jobs:
 
       - name: Generate raw tag
         id: raw-tag
-        run:
-          echo "raw_tag=$(git describe --always --tags)" >> $GITHUB_OUTPUT
+        run: |
+          USER_TARGET=${{ inputs.buildtarget }}
+          echo "BUILD_TARGET=${USER_TARGET:-"production"}" >> $GITHUB_OUTPUT
+          echo "raw_tag=$(git describe --always --tags)$USER_TARGET" >> $GITHUB_OUTPUT
 
       - name: Extract Docker metadata
         id: meta
@@ -60,7 +70,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          target: production
+          target: ${{ steps.raw-tag.outputs.BUILD_TARGET }}
           build-args: |
             GIT_COMMIT=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
           push: true
