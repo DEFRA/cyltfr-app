@@ -111,19 +111,20 @@ document.addEventListener('click', function (event) {
 })
 
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
-  const extentDescContainer = document.getElementsByClassName('extent-desc-container')
-  const extentDescCcContainer = document.getElementsByClassName('extent-desc-container-cc')
-  const extentRadio = document.getElementsByClassName('extent-radio')
-  const extentRadioCC = document.getElementById('extent-radio-cc')
-
   radio.addEventListener('change', () => {
-    if (extentRadioCC.checked) {
-      extentDescCcContainer[0].classList.remove('hide')
-      extentDescContainer[0].classList.add('hide')
-    }
-    if (extentRadio[0].checked) {
-      extentDescCcContainer[0].classList.add('hide')
-      extentDescContainer[0].classList.remove('hide')
+    mapPageConsts.extentDescCcContainer[0].classList.add('hide')
+    mapPageConsts.extentDescContainer[0].classList.add('hide')
+    mapPageConsts.depthDescCcContainer[0].classList.add('hide')
+    mapPageConsts.depthDescContainer[0].classList.add('hide')
+
+    if (mapPageConsts.extentRadioCC.checked) {
+      mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
+    } else if (mapPageConsts.extentRadio[0].checked) {
+      mapPageConsts.extentDescContainer[0].classList.remove('hide')
+    } else if (mapPageConsts.depthRadioCC.checked) {
+      mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
+    } else if (mapPageConsts.depthRadio[0].checked) {
+      mapPageConsts.depthDescContainer[0].classList.remove('hide')
     }
   })
 })
@@ -139,5 +140,10 @@ mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   event.stopPropagation()
   openKey()
 })
+
+const params = window.location.search
+if (params.includes('SurfaceWater')) {
+  mapPageConsts.selectedAddressCheckbox.classList.remove('hide')
+}
 
 mapPage()
