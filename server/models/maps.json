@@ -168,10 +168,10 @@
           }
         },
         {
-          "ref": "SurfaceWater_900-depth",
+          "ref": "200-depth",
           "name": "High risk: depth",
           "title": "Surface water flood risk: water depth in a high risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_CCRS2_Depth_900mm/VectorTileServer",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_Depth_200mm/VectorTileServer",
           "legend": {
             "title": "High risk scenario",
             "subTitle": "Flood depth (millimetres)",
@@ -192,10 +192,10 @@
           }
         },
         {
-          "ref": "SurfaceWater_600-depth",
+          "ref": "SurfaceWater_300-depth",
           "name": "Medium risk: depth",
           "title": "Surface water flood risk: water depth in a medium risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_CCRS2_Depth_600mm/VectorTileServer",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_Depth_300mm/VectorTileServer",
           "legend": {
             "title": "Medium risk scenario",
             "subTitle": "Flood depth (millimetres)",
@@ -216,10 +216,10 @@
           }
         },
         {
-          "ref": "SurfaceWater_300-depth",
+          "ref": "SurfaceWater_600-depth",
           "name": "Low risk: depth",
           "title": "Surface water flood risk: water depth in a low risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_CCRS2_Depth_300mm/VectorTileServer",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_Depth_600mm/VectorTileServer",
           "legend": {
             "title": "Low risk scenario",
             "subTitle": "Flood depth (millimetres)",
@@ -240,10 +240,10 @@
           }
         },
         {
-          "ref": "SurfaceWater_200-depth",
+          "ref": "SurfaceWater_900-depth",
           "name": "Low risk: depth",
           "title": "Surface water flood risk: water depth in a low risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_Depth_CCRS2_200mm/VectorTileServer",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_Depth_900mm/VectorTileServer",
           "legend": {
             "title": "Low risk scenario",
             "subTitle": "Flood depth (millimetres)",

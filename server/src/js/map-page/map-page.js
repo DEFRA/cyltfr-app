@@ -71,6 +71,8 @@ function mapPage () {
     const selectedAddressCheckbox = document.getElementById('selected-address-checkbox')
     const showFloodingCheckbox = document.getElementById('display-layers-checkbox')
     const mapReferenceValue = selectedOption()
+    console.log('in set')
+    console.log('mapReferenceValue ', mapReferenceValue)
 
     if (showFloodingCheckbox.checked) {
       mapPageConsts.maps.showMap(`${mapReferenceValue}`, selectedAddressCheckbox.checked)

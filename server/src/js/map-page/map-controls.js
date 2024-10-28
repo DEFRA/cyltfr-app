@@ -5,11 +5,24 @@ export function selectedOption () {
   const measurementsRadios = document.querySelector('input[name="measurements"]:checked')
   const currentPageURL = new URLSearchParams(document.location.search)
   const mapPageQuery = currentPageURL.get('map')
+  const keyTitleText = document.getElementById('mapKeyLabel')
 
   // The below is a placeholder ready to add the radio changes for climate change data
-  if (mapPageQuery === 'SurfaceWater') {
+  if (keyTitleText.innerText.includes('Surface water')) {
     if (mapControlsConsts.extentRadioSw.checked) {
       return measurementsRadios.value
+    }
+    if (mapControlsConsts.depthRadio[0].checked) {
+      if (mapControlsConsts.upTo30.checked) {
+        return mapControlsConsts.upTo30.value
+      }
+      if (mapControlsConsts.upTo60.checked) {
+        return mapControlsConsts.upTo60.value
+      }
+      if (mapControlsConsts.upTo90.checked) {
+        return mapControlsConsts.upTo90.value
+      }
+      return mapControlsConsts.upTo20.value
     }
   } else if (mapPageQuery === 'RiversAndSea') {
     if (mapControlsConsts.extentRadioRs.checked) {
@@ -20,7 +33,6 @@ export function selectedOption () {
       return measurementsRadios.value
     }
   }
-
   return measurementsRadios.value
 }
 
