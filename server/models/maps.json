@@ -17,25 +17,25 @@
               {
                 "text": "High",
                 "desc": "High risk description",
-                "icon": "purple",
+                "icon": "red",
                 "id": "rivers-seas-high"
               },
               {
                 "text": "Medium",
                 "desc": "Medium risk description",
-                "icon": "dark-blue",
+                "icon": "orange",
                 "id": "rivers-seas-medium"
               },
               {
                 "text": "Low",
                 "desc": "Low risk description",
-                "icon": "blue",
+                "icon": "pink",
                 "id": "rivers-seas-low"
               },
               {
                 "text": "Very low",
                 "desc": "Very low risk description",
-                "icon": "light-blue",
+                "icon": "light-pink",
                 "id": "rivers-seas-very-low"
               }
             ]
@@ -52,25 +52,25 @@
               {
                 "text": "High",
                 "desc": "High risk description",
-                "icon": "purple",
+                "icon": "red",
                 "id": "rivers-seas-high"
               },
               {
                 "text": "Medium",
                 "desc": "Medium risk description",
-                "icon": "dark-blue",
+                "icon": "orange",
                 "id": "rivers-seas-medium"
               },
               {
                 "text": "Low",
                 "desc": "Low risk description",
-                "icon": "blue",
+                "icon": "pink",
                 "id": "rivers-seas-low"
               },
               {
                 "text": "Very low",
                 "desc": "Very low risk description",
-                "icon": "light-blue",
+                "icon": "light-pink",
                 "id": "rivers-seas-very-low"
               }
             ]
@@ -115,17 +115,17 @@
             "keys": [
               {
                 "text": "High",
-                "icon": "purple",
+                "icon": "red",
                 "id": "surface-water-high"
               },
               {
                 "text": "Medium",
-                "icon": "dark-blue",
+                "icon": "orange",
                 "id": "surface-water-medium"
               },
               {
                 "text": "Low",
-                "icon": "blue",
+                "icon": "pink",
                 "id": "surface-water-low"
               },
               {
@@ -146,17 +146,17 @@
             "keys": [
               {
                 "text": "High",
-                "icon": "purple",
+                "icon": "red",
                 "id": "surface-water-high"
               },
               {
                 "text": "Medium",
-                "icon": "dark-blue",
+                "icon": "orange",
                 "id": "surface-water-medium"
               },
               {
                 "text": "Low",
-                "icon": "blue",
+                "icon": "pink",
                 "id": "surface-water-low"
               },
               {
@@ -168,145 +168,97 @@
           }
         },
         {
-          "ref": "SurfaceWater_9-SWDH",
+          "ref": "SurfaceWater_900-depth",
           "name": "High risk: depth",
           "title": "Surface water flood risk: water depth in a high risk scenario",
-          "url": "",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_CCRS2_Depth_900mm/VectorTileServer",
           "legend": {
             "title": "High risk scenario",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
                 "text": "Over 900mm",
-                "icon": "purple"
+                "icon": "red"
               },
               {
                 "text": "300 to 900mm",
-                "icon": "dark-blue"
+                "icon": "orange"
               },
               {
                 "text": "Below 300mm",
-                "icon": "blue"
+                "icon": "pink"
               }
             ]
           }
         },
         {
-          "ref": "SurfaceWater_12-SWVH",
-          "name": "High risk: velocity",
-          "title": "Surface water flood risk: water velocity in a high risk scenario",
-          "url": "",
-          "legend": {
-            "title": "High risk scenario",
-            "subTitle": "Flood velocity (metres/second)",
-            "keys": [
-              {
-                "text": "Over 0.25 m/s",
-                "icon": "purple"
-              },
-              {
-                "text": "Less than 0.25 m/s",
-                "icon": "blue"
-              },
-              {
-                "text": "Direction of water flow",
-                "icon": "arrow"
-              }
-            ]
-          }
-        },
-        {
-          "ref": "SurfaceWater_8-SWDM",
+          "ref": "SurfaceWater_600-depth",
           "name": "Medium risk: depth",
           "title": "Surface water flood risk: water depth in a medium risk scenario",
-          "url": "",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_CCRS2_Depth_600mm/VectorTileServer",
           "legend": {
             "title": "Medium risk scenario",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
                 "text": "Over 900mm",
-                "icon": "purple"
+                "icon": "red"
               },
               {
                 "text": "300 to 900mm",
-                "icon": "dark-blue"
+                "icon": "orange"
               },
               {
                 "text": "Below 300mm",
-                "icon": "blue"
+                "icon": "pink"
               }
             ]
           }
         },
         {
-          "ref": "SurfaceWater_11-SWVM",
-          "name": "Medium risk: velocity",
-          "title": "Surface water flood risk: water velocity in a medium risk scenario",
-          "url": "",
-          "legend": {
-            "title": "Medium risk scenario",
-            "subTitle": "Flood velocity (metres/second)",
-            "keys": [
-              {
-                "text": "Over 0.25 m/s",
-                "icon": "purple"
-              },
-              {
-                "text": "Less than 0.25 m/s",
-                "icon": "blue"
-              },
-              {
-                "text": "Direction of water flow",
-                "icon": "arrow"
-              }
-            ]
-          }
-        },
-        {
-          "ref": "SurfaceWater_7-SWDL",
+          "ref": "SurfaceWater_300-depth",
           "name": "Low risk: depth",
           "title": "Surface water flood risk: water depth in a low risk scenario",
-          "url": "",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_CCRS2_Depth_300mm/VectorTileServer",
           "legend": {
             "title": "Low risk scenario",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
                 "text": "Over 900mm",
-                "icon": "purple"
+                "icon": "red"
               },
               {
                 "text": "300 to 900mm",
-                "icon": "dark-blue"
+                "icon": "orange"
               },
               {
                 "text": "Below 300mm",
-                "icon": "blue"
+                "icon": "pink"
               }
             ]
           }
         },
         {
-          "ref": "SurfaceWater_10-SWVL",
-          "name": "Low risk: velocity",
-          "title": "Surface water flood risk: water velocity in a low risk scenario",
-          "url": "",
+          "ref": "SurfaceWater_200-depth",
+          "name": "Low risk: depth",
+          "title": "Surface water flood risk: water depth in a low risk scenario",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_Depth_CCRS2_200mm/VectorTileServer",
           "legend": {
             "title": "Low risk scenario",
-            "subTitle": "Flood velocity (metres/second)",
+            "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
-                "text": "Over 0.25 m/s",
-                "icon": "purple"
+                "text": "Over 900mm",
+                "icon": "red"
               },
               {
-                "text": "Less than 0.25 m/s",
-                "icon": "blue"
+                "text": "300 to 900mm",
+                "icon": "orange"
               },
               {
-                "text": "Direction of water flow",
-                "icon": "arrow"
+                "text": "Below 300mm",
+                "icon": "pink"
               }
             ]
           }
@@ -329,7 +281,7 @@
             "keys": [
               {
                 "text": "when river levels are normal",
-                "icon": "blue"
+                "icon": "pink"
               },
               {
                 "text": "when there is also flooding from rivers",

@@ -20,6 +20,7 @@ const depthDescContainer = document.getElementsByClassName('depth-desc-container
 const depthDescCcContainer = document.getElementsByClassName('depth-desc-container-cc')
 const depthRadio = document.getElementsByClassName('depth-radio')
 const depthRadioCC = document.getElementById('depth-radio-cc')
+const depthHeightBar = document.getElementsByClassName('defra-map-scenarios-v3_container')
 const params = window.location.search
 
 export const mapPageConsts = {
@@ -40,6 +41,7 @@ export const mapPageConsts = {
   depthDescCcContainer,
   depthRadio,
   depthRadioCC,
+  depthHeightBar,
   params
 }
 

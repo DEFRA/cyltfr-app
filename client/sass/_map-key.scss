@@ -27,6 +27,16 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     font-size: 24px;
     margin: 0;
     z-index: 15;
+    
+    &::after {
+      position: absolute;
+      content: "";
+      height: 1px;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      border-top: 1px solid #b1b4b6;
+    }
 
     @media screen and (max-width: $tablet-width) {
       width: 236px;
@@ -65,16 +75,6 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   padding: 20px 15px 0px 0px;
   box-sizing: border-box;
   width: 230px;
-
-  &::before {
-    position: absolute;
-    content: "";
-    height: 1px;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    border-top: 1px solid #b1b4b6;
-  }
 }
 
 #reservoir-title {

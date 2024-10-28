@@ -148,7 +148,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   flex-direction: row;
   background-color: white;
   padding: 5px 0px 0px 0px;
-  float: right;
+  right: 30px;
 
   @media screen and (max-width: $scenarioWidthCap1) {
     width: 55vw;
