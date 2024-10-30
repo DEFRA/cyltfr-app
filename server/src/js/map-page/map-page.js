@@ -1,4 +1,4 @@
-import { openKey, closeKey, selectedOption } from './map-controls.js'
+import { openKey, closeKey, selectedOption, scenarioDisplayUpdate } from './map-controls.js'
 import { mapPageConsts } from './constants.js'
 
 class MapController {
@@ -71,8 +71,6 @@ function mapPage () {
     const selectedAddressCheckbox = document.getElementById('selected-address-checkbox')
     const showFloodingCheckbox = document.getElementById('display-layers-checkbox')
     const mapReferenceValue = selectedOption()
-    console.log('in set')
-    console.log('mapReferenceValue ', mapReferenceValue)
 
     if (showFloodingCheckbox.checked) {
       mapPageConsts.maps.showMap(`${mapReferenceValue}`, selectedAddressCheckbox.checked)
@@ -87,7 +85,7 @@ function mapPage () {
       if (
         measurement.name === 'measurements' ||
         measurement.name === 'scenarios-depth' ||
-        measurement.name === 'scenarios-velocity' ||
+        measurement.name === 'scenarios-depth-cc' ||
         measurement.name === 'map-toggle'
       ) {
         measurement.addEventListener('change', function (event) {
@@ -153,5 +151,17 @@ mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
 if (mapPageConsts.params.includes('SurfaceWater')) {
   mapPageConsts.selectedAddressCheckbox.classList.remove('hide')
 }
+
+mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
+  if (radio.id.includes('-cc')) {
+    radio.addEventListener('change', function () {
+      scenarioDisplayUpdate('depth-cc')
+    })
+  } else {
+    radio.addEventListener('change', function () {
+      scenarioDisplayUpdate('depth')
+    })
+  }
+})
 
 mapPage()

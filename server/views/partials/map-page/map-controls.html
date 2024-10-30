@@ -76,7 +76,7 @@
 
       <div class="defra-map-scenarios-v3_container hide" id="scenarios-controls-depth">
         <div class="govuk-radios govuk-radios--small" id="scenario-selection-depth" data-module="govuk-radios">
-          <div id="high-risk-depth" class="govuk-radios__item selected-scenario">
+          <div id="radioCont20" class="govuk-radios__item selected-scenario">
             <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="up-to-20"
               name="scenarios-depth" type="radio" value="{{maps.categories[1].maps[2].ref}}" checked="">
             <label class="govuk-label govuk-radios__label" for="up-to-20">
@@ -84,7 +84,7 @@
               <span class="risk-context-v3">(8in)</span>
             </label>
           </div>
-          <div class="govuk-radios__item">
+          <div id="radioCont30" class="govuk-radios__item">
             <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="up-to-30"
               name="scenarios-depth" type="radio" value="{{maps.categories[1].maps[3].ref}}">
             <label class="govuk-label govuk-radios__label" for="up-to-30">
@@ -92,7 +92,7 @@
               <span class="risk-context-v3">(1ft)</span>
             </label>
           </div>
-          <div id="low-risk-depth" class="govuk-radios__item" id="low-depth-label">
+          <div id="radioCont60" class="govuk-radios__item" id="low-depth-label">
             <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="up-to-60"
               name="scenarios-depth" type="radio" value="{{maps.categories[1].maps[4].ref}}">
             <label class="govuk-label govuk-radios__label" for="up-to-60">
@@ -100,7 +100,7 @@
               <span class="risk-context-v3">(2ft)</span>
             </label>
           </div>
-          <div id="up-to-90" class="govuk-radios__item">
+          <div id="radioCont90" class="govuk-radios__item">
             <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="up-to-90"
               name="scenarios-depth" type="radio" value="{{maps.categories[1].maps[6].ref}}">
             <label class="govuk-label govuk-radios__label" for="up-to-90">
@@ -112,9 +112,9 @@
       </div>
     </div>
 
-    <!-- Velocity scenarios -->
-    <div class="defra-map-scenarios horizontal-overflow scenario-float-right v6-width-fix hide"
-      id="scenario-container-velocity">
+    <!-- Depth CC scenarios -->
+    <div class="defra-map-scenarios horizontal-overflow scenario-float-right v6-width-fix-depth"
+      id="scenario-container-depth-cc">
 
       <div class="scenario-arrows left-scenario-arrow hide">
         <svg class="arrow-svg">
@@ -122,42 +122,44 @@
         </svg>
       </div>
 
-      <div class="scenario-arrows right-scenario-arrow">
+      <div class="scenario-arrows right-scenario-arrow hide">
         <svg class="arrow-svg">
           <use xlink:href="{{ assetPath }}/images/right-chevron.svg#arrow"/>
         </svg>
       </div>
-      
-      <div class="defra-map-scenarios-v3_container" id="scenarios-controls-velocity">
-        <div class="govuk-radios govuk-radios--small hide" id="scenario-selection-velocity" data-module="govuk-radios">
 
-          <div class="govuk-radios__item selected-scenario">
-            <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="risk-radio-high-velocity"
-              name="scenarios-velocity" type="radio"
-              value="{{maps.categories[1].maps[2].ref}}" checked="">
-            <label class="govuk-label govuk-radios__label" for="risk-radio-high-velocity">
-              <strong class="scenario-heading">High</strong>
-              <span class="risk-context-v3">3.3% chance each year</span>
+      <div class="defra-map-scenarios-v3_container hide" id="scenarios-controls-depth-cc">
+        <div class="govuk-radios govuk-radios--small" id="scenario-selection-depth-cc" data-module="govuk-radios">
+          <div id="radioCont20Cc" class="govuk-radios__item selected-scenario">
+            <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="up-to-20-cc"
+              name="scenarios-depth-cc" type="radio" value="{{maps.categories[1].maps[7].ref}}" checked="">
+            <label class="govuk-label govuk-radios__label" for="up-to-20-cc">
+              <strong class="scenario-heading">Up to 20cm</strong>
+              <span class="risk-context-v3">(8in)</span>
             </label>
           </div>
-
-          <div class="govuk-radios__item">
-            <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="risk-radio-medium-velocity"
-              name="scenarios-velocity" type="radio"
-              value="{{maps.categories[1].maps[4].ref}}">
-            <label class="govuk-label govuk-radios__label" for="risk-radio-medium-velocity">
-              <strong class="scenario-heading">Medium</strong>
-              <span class="risk-context-v3">1% chance each year</span>
+          <div id="radioCont30Cc" class="govuk-radios__item">
+            <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="up-to-30-cc"
+              name="scenarios-depth-cc" type="radio" value="{{maps.categories[1].maps[8].ref}}">
+            <label class="govuk-label govuk-radios__label" for="up-to-30-cc">
+              <strong class="scenario-heading">Up to 30cm</strong>
+              <span class="risk-context-v3">(1ft)</span>
             </label>
           </div>
-
-          <div class="govuk-radios__item">
-            <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="risk-radio-low-velocity"
-              name="scenarios-velocity" type="radio"
-              value="{{maps.categories[1].maps[6].ref}}">
-            <label class="govuk-label govuk-radios__label" for="risk-radio-low-velocity">
-              <strong class="scenario-heading">Low</strong>
-              <span class="risk-context-v3">0.1% chance each year</span>
+          <div id="radioCont60Cc" class="govuk-radios__item" id="low-depth-label">
+            <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="up-to-60-cc"
+              name="scenarios-depth-cc" type="radio" value="{{maps.categories[1].maps[9].ref}}">
+            <label class="govuk-label govuk-radios__label" for="up-to-60-cc">
+              <strong class="scenario-heading">Up to 60cm</strong>
+              <span class="risk-context-v3">(2ft)</span>
+            </label>
+          </div>
+          <div id="radioCont90Cc" class="govuk-radios__item">
+            <input class="risk-radio govuk-radios__input govuk-radios__inputs scenario-radio-button" id="up-to-90-cc"
+              name="scenarios-depth-cc" type="radio" value="{{maps.categories[1].maps[10].ref}}">
+            <label class="govuk-label govuk-radios__label" for="up-to-90-cc">
+              <strong class="scenario-heading">Up to 90cm</strong>
+              <span class="risk-context-v3">(3ft)</span>
             </label>
           </div>
         </div>

@@ -21,10 +21,15 @@ const depthDescCcContainer = document.getElementsByClassName('depth-desc-contain
 const depthRadio = document.getElementsByClassName('depth-radio')
 const depthRadioCC = document.getElementById('depth-radio-cc')
 const depthHeightBar = document.getElementsByClassName('defra-map-scenarios-v3_container')
+const scenarioRadioButtons = document.querySelectorAll('.scenario-radio-button')
 const upTo20 = document.getElementById('up-to-20')
 const upTo30 = document.getElementById('up-to-30')
 const upTo60 = document.getElementById('up-to-60')
 const upTo90 = document.getElementById('up-to-90')
+const upTo20Cc = document.getElementById('up-to-20-cc')
+const upTo30Cc = document.getElementById('up-to-30-cc')
+const upTo60Cc = document.getElementById('up-to-60-cc')
+const upTo90Cc = document.getElementById('up-to-90-cc')
 const params = window.location.search
 
 export const mapPageConsts = {
@@ -46,6 +51,7 @@ export const mapPageConsts = {
   depthRadio,
   depthRadioCC,
   depthHeightBar,
+  scenarioRadioButtons,
   params
 }
 
@@ -62,5 +68,9 @@ export const mapControlsConsts = {
   upTo20,
   upTo30,
   upTo60,
-  upTo90
+  upTo90,
+  upTo20Cc,
+  upTo30Cc,
+  upTo60Cc,
+  upTo90Cc
 }
