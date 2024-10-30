@@ -14,6 +14,7 @@ export function selectedOption () {
     }
     if (mapControlsConsts.depthRadio[0].checked) {
       if (mapControlsConsts.upTo30.checked) {
+        console.log('mapControlsConsts.upTo30.value: ', mapControlsConsts.upTo30.value)
         return mapControlsConsts.upTo30.value
       }
       if (mapControlsConsts.upTo60.checked) {
@@ -22,26 +23,18 @@ export function selectedOption () {
       if (mapControlsConsts.upTo90.checked) {
         return mapControlsConsts.upTo90.value
       }
-      console.log('in depth')
       return mapControlsConsts.upTo20.value
     }
     if (mapControlsConsts.depthRadio[1].checked) {
-      console.log('in cc')
-      console.log('mapControlsConsts.upTo30Cc ', mapControlsConsts.upTo30Cc)
-      console.log('mapControlsConsts.upTo30Cc.checked ', mapControlsConsts.upTo30Cc.checked)
       if (mapControlsConsts.upTo30Cc.checked) {
-        console.log('in 30cc')
         return mapControlsConsts.upTo30Cc.value
       }
       if (mapControlsConsts.upTo60Cc.checked) {
-        console.log('in 60cc')
         return mapControlsConsts.upTo60Cc.value
       }
       if (mapControlsConsts.upTo90Cc.checked) {
-        console.log('in 90cc')
         return mapControlsConsts.upTo90Cc.value
       }
-      console.log('outside cc')
       return mapControlsConsts.upTo20Cc.value
     }
   } else if (mapPageQuery === 'RiversAndSea') {

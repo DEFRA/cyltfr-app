@@ -117,7 +117,8 @@ mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
     if (!mapPageConsts.params.includes('SurfaceWater')) {
       mapPageConsts.depthDescCcContainer[0].classList.add('hide')
       mapPageConsts.depthDescContainer[0].classList.add('hide')
-      mapPageConsts.depthHeightBar[0].classList.add('hide')
+      mapPageConsts.depthScenarioBarCc[0].classList.add('hide')
+      mapPageConsts.depthScenarioBar[0].classList.add('hide')
     }
 
     if (mapPageConsts.extentRadioCC.checked) {
@@ -127,10 +128,10 @@ mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
     } else if (!mapPageConsts.params.includes('SurfaceWater')) {
       if (mapPageConsts.depthRadioCC.checked) {
         mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
-        mapPageConsts.depthHeightBar[0].classList.remove('hide')
+        mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
       } else if (mapPageConsts.depthRadio[0].checked) {
         mapPageConsts.depthDescContainer[0].classList.remove('hide')
-        mapPageConsts.depthHeightBar[0].classList.remove('hide')
+        mapPageConsts.depthScenarioBar[0].classList.remove('hide')
       }
     }
   })
