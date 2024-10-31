@@ -17,8 +17,9 @@
 
 {% block main %}
 <div class="map-container">
-  <div id="map" aria-label="Use your arrows to navigate the map. To zoom in and out cycle back to the zoom buttons."></div>
   {% include 'partials/map-page/map-controls.html' %}
+  <div id="map" aria-label="Use your arrows to navigate the map. To zoom in and out cycle back to the zoom buttons.">
+  </div>
   <!-- Key -->
   <!-- map-key inline styling required for ability to click off key on devices -->
   <div id="map-key" class="defra-map-key" style="display: block;">
@@ -288,20 +289,10 @@
             </fieldset>
           </div>
           {% include 'partials/map-page/key/toggles.html' %}
-          
-          <div class="data-message">
-            <h2 class="data-message">Pause to updates of flood risk data</h2>
-            We have <a href="https://www.gov.uk/guidance/updates-to-national-flood-and-coastal-erosion-risk-information" data-journey-click="ltfri:map:datapause" rel="noopener">
-              paused updates to information about flood risk</a>
-            from rivers and the sea and surface water while we get ready for new data.
-          </div>
-          
         </div>
       </div>
     </div>
   </div>
-
-  <div id="progress"></div>
 </div>
 {% endblock %}
 
