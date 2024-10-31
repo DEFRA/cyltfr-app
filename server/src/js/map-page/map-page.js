@@ -165,4 +165,8 @@ mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
   }
 })
 
+if (!mapPageConsts.params.includes('map=')) {
+  mapPageConsts.rsAndResOptions.classList.remove('hide')
+}
+
 mapPage()
