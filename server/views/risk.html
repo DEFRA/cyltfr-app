@@ -28,14 +28,16 @@
         <p class="govuk-body">This information tells you the flood risk of the land around a building, not the building itself.</p>
         {{ govukDetails({
           summaryText: "How we assess an area's flood risk",
-          html: "<p class='govuk-body'>Our data does not include every feature like kerbs, or fences and walls around a building. 
-            That means we cannot tell you the flood risk of every individual property.</p>
-          <p class='govuk-body'>Neighbouring houses may have different levels of flood risk. 
+          html: "<p class='govuk-body'>We use computer models to estimate flood risk, 
+            based on the best data we have available.</p>
+          <p class='govuk-body'>The models do not include every local feature like kerbs, 
+            fences and walls. That means we cannot tell you the flood risk of every individual property. </p>
+          <p class='govuk-body'>Neighbouring houses in a street may have different levels of flood risk. 
             This could be because one is on higher land or is nearer water, for example.</p>
           <p class='govuk-body'>An area can be at risk even if it has not flooded before. 
-            If an area has flooded before, any future flooding might not cover the same area.</p>
+            If an area has flooded before, any future flooding might not cover the same area. </p>
           <p class='govuk-body'>Flooding is hard to predict, especially further into the future. 
-            Flood risks could be bigger or smaller than what we show, and could change over time.</p>"
+          Flood risks could be bigger or smaller than what we show, and could change over time.</p>"
         }) }}
         
         {% include highestRisk %}
