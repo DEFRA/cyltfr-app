@@ -49,6 +49,7 @@ body {
   display: grid;
   grid-template-columns: 5fr 1fr;
   justify-content: end;
+  justify-items: end;
   flex-basis: 100%;
   flex-wrap: wrap;
 

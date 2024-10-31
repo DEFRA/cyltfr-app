@@ -277,6 +277,9 @@ svg:not(:root) {
 .scenarios {
   display: flex;
   justify-content: flex-end;
+  position: absolute;
+  bottom: 20px;
+  right: -15px;
 }
 
 .key-container {

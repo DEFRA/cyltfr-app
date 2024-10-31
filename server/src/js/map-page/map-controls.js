@@ -14,7 +14,6 @@ export function selectedOption () {
     }
     if (mapControlsConsts.depthRadio[0].checked) {
       if (mapControlsConsts.upTo30.checked) {
-        console.log('mapControlsConsts.upTo30.value: ', mapControlsConsts.upTo30.value)
         return mapControlsConsts.upTo30.value
       }
       if (mapControlsConsts.upTo60.checked) {
