@@ -26,7 +26,6 @@ function checkCookie (response) {
 describe('GET /ground-water', () => {
   beforeAll(async () => {
     config.setConfigOptions({
-      riskPageFlag: true,
       friendlyCaptchaEnabled: false
     })
     server = await createServer()
@@ -39,15 +38,15 @@ describe('GET /ground-water', () => {
   })
 
   beforeEach(async () => {
-    const { getOptions, postOptions } = mockSearchOptions('NP18 3EZ', cookie)
+    const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP18 3EZ')}`)
+    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('CV37 6YZ')}`)
 
     const getResponse = await server.inject(getOptions)
     checkCookie(getResponse)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    postOptions.url = `/search?postcode=${encodeURIComponent('NP18 3EZ')}`
+    postOptions.url = `/search?postcode=${encodeURIComponent('CV37 6YZ')}`
     postOptions.payload = 'address=0'
 
     postResponse = await server.inject(postOptions)

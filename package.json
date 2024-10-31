@@ -15,7 +15,7 @@
     "watch": "npx nodemon index.js",
     "build": "./bin/build",
     "test": "npm run test:lint && npm run test:jest",
-    "test:jest": "jest --no-cache  --detectOpenHandles --runInBand --forceExit",
+    "test:jest": " DOTENV_CONFIG_PATH=./.env.unittest jest --no-cache  --detectOpenHandles --runInBand --forceExit",
     "test:lint": "standard",
     "test:watch": "jest --watch",
     "debug": "node --inspect-brk=0.0.0.0:9229 index.js",
@@ -34,6 +34,8 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@airbrake/node": "^2.1.8",
+    "@arcgis/core": "^4.30.9",
+    "@esri/arcgis-rest-request": "^4.2.3",
     "@hapi/boom": "^10.0.0",
     "@hapi/catbox-memory": "^6.0.1",
     "@hapi/catbox-redis": "7.0.2",
@@ -51,9 +53,8 @@
     "hapi-rate-limit": "^7.0.0",
     "https-proxy-agent": "^7.0.0",
     "joi": "^17.0.0",
-    "nunjucks": "^3.2.0",
-    "ol": "^9.0.0",
-    "proj4": "^2.10.0"
+    "node-fetch": "^2.7.0",
+    "nunjucks": "^3.2.0"
   },
   "devDependencies": {
     "husky": "^9.0.0",

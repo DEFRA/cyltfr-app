@@ -1,5 +1,4 @@
 const { capitaliseAddress } = require('../services/address.js')
-const config = require('../config.js')
 
 const RiskLevel = {
   VeryLow: 'Very Low',
@@ -17,37 +16,35 @@ const RiskTitles = {
 
 const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
 
-const suitabilities = [
-  'county to town',
-  'national to county',
-  'street to parcels of land',
-  'town to street'
-]
-
 function riskViewModel (risk, address, backLinkUri) {
   const riverAndSeaRisk = risk.riverAndSeaRisk
     ? risk.riverAndSeaRisk.probabilityForBand
     : RiskLevel.VeryLow
+  const riverAndSeaRiskCC = risk.riverAndSeaRiskCC
+    ? risk.riverAndSeaRiskCC.probabilityForBand
+    : RiskLevel.VeryLow
   const surfaceWaterRisk = risk.surfaceWaterRisk || RiskLevel.VeryLow
+  const surfaceWaterRiskCC = risk.surfaceWaterRiskCC || RiskLevel.VeryLow
   const reservoirDryRisk = !!(risk.reservoirDryRisk?.length)
   const reservoirWetRisk = !!(risk.reservoirWetRisk?.length)
   const reservoirRisk = reservoirDryRisk || reservoirWetRisk
 
   this.riverAndSeaRisk = riverAndSeaRisk
+  this.riverAndSeaRiskCC = riverAndSeaRiskCC
   this.surfaceWaterRisk = surfaceWaterRisk
+  this.surfaceWaterRiskCC = surfaceWaterRiskCC
   this.riverAndSeaClassName = riverAndSeaRisk.toLowerCase().replace(' ', '-')
   this.surfaceWaterClassName = surfaceWaterRisk.toLowerCase().replace(' ', '-')
   this.riversSeaRiskStyle = riverAndSeaRisk.replace(/ /g, '-')
   this.surfaceWaterStyle = surfaceWaterRisk.replace(/ /g, '-')
+  this.riversSeaRiskCCStyle = riverAndSeaRiskCC.replace(/ /g, '-')
+  this.surfaceWaterCCStyle = surfaceWaterRiskCC.replace(/ /g, '-')
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
 
   if (reservoirRisk) {
     processReservoirs.call(this, reservoirDryRisk, risk, reservoirWetRisk)
   }
-
-  // River and sea suitability
-  processSuitability.call(this, risk)
 
   // Groundwater area
   this.isGroundwaterArea = risk.isGroundwaterArea
@@ -94,15 +91,10 @@ function riskViewModel (risk, address, backLinkUri) {
     this.firstSource = 'rivers-sea.html'
     this.secondSource = 'surface-water.html'
   }
-  if (config.riskPageFlag) {
-    this.firstSource = 'partials/flagged/' + this.firstSource
-    this.secondSource = 'partials/flagged/' + this.secondSource
-    this.additionalInformation = 'partials/flagged/groundwaterAndReservoirs.html'
-  } else {
-    this.firstSource = 'partials/' + this.firstSource
-    this.secondSource = 'partials/' + this.secondSource
-    this.additionalInformation = 'partials/groundwaterAndReservoirs.html'
-  }
+
+  this.firstSource = 'partials/' + this.firstSource
+  this.secondSource = 'partials/' + this.secondSource
+  this.additionalInformation = 'partials/groundwaterAndReservoirs.html'
   this.surfaceWaterIsFirst = surfaceWaterIsFirst
   this.testInfo = JSON.stringify({
     riverAndSeaRisk,
@@ -115,29 +107,10 @@ function riskViewModel (risk, address, backLinkUri) {
 module.exports = riskViewModel
 
 function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel) {
-  this.highestRisk = 'partials/flagged/blank.html'
-  if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/flagged/rsl.html' }
-  if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/flagged/sw.html' }
-  if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/flagged/rsl-sw.html' }
-}
-
-function processSuitability (risk) {
-  const riverAndSeaSuitability = risk.riverAndSeaRisk?.suitability
-  if (riverAndSeaSuitability) {
-    const name = riverAndSeaSuitability.toLowerCase()
-    if (suitabilities.includes(name)) {
-      this.riverAndSeaSuitabilityName = `partials/suitability/${name.replace(/ /g, '-')}.html`
-    }
-  }
-
-  // Surface water suitability
-  const surfaceWaterSuitability = risk.surfaceWaterSuitability
-  if (surfaceWaterSuitability) {
-    const name = surfaceWaterSuitability.toLowerCase()
-    if (suitabilities.includes(name)) {
-      this.surfaceWaterSuitabilityName = `partials/suitability/${name.replace(/ /g, '-')}.html`
-    }
-  }
+  this.highestRisk = 'partials/blank.html'
+  if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl.html' }
+  if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/sw.html' }
+  if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl-sw.html' }
 }
 
 function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {

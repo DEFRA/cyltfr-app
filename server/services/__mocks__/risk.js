@@ -1,17 +1,13 @@
 const riskService = jest.createMockFromModule('../risk')
 
 const originalReturnValue = {
-  inEngland: true,
   isGroundwaterArea: false,
   floodAlertArea: [],
   floodWarningArea: [],
-  inFloodAlertArea: false,
-  inFloodWarningArea: false,
   leadLocalFloodAuthority: 'Cheshire West and Chester',
   reservoirRisk: null,
   riverAndSeaRisk: null,
   surfaceWaterRisk: 'Very Low',
-  surfaceWaterSuitability: 'County to Town',
   extraInfo: null
 }
 let returnValue = { ...originalReturnValue }

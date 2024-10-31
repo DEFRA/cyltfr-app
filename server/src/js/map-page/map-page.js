@@ -1,6 +1,4 @@
-import { scenarioDisplayUpdate, handleScroll, handleArrowClick } from './scenario-bars.js'
-import { openKey, closeKey, showOrHideAdvancedToggleText, toggleAdvancedOptions, handleRadioChange, selectedOption } from './map-controls.js'
-import { adjustPosition } from './screen-size-adjustments.js'
+import { openKey, closeKey, selectedOption } from './map-controls.js'
 import { mapPageConsts } from './constants.js'
 
 class MapController {
@@ -40,15 +38,12 @@ class MapController {
         }
       }
     }
-
     this.currMap = defaultMap
     this.currCategory = defaultCategory
   }
 }
 
 function mapPage () {
-  getInitialKeyOptions()
-
   function getParameterByName (name) {
     name = name.replace(/[[]/, '\\[').replace(/\]/, '\\]')
     const regex = new RegExp(`[\\?&]${name}=([^&#]*)`)
@@ -62,8 +57,12 @@ function mapPage () {
   const easting = parseInt(getParameterByName('easting'), 10)
   const northing = parseInt(getParameterByName('northing'), 10)
   const hasLocation = !!easting
-
-  mapPageConsts.maps.loadMap((hasLocation && [easting, northing]))
+  const stateCheck = setInterval(() => {
+    if (document.readyState === 'complete') {
+      clearInterval(stateCheck)
+      mapPageConsts.maps.loadMap((hasLocation && [easting, northing]))
+    }
+  }, 100)
 
   // This function updates the map to the radio button you select (extent, depth, velocity)
   function setCurrent (ref) {
@@ -74,9 +73,9 @@ function mapPage () {
     const mapReferenceValue = selectedOption()
 
     if (showFloodingCheckbox.checked) {
-      mapPageConsts.maps.showMap(`risk:${mapReferenceValue.substring(mapReferenceValue.indexOf('_') + 1)}`, selectedAddressCheckbox.checked)
+      mapPageConsts.maps.showMap(`${mapReferenceValue}`, selectedAddressCheckbox.checked)
     } else {
-      mapPageConsts.maps.showMap(`risk:${mapReferenceValue.substring(mapReferenceValue.indexOf('_') + 1)}DONOTDISPLAY`, selectedAddressCheckbox.checked)
+      mapPageConsts.maps.showMap(`${mapReferenceValue}DONOTDISPLAY`, selectedAddressCheckbox.checked)
     }
   }
 
@@ -99,16 +98,6 @@ function mapPage () {
     setCurrent(getParameterByName('map'))
   })
 
-  mapPageConsts.advancedToggle.addEventListener('click', function (event) {
-    event.stopPropagation()
-    if (window.innerWidth <= mapPageConsts.deviceScreenWidth) {
-      openKey()
-    }
-    toggleAdvancedOptions()
-    selectedOption()
-    setCurrent()
-  })
-
   // ensures mouse cursor returns to default if feature was at edge of map
   map.addEventListener('mouseleave', function () {
     body.style.cursor = 'default'
@@ -121,17 +110,22 @@ document.addEventListener('click', function (event) {
   }
 })
 
-document.addEventListener('DOMContentLoaded', function () {
-  mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
-    radio.addEventListener('change', function () {
-      const label = document.querySelector(`label[for="${this.id}"]`)
-      if (label) {
-        label.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-      }
-    })
-  })
+mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
+  const extentDescContainer = document.getElementsByClassName('extent-desc-container')
+  const extentDescCcContainer = document.getElementsByClassName('extent-desc-container-cc')
+  const extentRadio = document.getElementsByClassName('extent-radio')
+  const extentRadioCC = document.getElementById('extent-radio-cc')
 
-  showOrHideAdvancedToggleText()
+  radio.addEventListener('change', () => {
+    if (extentRadioCC.checked) {
+      extentDescCcContainer[0].classList.remove('hide')
+      extentDescContainer[0].classList.add('hide')
+    }
+    if (extentRadio[0].checked) {
+      extentDescCcContainer[0].classList.add('hide')
+      extentDescContainer[0].classList.remove('hide')
+    }
+  })
 })
 
 mapPageConsts.exitMapBtn.addEventListener('click', function () {
@@ -140,96 +134,10 @@ mapPageConsts.exitMapBtn.addEventListener('click', function () {
   window.location.href = backLink
 })
 
-mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
-  if (radio.id.includes('depth')) {
-    radio.addEventListener('change', function () {
-      scenarioDisplayUpdate('depth')
-    })
-  } else {
-    radio.addEventListener('change', function () {
-      scenarioDisplayUpdate('velocity')
-    })
-  }
-})
-
-mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
-  let eventType
-  let extentType
-
-  if (radio.id.includes('sw-extent')) {
-    eventType = 'extent'
-    extentType = mapPageConsts.surfaceWater
-  } else if (radio.id.includes('sw-depth')) {
-    eventType = 'depth'
-  } else if (radio.id.includes('sw-velocity')) {
-    eventType = 'velocity'
-  } else if (radio.id.includes('reservoirs')) {
-    eventType = 'extent'
-    extentType = 'reservoirs'
-  } else if (radio.id.includes('rs-radio')) {
-    eventType = 'extent'
-    extentType = mapPageConsts.riversAndTheSea
-  } else {
-    console.log('No type selected.')
-  }
-
-  if (eventType) {
-    radio.addEventListener('change', function () {
-      handleRadioChange(eventType, extentType)
-    })
-  }
-})
-
 mapPageConsts.closeKeyBtn.addEventListener('click', closeKey)
 mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   event.stopPropagation()
   openKey()
 })
 
-handleArrowClick(mapPageConsts.rightArrow, mapPageConsts.rightMove)
-handleArrowClick(mapPageConsts.leftArrow, mapPageConsts.leftMove)
-
-handleScroll(mapPageConsts.scenarioSelectionDepth, [mapPageConsts.rightArrow[0], mapPageConsts.leftArrow[0]])
-handleScroll(mapPageConsts.scenarioSelectionVelocity, [mapPageConsts.rightArrow[1], mapPageConsts.leftArrow[1]])
-
-function getInitialKeyOptions () {
-  if (window.location.href.includes('map=SurfaceWater')) {
-    surfaceWaterInitialOptions()
-  } else if (window.location.href.includes('map=RiversOrSea')) {
-    riversAndTheSeaInitialOptions()
-  } else if (window.location.href.includes('map=Reservoirs')) {
-    reservoirsInitialOptions()
-  } else {
-    mapPageConsts.advancedToggle.classList.add('hide')
-    mapPageConsts.selectedAddressInput.classList.add('hide')
-  }
-}
-
-function surfaceWaterInitialOptions () {
-  mapPageConsts.velocityContainer.classList.add('hide')
-  mapPageConsts.rsContainer.classList.add('hide')
-  mapPageConsts.reservoirsContainer.classList.add('hide')
-}
-
-function riversAndTheSeaInitialOptions () {
-  mapPageConsts.swContainer.classList.add('hide')
-  mapPageConsts.extentInfoSw.classList.add(mapPageConsts.extentDesc)
-  mapPageConsts.rsContainer.classList.add(mapPageConsts.keyContainer)
-  mapPageConsts.rsRadio.checked = true
-  mapPageConsts.extentInfoRs.classList.remove(mapPageConsts.extentDesc)
-  mapPageConsts.reservoirsContainer.classList.add('hide')
-  mapPageConsts.boundaryContainer.classList.add('hide')
-}
-
-function reservoirsInitialOptions () {
-  mapPageConsts.swContainer.classList.add('hide')
-  mapPageConsts.extentInfoSw.classList.add(mapPageConsts.extentDesc)
-  mapPageConsts.rsContainer.classList.add('hide')
-  mapPageConsts.reservoirsContainer.classList.add(mapPageConsts.keyContainer)
-  mapPageConsts.reservoirsRadio.checked = true
-  mapPageConsts.extentInfoReservoirs.classList.remove(mapPageConsts.extentDesc)
-  mapPageConsts.boundaryContainer.classList.add('hide')
-}
-
-window.onresize = adjustPosition
 mapPage()

@@ -1,5 +1,4 @@
 const joi = require('joi')
-const { defineBackLink } = require('../services/defineBackLink')
 
 module.exports = {
   method: 'GET',
@@ -13,13 +12,12 @@ module.exports = {
     if (!postcodeIn) {
       return h.redirect('/postcode')
     }
-    const path = request.path
-    const backLink = defineBackLink(path, postcodeIn)
+    const backLinkUri = '/postcode'
     const model = {
-      isWales: request.query.region === 'wales',
-      isScotland: request.query.region === 'scotland',
-      isNorthernIreland: request.query.region === 'northern-ireland',
-      backLink
+      isWales: ['wales', 'W'].includes(request.query.region),
+      isScotland: ['scotland', 'S'].includes(request.query.region),
+      isNorthernIreland: ['northern-ireland', 'N'].includes(request.query.region),
+      backLinkUri
     }
 
     return h.view('england-only', model)

@@ -1,5 +1,5 @@
 const { find } = require('../services/address')
-const { getByCoordinates } = require('../services/risk')
+const { getByCoordinates, swDepthRisk, rsDepthRisk } = require('../services/risk')
 const { findWarnings } = require('../services/flood')
 const config = require('../config')
 
@@ -33,6 +33,32 @@ const serverMethods = [
       : undefined
   },
   {
+    name: 'swDepth',
+    method: swDepthRisk,
+    options: cacheEnabled
+      ? {
+          cache: {
+            cache: 'server_cache',
+            expiresIn: 100 * 1000,
+            generateTimeout: 20000
+          }
+        }
+      : undefined
+  },
+  {
+    name: 'rsDepth',
+    method: rsDepthRisk,
+    options: cacheEnabled
+      ? {
+          cache: {
+            cache: 'server_cache',
+            expiresIn: 100 * 1000,
+            generateTimeout: 20000
+          }
+        }
+      : undefined
+  },
+  {
     name: 'floodService',
     method: findWarnings,
     options: cacheEnabled
@@ -44,7 +70,6 @@ const serverMethods = [
           }
         }
       : undefined
-  }
-]
+  }]
 
 module.exports = serverMethods

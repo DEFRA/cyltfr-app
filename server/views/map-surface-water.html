@@ -1,0 +1,194 @@
+{% extends 'layout.html' %}
+
+{% set pageTitle = "See flood risk on a map" %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block head %}
+{{ super() }}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" sizes="16x16 32x32 48x48" href="/assets/images/favicon.ico" type="image/x-icon">
+<link href="{{ assetPath }}/stylesheets/map-page.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ assetPath }}/esri/themes/light/main.css">
+{% endblock %}
+
+{% block main %}
+<div class="map-container">
+  <div id="map" aria-label="Use your arrows to navigate the map. To zoom in and out cycle back to the zoom buttons."></div>
+  {% include 'partials/map-page/map-controls.html' %}
+  <!-- Key -->
+  <!-- map-key inline styling required for ability to click off key on devices -->
+  <div id="map-key" class="defra-map-key" style="display: block;">
+    <div class="defra-map-key__container" id="defra-map-key__container">
+      <h1 id="mapKeyLabel" class="defra-map-key__title">
+        <span role="text">Surface water map<span class="govuk-visually-hidden">for map features</span></span>
+        <button class="defra-map-key__close" id="close-key">
+          <svg id="close-btn" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+            <path d="M10,8.6L15.6,3L17,4.4L11.4,10L17,15.6L15.6,17L10,11.4L4.4,17L3,15.6L8.6,10L3,4.4L4.4,3L10,8.6Z"></path>
+          </svg>
+          <span class="govuk-visually-hidden">Close key</span>
+        </button>
+      </h1>
+
+      <div class="defra-map-key__content">
+        <div class="govuk-form-group" id="map-key__section">
+          <div id="sw-section-container">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                <h2 id="defra-map-key__section-title-top-title" class="defra-map-key__section-title" ontoken="this.onscrolling = false">Yearly chance of flooding</h2>
+              </legend>
+          
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="risk-radio govuk-radios__input govuk-radios__inputs risk-measurement extent-radio" id="sw-extent-radio"
+                    value="{{maps.categories[1].maps[0].ref}}"
+                    title="Extent of flooding from surface water" name="measurements" type="radio" checked="">
+                  <label class="govuk-label govuk-radios__label" for="sw-extent-radio">
+                    <span class="surface-water-bulletpoint__heading" id="surface-water-extent__heading">Flood area (extent)</span>
+          
+                    <div id="sw-extent-desc-container" class="extent-desc-container">
+                      <span
+                        class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                        id="sw-extent-high">
+                        <span class="defra-map-key__symbol">
+                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                            <rect class="high-symbol risk-colour-square" x="5" y="5"></rect>
+                          </svg>
+                        </span>
+                        <span id="risk-severity" class="risk-severity-text">High chance</span>
+                      </span>
+          
+                      <span
+                        class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                        id="sw-extent-med">
+                        <span class="defra-map-key__symbol">
+                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                            <rect class="medium-symbol risk-colour-square" x="5" y="5"></rect>
+                          </svg>
+                        </span>
+                        <span class="risk-severity-text">Medium chance</span>
+                      </span>
+          
+                      <span
+                        class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                        id="sw-extent-low">
+                        <span class="defra-map-key__symbol">
+                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                            <rect class="low-symbol risk-colour-square" x="5" y="5"></rect>
+                          </svg>
+                        </span>
+                        <span class="risk-severity-text">Low chance</span>
+                      </span>
+                      
+                      <span
+                        class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                        id="sw-extent-low">
+                        <span class="defra-map-key__symbol">
+                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                            <rect class="very-low-symbol risk-colour-square" x="5" y="5"></rect>
+                          </svg>
+                        </span>
+                        <span class="risk-severity-text">Very low chance</span>
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                <h3 class="defra-map-key__section-title" ontoken="this.onscrolling = false">Yearly chance of flooding between 2040 and 2060</h3>
+              </legend>
+          
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="risk-radio govuk-radios__input govuk-radios__inputs risk-measurement" id="extent-radio-cc"
+                    value="{{maps.categories[1].maps[1].ref}}"
+                    title="Extent of flooding from surface water (2040-2060)" name="measurements" type="radio">
+                  <label class="govuk-label govuk-radios__label" for="extent-radio-cc">
+                    <span class="surface-water-bulletpoint__heading" id="surface-water-extent__heading">Flood area (extent)</span>
+                    <div id="sw-extent-desc-container-cc" class="extent-desc-container-cc hide">
+                      <span
+                        class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                        id="sw-extent-high">
+                        <span class="defra-map-key__symbol">
+                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                            <rect class="high-symbol risk-colour-square" x="5" y="5"></rect>
+                          </svg>
+                        </span>
+                        <span id="risk-severity" class="risk-severity-text">High chance</span>
+                      </span>
+          
+                      <span
+                        class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                        id="sw-extent-med">
+                        <span class="defra-map-key__symbol">
+                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                            <rect class="medium-symbol risk-colour-square" x="5" y="5"></rect>
+                          </svg>
+                        </span>
+                        <span class="risk-severity-text">Medium chance</span>
+                      </span>
+          
+                      <span
+                        class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                        id="sw-extent-low">
+                        <span class="defra-map-key__symbol">
+                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                            <rect class="low-symbol risk-colour-square" x="5" y="5"></rect>
+                          </svg>
+                        </span>
+                        <span class="risk-severity-text">Low chance</span>
+                      </span>
+                      
+                      <span
+                        class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                        id="sw-extent-low">
+                        <span class="defra-map-key__symbol">
+                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                            <rect class="very-low-symbol risk-colour-square" x="5" y="5"></rect>
+                          </svg>
+                        </span>
+                        <span class="risk-severity-text">Very low chance</span>
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          {% include 'partials/map-page/key/toggles.html' %}
+          
+          <div class="data-message">
+            <h2 class="data-message">Pause to updates of flood risk data</h2>
+            We have <a href="https://www.gov.uk/guidance/updates-to-national-flood-and-coastal-erosion-risk-information" data-journey-click="ltfri:map:datapause" rel="noopener">
+              paused updates to information about flood risk</a>
+            from rivers and the sea and surface water while we get ready for new data.
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="progress"></div>
+</div>
+{% endblock %}
+
+{% block bodyEnd %}
+{{ super() }}
+<script>
+  window.mapCategories = {{ maps | dump | safe }}
+  window.mapConfig = JSON.parse({{ mapConfig | dump | safe }})
+</script>
+<script src="{{ assetPath }}/nunjucks-slim.js"></script>
+<script src="{{ assetPath }}/js/map.js"></script>
+<script src="{{ assetPath }}/js/mapPage.js"></script>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

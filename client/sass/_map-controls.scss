@@ -63,10 +63,12 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     &:hover {
       background-color: #f3f2f1;
     }
+
     &:focus-visible {
       outline: 3px solid transparent;
       box-shadow: $focusBorder;
     }
+
     &::-moz-focus-inner {
       border: 0;
     }
@@ -80,7 +82,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
       width: 20px;
       height: 20px;
     }
-    
+
     .button-content {
       display: flex;
       align-items: center;
@@ -98,15 +100,16 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
       margin: 0 10px 10px 0;
     }
   }
- 
-  
+
+
   .defra-map-key__close {
     display: none;
+
     @media screen and (max-width: $tablet-width) {
       z-index: 25;
       display: block;
       position: absolute;
-      right: 16px;
+      right: -11px;
       top: 0;
       width: 40px;
       height: 40px;
@@ -130,7 +133,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 
   #open-key-button {
     display: none;
-    position: relative; 
+    position: relative;
     z-index: 25;
     float: right;
     top: calc(100vh - 60px);
@@ -150,7 +153,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     line-height: 1.1428571429;
     line-height: 40px;
     color: #0b0c0c;
-    
+
     &:hover {
       background-color: #f3f2f1;
       cursor: pointer;
@@ -179,9 +182,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     bottom: 0px;
     left: 0px;
     pointer-events: none;
-    
+    height: 100dvh;
+
     @media (min-width: 48.0625em) {
-        right: 290px;
+      right: 290px;
     }
   }
 
@@ -189,14 +193,18 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   // only generate after the JS imports the map and are contained
   // within the map element.
   #map {
-    height: 100%;
-    width: 100vw;
+
+    @media screen and (max-width: $tablet-width) {
+      height: 100dvh;
+      width: 100dvw;
+    }
 
     .ol-control {
       padding: 0;
       border-radius: 0;
       background-color: white;
-        button {
+
+      button {
         display: block;
         position: relative;
         border: 0;
@@ -208,14 +216,14 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
         color: #0b0c0c;
         border-radius: 0;
 
-          @media screen and (max-width: $tablet-width) {
-            display: none;
-          }
+        @media screen and (max-width: $tablet-width) {
+          display: none;
         }
+      }
 
       button:hover {
         background-color: #f3f2f1;
-      }    
+      }
 
       button:focus-visible {
         outline: 3px solid transparent;
@@ -253,14 +261,16 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
       padding-right: 11px;
     }
   }
+
   .defra-map__exit svg {
     display: inline-block;
     margin: 10px;
     vertical-align: top;
   }
-  
+
   .defra-map__exit span {
     vertical-align: top;
+
     @media (max-width: 48.0525em) {
       clip: rect(0 0 0 0);
       clip-path: inset(50%);
@@ -293,6 +303,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     pointer-events: none;
     z-index: 99;
   }
+
   .defra-map__exit::-moz-focus-inner {
     border: 0;
   }
@@ -328,14 +339,16 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     -ms-user-select: none;
     pointer-events: auto;
   }
+
   .defra-map__advanced svg {
     display: inline-block;
     margin: 10px;
     vertical-align: top;
   }
-  
+
   .defra-map__advanced span {
     vertical-align: top;
+
     @media (max-width: 48.0525em) {
       font-size: 14px;
       padding-left: 0;
@@ -345,24 +358,26 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   .defra-map__advanced:hover {
     background-color: #f3f2f1;
   }
+
   .defra-map__advanced:focus-visible {
     outline: 3px solid transparent;
     box-shadow: $focusBorder;
   }
+
   .defra-map__advanced::-moz-focus-inner {
     border: 0;
   }
 
   .key-adv-button-display {
-  display: block;
-}
-  
+    display: block;
+  }
+
   .ol-zoom {
     float: right;
     /* As the zoom buttons are within the map they are not as easily positioned, which is why I
       have used the calculation as seen below. */
-    top: calc(100% - 102px);
-    left: calc(100% - 340px);
+    top: calc(100% - 105px);
+    left: calc(100% - 50px);
   }
 
   .zoom-disabled {
@@ -372,7 +387,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     outline: none;
     box-shadow: none;
   }
-  
+
   .ol-zoom .ol-zoom-in:focus {
     /* Ensures the focus boarder overlaps the other zoom button rather than hides behind */
     z-index: 12;

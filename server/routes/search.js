@@ -5,7 +5,6 @@ const config = require('../config')
 const SearchViewModel = require('../models/search-view')
 const errors = require('../models/errors.json')
 const { captchaCheck } = require('../services/captchacheck')
-const { defineBackLink } = require('../services/defineBackLink')
 
 const getWarnings = async (postcode, request) => {
   try {
@@ -29,8 +28,10 @@ module.exports = [
       let { postcode } = request.query
       if (!postcode) {
         postcode = request.yar.get('postcode')
+        if (!postcode) {
+          return h.redirect('/postcode')
+        }
       }
-      const path = request.path
 
       // Our Address service doesn't support NI addresses
       // but all NI postcodes start with BT so redirect to
@@ -65,7 +66,7 @@ module.exports = [
         try {
           warnings = await getWarnings(postcode, request)
         } catch {}
-        const backLinkUri = defineBackLink(path)
+        const backLinkUri = '/postcode'
         return h.view('search', new SearchViewModel(postcode, addresses, null, warnings, backLinkUri))
       } catch (err) {
         return boom.badRequest(errors.addressByPostcode.message, err)
@@ -115,11 +116,15 @@ module.exports = [
 
         return h.view('search', model)
       }
-      // Set addresses to session
-      request.yar.set({
-        address: addresses[address]
-      })
 
+      const addressRecord = addresses[address]
+      request.yar.set({
+        address: addressRecord
+      })
+      if (addressRecord.country_code !== 'E') {
+        return redirectToHomeCounty(h, postcode, addressRecord.country_code)
+      }
+      // Set addresses to session
       return h.redirect('/risk#')
     },
     options: {

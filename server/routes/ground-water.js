@@ -7,6 +7,7 @@ module.exports = {
   path: '/ground-water',
   handler: async (request, h) => {
     const address = request.yar.get('address')
+    request.yar.set('previousPage', request.path)
 
     if (!address) {
       return h.redirect('/postcode')
@@ -26,6 +27,6 @@ module.exports = {
     }
   },
   options: {
-    description: 'Understand rivers and the sea page'
+    description: 'Understand groundwater page'
   }
 }

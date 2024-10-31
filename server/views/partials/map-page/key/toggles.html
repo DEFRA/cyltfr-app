@@ -2,13 +2,13 @@
 <div class="govuk-form-group">
   <fieldset class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-      <h3 class="defra-map-key__section-title" id="map-display-toggles-title">Map details</h3>
+      <h2 class="defra-map-key__section-title" id="map-display-toggles-title">Map details</h2>
     </legend>
     <div class="govuk-radios govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
       <div class="govuk-checkboxes__item">
         <input class="govuk-checkboxes__input govuk-radios__inputs" id="display-layers-checkbox" name="map-toggle" type="checkbox"
           value="30" checked="">
-        <label class="govuk-label  govuk-checkboxes__label" for="display-layers-checkbox">
+        <label class="govuk-label govuk-checkboxes__label" for="display-layers-checkbox">
           Show flooding
         </label>
       </div>
@@ -18,20 +18,9 @@
         <label class="govuk-label govuk-checkboxes__label" for="selected-address-checkbox">
           <span class="defra-map-key__symbol-container">
             <span class="defra-map-key__symbol">
-              <svg id="pointer-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" 
-                aria-hidden="true" focusable="false">
-                <use xlink:href="{{ assetPath }}/images/pointer-icon.svg#pointer"/>
-              </svg>
+              <img id="pointer-icon" src="{{ assetPath }}/images/pointer-icon.png" alt="Pointer Icon" aria-hidden="true">
             </span>
             Selected address
-          </span>
-          <span class="defra-map-key__symbol-container defra-map-key__symbol-container--multi" id="boundary-container">
-            <span class="defra-map-key__symbol">
-              <svg id="radius-circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="40"></circle>
-              </svg>
-            </span>
-            15m boundary
           </span>
         </label>
       </div>

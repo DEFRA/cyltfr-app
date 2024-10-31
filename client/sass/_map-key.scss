@@ -6,10 +6,15 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 #map-key {
   display: block;
   z-index: 25;
-  position: absolute;
   height: 100%;
   width: 290px;
   background-color: white;
+
+  @media screen and (max-width: $tablet-width) {
+    height: 100%;
+    width: 290px;
+    position: absolute;
+  }
 
   #mapKeyLabel {
     font-family: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
@@ -17,9 +22,9 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     background-color: white;
     line-height: 2.125;
     height: 40px;
-    width: 100%;
-    padding: 0px 18px 0 20px;
-    font-size: 19px;
+    width: 237px;
+    padding: 18px 18px 0 20px;
+    font-size: 24px;
     margin: 0;
     z-index: 15;
 
@@ -38,7 +43,17 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   font-size: 16px;
 }
 
+.risk-severity-text {
+  font-size: 14px;
+}
+
+#defra-map-key__section-title-top-title {
+  padding-top: 18px;
+  margin-top: 66px;
+}
+
 .defra-map-key__section-title {
+  margin-top: 66px;
   position: relative;
   font-family: $gov-font;
   -webkit-font-smoothing: antialiased;
@@ -47,11 +62,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   font-size: 16px !important;
   line-height: 1.1428571429;
   display: block;
-  margin-top: 45px;
   margin-bottom: 0;
   padding: 10px 15px 0px 0px;
   box-sizing: border-box;
-  width: 260px;
+  width: 230px;
 
   &::before {
     position: absolute;
@@ -116,6 +130,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   height: 22px;
 }
 
+#sw-extent-desc-container {
+  padding-left: 30px;
+}
+
 .high-symbol {
   fill: #555C9D;
 }
@@ -131,6 +149,14 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 
 #map-display-toggles-title {
   margin-top: 5px;
+}
+
+.extent-desc-container {
+  padding-left: 30px;
+}
+
+.extent-desc-container-cc {
+  padding-left: 30px;
 }
 
 #rs-title {
@@ -174,6 +200,12 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   border: 0;
 }
 
+.defra-map-key__symbol img {
+  display: block; 
+  box-sizing: border-box;
+  top: 10px;
+}
+
 .defra-map-key__symbol svg {
   display: block; 
   box-sizing: border-box;
@@ -207,7 +239,6 @@ svg:not(:root) {
 
 .defra-map-key__symbol-container--multi {
   margin-top: 19px;
-
 }
 
 .sw-depth-container {
@@ -242,10 +273,6 @@ svg:not(:root) {
   background-size: 12px;
   margin-left: -25px;
   margin-top: 6px;
-}
-
-.extent-desc-container {
-  display: none;
 }
 
 .scenarios {

@@ -1,8 +1,7 @@
 const boom = require('@hapi/boom')
 const RiskViewModel = require('../models/risk-view')
+const { redirectToHomeCounty } = require('../helpers')
 const errors = require('../models/errors.json')
-const config = require('../config')
-const { defineBackLink } = require('../services/defineBackLink.js')
 
 module.exports = {
   method: 'GET',
@@ -10,10 +9,12 @@ module.exports = {
   handler: async (request, h) => {
     try {
       const address = request.yar.get('address')
-      const path = request.path
 
       if (!address) {
         return h.redirect('/postcode')
+      }
+      if (address.country_code !== 'E') {
+        return redirectToHomeCounty(h, address.postcode, address.country_code)
       }
 
       const { x, y } = address
@@ -21,16 +22,14 @@ module.exports = {
 
       try {
         const risk = await request.server.methods.riskService(x, y, radius)
+
         // FLO-1139 If query 1 to 6 errors then throw default error page
-        const hasError = risk.inFloodWarningArea === 'Error' ||
-          risk.inFloodAlertArea === 'Error' ||
-          risk.riverAndSeaRisk === 'Error' ||
-          risk.surfaceWaterRisk === 'Error' ||
-          risk.reservoirDryRisk === 'Error' ||
-          risk.reservoirWetRisk === 'Error' ||
-          risk.surfaceWaterSuitability === 'Error' ||
-          risk.leadLocalFloodAuthority === 'Error' ||
-          risk.extraInfo === 'Error'
+        const hasError = risk.riverAndSeaRisk?.error ||
+          risk.surfaceWaterRisk?.error ||
+          risk.reservoirDryRisk?.error ||
+          risk.reservoirWetRisk?.error ||
+          risk.leadLocalFloodAuthority?.error ||
+          risk.extraInfo?.error
 
         if (hasError) {
           return boom.badRequest(errors.spatialQuery.message, {
@@ -39,12 +38,8 @@ module.exports = {
           })
         }
 
-        if (!risk.inEngland) {
-          return h.redirect('/england-only')
-        }
-        const backLinkUri = defineBackLink(path, address.postcode)
-        const htmlFile = config.riskPageFlag ? 'risk-flagged' : 'risk'
-        return h.view(htmlFile, new RiskViewModel(risk, address, backLinkUri))
+        const backLinkUri = '/search'
+        return h.view('risk', new RiskViewModel(risk, address, backLinkUri))
       } catch (err) {
         return boom.badRequest(errors.riskProfile.message, err)
       }

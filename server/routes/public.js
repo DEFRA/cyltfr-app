@@ -38,22 +38,13 @@ module.exports = [
           'server/public/static',
           'server/public/build',
           'node_modules/govuk-frontend/dist/govuk/assets',
-          'node_modules/nunjucks/browser'
+          'node_modules/nunjucks/browser',
+          'node_modules/@arcgis/core/assets/'
         ]
       }
     },
     options: {
       description: 'Get public assets'
-    }
-  },
-  {
-    method: 'GET',
-    path: '/ol/ol.css',
-    handler: {
-      file: 'node_modules/ol/ol.css'
-    },
-    options: {
-      description: 'Get the openlayers css file'
     }
   }
 ]

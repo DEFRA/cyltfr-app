@@ -2,7 +2,7 @@ const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const floodService = require('../../services/flood')
 const addressService = require('../../services/address')
-const DEFAULT_POSTCODE = 'NP18 3EZ'
+const DEFAULT_POSTCODE = 'CV37 6YZ'
 const SEARCH_REDIRECT = '/search?postcode='
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
 let server, cookie
@@ -116,6 +116,26 @@ describe('search page route', () => {
 
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+  })
+
+  test('/search - Stored postcode', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch(SEARCH_REDIRECT)
+
+    getOptions.url = '/search'
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+  })
+
+  test('/search - No postcode', async () => {
+    const { getOptions } = mockSearchOptions('invalid')
+    getOptions.url = '/search'
+    floodService.__updateReturnValue({})
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
   })
 
   test('/search - Invalid postcode - fails regexp', async () => {

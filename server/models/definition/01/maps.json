@@ -1,0 +1,344 @@
+{
+  "categories": [
+    {
+      "ref": "RiversOrSea",
+      "icon": "rivers-sea",
+      "name": "Flood risk from rivers or the sea",
+      "title": "Flood risk from rivers or the sea",
+      "maps": [
+        {
+          "ref": "RiversOrSea_1-ROFRS",
+          "name": "Extent of flooding",
+          "title": "Extent of flooding from rivers or the sea",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_Depth_0mm/VectorTileServer",
+          "legend": {
+            "title": "Flood risk",
+            "keys": [
+              {
+                "text": "High",
+                "desc": "High risk description",
+                "icon": "purple",
+                "id": "rivers-seas-high"
+              },
+              {
+                "text": "Medium",
+                "desc": "Medium risk description",
+                "icon": "dark-blue",
+                "id": "rivers-seas-medium"
+              },
+              {
+                "text": "Low",
+                "desc": "Low risk description",
+                "icon": "blue",
+                "id": "rivers-seas-low"
+              },
+              {
+                "text": "Very low",
+                "desc": "Very low risk description",
+                "icon": "light-blue",
+                "id": "rivers-seas-very-low"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "RiversOrSea_1-ROFRS-cc",
+          "name": "Extent of flooding climate change",
+          "title": "Extent of flooding from rivers or the sea climate change",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_Depth_CCRS2_0mm/VectorTileServer",
+          "legend": {
+            "title": "Flood risk climate change",
+            "keys": [
+              {
+                "text": "High",
+                "desc": "High risk description",
+                "icon": "purple",
+                "id": "rivers-seas-high"
+              },
+              {
+                "text": "Medium",
+                "desc": "Medium risk description",
+                "icon": "dark-blue",
+                "id": "rivers-seas-medium"
+              },
+              {
+                "text": "Low",
+                "desc": "Low risk description",
+                "icon": "blue",
+                "id": "rivers-seas-low"
+              },
+              {
+                "text": "Very low",
+                "desc": "Very low risk description",
+                "icon": "light-blue",
+                "id": "rivers-seas-very-low"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "RiversOrSea_2-FWLRSF",
+          "name": "Depth and flow estimates at monitoring stations",
+          "title": "Estimated depth and flow of water at river and sea level monitoring stations",
+          "url": "",
+          "legend": {
+            "title": "Select monitoring station",
+            "keys": [
+              {
+                "text": "River level monitoring station",
+                "icon": "green",
+                "shape": "round"
+              },
+              {
+                "text": "Sea level monitoring station",
+                "icon": "red",
+                "shape": "round"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "SurfaceWater",
+      "icon": "surface-water",
+      "name": "Flood risk from surface water",
+      "title": "Flood risk from surface water",
+      "maps": [
+        {
+          "ref": "SurfaceWater_6-SW-Extent",
+          "name": "Extent of flooding",
+          "title": "Extent of flooding from surface water",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_Depth_0mm/VectorTileServer",
+          "legend": {
+            "title": "Flood risk",
+            "keys": [
+              {
+                "text": "High",
+                "icon": "purple",
+                "id": "surface-water-high"
+              },
+              {
+                "text": "Medium",
+                "icon": "dark-blue",
+                "id": "surface-water-medium"
+              },
+              {
+                "text": "Low",
+                "icon": "blue",
+                "id": "surface-water-low"
+              },
+              {
+                "text": "Very low",
+                "icon": "white",
+                "id": "surface-water-very-low"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "SurfaceWater_6-SW-Extent-cc",
+          "name": "Extent of flooding climate change",
+          "title": "Extent of flooding from surface water climate change",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_Depth_CCSW3_0mm/VectorTileServer",
+          "legend": {
+            "title": "Flood risk climate change",
+            "keys": [
+              {
+                "text": "High",
+                "icon": "purple",
+                "id": "surface-water-high"
+              },
+              {
+                "text": "Medium",
+                "icon": "dark-blue",
+                "id": "surface-water-medium"
+              },
+              {
+                "text": "Low",
+                "icon": "blue",
+                "id": "surface-water-low"
+              },
+              {
+                "text": "Very low",
+                "icon": "white",
+                "id": "surface-water-very-low"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "SurfaceWater_9-SWDH",
+          "name": "High risk: depth",
+          "title": "Surface water flood risk: water depth in a high risk scenario",
+          "url": "",
+          "legend": {
+            "title": "High risk scenario",
+            "subTitle": "Flood depth (millimetres)",
+            "keys": [
+              {
+                "text": "Over 900mm",
+                "icon": "purple"
+              },
+              {
+                "text": "300 to 900mm",
+                "icon": "dark-blue"
+              },
+              {
+                "text": "Below 300mm",
+                "icon": "blue"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "SurfaceWater_12-SWVH",
+          "name": "High risk: velocity",
+          "title": "Surface water flood risk: water velocity in a high risk scenario",
+          "url": "",
+          "legend": {
+            "title": "High risk scenario",
+            "subTitle": "Flood velocity (metres/second)",
+            "keys": [
+              {
+                "text": "Over 0.25 m/s",
+                "icon": "purple"
+              },
+              {
+                "text": "Less than 0.25 m/s",
+                "icon": "blue"
+              },
+              {
+                "text": "Direction of water flow",
+                "icon": "arrow"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "SurfaceWater_8-SWDM",
+          "name": "Medium risk: depth",
+          "title": "Surface water flood risk: water depth in a medium risk scenario",
+          "url": "",
+          "legend": {
+            "title": "Medium risk scenario",
+            "subTitle": "Flood depth (millimetres)",
+            "keys": [
+              {
+                "text": "Over 900mm",
+                "icon": "purple"
+              },
+              {
+                "text": "300 to 900mm",
+                "icon": "dark-blue"
+              },
+              {
+                "text": "Below 300mm",
+                "icon": "blue"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "SurfaceWater_11-SWVM",
+          "name": "Medium risk: velocity",
+          "title": "Surface water flood risk: water velocity in a medium risk scenario",
+          "url": "",
+          "legend": {
+            "title": "Medium risk scenario",
+            "subTitle": "Flood velocity (metres/second)",
+            "keys": [
+              {
+                "text": "Over 0.25 m/s",
+                "icon": "purple"
+              },
+              {
+                "text": "Less than 0.25 m/s",
+                "icon": "blue"
+              },
+              {
+                "text": "Direction of water flow",
+                "icon": "arrow"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "SurfaceWater_7-SWDL",
+          "name": "Low risk: depth",
+          "title": "Surface water flood risk: water depth in a low risk scenario",
+          "url": "",
+          "legend": {
+            "title": "Low risk scenario",
+            "subTitle": "Flood depth (millimetres)",
+            "keys": [
+              {
+                "text": "Over 900mm",
+                "icon": "purple"
+              },
+              {
+                "text": "300 to 900mm",
+                "icon": "dark-blue"
+              },
+              {
+                "text": "Below 300mm",
+                "icon": "blue"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "SurfaceWater_10-SWVL",
+          "name": "Low risk: velocity",
+          "title": "Surface water flood risk: water velocity in a low risk scenario",
+          "url": "",
+          "legend": {
+            "title": "Low risk scenario",
+            "subTitle": "Flood velocity (metres/second)",
+            "keys": [
+              {
+                "text": "Over 0.25 m/s",
+                "icon": "purple"
+              },
+              {
+                "text": "Less than 0.25 m/s",
+                "icon": "blue"
+              },
+              {
+                "text": "Direction of water flow",
+                "icon": "arrow"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "Reservoirs",
+      "icon": "reservoir",
+      "name": "Flood risk from reservoirs",
+      "title": "Flood risk from reservoirs",
+      "maps": [
+        {
+          "ref": "Reservoirs_13-RESERVOIRS",
+          "name": "Extent of flooding",
+          "title": "Maximum extent of flooding from reservoirs:",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Reservoir_Flood_Extents/VectorTileServer",
+          "legend": {
+            "title": "Reservoirs",
+            "keys": [
+              {
+                "text": "when river levels are normal",
+                "icon": "blue"
+              },
+              {
+                "text": "when there is also flooding from rivers",
+                "icon": "redhatch"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

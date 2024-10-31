@@ -3,18 +3,21 @@
     "uprn": "200000976158",
     "postcode": "WA3 7ED",
     "address": "THE BUNGALOW, KENYON HALL, WINWICK LANE, CROFT, WARRINGTON, WA3 7ED",
-    "country": "ENGLAND"
+    "country": "ENGLAND",
+    "country_code": "E"
   },
   {
     "uprn": "200000977803",
     "postcode": "WA3 7ED",
     "address": "THE COTTAGE, KENYON HALL, WINWICK LANE, CROFT, WARRINGTON, WA3 7ED",
-    "country": "ENGLAND"
+    "country": "ENGLAND",
+    "country_code": "E"
   },
   {
     "uprn": "200000977802",
     "postcode": "WA3 7ED",
     "address": "KENYON HALL, WINWICK LANE, CROFT, WARRINGTON, WA3 7ED",
-    "country": "ENGLAND"
+    "country": "ENGLAND",
+    "country_code": "E"
   }
 ]
