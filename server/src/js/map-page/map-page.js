@@ -127,7 +127,7 @@ mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
       mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
     } else if (mapPageConsts.extentRadio[0].checked) {
       mapPageConsts.extentDescContainer[0].classList.remove('hide')
-    } else if (!mapPageConsts.params.includes('SurfaceWater')) {
+    } else if (!mapPageQuery) {
       if (mapPageConsts.depthRadioCC.checked) {
         mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
         mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
