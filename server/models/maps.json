@@ -17,25 +17,25 @@
               {
                 "text": "High",
                 "desc": "High risk description",
-                "icon": "red",
+                "icon": "purple",
                 "id": "rivers-seas-high"
               },
               {
                 "text": "Medium",
                 "desc": "Medium risk description",
-                "icon": "orange",
+                "icon": "dark blue",
                 "id": "rivers-seas-medium"
               },
               {
                 "text": "Low",
                 "desc": "Low risk description",
-                "icon": "pink",
+                "icon": "blue",
                 "id": "rivers-seas-low"
               },
               {
                 "text": "Very low",
                 "desc": "Very low risk description",
-                "icon": "light-pink",
+                "icon": "light blue",
                 "id": "rivers-seas-very-low"
               }
             ]
@@ -52,25 +52,25 @@
               {
                 "text": "High",
                 "desc": "High risk description",
-                "icon": "red",
+                "icon": "purple",
                 "id": "rivers-seas-high"
               },
               {
                 "text": "Medium",
                 "desc": "Medium risk description",
-                "icon": "orange",
+                "icon": "dark blue",
                 "id": "rivers-seas-medium"
               },
               {
                 "text": "Low",
                 "desc": "Low risk description",
-                "icon": "pink",
+                "icon": "blue",
                 "id": "rivers-seas-low"
               },
               {
                 "text": "Very low",
                 "desc": "Very low risk description",
-                "icon": "light-pink",
+                "icon": "light blue",
                 "id": "rivers-seas-very-low"
               }
             ]
@@ -91,7 +91,7 @@
               },
               {
                 "text": "Sea level monitoring station",
-                "icon": "red",
+                "icon": "purple",
                 "shape": "round"
               }
             ]
@@ -109,28 +109,28 @@
           "ref": "SurfaceWater_6-SW-Extent",
           "name": "Extent of flooding",
           "title": "Extent of flooding from surface water",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_Depth_0mm/VectorTileServer",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_0mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
             "title": "Flood risk",
             "keys": [
               {
                 "text": "High",
-                "icon": "red",
+                "icon": "purple",
                 "id": "surface-water-high"
               },
               {
                 "text": "Medium",
-                "icon": "orange",
+                "icon": "dark blue",
                 "id": "surface-water-medium"
               },
               {
                 "text": "Low",
-                "icon": "pink",
+                "icon": "blue",
                 "id": "surface-water-low"
               },
               {
                 "text": "Very low",
-                "icon": "white",
+                "icon": "light blue",
                 "id": "surface-water-very-low"
               }
             ]
@@ -140,28 +140,28 @@
           "ref": "SurfaceWater_6-SW-Extent-cc",
           "name": "Extent of flooding climate change",
           "title": "Extent of flooding from surface water climate change",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_Depth_CCSW3_0mm/VectorTileServer",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_CCSW1_0mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
             "title": "Flood risk climate change",
             "keys": [
               {
                 "text": "High",
-                "icon": "red",
+                "icon": "purple",
                 "id": "surface-water-high"
               },
               {
                 "text": "Medium",
-                "icon": "orange",
+                "icon": "dark blue",
                 "id": "surface-water-medium"
               },
               {
                 "text": "Low",
-                "icon": "pink",
+                "icon": "blue",
                 "id": "surface-water-low"
               },
               {
                 "text": "Very low",
-                "icon": "white",
+                "icon": "light blue",
                 "id": "surface-water-very-low"
               }
             ]
@@ -171,22 +171,26 @@
           "ref": "SurfaceWater_200-depth",
           "name": "High risk: depth",
           "title": "Surface water flood risk: water depth in a high risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_200mm/VectorTileServer",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_200mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
-            "title": "High risk scenario",
+            "title": "200mm surface water scenario",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
-                "text": "Over 900mm",
-                "icon": "red"
+                "text": "Up to 900mm",
+                "icon": "purple"
               },
               {
-                "text": "300 to 900mm",
-                "icon": "orange"
+                "text": "Up to 600mm",
+                "icon": "dark blue"
               },
               {
-                "text": "Below 300mm",
-                "icon": "pink"
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
               }
             ]
           }
@@ -195,22 +199,26 @@
           "ref": "SurfaceWater_300-depth",
           "name": "Medium risk: depth",
           "title": "Surface water flood risk: water depth in a medium risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_300mm/VectorTileServer",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_300mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
-            "title": "Medium risk scenario",
+            "title": "300mm surface water scenario",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
-                "text": "Over 900mm",
-                "icon": "red"
+                "text": "Up to 900mm",
+                "icon": "purple"
               },
               {
-                "text": "300 to 900mm",
-                "icon": "orange"
+                "text": "Up to 600mm",
+                "icon": "dark blue"
               },
               {
-                "text": "Below 300mm",
-                "icon": "pink"
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
               }
             ]
           }
@@ -218,23 +226,27 @@
         {
           "ref": "SurfaceWater_600-depth",
           "name": "Low risk: depth",
-          "title": "Surface water flood risk: water depth in a low risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_600mm/VectorTileServer",
+          "title": "600mm surface water depth",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_600mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
-            "title": "Low risk scenario",
+            "title": "600mm surface water scenario",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
-                "text": "Over 900mm",
-                "icon": "red"
+                "text": "Up to 900mm",
+                "icon": "purple"
               },
               {
-                "text": "300 to 900mm",
-                "icon": "orange"
+                "text": "Up to 600mm",
+                "icon": "dark blue"
               },
               {
-                "text": "Below 300mm",
-                "icon": "pink"
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
               }
             ]
           }
@@ -242,119 +254,139 @@
         {
           "ref": "SurfaceWater_900-depth",
           "name": "Low risk: depth",
-          "title": "Surface water flood risk: water depth in a low risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_900mm/VectorTileServer",
+          "title": "900mm surface water depth",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_900mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
-            "title": "Low risk scenario",
+            "title": "900mm surface water scenario",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
-                "text": "Over 900mm",
-                "icon": "red"
+                "text": "Up to 900mm",
+                "icon": "purple"
               },
               {
-                "text": "300 to 900mm",
-                "icon": "orange"
+                "text": "Up to 600mm",
+                "icon": "dark blue"
               },
               {
-                "text": "Below 300mm",
-                "icon": "pink"
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
               }
             ]
           }
         },
         {
           "ref": "SurfaceWater_200-depth-cc",
-          "name": "High risk: depth",
-          "title": "Surface water flood risk: water depth in a high risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_Depth_CCSW3_200mm/VectorTileServer",
+          "name": "Depth 2040 and 2060",
+          "title": "200mm surface water depth climate change",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_CCSW1_200mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
-            "title": "High risk scenario",
+            "title": "200mm surface water scenario climate change",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
-                "text": "Over 900mm",
-                "icon": "red"
+                "text": "Up to 900mm",
+                "icon": "purple"
               },
               {
-                "text": "300 to 900mm",
-                "icon": "orange"
+                "text": "Up to 600mm",
+                "icon": "dark blue"
               },
               {
-                "text": "Below 300mm",
-                "icon": "pink"
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
               }
             ]
           }
         },
         {
           "ref": "SurfaceWater_300-depth-cc",
-          "name": "Medium risk: depth",
-          "title": "Surface water flood risk: water depth in a medium risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_CCSW3_Depth_300mm/VectorTileServer",
+          "name": "Depth 2040 and 2060",
+          "title": "300mm surface water depth climate change",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_CCSW1_300mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
-            "title": "Medium risk scenario",
+            "title": "300mm surface water scenario climate change",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
-                "text": "Over 900mm",
-                "icon": "red"
+                "text": "Up to 900mm",
+                "icon": "purple"
               },
               {
-                "text": "300 to 900mm",
-                "icon": "orange"
+                "text": "Up to 600mm",
+                "icon": "dark blue"
               },
               {
-                "text": "Below 300mm",
-                "icon": "pink"
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
               }
             ]
           }
         },
         {
           "ref": "SurfaceWater_600-depth-cc",
-          "name": "Low risk: depth",
-          "title": "Surface water flood risk: water depth in a low risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_CCSW3_Depth_600mm/VectorTileServer",
+          "name": "Depth 2040 and 2060",
+          "title": "600mm surface water depth climate change",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_CCSW1_600mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
-            "title": "Low risk scenario",
+            "title": "600mm surface water scenario climate change",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
-                "text": "Over 900mm",
-                "icon": "red"
+                "text": "Up to 900mm",
+                "icon": "purple"
               },
               {
-                "text": "300 to 900mm",
-                "icon": "orange"
+                "text": "Up to 600mm",
+                "icon": "dark blue"
               },
               {
-                "text": "Below 300mm",
-                "icon": "pink"
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
               }
             ]
           }
         },
         {
           "ref": "SurfaceWater_900-depth-cc",
-          "name": "Low risk: depth",
-          "title": "Surface water flood risk: water depth in a low risk scenario",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_CCSW3_900mm/VectorTileServer",
+          "name": "Depth 2040 and 2060",
+          "title": "900mm surface water depth climate change",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Surface_Water_CCSW1_900mm_NON_PRODUCTION/VectorTileServer",
           "legend": {
-            "title": "Low risk scenario",
+            "title": "900mm surface water scenario climate change",
             "subTitle": "Flood depth (millimetres)",
             "keys": [
               {
-                "text": "Over 900mm",
-                "icon": "red"
+                "text": "Up to 900mm",
+                "icon": "purple"
               },
               {
-                "text": "300 to 900mm",
-                "icon": "orange"
+                "text": "Up to 600mm",
+                "icon": "dark blue"
               },
               {
-                "text": "Below 300mm",
-                "icon": "pink"
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
               }
             ]
           }
@@ -377,11 +409,11 @@
             "keys": [
               {
                 "text": "when river levels are normal",
-                "icon": "pink"
+                "icon": "light blue"
               },
               {
                 "text": "when there is also flooding from rivers",
-                "icon": "redhatch"
+                "icon": "purple"
               }
             ]
           }
