@@ -57,12 +57,12 @@ window.loadAnalytics = () => {
 {% endblock %}
 
 {% block header %}
-{% if G4AnalyticsAccount and cookiesPolicy.analytics %}
+{% if GTagManagerId and cookiesPolicy.analytics %}
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCRVQCCW"
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{GTagManagerId}}"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  {% endif %}
+{% endif %}
   {{ govukHeader({
     homepageUrl: "https://www.gov.uk",
     containerClasses: "govuk-width-container",
