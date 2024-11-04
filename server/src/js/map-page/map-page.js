@@ -64,7 +64,7 @@ function mapPage () {
     }
   }, 100)
 
-  // This function updates the map to the radio button you select (extent, depth, velocity)
+  // This function updates the map to the radio button you select (extent, depth, depth CC)
   function setCurrent (ref) {
     const mapController = new MapController(window.mapCategories.categories)
     mapController.setCurrent(ref)
@@ -111,10 +111,12 @@ document.addEventListener('click', function (event) {
 })
 
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
+  const currentPageURL = new URLSearchParams(document.location.search)
+  const mapPageQuery = currentPageURL.get('map')
   radio.addEventListener('change', () => {
     mapPageConsts.extentDescCcContainer[0].classList.add('hide')
     mapPageConsts.extentDescContainer[0].classList.add('hide')
-    if (!mapPageConsts.params.includes('SurfaceWater')) {
+    if (!mapPageQuery) {
       mapPageConsts.depthDescCcContainer[0].classList.add('hide')
       mapPageConsts.depthDescContainer[0].classList.add('hide')
       mapPageConsts.depthScenarioBarCc[0].classList.add('hide')

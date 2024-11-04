@@ -33,7 +33,6 @@ const upTo30Cc = document.getElementById('up-to-30-cc')
 const upTo60Cc = document.getElementById('up-to-60-cc')
 const upTo90Cc = document.getElementById('up-to-90-cc')
 const params = window.location.search
-console.log('params ', params)
 
 export const mapPageConsts = {
   closeKeyBtn,
