@@ -124,7 +124,9 @@ describe('Risk page test', () => {
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
-      riverAndSeaRisk: 'Error',
+      riverAndSeaRisk: {
+        error: 'Internal Error'
+      },
       surfaceWaterRisk: 'Very Low',
       extraInfo: null
     })
@@ -140,7 +142,9 @@ describe('Risk page test', () => {
       leadLocalFloodAuthority: 'Cheshire West and Chester',
       reservoirRisk: null,
       riverAndSeaRisk: null,
-      surfaceWaterRisk: 'Error',
+      surfaceWaterRisk: {
+        error: 'Internal Error'
+      },
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
@@ -153,7 +157,9 @@ describe('Risk page test', () => {
       floodAlertArea: [],
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Cheshire West and Chester',
-      reservoirDryRisk: 'Error',
+      reservoirDryRisk: {
+        error: 'Internal Error'
+      },
       riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
       extraInfo: null
@@ -167,7 +173,9 @@ describe('Risk page test', () => {
       floodAlertArea: [],
       floodWarningArea: [],
       leadLocalFloodAuthority: 'Cheshire West and Chester',
-      reservoirWetRisk: 'Error',
+      reservoirWetRisk: {
+        error: 'Internal Error'
+      },
       riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,
       extraInfo: null
@@ -181,7 +189,9 @@ describe('Risk page test', () => {
       isGroundwaterArea: false,
       floodAlertArea: [],
       floodWarningArea: [],
-      leadLocalFloodAuthority: 'Error',
+      leadLocalFloodAuthority: {
+        error: 'Internal Error'
+      },
       reservoirRisk: null,
       riverAndSeaRisk: { probabilityForBand: 'Low' },
       surfaceWaterRisk: null,

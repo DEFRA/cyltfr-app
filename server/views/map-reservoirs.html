@@ -37,11 +37,7 @@
         <div class="govuk-form-group" id="map-key__section">
           <div id="reservoirs-section-container">
             <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <h2 id="defra-map-key__section-title-top-title" class="defra-map-key__section-title" ontoken="this.onscrolling = false">Yearly chance of flooding</h2>
-              </legend>
-          
-              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+              <div class="govuk-radios govuk-radios--small defra-map-key__section-title" data-module="govuk-radios">
                 <div class="govuk-radios__item">
                   <input class="risk-radio govuk-radios__input govuk-radios__inputs extent-radio risk-measurement" id="reservoirs-radio"
                     value="{{maps.categories[2].maps[0].ref}}"
@@ -79,13 +75,6 @@
             
           </div>
           {% include 'partials/map-page/key/toggles.html' %}
-          
-          <div class="data-message">
-            <h2 class="data-message">Pause to updates of flood risk data</h2>
-            We have <a href="https://www.gov.uk/guidance/updates-to-national-flood-and-coastal-erosion-risk-information" data-journey-click="ltfri:map:datapause" rel="noopener">
-              paused updates to information about flood risk</a>
-            from rivers and the sea and surface water while we get ready for new data.
-          </div>
           
         </div>
       </div>

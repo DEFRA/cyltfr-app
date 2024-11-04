@@ -22,13 +22,14 @@ module.exports = {
 
       try {
         const risk = await request.server.methods.riskService(x, y, radius)
+
         // FLO-1139 If query 1 to 6 errors then throw default error page
-        const hasError = risk.riverAndSeaRisk === 'Error' ||
-          risk.surfaceWaterRisk === 'Error' ||
-          risk.reservoirDryRisk === 'Error' ||
-          risk.reservoirWetRisk === 'Error' ||
-          risk.leadLocalFloodAuthority === 'Error' ||
-          risk.extraInfo === 'Error'
+        const hasError = risk.riverAndSeaRisk?.error ||
+          risk.surfaceWaterRisk?.error ||
+          risk.reservoirDryRisk?.error ||
+          risk.reservoirWetRisk?.error ||
+          risk.leadLocalFloodAuthority?.error ||
+          risk.extraInfo?.error
 
         if (hasError) {
           return boom.badRequest(errors.spatialQuery.message, {
