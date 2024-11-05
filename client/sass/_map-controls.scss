@@ -14,14 +14,8 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   }
 
   .defra-map-controls-bottom {
-    position: absolute;
-    left: 10px;
-    bottom: 0;
-    right: 0;
-    pointer-events: none;
-    padding-right: 10px;
+    padding-right: 15px;
     pointer-events: auto;
-
     position: absolute;
     bottom: 20px;
     right: -15px;
