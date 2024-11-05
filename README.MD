@@ -42,7 +42,11 @@ Docker v20.10.0+
 | PORT                        | Server port #                           |   yes     |             |                             |       |
 | SERVICE_URL                 | Service API                             |   yes     |             |                             |       |
 | SIMULATE_ADDRESS_SERVICE    | Mocks address service for testing       |    no     | false       |                             |       |
+<<<<<<< HEAD
 | DATA_VERSION                | Which data version will be used for maps|    no     | 01          |                             |       |
+=======
+| PERFORMANCE_LOGGING         | If true, will log performance of external calls | no | false      |                             |       |
+>>>>>>> 25dbf5f (Add config setting for logging performance)
 | HTTP_TIMEOUT_MS             | Timeout in ms                           |   yes     |             |                             |       |
 | G4_ANALYTICS_ACCOUNT        | GA ID                                   |    no     |             |                             |       |
 | GTAG_MANAGER_ID             | GTM ID                                  |    no     |             |                             |       |
