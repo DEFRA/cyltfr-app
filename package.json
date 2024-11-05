@@ -12,6 +12,7 @@
     "build:webpack": "webpack",
     "build:js": "./bin/build-js",
     "build:css": "./bin/build-css",
+    "build:datafile": "cd tools/address/output; rm ../data.zip; zip -r ../data.zip *",
     "watch": "npx nodemon index.js",
     "build": "./bin/build",
     "test": "npm run test:lint && npm run test:jest",

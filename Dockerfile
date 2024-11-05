@@ -2,7 +2,7 @@ ARG PARENT_VERSION=2.2.2-node20.11.1
 
 FROM defradigital/node:${PARENT_VERSION} AS base
 ARG PORT=3000
-ENV PORT ${PORT}
+ENV PORT=${PORT}
 
 USER root
 
@@ -39,7 +39,7 @@ EXPOSE ${PORT} 9229 9230
 
 USER node
 
-CMD [ "node", "index.js" ]
+CMD [ "bin/start-dev" ]
 
 FROM base AS production
 
