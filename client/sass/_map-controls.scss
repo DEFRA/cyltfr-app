@@ -14,12 +14,11 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   }
 
   .defra-map-controls-bottom {
+    padding-right: 15px;
+    pointer-events: auto;
     position: absolute;
-    left: 10px;
-    bottom: 0;
-    right: 0;
-    pointer-events: none;
-    padding-right: 10px;
+    bottom: 20px;
+    right: -15px;
 
     @media screen and (max-width: $tablet-width) {
       display: grid;
@@ -27,10 +26,6 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
       left: 0px;
       padding-right: 0;
     }
-  }
-
-  .defra-map-controls-bottom * {
-    pointer-events: auto;
   }
 
   .defra-map__open-key {
@@ -173,6 +168,14 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     }
   }
 
+  #technical-map-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    right: -5px;
+  }
+
   #defra-map-controls {
     position: absolute;
     z-index: 1;
@@ -185,7 +188,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     height: 100dvh;
 
     @media (min-width: 48.0625em) {
-      right: 290px;
+      right: 340px;
     }
   }
 
@@ -193,7 +196,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   // only generate after the JS imports the map and are contained
   // within the map element.
   #map {
-
+    justify-self: normal;
     @media screen and (max-width: $tablet-width) {
       height: 100dvh;
       width: 100dvw;
@@ -236,14 +239,14 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     display: none;
   }
 
-  .defra-map__exit {
+  .defra-map__options-top {
     float: left;
     position: relative;
     margin: 10px 0px 0px 10px;
     border: 0;
     padding: 0;
     height: 40px;
-    width: 40px;
+    width: fit-content;
     cursor: pointer;
     background-color: white;
     color: #0b0c0c;
@@ -257,18 +260,18 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     pointer-events: auto;
 
     @media (min-width: 48.0625em) {
-      width: auto;
+      width: fit-content;
       padding-right: 11px;
     }
   }
 
-  .defra-map__exit svg {
+  .defra-map__options-top svg {
     display: inline-block;
     margin: 10px;
     vertical-align: top;
   }
 
-  .defra-map__exit span {
+  .defra-map__options-top span {
     vertical-align: top;
 
     @media (max-width: 48.0525em) {
@@ -282,16 +285,16 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     }
   }
 
-  .defra-map__exit:hover {
+  .defra-map__options-top:hover {
     background-color: #f3f2f1;
   }
 
-  .defra-map__exit:focus-visible {
+  .defra-map__options-top:focus-visible {
     outline: 3px solid transparent;
     box-shadow: $focusBorder;
   }
 
-  .defra-map__exit:focus[keyboard-focus]:after {
+  .defra-map__options-top:focus[keyboard-focus]:after {
     position: absolute;
     content: "";
     left: 5px;
@@ -304,7 +307,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     z-index: 99;
   }
 
-  .defra-map__exit::-moz-focus-inner {
+  .defra-map__options-top::-moz-focus-inner {
     border: 0;
   }
 

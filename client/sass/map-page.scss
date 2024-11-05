@@ -47,8 +47,9 @@ body {
   height: 100%;
   margin: 0;
   display: grid;
-  grid-template-columns: 5fr 1fr;
+  grid-template-columns: 5fr 320px;
   justify-content: end;
+  justify-items: end;
   flex-basis: 100%;
   flex-wrap: wrap;
 
