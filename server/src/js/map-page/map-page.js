@@ -169,6 +169,8 @@ const hideDescriptions = function () {
   if (!mapPageQuery) {
     mapPageConsts.depthDescCcContainer[0].classList.add('hide')
     mapPageConsts.depthDescContainer[0].classList.add('hide')
+    mapPageConsts.depthDescCcContainer[1].classList.add('hide')
+    mapPageConsts.depthDescContainer[1].classList.add('hide')
     mapPageConsts.depthScenarioBarCc[0].classList.add('hide')
     mapPageConsts.depthScenarioBar[0].classList.add('hide')
   }
@@ -188,12 +190,20 @@ const showSelectedDescription = function () {
     mapPageConsts.extentDescContainer[1].classList.remove('hide')
   }
   if (!mapPageQuery) {
-    if (mapPageConsts.depthRadioCC.checked) {
+    if (mapPageConsts.depthRadioCC[0].checked) {
       mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
       mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
     }
     if (mapPageConsts.depthRadio[0].checked) {
       mapPageConsts.depthDescContainer[0].classList.remove('hide')
+      mapPageConsts.depthScenarioBar[0].classList.remove('hide')
+    }
+    if (mapPageConsts.depthRadioCC[1].checked) {
+      mapPageConsts.depthDescCcContainer[1].classList.remove('hide')
+      mapPageConsts.depthScenarioBarCc[1].classList.remove('hide')
+    }
+    if (mapPageConsts.depthRadio[1].checked) {
+      mapPageConsts.depthDescContainer[1].classList.remove('hide')
       mapPageConsts.depthScenarioBar[0].classList.remove('hide')
     }
   }
