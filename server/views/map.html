@@ -53,7 +53,7 @@
                     <label class="govuk-label govuk-radios__label" for="sw-extent-radio">
                       <span class="surface-water-bulletpoint__heading" id="surface-water-extent__heading">Extent</span>
             
-                      <div id="sw-extent-desc-container" class="extent-desc-container">
+                      <div id="sw-extent-desc-container" class="extent-desc-container desc-container">
                         <span
                           class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
                           id="sw-extent-high">
@@ -102,7 +102,7 @@
                     <label class="govuk-label govuk-radios__label" for="sw-extent-radio">
                       <span class="surface-water-bulletpoint__heading" id="surface-water-extent__heading">Depth</span>
             
-                      <div id="sw-extent-desc-container" class="depth-desc-container hide">
+                      <div id="sw-extent-desc-container" class="depth-desc-container desc-container hide">
                         <span
                           class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
                           id="sw-extent-high">
@@ -156,7 +156,7 @@
                       title="Extent of flooding from surface water (2040-2060)" name="measurements" type="radio">
                     <label class="govuk-label govuk-radios__label" for="sw-extent-radio-cc">
                       <span class="surface-water-bulletpoint__heading" id="surface-water-extent__heading">Extent</span>
-                      <div id="sw-extent-desc-container-cc" class="extent-desc-container-cc hide">
+                      <div id="sw-extent-desc-container-cc" class="extent-desc-container-cc desc-container hide">
                         <span
                           class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
                           id="sw-extent-high">
@@ -203,7 +203,7 @@
                       title="Extent of flooding from surface water (2040-2060)" name="measurements" type="radio">
                     <label class="govuk-label govuk-radios__label" for="depth-radio-cc">
                       <span class="surface-water-bulletpoint__heading" id="surface-water-extent__heading">Depth</span>
-                      <div id="sw-extent-desc-container-cc" class="depth-desc-container-cc hide">
+                      <div id="sw-extent-desc-container-cc" class="depth-desc-container-cc desc-container hide">
                         <span
                           class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
                           id="sw-extent-high">
@@ -270,7 +270,8 @@
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                   <h2 id="defra-map-key__section-title-top-title" class="defra-map-key__section-title" ontoken="this.onscrolling = false">Yearly chance of flooding</h2>
                 </legend>
-            
+                
+                <!-- Rivers and the sea extent -->
                 <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
                   <div class="govuk-radios__item">
                     <input class="risk-radio govuk-radios__input govuk-radios__inputs extent-radio risk-measurement" id="extent-radio"
@@ -279,7 +280,7 @@
                     <label class="govuk-label govuk-radios__label" for="extent-radio">
                       <span class="rivers-and-sea-bulletpoint__heading" id="rivers-and-sea-extent__heading">Flood area (extent)</span>
             
-                      <div id="rs-extent-desc-container" class="extent-desc-container">
+                      <div id="rs-extent-desc-container" class="extent-desc-container desc-container">
                         <span
                           class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi rs-extent-container"
                           id="rs-extent-high">
@@ -327,7 +328,58 @@
                     </label>
                   </div>
                 </div>
+
+                <!-- Rivers and the sea depth -->
+                <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                  <div class="govuk-radios__item">
+                    <input class="risk-radio govuk-radios__input govuk-radios__inputs risk-measurement depth-radio" id="rs-depth-radio"
+                      value="{{maps.categories[1].maps[6].ref}}"
+                      title="Extent of flooding from surface water (2040-2060)" name="measurements" type="radio">
+                    <label class="govuk-label govuk-radios__label" for="depth-radio-cc">
+                      <span class="rivers-and-sea-bulletpoint__heading" id="rivers-and-sea-extent__heading">Depth</span>
+                      <div id="sw-extent-desc-container-cc" class="depth-desc-container-cc desc-container hide">
+                        <span
+                          class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                          id="sw-extent-high">
+                          <span class="defra-map-key__symbol">
+                            <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                              <rect class="high-symbol risk-colour-square" x="5" y="5"></rect>
+                            </svg>
+                          </span>
+                          <span id="risk-severity" class="risk-severity-text">High chance</span>
+                          <span class="risk-context">More than 3.3% chance each year</span>
+                        </span>
+            
+                        <span
+                          class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                          id="sw-extent-med">
+                          <span class="defra-map-key__symbol">
+                            <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                              <rect class="medium-symbol risk-colour-square" x="5" y="5"></rect>
+                            </svg>
+                          </span>
+                          <span class="risk-severity-text">Medium chance</span>
+                          <span class="risk-context">Between 1% and 3.3% chance each year</span>
+                        </span>
+            
+                        <span
+                          class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                          id="sw-extent-low">
+                          <span class="defra-map-key__symbol">
+                            <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                              <rect class="low-symbol risk-colour-square" x="5" y="5"></rect>
+                            </svg>
+                          </span>
+                          <span class="risk-severity-text">Low chance</span>
+                          <span class="risk-context">Between 0.1% and 1% chance each year</span>
+                        </span>
+                        
+                      </div>
+                    </label>
+                  </div>
+                </div>
               </fieldset>
+              
               <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                   <h3 class="defra-map-key__section-title" ontoken="this.onscrolling = false">Yearly chance of flooding between 2036 and 2069</h3>
@@ -340,7 +392,7 @@
                       title="Extent of flooding from rivers and sea (2036-2069)" name="measurements" type="radio">
                     <label class="govuk-label govuk-radios__label" for="rs-extent-radio-cc">
                       <span class="rivers-and-sea-bulletpoint__heading" id="rivers-and-sea-extent__heading">Flood area (extent)</span>
-                      <div id="rs-extent-desc-container-cc" class="extent-desc-container-cc hide">
+                      <div id="rs-extent-desc-container-cc" class="extent-desc-container-cc desc-container hide">
                         <span
                           class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi rs-extent-container"
                           id="rs-extent-high">
@@ -400,6 +452,56 @@
                     </label>
                   </div>
                 </div>
+
+                <!-- Rivers and the sea depth CC -->
+                <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                  <div class="govuk-radios__item">
+                    <input class="risk-radio govuk-radios__input govuk-radios__inputs risk-measurement depth-radio" id="rs-depth-radio"
+                      value="{{maps.categories[1].maps[6].ref}}"
+                      title="Extent of flooding from surface water (2040-2060)" name="measurements" type="radio">
+                    <label class="govuk-label govuk-radios__label" for="depth-radio-cc">
+                      <span class="rivers-and-sea-bulletpoint__heading" id="rivers-and-sea-extent__heading">Depth</span>
+                      <div id="sw-extent-desc-container-cc" class="depth-desc-container-cc desc-container hide">
+                        <span
+                          class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                          id="sw-extent-high">
+                          <span class="defra-map-key__symbol">
+                            <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                              <rect class="high-symbol risk-colour-square" x="5" y="5"></rect>
+                            </svg>
+                          </span>
+                          <span id="risk-severity" class="risk-severity-text">High chance</span>
+                          <span class="risk-context">More than 3.3% chance each year</span>
+                        </span>
+            
+                        <span
+                          class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                          id="sw-extent-med">
+                          <span class="defra-map-key__symbol">
+                            <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                              <rect class="medium-symbol risk-colour-square" x="5" y="5"></rect>
+                            </svg>
+                          </span>
+                          <span class="risk-severity-text">Medium chance</span>
+                          <span class="risk-context">Between 1% and 3.3% chance each year</span>
+                        </span>
+            
+                        <span
+                          class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                          id="sw-extent-low">
+                          <span class="defra-map-key__symbol">
+                            <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                              <rect class="low-symbol risk-colour-square" x="5" y="5"></rect>
+                            </svg>
+                          </span>
+                          <span class="risk-severity-text">Low chance</span>
+                          <span class="risk-context">Between 0.1% and 1% chance each year</span>
+                        </span>
+                        
+                      </div>
+                    </label>
+                  </div>
+                </div>
               </fieldset>
             </div>
             {% include 'partials/map-page/key/toggles.html' %}
@@ -431,7 +533,7 @@
                     <label class="govuk-label govuk-radios__label" for="reservoirs-radio">
                       <span class="reservoirs-bulletpoint__heading" id="reservoirs-extent__heading">Extent</span>
             
-                      <div id="reservoirs-extent-desc-container" class="extent-desc-container">
+                      <div id="reservoirs-extent-desc-container" class="extent-desc-container desc-container">
                         <span
                           class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi reservoirs-extent-container"
                           id="reservoirs-extent-high">
