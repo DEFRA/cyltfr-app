@@ -117,6 +117,8 @@ function mapPage () {
           mapPageConsts.techMapKeys[index].classList.remove('hide')
           updateRadioOnOptionChange(text)
           setCurrent(selectedOption())
+          hideDescriptions()
+          showSelectedDescription()
           break
         }
       }
@@ -136,33 +138,13 @@ document.addEventListener('click', function (event) {
   }
 })
 
+const currentPageURL = new URLSearchParams(document.location.search)
+const mapPageQuery = currentPageURL.get('map')
 // Show or hide depth scenario bars and relevant description containers
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
-  const currentPageURL = new URLSearchParams(document.location.search)
-  const mapPageQuery = currentPageURL.get('map')
   radio.addEventListener('change', () => {
-    mapPageConsts.extentDescCcContainer[0].classList.add('hide')
-    mapPageConsts.extentDescContainer[0].classList.add('hide')
-    if (!mapPageQuery) {
-      mapPageConsts.depthDescCcContainer[0].classList.add('hide')
-      mapPageConsts.depthDescContainer[0].classList.add('hide')
-      mapPageConsts.depthScenarioBarCc[0].classList.add('hide')
-      mapPageConsts.depthScenarioBar[0].classList.add('hide')
-    }
-
-    if (mapPageConsts.extentRadioCC.checked) {
-      mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
-    } else if (mapPageConsts.extentRadio[0].checked) {
-      mapPageConsts.extentDescContainer[0].classList.remove('hide')
-    } else if (!mapPageQuery) {
-      if (mapPageConsts.depthRadioCC.checked) {
-        mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
-        mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
-      } else if (mapPageConsts.depthRadio[0].checked) {
-        mapPageConsts.depthDescContainer[0].classList.remove('hide')
-        mapPageConsts.depthScenarioBar[0].classList.remove('hide')
-      }
-    }
+    hideDescriptions()
+    showSelectedDescription()
   })
 })
 
@@ -178,6 +160,44 @@ mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   event.stopPropagation()
   openKey()
 })
+
+const hideDescriptions = function () {
+  mapPageConsts.extentDescCcContainer[0].classList.add('hide')
+  mapPageConsts.extentDescContainer[0].classList.add('hide')
+  mapPageConsts.extentDescCcContainer[1].classList.add('hide')
+  mapPageConsts.extentDescContainer[1].classList.add('hide')
+  if (!mapPageQuery) {
+    mapPageConsts.depthDescCcContainer[0].classList.add('hide')
+    mapPageConsts.depthDescContainer[0].classList.add('hide')
+    mapPageConsts.depthScenarioBarCc[0].classList.add('hide')
+    mapPageConsts.depthScenarioBar[0].classList.add('hide')
+  }
+}
+
+const showSelectedDescription = function () {
+  if (mapPageConsts.extentRadioCC[0].checked) {
+    mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
+  }
+  if (mapPageConsts.extentRadio[0].checked) {
+    mapPageConsts.extentDescContainer[0].classList.remove('hide')
+  }
+  if (mapPageConsts.extentRadioCC[1].checked) {
+    mapPageConsts.extentDescCcContainer[1].classList.remove('hide')
+  }
+  if (mapPageConsts.extentRadio[1].checked) {
+    mapPageConsts.extentDescContainer[1].classList.remove('hide')
+  }
+  if (!mapPageQuery) {
+    if (mapPageConsts.depthRadioCC.checked) {
+      mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
+      mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
+    }
+    if (mapPageConsts.depthRadio[0].checked) {
+      mapPageConsts.depthDescContainer[0].classList.remove('hide')
+      mapPageConsts.depthScenarioBar[0].classList.remove('hide')
+    }
+  }
+}
 
 // Get depth scenario API names
 mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
