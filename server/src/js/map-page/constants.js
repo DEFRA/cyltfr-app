@@ -24,6 +24,11 @@ const depthScenarioBar = document.getElementsByClassName('defra-map-scenarios-v3
 const depthScenarioBarCc = document.getElementsByClassName('defra-map-scenarios-v3_container-cc')
 const rsAndResOptions = document.getElementById('rs-res-container')
 const scenarioRadioButtons = document.querySelectorAll('.scenario-radio-button')
+const techMapOptions = document.querySelectorAll('.tech-map-option')
+const techMapKeys = document.querySelectorAll('.tech-map-key')
+const swExtent = document.getElementById('sw-extent-radio')
+const rsExtent = document.getElementById('extent-radio')
+const reservoirsExtent = document.getElementById('reservoirs-radio')
 const upTo20 = document.getElementById('up-to-20')
 const upTo30 = document.getElementById('up-to-30')
 const upTo60 = document.getElementById('up-to-60')
@@ -56,6 +61,11 @@ export const mapPageConsts = {
   depthScenarioBarCc,
   rsAndResOptions,
   scenarioRadioButtons,
+  techMapOptions,
+  techMapKeys,
+  swExtent,
+  rsExtent,
+  reservoirsExtent,
   params
 }
 

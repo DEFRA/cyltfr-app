@@ -98,6 +98,31 @@ function mapPage () {
     setCurrent(getParameterByName('map'))
   })
 
+  // Function to update tech map visible options
+  mapPageConsts.techMapOptions.forEach((optionBtn) => {
+    const techMapMapping = {
+      0: 'Surface water',
+      1: 'Rivers and the sea',
+      2: 'Reservoirs'
+    }
+    optionBtn.addEventListener('click', () => {
+      // Reset visibility of all options and keys
+      mapPageConsts.techMapOptions.forEach((option) => option.classList.remove('hide'))
+      mapPageConsts.techMapKeys.forEach((key) => key.classList.add('hide'))
+
+      // Find index based on button text and update visibility, also update tiles with change of radio
+      for (const [index, text] of Object.entries(techMapMapping)) {
+        if (optionBtn.innerHTML.includes(text)) {
+          mapPageConsts.techMapOptions[index].classList.add('hide')
+          mapPageConsts.techMapKeys[index].classList.remove('hide')
+          updateRadioOnOptionChange(text)
+          setCurrent(selectedOption())
+          break
+        }
+      }
+    })
+  })
+
   // ensures mouse cursor returns to default if feature was at edge of map
   map.addEventListener('mouseleave', function () {
     body.style.cursor = 'default'
@@ -173,30 +198,16 @@ if (!mapPageConsts.params.includes('map=')) {
   mapPageConsts.selectedAddressCheckbox.classList.add('hide')
 }
 
-const techMapOptions = document.querySelectorAll('.tech-map-option')
-const techMapKeys = document.querySelectorAll('.tech-map-key')
-const techMapMapping = {
-  0: 'Surface water',
-  1: 'Rivers and the sea',
-  2: 'Reservoirs'
+const updateRadioOnOptionChange = function (text) {
+  if (text === 'Surface water') {
+    mapPageConsts.swExtent.checked = true
+  }
+  if (text === 'Rivers and the sea') {
+    mapPageConsts.rsExtent.checked = true
+  }
+  if (text === 'Reservoirs') {
+    mapPageConsts.reservoirsExtent.checked = true
+  }
 }
-
-// Function to update tech map visible options
-techMapOptions.forEach((optionBtn) => {
-  optionBtn.addEventListener('click', () => {
-    // Reset visibility of all options and keys
-    techMapOptions.forEach((option) => option.classList.remove('hide'))
-    techMapKeys.forEach((key) => key.classList.add('hide'))
-
-    // Find index based on button text and update visibility
-    for (const [index, text] of Object.entries(techMapMapping)) {
-      if (optionBtn.innerHTML.includes(text)) {
-        techMapOptions[index].classList.add('hide')
-        techMapKeys[index].classList.remove('hide')
-        break
-      }
-    }
-  })
-})
 
 mapPage()
