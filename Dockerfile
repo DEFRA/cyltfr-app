@@ -29,8 +29,6 @@ COPY --chown=root:root ./.husky/ ./.husky/
 
 COPY --chown=root:root ./webpack.config.js .
 
-RUN apk add aws-cli
-
 RUN npm ci --ignore-scripts --include dev
 
 COPY --chown=root:root ./server/ ./server/
@@ -39,9 +37,10 @@ RUN npm run build
 
 EXPOSE ${PORT} 9229 9230
 
-RUN mkdir /home/node/app/server/simulated_data
-
-RUN chown node:node /home/node/app/server/simulated_data
+RUN apk add aws-cli \
+    && apk cache clean \
+    && mkdir /home/node/app/server/simulated_data \
+    && chown node:node /home/node/app/server/simulated_data
 
 USER node
 
