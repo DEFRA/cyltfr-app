@@ -3,6 +3,9 @@
 node_modules
 npm-debug.log
 server/public/build
+server/simulated_data
+tools/address/output
+tools/address/data.zip
 config/*.json
 lcov.info
 test/output/*

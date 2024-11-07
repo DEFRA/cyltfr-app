@@ -2,7 +2,7 @@ ARG PARENT_VERSION=2.2.2-node20.11.1
 
 FROM defradigital/node:${PARENT_VERSION} AS base
 ARG PORT=3000
-ENV PORT ${PORT}
+ENV PORT=${PORT}
 
 USER root
 
@@ -37,9 +37,14 @@ RUN npm run build
 
 EXPOSE ${PORT} 9229 9230
 
+RUN apk add aws-cli \
+    && apk cache clean \
+    && mkdir /home/node/app/server/simulated_data \
+    && chown node:node /home/node/app/server/simulated_data
+
 USER node
 
-CMD [ "node", "index.js" ]
+CMD [ "bin/start-dev" ]
 
 FROM base AS production
 

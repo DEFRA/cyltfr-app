@@ -1,11 +1,32 @@
 const util = require('../util')
 const config = require('../config')
 const { osPostcodeUrl, osSearchKey } = config
+const fs = require('fs/promises')
+const path = require('path')
 
-async function simulatedFind (_postcode) {
+async function simulatedFind (inputPostcode) {
   const simulatedData = require('../routes/simulated/data/address-service.json')
+  let output
+  try {
+    const postcode = inputPostcode.toUpperCase()
+    const part1 = postcode.split(' ')[0]
+    const filename = path.join('./server/simulated_data/', part1, postcode + '.json')
+    const filedata = JSON.parse(await fs.readFile(filename))
+    output = filedata.results.map(item => item.DPA ? item.DPA : item.LPI).map(item => {
+      return {
+        uprn: item.UPRN,
+        postcode: item.POSTCODE ? item.POSTCODE : item.POSTCODE_LOCATOR,
+        address: item.ADDRESS,
+        country_code: item.COUNTRY_CODE,
+        x: item.X_COORDINATE,
+        y: item.Y_COORDINATE
+      }
+    })
+  } catch {
+    output = simulatedData
+  }
 
-  return simulatedData
+  return output
 }
 
 async function callOsApi (postcode, offset = 0) {
