@@ -3,7 +3,6 @@ const exitMapBtn = document.getElementById('exit-map')
 const keyDisplay = document.getElementById('map-key')
 const maps = window.maps
 const openKeyBtn = document.getElementById('open-key')
-const reservoirsRadio = document.getElementById('reservoirs-radio')
 const riskMeasurementRadio = document.querySelectorAll('.risk-measurement')
 const extentRadioSw = document.getElementById('sw-extent-radio')
 const extentRadioRs = document.getElementById('rs-extent-radio')
@@ -70,7 +69,7 @@ export const mapPageConsts = {
 export const mapControlsConsts = {
   keyDisplay,
   openKeyBtn,
-  reservoirsRadio,
+  reservoirsExtent,
   extentDesc,
   extentRadioSw,
   extentRadioRs,
