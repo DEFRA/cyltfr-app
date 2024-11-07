@@ -4,8 +4,8 @@ export function selectedOption () {
   const measurementsRadios = document.querySelector('input[name="measurements"]:checked')
   const currentPageURL = new URLSearchParams(document.location.search)
   const mapPageQuery = currentPageURL.get('map')
-  const keyTitleText = document.getElementById('mapKeyLabel')
-
+  const surfaceWaterContainer = document.getElementById('surfaceWaterContainer')
+  const riversAndSeaContainer = document.getElementById('riversAndSeaContainer')
   // Helper function to check depth conditions and return corresponding values
   const getDepthValue = (depthRadio, upTo30, upTo60, upTo90, defaultValue) => {
     if (depthRadio.checked) {
@@ -17,20 +17,20 @@ export function selectedOption () {
   }
 
   // Check page for Surface water and no query in URL to show depth options
-  if (keyTitleText.innerText.includes('Surface water') && !mapPageQuery) {
+  if (!surfaceWaterContainer.classList.contains('hide') && !mapPageQuery) {
     if (mapControlsConsts.extentRadioSw.checked) return measurementsRadios.value
     const depthValue =
-      getDepthValue(mapControlsConsts.depthRadio[0], mapControlsConsts.upTo30, mapControlsConsts.upTo60, mapControlsConsts.upTo90, mapControlsConsts.upTo20) ||
-      getDepthValue(mapControlsConsts.depthRadioCC[0], mapControlsConsts.upTo30Cc, mapControlsConsts.upTo60Cc, mapControlsConsts.upTo90Cc, mapControlsConsts.upTo20Cc)
+      getDepthValue(mapControlsConsts.depthRadio[0], mapControlsConsts.upTo30[0], mapControlsConsts.upTo60[0], mapControlsConsts.upTo90[0], mapControlsConsts.upTo20[0]) ||
+      getDepthValue(mapControlsConsts.depthRadioCC[0], mapControlsConsts.upTo30Cc[0], mapControlsConsts.upTo60Cc[0], mapControlsConsts.upTo90Cc[0], mapControlsConsts.upTo20Cc[0])
     if (depthValue) return depthValue
   }
 
   // Check page for Rivers and the sea and no query in URL to show depth options
-  if (keyTitleText.innerText.includes('Rivers and sea') && !mapPageQuery) {
-    if (mapControlsConsts.extentRadioSw.checked) return measurementsRadios.value
+  if (!riversAndSeaContainer.classList.contains('hide') && !mapPageQuery) {
+    if (mapControlsConsts.extentRadioRs.checked) return measurementsRadios.value
     const depthValue =
-      getDepthValue(mapControlsConsts.depthRadio[1], mapControlsConsts.upTo30, mapControlsConsts.upTo60, mapControlsConsts.upTo90, mapControlsConsts.upTo20) ||
-      getDepthValue(mapControlsConsts.depthRadioCC[1], mapControlsConsts.upTo30Cc, mapControlsConsts.upTo60Cc, mapControlsConsts.upTo90Cc, mapControlsConsts.upTo20Cc)
+      getDepthValue(mapControlsConsts.depthRadio[1], mapControlsConsts.upTo30[1], mapControlsConsts.upTo60[1], mapControlsConsts.upTo90[1], mapControlsConsts.upTo20[1]) ||
+      getDepthValue(mapControlsConsts.depthRadioCC[1], mapControlsConsts.upTo30Cc[1], mapControlsConsts.upTo60Cc[1], mapControlsConsts.upTo90Cc[1], mapControlsConsts.upTo20Cc[1])
     if (depthValue) return depthValue
   }
 

@@ -5,8 +5,6 @@ const maps = window.maps
 const openKeyBtn = document.getElementById('open-key')
 const reservoirsRadio = document.getElementById('reservoirs-radio')
 const riskMeasurementRadio = document.querySelectorAll('.risk-measurement')
-const swExtentRadio = document.getElementById('sw-extent-radio')
-const rsExtentRadio = document.getElementById('rs-radio')
 const extentRadioSw = document.getElementById('sw-extent-radio')
 const extentRadioRs = document.getElementById('rs-extent-radio')
 const keyContainer = 'key-container'
@@ -26,17 +24,15 @@ const rsAndResOptions = document.getElementById('rs-res-container')
 const scenarioRadioButtons = document.querySelectorAll('.scenario-radio-button')
 const techMapOptions = document.querySelectorAll('.tech-map-option')
 const techMapKeys = document.querySelectorAll('.tech-map-key')
-const swExtent = document.getElementById('sw-extent-radio')
-const rsExtent = document.getElementById('extent-radio')
 const reservoirsExtent = document.getElementById('reservoirs-radio')
-const upTo20 = document.getElementById('up-to-20')
-const upTo30 = document.getElementById('up-to-30')
-const upTo60 = document.getElementById('up-to-60')
-const upTo90 = document.getElementById('up-to-90')
-const upTo20Cc = document.getElementById('up-to-20-cc')
-const upTo30Cc = document.getElementById('up-to-30-cc')
-const upTo60Cc = document.getElementById('up-to-60-cc')
-const upTo90Cc = document.getElementById('up-to-90-cc')
+const upTo20 = document.getElementsByClassName('up-to-20-radio')
+const upTo30 = document.getElementsByClassName('up-to-30-radio')
+const upTo60 = document.getElementsByClassName('up-to-60-radio')
+const upTo90 = document.getElementsByClassName('up-to-90-radio')
+const upTo20Cc = document.getElementsByClassName('up-to-20-cc-radio')
+const upTo30Cc = document.getElementsByClassName('up-to-30-cc-radio')
+const upTo60Cc = document.getElementsByClassName('up-to-60-cc-radio')
+const upTo90Cc = document.getElementsByClassName('up-to-90-cc-radio')
 const params = window.location.search
 
 export const mapPageConsts = {
@@ -63,8 +59,8 @@ export const mapPageConsts = {
   scenarioRadioButtons,
   techMapOptions,
   techMapKeys,
-  swExtent,
-  rsExtent,
+  extentRadioSw,
+  extentRadioRs,
   reservoirsExtent,
   params
 }
@@ -72,8 +68,6 @@ export const mapPageConsts = {
 export const mapControlsConsts = {
   keyDisplay,
   openKeyBtn,
-  swExtentRadio,
-  rsExtentRadio,
   reservoirsRadio,
   extentDesc,
   extentRadioSw,

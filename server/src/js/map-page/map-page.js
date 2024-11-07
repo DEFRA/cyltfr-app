@@ -236,10 +236,10 @@ if (!mapPageConsts.params.includes('map=')) {
 
 const updateRadioOnOptionChange = function (text) {
   if (text === 'Surface water') {
-    mapPageConsts.swExtent.checked = true
+    mapPageConsts.extentRadioSw.checked = true
   }
   if (text === 'Rivers and the sea') {
-    mapPageConsts.rsExtent.checked = true
+    mapPageConsts.extentRadioRs.checked = true
   }
   if (text === 'Reservoirs') {
     mapPageConsts.reservoirsExtent.checked = true

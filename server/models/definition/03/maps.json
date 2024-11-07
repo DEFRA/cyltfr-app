@@ -89,6 +89,118 @@
           }
         },
         {
+          "ref": "RiversOrSea_200-depth",
+          "name": "High risk: depth",
+          "title": "Rivers and sea flood risk: water depth in a high risk scenario",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_200mm_NON_PRODUCTION/VectorTileServer",
+          "legend": {
+            "title": "200mm rivers and sea scenario",
+            "subTitle": "Flood depth (millimetres)",
+            "keys": [
+              {
+                "text": "Up to 900mm",
+                "icon": "purple"
+              },
+              {
+                "text": "Up to 600mm",
+                "icon": "dark blue"
+              },
+              {
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "RiversOrSea_300-depth",
+          "name": "Medium risk: depth",
+          "title": "Rivers and sea flood risk: water depth in a medium risk scenario",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_300mm_NON_PRODUCTION/VectorTileServer",
+          "legend": {
+            "title": "300mm rivers and sea scenario",
+            "subTitle": "Flood depth (millimetres)",
+            "keys": [
+              {
+                "text": "Up to 900mm",
+                "icon": "purple"
+              },
+              {
+                "text": "Up to 600mm",
+                "icon": "dark blue"
+              },
+              {
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "RiversOrSea_600-depth",
+          "name": "Low risk: depth",
+          "title": "600mm rivers and sea depth",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_600mm_NON_PRODUCTION/VectorTileServer",
+          "legend": {
+            "title": "600mm rivers and sea scenario",
+            "subTitle": "Flood depth (millimetres)",
+            "keys": [
+              {
+                "text": "Up to 900mm",
+                "icon": "purple"
+              },
+              {
+                "text": "Up to 600mm",
+                "icon": "dark blue"
+              },
+              {
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "RiversOrSea_900-depth",
+          "name": "Low risk: depth",
+          "title": "900mm rivers and sea depth",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Risk_of_Flooding_from_Rivers_and_Sea_900mm_NON_PRODUCTION/VectorTileServer",
+          "legend": {
+            "title": "900mm rivers and sea scenario",
+            "subTitle": "Flood depth (millimetres)",
+            "keys": [
+              {
+                "text": "Up to 900mm",
+                "icon": "purple"
+              },
+              {
+                "text": "Up to 600mm",
+                "icon": "dark blue"
+              },
+              {
+                "text": "Up to 300mm",
+                "icon": "blue"
+              },
+              {
+                "text": "Up to 200mm",
+                "icon": "light blue"
+              }
+            ]
+          }
+        },
+        {
           "ref": "RiversOrSea_2-FWLRSF",
           "name": "Depth and flow estimates at monitoring stations",
           "title": "Estimated depth and flow of water at river and sea level monitoring stations",
