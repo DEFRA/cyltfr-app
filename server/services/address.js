@@ -4,10 +4,11 @@ const { osPostcodeUrl, osSearchKey } = config
 const fs = require('fs/promises')
 const path = require('path')
 
-async function simulatedFind (postcode) {
+async function simulatedFind (inputPostcode) {
   const simulatedData = require('../routes/simulated/data/address-service.json')
   let output
   try {
+    const postcode = inputPostcode.toUpperCase()
     const part1 = postcode.split(' ')[0]
     const filename = path.join('./server/simulated_data/', part1, postcode + '.json')
     const filedata = JSON.parse(await fs.readFile(filename))

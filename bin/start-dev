@@ -3,7 +3,7 @@
 # Get zip file from AWS bucket, if available, to set up simulated data for performance testing.
 # See also environment variable SIMULATE_ADDRESS_SERVICE
 if [ -n "$AWS_DATA_BUCKET" ]; then
-aws s3 sync s3://$AWS_DATA_BUCKET/data.zip tools/address/data.zip
+aws s3 cp s3://$AWS_DATA_BUCKET/data.zip tools/address/
 fi
 unzip -o -q tools/address/data.zip -d server/simulated_data/
 node index.js
