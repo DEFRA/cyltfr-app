@@ -198,19 +198,23 @@ const showSelectedDescription = function () {
     if (mapPageConsts.depthRadio[0].checked) {
       mapPageConsts.depthDescContainer[0].classList.remove('hide')
       mapPageConsts.depthScenarioBar[0].classList.remove('hide')
+      mapPageConsts.upTo20[0].checked = true
     }
     if (mapPageConsts.depthRadioCC[0].checked) {
       mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
       mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
+      mapPageConsts.upTo20Cc[0].checked = true
     }
     // Rivers and sea scenario bars
     if (mapPageConsts.depthRadio[1].checked) {
       mapPageConsts.depthDescContainer[1].classList.remove('hide')
       mapPageConsts.depthScenarioBar[1].classList.remove('hide')
+      mapPageConsts.upTo20[1].checked = true
     }
     if (mapPageConsts.depthRadioCC[1].checked) {
       mapPageConsts.depthDescCcContainer[1].classList.remove('hide')
       mapPageConsts.depthScenarioBarCc[1].classList.remove('hide')
+      mapPageConsts.upTo20Cc[1].checked = true
     }
   }
 }
