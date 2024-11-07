@@ -234,6 +234,7 @@ if (!mapPageConsts.params.includes('map=')) {
   mapPageConsts.selectedAddressCheckbox.classList.add('hide')
 }
 
+// Update first radio to checked when changing to other key option
 const updateRadioOnOptionChange = function (text) {
   if (text === 'Surface water') {
     mapPageConsts.extentRadioSw.checked = true
