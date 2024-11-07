@@ -161,6 +161,7 @@ mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   openKey()
 })
 
+// Resetting all desc and scenario bars to hide
 const hideDescriptions = function () {
   mapPageConsts.extentDescCcContainer[0].classList.add('hide')
   mapPageConsts.extentDescContainer[0].classList.add('hide')
@@ -173,9 +174,12 @@ const hideDescriptions = function () {
     mapPageConsts.depthDescContainer[1].classList.add('hide')
     mapPageConsts.depthScenarioBarCc[0].classList.add('hide')
     mapPageConsts.depthScenarioBar[0].classList.add('hide')
+    mapPageConsts.depthScenarioBarCc[1].classList.add('hide')
+    mapPageConsts.depthScenarioBar[1].classList.add('hide')
   }
 }
 
+// Showing descriptions and scenario bars
 const showSelectedDescription = function () {
   if (mapPageConsts.extentRadioCC[0].checked) {
     mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
@@ -190,21 +194,23 @@ const showSelectedDescription = function () {
     mapPageConsts.extentDescContainer[1].classList.remove('hide')
   }
   if (!mapPageQuery) {
-    if (mapPageConsts.depthRadioCC[0].checked) {
-      mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
-      mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
-    }
+    // Surface water scenario bars
     if (mapPageConsts.depthRadio[0].checked) {
       mapPageConsts.depthDescContainer[0].classList.remove('hide')
       mapPageConsts.depthScenarioBar[0].classList.remove('hide')
     }
+    if (mapPageConsts.depthRadioCC[0].checked) {
+      mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
+      mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
+    }
+    // Rivers and sea scenario bars
+    if (mapPageConsts.depthRadio[1].checked) {
+      mapPageConsts.depthDescContainer[1].classList.remove('hide')
+      mapPageConsts.depthScenarioBar[1].classList.remove('hide')
+    }
     if (mapPageConsts.depthRadioCC[1].checked) {
       mapPageConsts.depthDescCcContainer[1].classList.remove('hide')
       mapPageConsts.depthScenarioBarCc[1].classList.remove('hide')
-    }
-    if (mapPageConsts.depthRadio[1].checked) {
-      mapPageConsts.depthDescContainer[1].classList.remove('hide')
-      mapPageConsts.depthScenarioBar[0].classList.remove('hide')
     }
   }
 }

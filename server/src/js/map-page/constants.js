@@ -79,6 +79,7 @@ export const mapControlsConsts = {
   extentRadioSw,
   extentRadioRs,
   depthRadio,
+  depthRadioCC,
   upTo20,
   upTo30,
   upTo60,

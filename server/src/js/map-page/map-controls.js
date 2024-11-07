@@ -21,7 +21,16 @@ export function selectedOption () {
     if (mapControlsConsts.extentRadioSw.checked) return measurementsRadios.value
     const depthValue =
       getDepthValue(mapControlsConsts.depthRadio[0], mapControlsConsts.upTo30, mapControlsConsts.upTo60, mapControlsConsts.upTo90, mapControlsConsts.upTo20) ||
-      getDepthValue(mapControlsConsts.depthRadio[1], mapControlsConsts.upTo30Cc, mapControlsConsts.upTo60Cc, mapControlsConsts.upTo90Cc, mapControlsConsts.upTo20Cc)
+      getDepthValue(mapControlsConsts.depthRadioCC[0], mapControlsConsts.upTo30Cc, mapControlsConsts.upTo60Cc, mapControlsConsts.upTo90Cc, mapControlsConsts.upTo20Cc)
+    if (depthValue) return depthValue
+  }
+
+  // Check page for Rivers and the sea and no query in URL to show depth options
+  if (keyTitleText.innerText.includes('Rivers and sea') && !mapPageQuery) {
+    if (mapControlsConsts.extentRadioSw.checked) return measurementsRadios.value
+    const depthValue =
+      getDepthValue(mapControlsConsts.depthRadio[1], mapControlsConsts.upTo30, mapControlsConsts.upTo60, mapControlsConsts.upTo90, mapControlsConsts.upTo20) ||
+      getDepthValue(mapControlsConsts.depthRadioCC[1], mapControlsConsts.upTo30Cc, mapControlsConsts.upTo60Cc, mapControlsConsts.upTo90Cc, mapControlsConsts.upTo20Cc)
     if (depthValue) return depthValue
   }
 
