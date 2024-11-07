@@ -1,4 +1,6 @@
 const { HttpsProxyAgent } = require('https-proxy-agent')
+const STATUS_CODES = require('http2').constants
+const FETCH_ERROR_MSG = 'Requested resource returned a non 200 status code'
 
 const config = require('./config')
 const wreck = require('@hapi/wreck').defaults({
@@ -12,25 +14,49 @@ if (config.http_proxy) {
     agent: new HttpsProxyAgent(config.http_proxy)
   })
 }
-function get (url, options, ext = false) {
+
+const { performance } = require('node:perf_hooks')
+const get = (url, options, ext = false) => {
   const thisWreck = (ext && wreckExt) ? wreckExt : wreck
+  const startTick = performance.now()
   return thisWreck.get(url, options)
     .then(response => {
-      if (response.res.statusCode !== 200) {
-        throw new Error('Requested resource returned a non 200 status code', response)
+      if (config.performanceLogging) {
+        console.log('Response received from url in %d ms : %s', performance.now() - startTick, url)
+      }
+      if (response.res.statusCode !== STATUS_CODES.HTTP_STATUS_OK) {
+        throw new Error(FETCH_ERROR_MSG, response)
       }
       return response.payload
     })
+    .catch(error => {
+      if (config.performanceLogging) {
+        console.log('Error received from url in %d ms : %s', performance.now() - startTick, url)
+        console.log(error)
+      }
+      throw error
+    })
 }
 
-function post (url, options, ext = false) {
+const post = (url, options, ext = false) => {
   const thisWreck = (ext && wreckExt) ? wreckExt : wreck
+  const startTick = performance.now()
   return thisWreck.post(url, options)
     .then(response => {
-      if (response.res.statusCode !== 200) {
-        throw new Error('Requested resource returned a non 200 status code', response)
+      if (config.performanceLogging) {
+        console.log('Response received from url in %d ms : %s', performance.now() - startTick, url)
+      }
+      if (response.res.statusCode !== STATUS_CODES.HTTP_STATUS_OK) {
+        throw new Error(FETCH_ERROR_MSG, response)
       }
       return response.payload
+    })
+    .catch(error => {
+      if (config.performanceLogging) {
+        console.log('Error received from url in %d ms : %s', performance.now() - startTick, url)
+        console.log(error)
+      }
+      throw error
     })
 }
 
