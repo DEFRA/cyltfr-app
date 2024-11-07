@@ -19,6 +19,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     position: absolute;
     bottom: 20px;
     right: -15px;
+    width: 100%;
 
     @media screen and (max-width: $tablet-width) {
       display: grid;
@@ -124,6 +125,15 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
       }
     }
 
+  }
+
+  .scenario-heading {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .first-radio {
+    text-decoration: none;
   }
 
   #open-key-button {

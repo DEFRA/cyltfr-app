@@ -98,63 +98,128 @@ function mapPage () {
     setCurrent(getParameterByName('map'))
   })
 
+  // Function to update tech map visible options
+  mapPageConsts.techMapOptions.forEach((optionBtn) => {
+    const techMapMapping = {
+      0: 'Surface water',
+      1: 'Rivers and the sea',
+      2: 'Reservoirs'
+    }
+    optionBtn.addEventListener('click', () => {
+      // Reset visibility of all options and keys
+      mapPageConsts.techMapOptions.forEach((option) => option.classList.remove('hide'))
+      mapPageConsts.techMapKeys.forEach((key) => key.classList.add('hide'))
+
+      // Find index based on button text and update visibility, also update tiles with change of radio
+      for (const [index, text] of Object.entries(techMapMapping)) {
+        if (optionBtn.innerHTML.includes(text)) {
+          mapPageConsts.techMapOptions[index].classList.add('hide')
+          mapPageConsts.techMapKeys[index].classList.remove('hide')
+          updateRadioOnOptionChange(text)
+          setCurrent(selectedOption())
+          hideDescriptions()
+          showSelectedDescription()
+          break
+        }
+      }
+    })
+  })
+
   // ensures mouse cursor returns to default if feature was at edge of map
   map.addEventListener('mouseleave', function () {
     body.style.cursor = 'default'
   })
 }
 
+// Close key when clicking on map when on device
 document.addEventListener('click', function (event) {
   if (mapPageConsts.keyDisplay.style.display === 'block' && !mapPageConsts.keyDisplay.contains(event.target)) {
     closeKey()
   }
 })
 
+const currentPageURL = new URLSearchParams(document.location.search)
+const mapPageQuery = currentPageURL.get('map')
+// Show or hide depth scenario bars and relevant description containers
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
-  const currentPageURL = new URLSearchParams(document.location.search)
-  const mapPageQuery = currentPageURL.get('map')
   radio.addEventListener('change', () => {
-    mapPageConsts.extentDescCcContainer[0].classList.add('hide')
-    mapPageConsts.extentDescContainer[0].classList.add('hide')
-    if (!mapPageQuery) {
-      mapPageConsts.depthDescCcContainer[0].classList.add('hide')
-      mapPageConsts.depthDescContainer[0].classList.add('hide')
-      mapPageConsts.depthScenarioBarCc[0].classList.add('hide')
-      mapPageConsts.depthScenarioBar[0].classList.add('hide')
-    }
-
-    if (mapPageConsts.extentRadioCC.checked) {
-      mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
-    } else if (mapPageConsts.extentRadio[0].checked) {
-      mapPageConsts.extentDescContainer[0].classList.remove('hide')
-    } else if (!mapPageQuery) {
-      if (mapPageConsts.depthRadioCC.checked) {
-        mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
-        mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
-      } else if (mapPageConsts.depthRadio[0].checked) {
-        mapPageConsts.depthDescContainer[0].classList.remove('hide')
-        mapPageConsts.depthScenarioBar[0].classList.remove('hide')
-      }
-    }
+    hideDescriptions()
+    showSelectedDescription()
   })
 })
 
+// Assign value to exit map button depending on page
 mapPageConsts.exitMapBtn.addEventListener('click', function () {
   const backLink = mapPageConsts.exitMapBtn.getAttribute('data-backlink')
-
   window.location.href = backLink
 })
 
+// Close and open key assignments
 mapPageConsts.closeKeyBtn.addEventListener('click', closeKey)
 mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   event.stopPropagation()
   openKey()
 })
 
-if (mapPageConsts.params.includes('SurfaceWater')) {
-  mapPageConsts.selectedAddressCheckbox.classList.remove('hide')
+// Resetting all desc and scenario bars to hide
+const hideDescriptions = function () {
+  mapPageConsts.extentDescCcContainer[0].classList.add('hide')
+  mapPageConsts.extentDescContainer[0].classList.add('hide')
+  mapPageConsts.extentDescCcContainer[1].classList.add('hide')
+  mapPageConsts.extentDescContainer[1].classList.add('hide')
+  if (!mapPageQuery) {
+    mapPageConsts.depthDescCcContainer[0].classList.add('hide')
+    mapPageConsts.depthDescContainer[0].classList.add('hide')
+    mapPageConsts.depthDescCcContainer[1].classList.add('hide')
+    mapPageConsts.depthDescContainer[1].classList.add('hide')
+    mapPageConsts.depthScenarioBarCc[0].classList.add('hide')
+    mapPageConsts.depthScenarioBar[0].classList.add('hide')
+    mapPageConsts.depthScenarioBarCc[1].classList.add('hide')
+    mapPageConsts.depthScenarioBar[1].classList.add('hide')
+  }
 }
 
+// Showing descriptions and scenario bars
+const showSelectedDescription = function () {
+  if (mapPageConsts.extentRadioCC[0].checked) {
+    mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
+  }
+  if (mapPageConsts.extentRadio[0].checked) {
+    mapPageConsts.extentDescContainer[0].classList.remove('hide')
+  }
+  if (mapPageConsts.extentRadioCC[1].checked) {
+    mapPageConsts.extentDescCcContainer[1].classList.remove('hide')
+  }
+  if (mapPageConsts.extentRadio[1].checked) {
+    mapPageConsts.extentDescContainer[1].classList.remove('hide')
+  }
+  if (!mapPageQuery) {
+    // Surface water scenario bars
+    if (mapPageConsts.depthRadio[0].checked) {
+      mapPageConsts.depthDescContainer[0].classList.remove('hide')
+      mapPageConsts.depthScenarioBar[0].classList.remove('hide')
+      mapPageConsts.upTo20[0].checked = true
+    }
+    if (mapPageConsts.depthRadioCC[0].checked) {
+      mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
+      mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
+      mapPageConsts.upTo20Cc[0].checked = true
+    }
+    // Rivers and sea scenario bars
+    if (mapPageConsts.depthRadio[1].checked) {
+      mapPageConsts.depthDescContainer[1].classList.remove('hide')
+      mapPageConsts.depthScenarioBar[1].classList.remove('hide')
+      mapPageConsts.upTo20[1].checked = true
+    }
+    if (mapPageConsts.depthRadioCC[1].checked) {
+      mapPageConsts.depthDescCcContainer[1].classList.remove('hide')
+      mapPageConsts.depthScenarioBarCc[1].classList.remove('hide')
+      mapPageConsts.upTo20Cc[1].checked = true
+    }
+  }
+}
+
+// Get depth scenario API names
 mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
   if (radio.id.includes('-cc')) {
     radio.addEventListener('change', function () {
@@ -167,8 +232,23 @@ mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
   }
 })
 
+// Tech map should show key options selectors but not select address checkbox
 if (!mapPageConsts.params.includes('map=')) {
   mapPageConsts.rsAndResOptions.classList.remove('hide')
+  mapPageConsts.selectedAddressCheckbox.classList.add('hide')
+}
+
+// Update first radio to checked when changing to other key option
+const updateRadioOnOptionChange = function (text) {
+  if (text === 'Surface water') {
+    mapPageConsts.extentRadioSw.checked = true
+  }
+  if (text === 'Rivers and the sea') {
+    mapPageConsts.extentRadioRs.checked = true
+  }
+  if (text === 'Reservoirs') {
+    mapPageConsts.reservoirsExtent.checked = true
+  }
 }
 
 mapPage()
