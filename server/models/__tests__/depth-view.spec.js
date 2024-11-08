@@ -18,7 +18,7 @@ describe('Depth view model', () => {
       }
     }
     const result = depth(swDepth, null, address)
-    expect(result).toMatchObject({ sw200: 'Medium', sw200cc: 'Very Low' })
+    expect(result).toMatchObject({ sw200: 'Medium', sw200cc: 'Very low' })
   })
 
   test('Sets Rivers and sea water risk-level to very low if empty', async () => {
@@ -28,7 +28,7 @@ describe('Depth view model', () => {
       }
     }
     const result = depth(null, rsDepth, address)
-    expect(result).toMatchObject({ rs200: 'Medium', rs200cc: 'Very Low' })
+    expect(result).toMatchObject({ rs200: 'Medium', rs200cc: 'Very low' })
   })
 
   test('Sets Surface water class name correctly', async () => {
@@ -38,7 +38,7 @@ describe('Depth view model', () => {
       }
     }
     const result = depth(swDepth, null, address)
-    expect(result).toMatchObject({ sw200: 'Medium', sw200cc: 'Very Low', sw200ccclassname: 'Very-Low' })
+    expect(result).toMatchObject({ sw200: 'Medium', sw200cc: 'Very low', sw200ccclassname: 'Very-low' })
   })
 
   test('Sets Rivers and sea class name correctly', async () => {
@@ -48,13 +48,13 @@ describe('Depth view model', () => {
       }
     }
     const result = depth(null, rsDepth, address)
-    expect(result).toMatchObject({ rs200: 'Medium', rs200cc: 'Very Low', rs200ccclassname: 'Very-Low' })
+    expect(result).toMatchObject({ rs200: 'Medium', rs200cc: 'Very low', rs200ccclassname: 'Very-low' })
   })
 
   test('Sets Rivers and sea level change', async () => {
     const rsDepth = {
       200: {
-        current: 'Very Low',
+        current: 'Very low',
         cc: 'Low'
       },
       300: {

@@ -1,7 +1,7 @@
 const { capitaliseAddress } = require('../services/address.js')
 
 const RiskLevel = {
-  VeryLow: 'Very Low',
+  VeryLow: 'Very low',
   Low: 'Low',
   Medium: 'Medium',
   High: 'High'

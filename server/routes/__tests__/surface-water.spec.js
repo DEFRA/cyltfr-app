@@ -153,7 +153,7 @@ describe('GET /surface-water', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--Very-Low')
+    expect(response.result).toContain('govuk-tag--Very-low')
   })
 
   it('returns 200 OK and renders surface water page with lead local flood authority', async () => {
