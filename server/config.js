@@ -138,6 +138,7 @@ if (result.error) {
 const value = result.value
 
 // Add some helper props
+value.simulatedDataPath = './server/simulated_data/'
 value.isDev = value.env === 'dev'
 value.isTest = value.env === 'test'
 value.isProd = value.env.startsWith('prod-')

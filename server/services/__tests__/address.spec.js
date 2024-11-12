@@ -18,6 +18,7 @@ function setReturnValue (value) {
 }
 
 jest.mock('../../util')
+jest.mock('../../config')
 
 util.getJson = jest.fn(async () => {
   return returnValue
@@ -63,6 +64,7 @@ describe('Address service', () => {
 
 describe('simulatedFind function', () => {
   test('returns simulated data when file is not found', async () => {
+    config.setConfigOptions({ simulatedDataPath: './server/routes/simulated/data/' })
     const inputPostcode = 'INVALID POSTCODE'
     const result = await addressService.simulatedFind(inputPostcode)
     expect(result).toEqual(simulatedData)
@@ -70,10 +72,12 @@ describe('simulatedFind function', () => {
 
   test('returns correct data when file is found', async () => {
     const inputPostcode = 'NP18 3EZ'
+    config.setConfigOptions({ simulatedDataPath: './server/routes/simulated/data/' })
     const result = await addressService.simulatedFind(inputPostcode)
     expect(result.length).toBeGreaterThan(0)
     expect(result[0]).toHaveProperty('uprn')
     expect(result[0]).toHaveProperty('postcode')
+    expect(result[0].postcode).toEqual('NP18 3EZ')
     expect(result[0]).toHaveProperty('address')
     expect(result[0]).toHaveProperty('country_code')
     expect(result[0]).toHaveProperty('x')

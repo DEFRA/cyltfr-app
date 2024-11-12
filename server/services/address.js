@@ -10,7 +10,8 @@ async function simulatedFind (inputPostcode) {
   try {
     const postcode = inputPostcode.toUpperCase()
     const part1 = postcode.split(' ')[0]
-    const filename = path.join('./server/simulated_data/', part1, postcode + '.json')
+    const filename = path.join(config.simulatedDataPath, part1, postcode + '.json')
+    console.log(filename)
     const filedata = JSON.parse(await fs.readFile(filename))
     output = filedata.results.map(item => item.DPA ? item.DPA : item.LPI).map(item => {
       return {
