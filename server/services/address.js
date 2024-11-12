@@ -93,6 +93,7 @@ function capitaliseAddress (address) {
 
 module.exports = {
   find,
+  simulatedFind,
   capitaliseAddress
 }
 
