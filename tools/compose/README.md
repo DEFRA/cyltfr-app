@@ -6,6 +6,10 @@ You must first build the debug containers for each of the services. This can be 
 
 You can then put an environment file in this directory for each container.
 
+You can then run the service as a whole by running
+
+`docker compose up -d`
+
 # Environment setup
 
 Each environment file will need specific things in for the inter-container communication.
