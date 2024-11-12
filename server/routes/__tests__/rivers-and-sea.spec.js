@@ -119,7 +119,7 @@ describe('GET /rivers-and-sea', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--Very-Low')
+    expect(response.result).toContain('govuk-tag--Very-low')
   })
 
   test('risk address not in england', async () => {
