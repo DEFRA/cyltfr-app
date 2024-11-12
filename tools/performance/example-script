@@ -1,0 +1,5 @@
+# Set up the urls in the urls file. For example, copy the line 2000 times for running 2000 calls
+
+time curl --output - --parallel --parallel-immediate --parallel-max 30 --config urls > /dev/null
+
+xargs -I % -P 8 time curl --output - --parallel --parallel-immediate --parallel-max 30 --config urls > /dev/null < <(printf '%s\n' {1..400})

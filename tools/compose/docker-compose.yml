@@ -1,0 +1,41 @@
+services:
+  app:
+    image: "cyltfr-risk-app-debug"
+    ports: 
+      - 3000:3000
+    networks:
+      - frontend
+      - redisnet
+      - servicenet
+    env_file: ".env.app"
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+  redis:
+    image: "redis:alpine"
+    networks:
+      - redisnet
+    expose:
+      - 6379
+  service:
+    image: "cyltfr-risk-service-debug"
+    networks:
+      - servicenet
+    expose:
+      - 8050
+    env_file: ".env.service"
+  data:
+    image: "cyltfr-risk-data-debug"
+    networks:
+      - servicenet
+    expose:
+      - 8051
+    env_file: ".env.data"
+networks:
+  redisnet:
+  servicenet:
+  frontend:
+    driver: bridge
+    
