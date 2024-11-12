@@ -96,7 +96,7 @@ export async function loadMap (point) {
   mapView.when(function () {
     // MapView is now ready for display and can be used. Here we will
     // use goTo to view a particular location at a given zoom level and center
-    mapView.ui.move('zoom', 'bottom-left')
+    mapView.ui.move('zoom', 'bottom-right')
   })
 
   if (callback) {
