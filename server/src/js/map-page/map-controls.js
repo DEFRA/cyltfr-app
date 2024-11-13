@@ -17,26 +17,30 @@ export function selectedOption () {
   }
 
   // Check page for Surface water and no query in URL to show depth options
-  if (!surfaceWaterContainer.classList.contains('hide') && !mapPageQuery) {
-    if (mapControlsConsts.extentRadioSw.checked) return measurementsRadios.value
-    const depthValue =
-      getDepthValue(mapControlsConsts.depthRadio[0], mapControlsConsts.upTo30[0], mapControlsConsts.upTo60[0], mapControlsConsts.upTo90[0], mapControlsConsts.upTo20[0]) ||
-      getDepthValue(mapControlsConsts.depthRadioCC[0], mapControlsConsts.upTo30Cc[0], mapControlsConsts.upTo60Cc[0], mapControlsConsts.upTo90Cc[0], mapControlsConsts.upTo20Cc[0])
-    if (depthValue) return depthValue
+  if (!mapPageQuery) {
+    if (!surfaceWaterContainer.classList.contains('hide')) {
+      if (mapControlsConsts.extentRadioSw.checked) return measurementsRadios.value
+      const depthValue =
+        getDepthValue(mapControlsConsts.depthRadio[0], mapControlsConsts.upTo30[0], mapControlsConsts.upTo60[0], mapControlsConsts.upTo90[0], mapControlsConsts.upTo20[0]) ||
+        getDepthValue(mapControlsConsts.depthRadioCC[0], mapControlsConsts.upTo30Cc[0], mapControlsConsts.upTo60Cc[0], mapControlsConsts.upTo90Cc[0], mapControlsConsts.upTo20Cc[0])
+      if (depthValue) return depthValue
+    }
   }
 
   // Check page for Rivers and the sea and no query in URL to show depth options
-  if (!riversAndSeaContainer.classList.contains('hide') && !mapPageQuery) {
-    if (mapControlsConsts.extentRadioRs.checked) return measurementsRadios.value
-    const depthValue =
-      getDepthValue(mapControlsConsts.depthRadio[1], mapControlsConsts.upTo30[1], mapControlsConsts.upTo60[1], mapControlsConsts.upTo90[1], mapControlsConsts.upTo20[1]) ||
-      getDepthValue(mapControlsConsts.depthRadioCC[1], mapControlsConsts.upTo30Cc[1], mapControlsConsts.upTo60Cc[1], mapControlsConsts.upTo90Cc[1], mapControlsConsts.upTo20Cc[1])
-    if (depthValue) return depthValue
+  if (!mapPageQuery) {
+    if (!riversAndSeaContainer.classList.contains('hide')) {
+      if (mapControlsConsts.extentRadioRs.checked) return measurementsRadios.value
+      const depthValue =
+        getDepthValue(mapControlsConsts.depthRadio[1], mapControlsConsts.upTo30[1], mapControlsConsts.upTo60[1], mapControlsConsts.upTo90[1], mapControlsConsts.upTo20[1]) ||
+        getDepthValue(mapControlsConsts.depthRadioCC[1], mapControlsConsts.upTo30Cc[1], mapControlsConsts.upTo60Cc[1], mapControlsConsts.upTo90Cc[1], mapControlsConsts.upTo20Cc[1])
+      if (depthValue) return depthValue
+    }
   }
 
   // Check for Rivers and Sea or Reservoirs conditions
-  if ((mapPageQuery === 'RiversAndSea' && mapControlsConsts.extentRadioRs.checked) ||
-      (mapPageQuery === 'Reservoirs' && mapControlsConsts.reservoirsRadio.checked)) {
+  if ((mapPageQuery === 'RiversOrSea' && mapControlsConsts.extentRadioRs.checked) ||
+      (mapPageQuery === 'Reservoirs' && mapControlsConsts.reservoirsExtent.checked)) {
     return measurementsRadios.value
   }
 
