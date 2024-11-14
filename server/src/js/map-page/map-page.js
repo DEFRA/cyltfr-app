@@ -163,11 +163,16 @@ mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
 
 // Resetting all desc and scenario bars to hide
 const hideDescriptions = function () {
-  mapPageConsts.extentDescCcContainer[0].classList.add('hide')
-  mapPageConsts.extentDescContainer[0].classList.add('hide')
-  mapPageConsts.extentDescCcContainer[1].classList.add('hide')
-  mapPageConsts.extentDescContainer[1].classList.add('hide')
+  if (mapPageQuery === 'SurfaceWater' || mapPageQuery === 'RiversOrSea') {
+    mapPageConsts.extentDescCcContainer[0].classList.add('hide')
+    mapPageConsts.extentDescContainer[0].classList.add('hide')
+  }
+
   if (!mapPageQuery) {
+    mapPageConsts.extentDescCcContainer[0].classList.add('hide')
+    mapPageConsts.extentDescContainer[0].classList.add('hide')
+    mapPageConsts.extentDescCcContainer[1].classList.add('hide')
+    mapPageConsts.extentDescContainer[1].classList.add('hide')
     mapPageConsts.depthDescCcContainer[0].classList.add('hide')
     mapPageConsts.depthDescContainer[0].classList.add('hide')
     mapPageConsts.depthDescCcContainer[1].classList.add('hide')
@@ -181,19 +186,27 @@ const hideDescriptions = function () {
 
 // Showing descriptions and scenario bars
 const showSelectedDescription = function () {
-  if (mapPageConsts.extentRadioCC[0].checked) {
-    mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
-  }
-  if (mapPageConsts.extentRadio[0].checked) {
-    mapPageConsts.extentDescContainer[0].classList.remove('hide')
-  }
-  if (mapPageConsts.extentRadioCC[1].checked) {
-    mapPageConsts.extentDescCcContainer[1].classList.remove('hide')
-  }
-  if (mapPageConsts.extentRadio[1].checked) {
-    mapPageConsts.extentDescContainer[1].classList.remove('hide')
+  if (mapPageQuery === 'SurfaceWater' || mapPageQuery === 'RiversOrSea') {
+    if (mapPageConsts.extentRadioCC[0].checked) {
+      mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
+    }
+    if (mapPageConsts.extentRadio[0].checked) {
+      mapPageConsts.extentDescContainer[0].classList.remove('hide')
+    }
   }
   if (!mapPageQuery) {
+    if (mapPageConsts.extentRadioCC[0].checked) {
+      mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
+    }
+    if (mapPageConsts.extentRadio[0].checked) {
+      mapPageConsts.extentDescContainer[0].classList.remove('hide')
+    }
+    if (mapPageConsts.extentRadioCC[1].checked) {
+      mapPageConsts.extentDescCcContainer[1].classList.remove('hide')
+    }
+    if (mapPageConsts.extentRadio[1].checked) {
+      mapPageConsts.extentDescContainer[1].classList.remove('hide')
+    }
     // Surface water scenario bars
     if (mapPageConsts.depthRadio[0].checked) {
       mapPageConsts.depthDescContainer[0].classList.remove('hide')

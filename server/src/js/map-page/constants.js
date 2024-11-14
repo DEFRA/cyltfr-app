@@ -7,7 +7,6 @@ const riskMeasurementRadio = document.querySelectorAll('.risk-measurement')
 const extentRadioSw = document.getElementById('sw-extent-radio')
 const extentRadioRs = document.getElementById('rs-extent-radio')
 const keyContainer = 'key-container'
-const extentDesc = 'extent-desc-container'
 const selectedAddressCheckbox = document.getElementById('selected-address')
 const extentDescContainer = document.getElementsByClassName('extent-desc-container')
 const extentDescCcContainer = document.getElementsByClassName('extent-desc-container-cc')
@@ -42,7 +41,6 @@ export const mapPageConsts = {
   maps,
   riskMeasurementRadio,
   keyContainer,
-  extentDesc,
   selectedAddressCheckbox,
   extentDescContainer,
   extentDescCcContainer,
@@ -70,7 +68,6 @@ export const mapControlsConsts = {
   keyDisplay,
   openKeyBtn,
   reservoirsExtent,
-  extentDesc,
   extentRadioSw,
   extentRadioRs,
   depthRadio,
