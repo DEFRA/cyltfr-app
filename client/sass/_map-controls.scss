@@ -419,6 +419,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   box-shadow: none;
 }
 
-.esri-ui .esri-zoom {
+.esri-zoom {
   margin-bottom: 25px;
+}
+
+.esri-zoom.with-scenario-bar {
+  margin-bottom: 110px;
 }

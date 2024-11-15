@@ -179,6 +179,16 @@ const hideDescriptions = function () {
   }
 }
 
+function updateZoomButtonPosition () {
+  const zoomButton = document.querySelector('.esri-zoom')
+  const depthScenarioBars = [
+    ...mapPageConsts.depthScenarioBar,
+    ...mapPageConsts.depthScenarioBarCc
+  ]
+  const DepthScenarioBarActive = depthScenarioBars.some(scenarioBar => !scenarioBar.classList.contains('hide'))
+  zoomButton.classList.toggle('with-scenario-bar', DepthScenarioBarActive)
+}
+
 // Showing descriptions and scenario bars
 const showSelectedDescription = function () {
   if (mapPageConsts.extentRadioCC[0].checked) {
@@ -217,6 +227,7 @@ const showSelectedDescription = function () {
       mapPageConsts.upTo20Cc[1].checked = true
     }
   }
+  updateZoomButtonPosition()
 }
 
 // Get depth scenario API names
