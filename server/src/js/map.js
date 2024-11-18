@@ -11,6 +11,9 @@ import Graphic from '@arcgis/core/Graphic.js'
 
 let map, callback, currentLayer, tokenFetchRunning
 const TOKEN_PREFETCH_SECS = 30
+const currentPageURL = new URLSearchParams(document.location.search)
+const mapPageQuery = currentPageURL.get('map')
+const initialZoomLevel = mapPageQuery === null ? 1 : 7
 
 async function refreshOsToken () {
   tokenFetchRunning = true
@@ -54,7 +57,7 @@ export async function loadMap (point) {
   const mapView = new MapView({
     container: 'map',
     map,
-    zoom: 7,
+    zoom: initialZoomLevel,
     center: centrePoint,
     constraints: {
       minZoom: 0,
