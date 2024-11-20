@@ -64,6 +64,34 @@ function mapPage () {
     }
   }, 100)
 
+  // Due to the way focus-visible works on the esri-widget--buttons this is
+  // a work around to apply the correct styling to the zoom buttons as the
+  // focus-visible styling can't be directly applied to the selected element
+  setTimeout(() => {
+    const zoomButtons = document.querySelectorAll('.esri-widget--button')
+    if (zoomButtons) {
+      zoomButtons.forEach(button => {
+        let isMouseUsed = false
+        button.addEventListener('mousedown', function () {
+          isMouseUsed = true
+          this.classList.add('no-focus')
+        })
+        button.addEventListener('click', function () {
+          if (isMouseUsed) {
+            this.classList.remove('no-focus')
+            this.blur()
+          }
+          isMouseUsed = false
+        })
+        button.addEventListener('keydown', function (event) {
+          if (event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') {
+            isMouseUsed = false
+          }
+        })
+      })
+    }
+  }, 1000)
+
   // This function updates the map to the radio button you select (extent, depth, depth CC)
   function setCurrent (ref) {
     const mapController = new MapController(window.mapCategories.categories)
@@ -184,6 +212,16 @@ const hideDescriptions = function () {
   }
 }
 
+function updateZoomButtonPosition () {
+  const zoomButton = document.querySelector('.esri-zoom')
+  const depthScenarioBars = [
+    ...mapPageConsts.depthScenarioBar,
+    ...mapPageConsts.depthScenarioBarCc
+  ]
+  const DepthScenarioBarActive = depthScenarioBars.some(scenarioBar => !scenarioBar.classList.contains('hide'))
+  zoomButton.classList.toggle('with-scenario-bar', DepthScenarioBarActive)
+}
+
 // Showing descriptions and scenario bars
 const showSelectedDescription = function () {
   if (mapPageQuery === 'SurfaceWater' || mapPageQuery === 'RiversOrSea') {
@@ -230,6 +268,7 @@ const showSelectedDescription = function () {
       mapPageConsts.upTo20Cc[1].checked = true
     }
   }
+  updateZoomButtonPosition()
 }
 
 // Get depth scenario API names

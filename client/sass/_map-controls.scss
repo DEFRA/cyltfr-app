@@ -405,6 +405,28 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     /* Ensures the focus boarder overlaps the other zoom button rather than hides behind */
     z-index: 12;
   }
+
+  .esri-zoom {
+    margin-bottom: 25px;
+  }
+  
+  .esri-zoom.with-scenario-bar {
+    margin-bottom: 110px;
+  }
+
+  .esri-widget--button:focus {
+    outline: 0px solid transparent;
+    box-shadow: 0px 0px 0px 5px #0b0c0c, 0px 0px 0px 8px #ffdd00;
+    z-index: 10;
+  }
+
+  .esri-widget--button.no-focus:focus {
+    box-shadow: none;
+  }
+}
+
+:root {
+  --calcite-ui-focus-color: #ffdd0000;
 }
 
 .ol-zoom.ol-zoom-checked {
