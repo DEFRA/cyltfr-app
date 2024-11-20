@@ -64,6 +64,34 @@ function mapPage () {
     }
   }, 100)
 
+  // Due to the way focus-visible works on the esri-widget--buttons this is
+  // a work around to apply the correct styling to the zoom buttons as the
+  // focus-visible styling can't be directly applied to the selected element
+  setTimeout(() => {
+    const zoomButtons = document.querySelectorAll('.esri-widget--button')
+    if (zoomButtons) {
+      zoomButtons.forEach(button => {
+        let isMouseUsed = false
+        button.addEventListener('mousedown', function () {
+          isMouseUsed = true
+          this.classList.add('no-focus')
+        })
+        button.addEventListener('click', function () {
+          if (isMouseUsed) {
+            this.classList.remove('no-focus')
+            this.blur()
+          }
+          isMouseUsed = false
+        })
+        button.addEventListener('keydown', function (event) {
+          if (event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') {
+            isMouseUsed = false
+          }
+        })
+      })
+    }
+  }, 1000)
+
   // This function updates the map to the radio button you select (extent, depth, depth CC)
   function setCurrent (ref) {
     const mapController = new MapController(window.mapCategories.categories)
