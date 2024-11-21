@@ -1,0 +1,117 @@
+#map-overlay {
+  display: none;
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  bottom: 2px;
+  right: 2px;
+  z-index: 101;
+
+  @include govuk-media-query($from: mobile) {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: solid 2px govuk-colour("yellow");
+  }
+
+  background-color: #fff;
+
+  .map-overlay-container {
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .map-overlay-content {
+      position: absolute;
+      bottom: 15px;
+      top: 15px;
+      overflow: auto;
+
+      .heading-large {
+        margin-top: 10px;
+        padding-right: 70px;
+      }
+
+      // Overlay risk details
+      .high,
+      .medium,
+      .low,
+      .very-low {
+        display: none;
+      }
+
+      .rivers-seas-high {
+        .high {
+          display: block;
+        }
+      }
+
+      .rivers-seas-medium {
+        .medium {
+          display: block;
+        }
+      }
+
+      .rivers-seas-low {
+        .low {
+          display: block;
+        }
+      }
+
+      .rivers-seas-very-low {
+        .very-low {
+          display: block;
+        }
+      }
+
+      .surface-water-high {
+        .high {
+          display: block;
+        }
+      }
+
+      .surface-water-medium {
+        .medium {
+          display: block;
+        }
+      }
+
+      .surface-water-low {
+        .low {
+          display: block;
+        }
+      }
+
+      .surface-water-very-low {
+        .very-low {
+          display: block;
+        }
+      }
+    }
+
+    .map-overlay-close {
+      cursor: pointer;
+      position: absolute;
+      border: none;
+      width: 45px;
+      height: 45px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url('#{$govuk-images-path}icon-close.png');
+      z-index: 1;
+      right: 20px;
+      background-color: #fff;
+
+      @include govuk-media-query($from: mobile) {
+        width: 25px;
+        height: 25px;
+      }
+
+      // below should show when CSS is disabled for screen readers
+      .map-overlay-close-text {
+        display: none;
+      }
+    }
+  }
+}
