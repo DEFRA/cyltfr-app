@@ -1,7 +1,6 @@
 $govuk-assets-path: '/assets/';
 
 @import "govuk-frontend/dist/govuk/all";
-@import "./overlay";
 @import "./depth-gauges";
 @import "./risk-page";
 @import "./rivers-and-sea";
