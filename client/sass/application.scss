@@ -1,17 +1,8 @@
 $govuk-assets-path: '/assets/';
 
 @import "govuk-frontend/dist/govuk/all";
-@import "./legend";
 @import "./overlay";
 @import "./social";
-
-.nojs-hidden {
-  display: none;
-}
-
-.js-enabled .nojs-hidden {
-  display: block;
-}
 
 .noscript-iframe {
   display: block;
@@ -22,17 +13,9 @@ $govuk-assets-path: '/assets/';
   display: none;
 }
 
-.govuk-link--white {
-  color: govuk-colour("white")!important;
-}
-
 .map-container {
   margin: 10px 0;
   position: relative;
-}
-
-.pull-right {
-  float: right;
 }
 
 #postcode > dd {
