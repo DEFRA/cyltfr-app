@@ -63,6 +63,7 @@ export const mapPageConsts = {
   extentRadioSw,
   extentRadioRs,
   reservoirsExtent,
+  mapPageQuery,
   upTo20,
   upTo20Cc,
   params
