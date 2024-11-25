@@ -55,39 +55,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   }
 }
 
-#scenario-container-velocity {
-  display: block;
-  justify-content: flex-end;
-
-  .scenario-arrows {
-    display: none;
-  }
-
-  @media screen and (max-width: $scenarioArrowPoint) {
-    .scenario-arrows {
-      display: block;
-
-      .arrow-svg {
-        width: 60px;
-        height: 100px;
-      }
-    }
-    
-    .right-scenario-arrow {
-      @include scenario-right-arrow()
-    }
-    
-    .left-scenario-arrow {
-      @include scenario-left-arrow()
-    }
-  }
-}
-
 #scenario-selection-depth {
-  display:flex;
-}
-
-#scenario-selection-velocity {
   display:flex;
 }
 
@@ -96,23 +64,6 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     overflow-x: auto;
     display: block;
     scroll-behavior: smooth;
-  }
-  .search-container-v3 {
-    display: none !important;
-  }
-  .defra-map-scenarios-depth-v4.dragging {
-    scroll-behavior: unset;
-  }
-  .defra-map-scenarios-depth-v4::-webkit-scrollbar {
-    display: none;
-  }
-  .defra-map-scenarios-depth-v4 .govuk-radios {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    background-color: white;
-    padding: 5px 0px 0px 0px;
-    width: 800px;
   }
 }
 
