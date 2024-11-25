@@ -23,6 +23,8 @@ const scenarioRadioButtons = document.querySelectorAll('.scenario-radio-button')
 const techMapOptions = document.querySelectorAll('.tech-map-option')
 const techMapKeys = document.querySelectorAll('.tech-map-key')
 const reservoirsExtent = document.getElementById('reservoirs-radio')
+const surfaceWaterContainer = document.getElementById('surfaceWaterContainer')
+const riversAndSeaContainer = document.getElementById('riversAndSeaContainer')
 const upTo20 = document.getElementsByClassName('up-to-20-radio')
 const upTo30 = document.getElementsByClassName('up-to-30-radio')
 const upTo60 = document.getElementsByClassName('up-to-60-radio')
@@ -32,6 +34,8 @@ const upTo30Cc = document.getElementsByClassName('up-to-30-cc-radio')
 const upTo60Cc = document.getElementsByClassName('up-to-60-cc-radio')
 const upTo90Cc = document.getElementsByClassName('up-to-90-cc-radio')
 const params = window.location.search
+const currentPageURL = new URLSearchParams(document.location.search)
+const mapPageQuery = currentPageURL.get('map')
 
 export const mapPageConsts = {
   closeKeyBtn,
@@ -72,6 +76,9 @@ export const mapControlsConsts = {
   extentRadioRs,
   depthRadio,
   depthRadioCC,
+  surfaceWaterContainer,
+  riversAndSeaContainer,
+  mapPageQuery,
   upTo20,
   upTo30,
   upTo60,
