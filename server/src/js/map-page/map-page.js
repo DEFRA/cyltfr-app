@@ -93,6 +93,7 @@ function mapPage () {
   }, 1000)
 
   // This function updates the map to the radio button you select (extent, depth, depth CC)
+  // and adds the show flooding toggle functionality
   function setCurrent (ref) {
     const mapController = new MapController(window.mapCategories.categories)
     mapController.setCurrent(ref)
@@ -100,22 +101,14 @@ function mapPage () {
     const showFloodingCheckbox = document.getElementById('display-layers-checkbox')
     const mapReferenceValue = selectedOption()
 
-    if (showFloodingCheckbox.checked) {
-      mapPageConsts.maps.showMap(`${mapReferenceValue}`, selectedAddressCheckbox.checked)
-    } else {
-      mapPageConsts.maps.showMap(`${mapReferenceValue}DONOTDISPLAY`, selectedAddressCheckbox.checked)
-    }
+    const displayMapRef = showFloodingCheckbox.checked ? mapReferenceValue : `${mapReferenceValue}DONOTDISPLAY`
+    mapPageConsts.maps.showMap(`${displayMapRef}`, selectedAddressCheckbox.checked)
   }
 
   // Default to the first category/map
   mapPageConsts.maps.onReady(function () {
     measurements.forEach(function (measurement) {
-      if (
-        measurement.name === 'measurements' ||
-        measurement.name === 'scenarios-depth' ||
-        measurement.name === 'scenarios-depth-cc' ||
-        measurement.name === 'map-toggle'
-      ) {
+      if (['measurements', 'scenarios-depth', 'scenarios-depth-cc', 'map-toggle'].includes(measurement.name)) {
         measurement.addEventListener('change', function (event) {
           event.preventDefault()
           setCurrent(event.target.value)
