@@ -64,9 +64,7 @@ function mapPage () {
     }
   }, 100)
 
-  // Due to the way focus-visible works on the esri-widget--buttons this is
-  // a work around to apply the correct styling to the zoom buttons as the
-  // focus-visible styling can't be directly applied to the selected element
+  // This is to style the zoom buttons as they  cannot be styled with CSS as it is within a shadow root
   setTimeout(() => {
     const zoomButtons = document.querySelectorAll('.esri-widget--button')
     if (zoomButtons) {
@@ -93,6 +91,7 @@ function mapPage () {
   }, 1000)
 
   // This function updates the map to the radio button you select (extent, depth, depth CC)
+  // and adds the show flooding toggle functionality
   function setCurrent (ref) {
     const mapController = new MapController(window.mapCategories.categories)
     mapController.setCurrent(ref)
@@ -100,22 +99,14 @@ function mapPage () {
     const showFloodingCheckbox = document.getElementById('display-layers-checkbox')
     const mapReferenceValue = selectedOption()
 
-    if (showFloodingCheckbox.checked) {
-      mapPageConsts.maps.showMap(`${mapReferenceValue}`, selectedAddressCheckbox.checked)
-    } else {
-      mapPageConsts.maps.showMap(`${mapReferenceValue}DONOTDISPLAY`, selectedAddressCheckbox.checked)
-    }
+    const displayMapRef = showFloodingCheckbox.checked ? mapReferenceValue : `${mapReferenceValue}DONOTDISPLAY`
+    mapPageConsts.maps.showMap(`${displayMapRef}`, selectedAddressCheckbox.checked)
   }
 
   // Default to the first category/map
   mapPageConsts.maps.onReady(function () {
     measurements.forEach(function (measurement) {
-      if (
-        measurement.name === 'measurements' ||
-        measurement.name === 'scenarios-depth' ||
-        measurement.name === 'scenarios-depth-cc' ||
-        measurement.name === 'map-toggle'
-      ) {
+      if (['measurements', 'scenarios-depth', 'scenarios-depth-cc', 'map-toggle'].includes(measurement.name)) {
         measurement.addEventListener('change', function (event) {
           event.preventDefault()
           setCurrent(event.target.value)
@@ -166,8 +157,6 @@ document.addEventListener('click', function (event) {
   }
 })
 
-const currentPageURL = new URLSearchParams(document.location.search)
-const mapPageQuery = currentPageURL.get('map')
 // Show or hide depth scenario bars and relevant description containers
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
   radio.addEventListener('change', () => {
@@ -191,24 +180,31 @@ mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
 
 // Resetting all desc and scenario bars to hide
 const hideDescriptions = function () {
-  if (mapPageQuery === 'SurfaceWater' || mapPageQuery === 'RiversOrSea') {
-    mapPageConsts.extentDescCcContainer[0].classList.add('hide')
-    mapPageConsts.extentDescContainer[0].classList.add('hide')
+  const hideElement = (element) => element.classList.add('hide')
+
+  const hideExtentDescriptions = () => {
+    hideElement(mapPageConsts.extentDescCcContainer[0])
+    hideElement(mapPageConsts.extentDescContainer[0])
   }
 
-  if (!mapPageQuery) {
-    mapPageConsts.extentDescCcContainer[0].classList.add('hide')
-    mapPageConsts.extentDescContainer[0].classList.add('hide')
-    mapPageConsts.extentDescCcContainer[1].classList.add('hide')
-    mapPageConsts.extentDescContainer[1].classList.add('hide')
-    mapPageConsts.depthDescCcContainer[0].classList.add('hide')
-    mapPageConsts.depthDescContainer[0].classList.add('hide')
-    mapPageConsts.depthDescCcContainer[1].classList.add('hide')
-    mapPageConsts.depthDescContainer[1].classList.add('hide')
-    mapPageConsts.depthScenarioBarCc[0].classList.add('hide')
-    mapPageConsts.depthScenarioBar[0].classList.add('hide')
-    mapPageConsts.depthScenarioBarCc[1].classList.add('hide')
-    mapPageConsts.depthScenarioBar[1].classList.add('hide')
+  const hideAllDescriptions = () => {
+    hideExtentDescriptions()
+    hideElement(mapPageConsts.extentDescCcContainer[1])
+    hideElement(mapPageConsts.extentDescContainer[1])
+    hideElement(mapPageConsts.depthDescCcContainer[0])
+    hideElement(mapPageConsts.depthDescContainer[0])
+    hideElement(mapPageConsts.depthDescCcContainer[1])
+    hideElement(mapPageConsts.depthDescContainer[1])
+    hideElement(mapPageConsts.depthScenarioBarCc[0])
+    hideElement(mapPageConsts.depthScenarioBar[0])
+    hideElement(mapPageConsts.depthScenarioBarCc[1])
+    hideElement(mapPageConsts.depthScenarioBar[1])
+  }
+
+  if (mapPageConsts.mapPageQuery === 'SurfaceWater' || mapPageConsts.mapPageQuery === 'RiversOrSea') {
+    hideExtentDescriptions()
+  } else if (!mapPageConsts.mapPageQuery) {
+    hideAllDescriptions()
   }
 }
 
@@ -224,50 +220,47 @@ function updateZoomButtonPosition () {
 
 // Showing descriptions and scenario bars
 const showSelectedDescription = function () {
-  if (mapPageQuery === 'SurfaceWater' || mapPageQuery === 'RiversOrSea') {
-    if (mapPageConsts.extentRadioCC[0].checked) {
-      mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
-    }
-    if (mapPageConsts.extentRadio[0].checked) {
-      mapPageConsts.extentDescContainer[0].classList.remove('hide')
+  const showElement = (element) => element.classList.remove('hide')
+
+  const handleExtentRadio = () => {
+    if (mapPageConsts.extentRadioCC[0].checked) showElement(mapPageConsts.extentDescCcContainer[0])
+    if (mapPageConsts.extentRadio[0].checked) showElement(mapPageConsts.extentDescContainer[0])
+    if (!mapPageConsts.mapPageQuery) {
+      if (mapPageConsts.extentRadioCC[1].checked) showElement(mapPageConsts.extentDescCcContainer[1])
+      if (mapPageConsts.extentRadio[1].checked) showElement(mapPageConsts.extentDescContainer[1])
     }
   }
-  if (!mapPageQuery) {
-    if (mapPageConsts.extentRadioCC[0].checked) {
-      mapPageConsts.extentDescCcContainer[0].classList.remove('hide')
-    }
-    if (mapPageConsts.extentRadio[0].checked) {
-      mapPageConsts.extentDescContainer[0].classList.remove('hide')
-    }
-    if (mapPageConsts.extentRadioCC[1].checked) {
-      mapPageConsts.extentDescCcContainer[1].classList.remove('hide')
-    }
-    if (mapPageConsts.extentRadio[1].checked) {
-      mapPageConsts.extentDescContainer[1].classList.remove('hide')
-    }
-    // Surface water scenario bars
+
+  const handleDepthRadio = () => {
     if (mapPageConsts.depthRadio[0].checked) {
-      mapPageConsts.depthDescContainer[0].classList.remove('hide')
-      mapPageConsts.depthScenarioBar[0].classList.remove('hide')
+      showElement(mapPageConsts.depthDescContainer[0])
+      showElement(mapPageConsts.depthScenarioBar[0])
       mapPageConsts.upTo20[0].checked = true
     }
     if (mapPageConsts.depthRadioCC[0].checked) {
-      mapPageConsts.depthDescCcContainer[0].classList.remove('hide')
-      mapPageConsts.depthScenarioBarCc[0].classList.remove('hide')
+      showElement(mapPageConsts.depthDescCcContainer[0])
+      showElement(mapPageConsts.depthScenarioBarCc[0])
       mapPageConsts.upTo20Cc[0].checked = true
     }
-    // Rivers and sea scenario bars
     if (mapPageConsts.depthRadio[1].checked) {
-      mapPageConsts.depthDescContainer[1].classList.remove('hide')
-      mapPageConsts.depthScenarioBar[1].classList.remove('hide')
+      showElement(mapPageConsts.depthDescContainer[1])
+      showElement(mapPageConsts.depthScenarioBar[1])
       mapPageConsts.upTo20[1].checked = true
     }
     if (mapPageConsts.depthRadioCC[1].checked) {
-      mapPageConsts.depthDescCcContainer[1].classList.remove('hide')
-      mapPageConsts.depthScenarioBarCc[1].classList.remove('hide')
+      showElement(mapPageConsts.depthDescCcContainer[1])
+      showElement(mapPageConsts.depthScenarioBarCc[1])
       mapPageConsts.upTo20Cc[1].checked = true
     }
   }
+
+  if (mapPageConsts.mapPageQuery === 'SurfaceWater' || mapPageConsts.mapPageQuery === 'RiversOrSea') {
+    handleExtentRadio()
+  } else if (!mapPageConsts.mapPageQuery) {
+    handleExtentRadio()
+    handleDepthRadio()
+  }
+
   updateZoomButtonPosition()
 }
 
