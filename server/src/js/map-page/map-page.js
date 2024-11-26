@@ -64,9 +64,7 @@ function mapPage () {
     }
   }, 100)
 
-  // Due to the way focus-visible works on the esri-widget--buttons this is
-  // a work around to apply the correct styling to the zoom buttons as the
-  // focus-visible styling can't be directly applied to the selected element
+  // This is to style the zoom buttons as they  cannot be styled with CSS as it is within a shadow root
   setTimeout(() => {
     const zoomButtons = document.querySelectorAll('.esri-widget--button')
     if (zoomButtons) {
@@ -227,8 +225,10 @@ const showSelectedDescription = function () {
   const handleExtentRadio = () => {
     if (mapPageConsts.extentRadioCC[0].checked) showElement(mapPageConsts.extentDescCcContainer[0])
     if (mapPageConsts.extentRadio[0].checked) showElement(mapPageConsts.extentDescContainer[0])
-    if (mapPageConsts.extentRadioCC[1].checked) showElement(mapPageConsts.extentDescCcContainer[1])
-    if (mapPageConsts.extentRadio[1].checked) showElement(mapPageConsts.extentDescContainer[1])
+    if (!mapPageConsts.mapPageQuery) {
+      if (mapPageConsts.extentRadioCC[1].checked) showElement(mapPageConsts.extentDescCcContainer[1])
+      if (mapPageConsts.extentRadio[1].checked) showElement(mapPageConsts.extentDescContainer[1])
+    }
   }
 
   const handleDepthRadio = () => {
