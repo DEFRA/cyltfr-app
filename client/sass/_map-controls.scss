@@ -410,7 +410,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     margin-bottom: 25px;
     margin-right: 5px;
     
-    @media (max-width: 768px) {
+    @media screen and (max-width: $tablet-width) {
       display: none;
     }
   }
