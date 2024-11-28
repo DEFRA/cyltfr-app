@@ -141,6 +141,7 @@ function mapPage () {
           break
         }
       }
+      updateKeyButtonPosition()
     })
   })
 
@@ -157,13 +158,42 @@ document.addEventListener('click', function (event) {
   }
 })
 
+// Opens key when key options are clicked, timeout is needed to override the function above
+mapPageConsts.techMapOptions.forEach((optionBtn) => {
+  optionBtn.addEventListener('click', event => {
+    event.stopPropagation()
+    openKey()
+  })
+})
+
 // Show or hide depth scenario bars and relevant description containers
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
   radio.addEventListener('change', () => {
     hideDescriptions()
     showSelectedDescription()
+    updateKeyButtonPosition()
   })
 })
+
+// Check if scenario bar is showing and move key button up if not, on mobile
+const updateKeyButtonPosition = function () {
+  const scenarioBars = [...mapPageConsts.depthScenarioBar, ...mapPageConsts.depthScenarioBarCc]
+  const openKeyBtn = mapPageConsts.openKeyBtn
+  const osLogo = mapPageConsts.osLogo
+  const infoContainer = mapPageConsts.infoContainer
+  const anyScenarioBarVisible = scenarioBars.some(scenarioBar => !scenarioBar.classList.contains('hide'))
+  const isScreenSmall = window.innerWidth < 768
+
+  if (isScreenSmall) {
+    openKeyBtn.style.bottom = anyScenarioBarVisible ? '75px' : '0px'
+    osLogo.style.bottom = anyScenarioBarVisible ? '119px' : '40px'
+    infoContainer.style.bottom = anyScenarioBarVisible ? '86px' : '0px'
+  } else {
+    openKeyBtn.style.bottom = '0px'
+    osLogo.style.bottom = '40px'
+    infoContainer.style.bottom = '0px'
+  }
+}
 
 // Assign value to exit map button depending on page
 mapPageConsts.exitMapBtn.addEventListener('click', function () {
