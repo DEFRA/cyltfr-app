@@ -254,7 +254,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     position: relative;
     margin: 10px 10px 0px 10px;
     border: 0;
-    padding: 0;
+    padding-right: 11px;
     height: 40px;
     width: fit-content;
     cursor: pointer;
@@ -268,11 +268,6 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     -moz-user-select: none;
     -ms-user-select: none;
     pointer-events: auto;
-
-    @media (min-width: 48.0625em) {
-      width: fit-content;
-      padding-right: 11px;
-    }
   }
 
   .defra-map__options-top svg {
@@ -283,14 +278,6 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 
   .defra-map__options-top span {
     vertical-align: top;
-
-    @media (max-width: 48.0525em) {
-      height: 1px;
-      overflow: hidden;
-      position: absolute;
-      white-space: nowrap;
-      width: 1px;
-    }
   }
 
   .defra-map__options-top:hover {
@@ -322,65 +309,6 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   #exit-btn {
     width: 20px;
     height: 20px;
-  }
-
-  #advanced-btn {
-    width: 24px;
-    height: 24px;
-  }
-
-  .defra-map__advanced {
-    float: right;
-    position: relative;
-    margin: 10px 10px 0px 10px;
-    border: 0;
-    padding: 0;
-    height: 40px;
-    cursor: pointer;
-    background-color: white;
-    color: #0b0c0c;
-    font-size: 16px;
-    line-height: 40px;
-    width: auto;
-    padding-right: 11px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    pointer-events: auto;
-  }
-
-  .defra-map__advanced svg {
-    display: inline-block;
-    margin: 10px;
-    vertical-align: top;
-  }
-
-  .defra-map__advanced span {
-    vertical-align: top;
-
-    @media (max-width: 48.0525em) {
-      font-size: 14px;
-      padding-left: 0;
-    }
-  }
-
-  .defra-map__advanced:hover {
-    background-color: #f3f2f1;
-  }
-
-  .defra-map__advanced:focus-visible {
-    outline: 3px solid transparent;
-    box-shadow: $focusBorder;
-  }
-
-  .defra-map__advanced::-moz-focus-inner {
-    border: 0;
-  }
-
-  .key-adv-button-display {
-    display: block;
   }
 
   .ol-zoom {

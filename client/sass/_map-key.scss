@@ -51,6 +51,12 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   font-size: 14px;
 }
 
+#map-key__section {
+  @media screen and (max-width: $tablet-width) {
+    width: 260px;
+  }
+}
+
 #defra-map-key__section-title-top-title {
   padding-top: 18px;
   margin-top: 66px;
@@ -98,6 +104,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   height: 100%;
   position: fixed; 
   overflow-y: auto;
+
+  @media screen and (max-width: $tablet-width) {
+    width: fit-content;
+  }
 }
 
 .govuk-fieldset__legend {
