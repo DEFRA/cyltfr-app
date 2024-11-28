@@ -296,8 +296,12 @@ svg:not(:root) {
   display: flex;
   justify-content: flex-end;
   position: absolute;
-  bottom: 20px;
+  bottom: 0.1px;
   right: -15px;
+
+  @media screen and (max-width: $tablet-width) {
+    right: 0;
+  }
 }
 
 .key-container {
