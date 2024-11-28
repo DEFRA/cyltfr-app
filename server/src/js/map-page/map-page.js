@@ -160,8 +160,9 @@ document.addEventListener('click', function (event) {
 
 // Opens key when key options are clicked, timeout is needed to override the function above
 mapPageConsts.techMapOptions.forEach((optionBtn) => {
-  optionBtn.addEventListener('click', () => {
-    setTimeout(() => { openKey() }, 10)
+  optionBtn.addEventListener('click', event => {
+    event.stopPropagation()
+    openKey()
   })
 })
 
