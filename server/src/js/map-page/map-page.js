@@ -181,7 +181,6 @@ const updateKeyButtonPosition = function () {
   const osLogo = mapPageConsts.osLogo
   const infoContainer = mapPageConsts.infoContainer
   const anyScenarioBarVisible = scenarioBars.some(scenarioBar => !scenarioBar.classList.contains('hide'))
-  console.log('anyScenarioBarVisible', anyScenarioBarVisible)
   const isScreenSmall = window.innerWidth < 768
 
   if (isScreenSmall) {

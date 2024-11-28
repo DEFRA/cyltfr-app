@@ -296,10 +296,11 @@ svg:not(:root) {
   display: flex;
   justify-content: flex-end;
   position: absolute;
-  bottom: 0.1px;
+  bottom: 25px;
   right: -15px;
 
   @media screen and (max-width: $tablet-width) {
+    bottom: 0.1px;
     right: 0;
   }
 }
