@@ -65,8 +65,6 @@ export function scenarioDisplayUpdate (scenarioBar) {
 export function openKey () {
   mapControlsConsts.keyDisplay.classList.remove('hide')
   mapControlsConsts.openKeyBtn.classList.add('hide')
-  mapControlsConsts.scenarioSelectionDepth.classList.add('hide')
-  mapControlsConsts.scenarioSelectionVelocity.classList.add('hide')
 }
 
 // Function to close the key display on a device

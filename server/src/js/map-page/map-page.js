@@ -157,6 +157,13 @@ document.addEventListener('click', function (event) {
   }
 })
 
+// Opens key when key options are clicked, timeout is needed to override the function above
+mapPageConsts.techMapOptions.forEach((optionBtn) => {
+  optionBtn.addEventListener('click', () => {
+    setTimeout(() => { openKey() }, 10)
+  })
+})
+
 // Show or hide depth scenario bars and relevant description containers
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
   radio.addEventListener('change', () => {

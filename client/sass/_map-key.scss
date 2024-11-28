@@ -249,6 +249,9 @@ svg:not(:root) {
   padding-bottom: 0;
   height: 35px;
   width: 210px;
+  @media screen and (max-width: $tablet-width) {
+    width: 183px;
+  }
 }
 
 .defra-map-key__symbol-container--multi {
