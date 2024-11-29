@@ -14,29 +14,16 @@ afterAll(async () => {
 })
 
 describe('/Map page test', () => {
-  test('Assert Map page - surface-water', async () => {
+  const mapPages = [
+    { map: 'SurfaceWater' },
+    { map: 'RiversOrSea' },
+    { map: 'Reservoirs' }
+  ]
+
+  test.each(mapPages)('Assert Map pages', async ({ map }) => {
     const options = {
       method: 'GET',
-      url: '/map?easting=1&northing=1&map=SurfaceWater'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
-  })
-
-  test('Assert Map page - rivers-and-sea', async () => {
-    const options = {
-      method: 'GET',
-      url: '/map?easting=1&northing=1&map=RiversOrSea'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
-  })
-  test('Assert Map page - reservoirs', async () => {
-    const options = {
-      method: 'GET',
-      url: '/map?easting=1&northing=1&map=Reservoirs'
+      url: `/map?easting=1&northing=1&map=${map}`
     }
 
     const response = await server.inject(options)
