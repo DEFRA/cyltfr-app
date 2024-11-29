@@ -33,4 +33,13 @@ describe('/Map page test', () => {
     const response = await server.inject(options)
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
   })
+  test('Assert Map page - reservoirs', async () => {
+    const options = {
+      method: 'GET',
+      url: '/map?easting=1&northing=1&map=Reservoirs'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
+  })
 })
