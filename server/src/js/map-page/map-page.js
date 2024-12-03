@@ -202,7 +202,16 @@ mapPageConsts.exitMapBtn.addEventListener('click', function () {
 })
 
 // Close and open key assignments
-mapPageConsts.closeKeyBtn.addEventListener('click', closeKey)
+if (!mapPageConsts.mapPageQuery) {
+  console.log('mapPageConsts.closeKeyBtns', mapPageConsts.closeKeyBtns)
+  if (mapPageConsts.closeKeyBtns) {
+    mapPageConsts.closeKeyBtns.forEach((btn) => {
+      btn.addEventListener('click', closeKey)
+    })
+  } else {
+    mapPageConsts.closeKeyBtn.addEventListener('click', closeKey)
+  }
+}
 mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   event.stopPropagation()
   openKey()

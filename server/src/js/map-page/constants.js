@@ -1,4 +1,5 @@
 const closeKeyBtn = document.getElementById('close-key')
+const closeKeyBtns = document.querySelectorAll('.close-key')
 const exitMapBtn = document.getElementById('exit-map')
 const keyDisplay = document.getElementById('map-key')
 const maps = window.maps
@@ -41,6 +42,7 @@ const mapPageQuery = currentPageURL.get('map')
 
 export const mapPageConsts = {
   closeKeyBtn,
+  closeKeyBtns,
   exitMapBtn,
   keyDisplay,
   openKeyBtn,
