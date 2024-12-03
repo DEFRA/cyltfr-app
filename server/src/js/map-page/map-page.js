@@ -190,7 +190,7 @@ const updateKeyButtonPosition = function () {
     infoContainer.style.bottom = anyScenarioBarVisible ? '86px' : '0px'
   } else {
     openKeyBtn.style.bottom = '0px'
-    osLogo.style.bottom = '40px'
+    osLogo.style.bottom = '10px'
     infoContainer.style.bottom = '0px'
   }
 }
