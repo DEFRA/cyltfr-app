@@ -3,6 +3,7 @@ services:
     image: "cyltfr-risk-app-debug"
     ports: 
       - 3000:3000
+      - 9229:9229
     networks:
       - frontend
       - redisnet
