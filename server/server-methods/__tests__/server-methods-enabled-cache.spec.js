@@ -58,7 +58,7 @@ describe('server methods', () => {
   })
 
   describe('cache enabled', () => {
-    it('should return initial cached address', async () => {
+    test('should return initial cached address', async () => {
       const response = await server.methods.find('CV37 6YZ')
       expect(response).toEqual([
         expect.objectContaining({
@@ -90,7 +90,7 @@ describe('server methods', () => {
       ])
     })
 
-    it('should return original cached risk details', async () => {
+    test('should return original cached risk details', async () => {
       const response = await server.methods.riskService(x, y, radius)
 
       expect(response).toEqual(
@@ -124,7 +124,7 @@ describe('server methods', () => {
       )
     })
 
-    it('should return original cached flood service warnings', async () => {
+    test('should return original cached flood service warnings', async () => {
       // Setting initial values
       floodService.__updateReturnValue({
         address: '',

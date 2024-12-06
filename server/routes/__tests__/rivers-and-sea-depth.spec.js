@@ -63,7 +63,7 @@ describe('GET /rivers-and-sea-depth', () => {
     riskService.__resetReturnValue()
   })
 
-  it('redirects to postcode page if user does not have an address set in session', async () => {
+  test('redirects to postcode page if user does not have an address set in session', async () => {
     // Get postcode page first to clear the previous address selection
     const mockRequest = {
       method: 'GET',
@@ -80,7 +80,7 @@ describe('GET /rivers-and-sea-depth', () => {
     expect(swResponse.headers.location).toBe('/postcode')
   })
 
-  it('returns 200 OK and renders rivers and sea depth page if user has an address set in session', async () => {
+  test('returns 200 OK and renders rivers and sea depth page if user has an address set in session', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/rivers-and-sea-depth',
@@ -92,7 +92,7 @@ describe('GET /rivers-and-sea-depth', () => {
     expect(response.result).toContain('rivers-and-sea-depth')
   })
 
-  it('should show an error page if an error occurs', async () => {
+  test('should show an error page if an error occurs', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/rivers-and-sea-depth',
