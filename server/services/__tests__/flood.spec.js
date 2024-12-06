@@ -1,4 +1,4 @@
-const config = require('../../config')
+const mockConfig = require('../../__mocks__/config')
 const util = require('../../util')
 
 jest.mock('../../util', () => ({
@@ -14,8 +14,8 @@ jest.mock('../../routes/simulated/data/warnings-service.json', () => ({
 
 describe('flood service', () => {
   test('should export the real findWarnings function when simulateAddressService is false', async () => {
-    config.simulateAddressService = false
-    config.floodWarningsUrl = 'https://example.com'
+    mockConfig.simulateAddressService = false
+    mockConfig.floodWarningsUrl = 'https://example.com'
 
     const mockWarningData = {
       address: '',
@@ -34,7 +34,7 @@ describe('flood service', () => {
   })
 
   test('should export the simulateFindWarnings function when simulateAddressService is true', async () => {
-    config.simulateAddressService = true
+    mockConfig.simulateAddressService = true
 
     const flood = require('../flood')
     const location = 'TestLocation'
