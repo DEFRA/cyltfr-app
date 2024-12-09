@@ -29,10 +29,10 @@ function riskViewModel (risk, address, backLinkUri) {
   const reservoirWetRisk = !!(risk.reservoirWetRisk?.length)
   const reservoirRisk = reservoirDryRisk || reservoirWetRisk
 
-  this.riverAndSeaRisk = riverAndSeaRisk
-  this.riverAndSeaRiskCC = riverAndSeaRiskCC
-  this.surfaceWaterRisk = surfaceWaterRisk
-  this.surfaceWaterRiskCC = surfaceWaterRiskCC
+  this.riverAndSeaRisk = riverAndSeaRisk.toLowerCase()
+  this.riverAndSeaRiskCC = riverAndSeaRiskCC.toLowerCase()
+  this.surfaceWaterRisk = surfaceWaterRisk.toLowerCase()
+  this.surfaceWaterRiskCC = surfaceWaterRiskCC.toLowerCase()
   this.riverAndSeaClassName = riverAndSeaRisk.toLowerCase().replace(' ', '-')
   this.surfaceWaterClassName = surfaceWaterRisk.toLowerCase().replace(' ', '-')
   this.riversSeaRiskStyle = riverAndSeaRisk.replace(/ /g, '-')
