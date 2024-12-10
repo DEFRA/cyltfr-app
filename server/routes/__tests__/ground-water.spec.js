@@ -1,7 +1,7 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const riskService = require('../../services/risk')
-const { getByCoordinates } = require('../../services/risk')
+const { reservoirRisk } = require('../../services/risk')
 const config = require('../../config')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
 const defaultOptions = {
@@ -80,7 +80,7 @@ describe('GET /ground-water', () => {
     expect(swResponse.headers.location).toBe('/postcode')
   })
 
-  it('returns 200 OK and renders rivers and sea page if user has an address set in session', async () => {
+  it('returns 200 OK and renders groundwater page if user has an address set in session', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/ground-water',
@@ -98,7 +98,7 @@ describe('GET /ground-water', () => {
       url: '/ground-water',
       headers: defaultOptions.headers
     }
-    getByCoordinates.mockImplementationOnce(() => {
+    reservoirRisk.mockImplementationOnce(() => {
       throw new Error()
     })
     const response = await server.inject(mockRequest)
@@ -107,7 +107,7 @@ describe('GET /ground-water', () => {
   })
 
   it('should create an array of reservoirs if there is a reservoirs risk', async () => {
-    riskService.getByCoordinates.mockResolvedValue({
+    riskService.reservoirRisk.mockResolvedValue({
       reservoirDryRisk: [{
         reservoirName: 'Dry Risk Resevoir',
         location: 'SJ917968',
@@ -131,7 +131,7 @@ describe('GET /ground-water', () => {
   })
 
   it('should add any reservoirs that are not in the list when it is wet', async () => {
-    riskService.getByCoordinates.mockResolvedValue({
+    riskService.reservoirRisk.mockResolvedValue({
       reservoirDryRisk: [{
         reservoirName: 'Dry Risk Resevoir',
         location: 'SJ917968',
