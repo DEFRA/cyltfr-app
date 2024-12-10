@@ -29,16 +29,16 @@ function riskViewModel (risk, address, backLinkUri) {
   const reservoirWetRisk = !!(risk.reservoirWetRisk?.length)
   const reservoirRisk = reservoirDryRisk || reservoirWetRisk
 
-  this.riverAndSeaRisk = riverAndSeaRisk.toLowerCase()
-  this.riverAndSeaRiskCC = riverAndSeaRiskCC.toLowerCase()
-  this.surfaceWaterRisk = surfaceWaterRisk.toLowerCase()
-  this.surfaceWaterRiskCC = surfaceWaterRiskCC.toLowerCase()
-  this.riverAndSeaClassName = riverAndSeaRisk.toLowerCase().replace(' ', '-')
-  this.surfaceWaterClassName = surfaceWaterRisk.toLowerCase().replace(' ', '-')
-  this.riversSeaRiskStyle = riverAndSeaRisk.replace(/ /g, '-')
-  this.surfaceWaterStyle = surfaceWaterRisk.replace(/ /g, '-')
-  this.riversSeaRiskCCStyle = riverAndSeaRiskCC.replace(/ /g, '-')
-  this.surfaceWaterCCStyle = surfaceWaterRiskCC.replace(/ /g, '-')
+  // The below functions are added as some of the incoming data varies in whether the first
+  // letter is capitalised or not. This ensures that the first words letter is always capitalised.
+  this.riverAndSeaRisk = riverAndSeaRisk.charAt(0).toUpperCase() + riverAndSeaRisk.slice(1).toLowerCase()
+  this.riverAndSeaRiskCC = riverAndSeaRiskCC.charAt(0).toUpperCase() + riverAndSeaRiskCC.slice(1).toLowerCase()
+  this.surfaceWaterRisk = surfaceWaterRisk.charAt(0).toUpperCase() + surfaceWaterRisk.slice(1).toLowerCase()
+  this.surfaceWaterRiskCC = surfaceWaterRiskCC.charAt(0).toUpperCase() + surfaceWaterRiskCC.slice(1).toLowerCase()
+  this.riversSeaRiskStyle = riverAndSeaRisk.toLowerCase().replace(/ /g, '-')
+  this.surfaceWaterStyle = surfaceWaterRisk.toLowerCase().replace(/ /g, '-')
+  this.riversSeaRiskCCStyle = riverAndSeaRiskCC.toLowerCase().replace(/ /g, '-')
+  this.surfaceWaterCCStyle = surfaceWaterRiskCC.toLowerCase().replace(/ /g, '-')
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
 

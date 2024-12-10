@@ -14,8 +14,8 @@
       <div class="govuk-summary-list__row">
         <h3 class="govuk-heading-s">Yearly chance of flooding</h3>
         <div class="risk-label-group-2 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
-          {% if riverAndSeaRisk === "very low" %}
-          <strong class="govuk-tag govuk-tag--Very-low label-mod label-border">
+          {% if riverAndSeaRisk === "Very low" %}
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod label-border">
             Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -24,8 +24,8 @@
           </strong>
           {% endif %}
 
-          {% if riverAndSeaRisk === "low" %}
-          <strong class="govuk-tag govuk-tag--Low label-mod label-border">
+          {% if riverAndSeaRisk === "Low" %}
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod label-border">
             Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -34,8 +34,8 @@
           </strong>
           {% endif %}
 
-          {% if riverAndSeaRisk === "medium" %}
-          <strong class="govuk-tag govuk-tag--Medium label-mod label-border">
+          {% if riverAndSeaRisk === "Medium" %}
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod label-border">
             Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -44,8 +44,8 @@
           </strong>
           {% endif %}
 
-          {% if riverAndSeaRisk === "high" %}
-          <strong class="govuk-tag govuk-tag--High label-mod label-border">
+          {% if riverAndSeaRisk === "High" %}
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod label-border">
             High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -56,7 +56,7 @@
         </div>
         <h3 class="govuk-heading-s govuk-!-padding-top-6 govuk-!-margin-bottom-0">Yearly chance of flooding between 2036 and 2069</h3>
         <div class="risk-label-group-2 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
-          {% if riverAndSeaRiskCC === "unavailable" %}
+          {% if riverAndSeaRiskCC === "Unavailable" %}
           <strong class="govuk-tag govuk-tag--No-Data label-mod label-border">
             No data available<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
@@ -64,8 +64,8 @@
             when it becomes available.  
           </p>
           {% else %}
-            {% if riverAndSeaRiskCC === "very low" %}
-            <strong class="govuk-tag govuk-tag--Very-low label-mod label-border">
+            {% if riverAndSeaRiskCC === "Very low" %}
+            <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod label-border">
               Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
             </strong>
             {% else %}
@@ -74,8 +74,8 @@
             </strong>
             {% endif %}
 
-            {% if riverAndSeaRiskCC === "low" %}
-            <strong class="govuk-tag govuk-tag--Low label-mod label-border">
+            {% if riverAndSeaRiskCC === "Low" %}
+            <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod label-border">
               Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
             </strong>
             {% else %}
@@ -84,8 +84,8 @@
             </strong>
             {% endif %}
 
-            {% if riverAndSeaRiskCC === "medium" %}
-            <strong class="govuk-tag govuk-tag--Medium label-mod label-border">
+            {% if riverAndSeaRiskCC === "Medium" %}
+            <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod label-border">
               Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
             </strong>
             {% else %}
@@ -94,8 +94,8 @@
             </strong>
             {% endif %}
 
-            {% if riverAndSeaRiskCC === "high" %}
-            <strong class="govuk-tag govuk-tag--High label-mod label-border">
+            {% if riverAndSeaRiskCC === "High" %}
+            <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod label-border">
               High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
             </strong>
             {% else %}
