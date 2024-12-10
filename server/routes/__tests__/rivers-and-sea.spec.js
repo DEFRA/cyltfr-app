@@ -63,7 +63,7 @@ describe('GET /rivers-and-sea', () => {
     riskService.__resetReturnValue()
   })
 
-  it('redirects to postcode page if user does not have an address set in session', async () => {
+  test('redirects to postcode page if user does not have an address set in session', async () => {
     // Get postcode page first to clear the previous address selection
     const mockRequest = {
       method: 'GET',
@@ -80,7 +80,7 @@ describe('GET /rivers-and-sea', () => {
     expect(swResponse.headers.location).toBe('/postcode')
   })
 
-  it('returns 200 OK and renders rivers and sea page if user has an address set in session', async () => {
+  test('returns 200 OK and renders rivers and sea page if user has an address set in session', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/rivers-and-sea',
@@ -92,7 +92,7 @@ describe('GET /rivers-and-sea', () => {
     expect(response.result).toContain('rivers-and-sea')
   })
 
-  it('should show an error page if an error occurs', async () => {
+  test('should show an error page if an error occurs', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/rivers-and-sea',
@@ -106,7 +106,7 @@ describe('GET /rivers-and-sea', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
   })
 
-  it('should return "Very low" risk probability when riverAndSeaRisk is not present', async () => {
+  test('should return "Very low" risk probability when riverAndSeaRisk is not present', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/rivers-and-sea',

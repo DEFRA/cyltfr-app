@@ -84,3 +84,23 @@ describe('simulatedFind function', () => {
     expect(result[0]).toHaveProperty('y')
   })
 })
+
+describe('Address service module.exports.find', () => {
+  beforeEach(() => {
+    jest.resetModules()
+  })
+
+  test('find is set to simulatedFind when simulateAddressService is true', async () => {
+    jest.mock('../../config', () => ({ simulateAddressService: true }))
+    const updatedAddressService = require('../address')
+
+    expect(updatedAddressService.find).toBe(updatedAddressService.simulatedFind)
+  })
+
+  test('find is not set to simulatedFind when simulateAddressService is false', async () => {
+    jest.mock('../../config', () => ({ simulateAddressService: false }))
+    const updatedAddressService = require('../address')
+
+    expect(updatedAddressService.find).not.toBe(updatedAddressService.simulatedFind)
+  })
+})

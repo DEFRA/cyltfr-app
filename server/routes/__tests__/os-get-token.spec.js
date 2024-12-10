@@ -1,8 +1,7 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const { mockOptions } = require('../../../test/mock')
-let server
-// cookie
+let server, cookie
 
 jest.mock('../../config')
 jest.mock('../../services/flood')
@@ -17,7 +16,7 @@ beforeAll(async () => {
 
   const homepageresponse = await server.inject(initial)
   expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-  // cookie = homepageresponse.headers['set-cookie'][0].split(';')[0]
+  cookie = homepageresponse.headers['set-cookie'][0].split(';')[0]
 })
 
 afterAll(async () => {
@@ -35,21 +34,20 @@ describe('/os-get-token page', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST) // 400
   })
 
-  // Temporary comment out of this test until technical map is completed.
-  // test('/os-get-token with map page visit', async () => {
-  //   const options = {
-  //     method: 'GET',
-  //     url: '/map',
-  //     headers: {
-  //       cookie
-  //     }
-  //   }
+  test('/os-get-token with map page visit', async () => {
+    const options = {
+      method: 'GET',
+      url: '/map',
+      headers: {
+        cookie
+      }
+    }
 
-  //   const response = await server.inject(options)
-  //   expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
+    const response = await server.inject(options)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
 
-  //   options.url = '/os-get-token'
-  //   const tokenResponse = await server.inject(options)
-  //   expect(tokenResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_NO_CONTENT) // 204
-  // })
+    options.url = '/os-get-token'
+    const tokenResponse = await server.inject(options)
+    expect(tokenResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_NO_CONTENT) // 204
+  })
 })
