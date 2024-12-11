@@ -50,7 +50,7 @@ function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
 
   if (reservoirWetRisk) {
     risk.reservoirWetRisk
-      .filter(item => !reservoirs.find(r => r.location === item.location))
+      .filter(item => !reservoirs.find(r => r.name === item.reservoirName))
       .forEach(item => add(item))
   }
 
