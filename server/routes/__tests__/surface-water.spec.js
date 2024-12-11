@@ -105,7 +105,7 @@ describe('GET /surface-water', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--High')
+    expect(response.result).toContain('govuk-tag--high')
   })
 
   it('returns 200 OK and renders surface water page with medium risk', async () => {
@@ -121,7 +121,7 @@ describe('GET /surface-water', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--Medium')
+    expect(response.result).toContain('govuk-tag--medium')
   })
 
   it('returns 200 OK and renders surface water page with low risk', async () => {
@@ -137,7 +137,7 @@ describe('GET /surface-water', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--Low')
+    expect(response.result).toContain('govuk-tag--low')
   })
 
   it('returns 200 OK and renders surface water page with very low risk', async () => {
@@ -153,7 +153,7 @@ describe('GET /surface-water', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--Very-low')
+    expect(response.result).toContain('govuk-tag--very-low')
   })
 
   it('returns 200 OK and renders surface water page with lead local flood authority', async () => {
