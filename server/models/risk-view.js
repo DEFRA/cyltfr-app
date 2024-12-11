@@ -42,10 +42,6 @@ function riskViewModel (risk, address, backLinkUri) {
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
 
-  if (reservoirRisk) {
-    processReservoirs.call(this, reservoirDryRisk, risk, reservoirWetRisk)
-  }
-
   // Groundwater area
   this.isGroundwaterArea = risk.isGroundwaterArea
   this.extraInfo = risk.extraInfo
@@ -111,33 +107,6 @@ function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel) {
   if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl.html' }
   if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/sw.html' }
   if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl-sw.html' }
-}
-
-function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
-  const reservoirs = []
-
-  const add = function (item) {
-    reservoirs.push({
-      name: item.reservoirName,
-      owner: item.undertaker,
-      authority: item.leadLocalFloodAuthority,
-      location: item.location,
-      riskDesignation: item.riskDesignation,
-      comments: item.comments
-    })
-  }
-
-  if (reservoirDryRisk) {
-    risk.reservoirDryRisk.forEach(add)
-  }
-
-  if (reservoirWetRisk) {
-    risk.reservoirWetRisk
-      .filter(item => !reservoirs.find(r => r.location === item.location))
-      .forEach(item => add(item))
-  }
-
-  this.reservoirs = reservoirs
 }
 
 function processExtraInfo (risk) {

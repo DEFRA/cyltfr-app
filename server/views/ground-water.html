@@ -94,7 +94,7 @@
           </summary>
           {% for reservoir in reservoirs %}
           <ul class="govuk-list reservoirs" id="reservoirs-risk-reservoir-list">
-            <li><strong>{{reservoir.name}}</strong> (grid reference {{reservoir.location}})</li>
+            <li><strong>{{reservoir.name}}</strong> {% if (reservoir.location) %}(grid reference {{reservoir.location}}){% endif %}</li>
             <li>Owner: {{reservoir.owner}}</li>
             <li>Lead Local Flood Authority: {{reservoir.authority}}</li>
             <li>Comments: {{reservoir.comments}}</li>
