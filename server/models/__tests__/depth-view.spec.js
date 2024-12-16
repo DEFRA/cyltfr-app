@@ -31,7 +31,7 @@ describe('Depth view model', () => {
     expect(result).toMatchObject({ rs200: 'Medium', rs200cc: 'Very low' })
   })
 
-  test('Sets Surface water class name correctly', async () => {
+  test('Sets Surface water class name correctly in lower case', async () => {
     const swDepth = {
       200: {
         current: 'Medium'
@@ -41,7 +41,7 @@ describe('Depth view model', () => {
     expect(result).toMatchObject({ sw200: 'Medium', sw200cc: 'Very low', sw200ccclassname: 'very-low' })
   })
 
-  test('Sets Rivers and sea class name correctly', async () => {
+  test('Sets Rivers and sea class name correctly in lower case', async () => {
     const rsDepth = {
       200: {
         current: 'Medium'
