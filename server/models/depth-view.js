@@ -65,13 +65,13 @@ function swDepthFlatten (depthData, swDepthJson) {
   flattenDepthData(depthData, swDepthJson, 'sw')
 }
 
-function formatRiskLevel (riskLevel) {
-  if (!riskLevel) return riskLevel
-  return riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1).toLowerCase()
+function formatRiskLevel (riskValue) {
+  if (!riskValue) { return riskValue }
+  return riskValue.charAt(0).toUpperCase() + riskValue.slice(1).toLowerCase()
 }
 
-function formatClassName (riskLevel) {
-  return riskLevel.replace(' ', '-').toLowerCase()
+function formatClassName (riskValue) {
+  return riskValue.replace(' ', '-').toLowerCase()
 }
 
 module.exports = depthViewModel
