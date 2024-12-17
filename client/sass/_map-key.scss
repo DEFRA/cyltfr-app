@@ -51,6 +51,12 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   font-size: 14px;
 }
 
+#map-key__section {
+  @media screen and (max-width: $tablet-width) {
+    width: 260px;
+  }
+}
+
 #defra-map-key__section-title-top-title {
   padding-top: 18px;
   margin-top: 66px;
@@ -98,6 +104,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   height: 100%;
   position: fixed; 
   overflow-y: auto;
+
+  @media screen and (max-width: $tablet-width) {
+    width: fit-content;
+  }
 }
 
 .govuk-fieldset__legend {
@@ -239,6 +249,9 @@ svg:not(:root) {
   padding-bottom: 0;
   height: 35px;
   width: 210px;
+  @media screen and (max-width: $tablet-width) {
+    width: 183px;
+  }
 }
 
 .defra-map-key__symbol-container--multi {
@@ -283,8 +296,13 @@ svg:not(:root) {
   display: flex;
   justify-content: flex-end;
   position: absolute;
-  bottom: 20px;
-  right: -15px;
+  bottom: 25px;
+  right: -5px;
+
+  @media screen and (max-width: $tablet-width) {
+    bottom: 0.1px;
+    right: 0;
+  }
 }
 
 .key-container {

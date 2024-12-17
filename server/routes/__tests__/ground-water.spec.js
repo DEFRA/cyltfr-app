@@ -1,7 +1,7 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const riskService = require('../../services/risk')
-const { getByCoordinates } = require('../../services/risk')
+const { reservoirRisk } = require('../../services/risk')
 const config = require('../../config')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
 const defaultOptions = {
@@ -98,7 +98,7 @@ describe('GET /ground-water', () => {
       url: '/ground-water',
       headers: defaultOptions.headers
     }
-    getByCoordinates.mockImplementationOnce(() => {
+    reservoirRisk.mockImplementationOnce(() => {
       throw new Error()
     })
     const response = await server.inject(mockRequest)
