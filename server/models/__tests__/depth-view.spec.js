@@ -31,7 +31,23 @@ describe('Depth view model', () => {
     expect(result).toMatchObject({ rs200: 'Medium', rs200cc: 'Very low' })
   })
 
-  test('Sets Surface water class name correctly in lower case', async () => {
+  test('Sets Rivers and sea risk-level to very low if 200 current is missing', async () => {
+    const rsDepth = {
+      200: {}
+    }
+    const result = depth(null, rsDepth, address)
+    expect(result).toMatchObject({ rs200: 'Very low', rs200cc: 'Very low' })
+  })
+
+  test('Sets Surface water risk-level to very low if 200 current is missing', async () => {
+    const swDepth = {
+      200: {}
+    }
+    const result = depth(swDepth, null, address)
+    expect(result).toMatchObject({ sw200: 'Very low', sw200cc: 'Very low' })
+  })
+
+  test('Sets Surface water class name correctly', async () => {
     const swDepth = {
       200: {
         current: 'Medium'

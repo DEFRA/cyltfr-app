@@ -55,7 +55,7 @@ describe('server methods', () => {
   })
 
   describe('cache disabled', () => {
-    it('should return updated cached address', async () => {
+    test('should return updated cached address', async () => {
       const response = await server.methods.find('CV37 6YZ')
 
       expect(response).toEqual([
@@ -88,7 +88,7 @@ describe('server methods', () => {
       ])
     })
 
-    it('should return updated risk details', async () => {
+    test('should return updated risk details', async () => {
       const response = await server.methods.riskService(x, y, radius)
 
       expect(response).toEqual(
@@ -122,7 +122,7 @@ describe('server methods', () => {
       )
     })
 
-    it('should not return cached flood service warnings as cache is disabled', async () => {
+    test('should not return cached flood service warnings as cache is disabled', async () => {
       // Setting initial values
       floodService.__updateReturnValue({
         address: '',
