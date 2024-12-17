@@ -107,7 +107,7 @@ describe('GET /ground-water', () => {
   })
 
   test('should create an array of reservoirs if there is a reservoirs risk', async () => {
-    riskService.getByCoordinates.mockResolvedValue({
+    riskService.reservoirRisk.mockResolvedValue({
       reservoirDryRisk: [{
         reservoirName: 'Dry Risk Resevoir',
         location: 'SJ917968',
@@ -131,7 +131,7 @@ describe('GET /ground-water', () => {
   })
 
   test('should add any reservoirs that are not in the list when it is wet', async () => {
-    riskService.getByCoordinates.mockResolvedValue({
+    riskService.reservoirRisk.mockResolvedValue({
       reservoirDryRisk: [{
         reservoirName: 'Dry Risk Resevoir',
         location: 'SJ917968',
