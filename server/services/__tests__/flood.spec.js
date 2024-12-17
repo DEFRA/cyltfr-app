@@ -2,7 +2,6 @@ const util = require('../../util')
 const config = require('../../config')
 
 jest.mock('../../config', () => ({
-  simulateAddressService: false,
   floodWarningsUrl: 'https://example.com'
 }))
 
@@ -19,7 +18,6 @@ jest.mock('../../routes/simulated/data/warnings-service.json', () => ({
 
 describe('flood service', () => {
   test('should export the real findWarnings function when simulateAddressService is false', async () => {
-    config.simulateAddressService = false
     config.floodWarningsUrl = 'https://example.com'
 
     const mockWarningData = {
