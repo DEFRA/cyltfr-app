@@ -1,11 +1,15 @@
-describe('cache configuration', () => {
-  const mockCatboxRedis = require('@hapi/catbox-redis')
-  const mockConfig = require('../__mocks__/config')
+const mockCatboxRedis = require('@hapi/catbox-redis')
 
+jest.mock('../config', () => ({
+  setConfigOptions: jest.fn(),
+  redisCacheHost: 'mockHost',
+  redisCachePort: 1234,
+  redisTLS: undefined,
+  redisCacheEnabled: true
+}))
+
+describe('cache configuration', () => {
   test('should configure cache with CatboxRedis when redisCacheEnabled is true', () => {
-    mockConfig.setConfigOptions({
-      redisCacheEnabled: true
-    })
     const module = require('../cache')
 
     expect(module).toEqual({
@@ -13,8 +17,8 @@ describe('cache configuration', () => {
       provider: {
         constructor: mockCatboxRedis.Engine,
         options: {
-          host: mockConfig.redisCacheHost,
-          port: mockConfig.redisCachePort,
+          host: 'mockHost',
+          port: 1234,
           tls: undefined
         }
       }
