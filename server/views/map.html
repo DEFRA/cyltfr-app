@@ -29,8 +29,8 @@
       <div id="surfaceWaterContainer" class="tech-map-key">
         <h1 id="mapKeyLabel" class="defra-map-key__title">
           <span class="key-title" role="text">Surface water map<span class="govuk-visually-hidden">for map features</span></span>
-          <button class="defra-map-key__close" id="close-key">
-            <svg id="close-btn" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+          <button class="defra-map-key__close close-key">
+            <svg class="close-btn" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
               <path d="M10,8.6L15.6,3L17,4.4L11.4,10L17,15.6L15.6,17L10,11.4L4.4,17L3,15.6L8.6,10L3,4.4L4.4,3L10,8.6Z"></path>
             </svg>
             <span class="govuk-visually-hidden">Close key</span>
@@ -277,8 +277,8 @@
       <div id="riversAndSeaContainer" class="tech-map-key hide">
         <h1 id="mapKeyLabel" class="defra-map-key__title">
           <span class="key-title" role="text">Rivers and sea map<span class="govuk-visually-hidden">for map features</span></span>
-          <button class="defra-map-key__close" id="close-key">
-            <svg id="close-btn" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+          <button class="defra-map-key__close close-key">
+            <svg class="close-btn" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
               <path d="M10,8.6L15.6,3L17,4.4L11.4,10L17,15.6L15.6,17L10,11.4L4.4,17L3,15.6L8.6,10L3,4.4L4.4,3L10,8.6Z"></path>
             </svg>
             <span class="govuk-visually-hidden">Close key</span>
@@ -477,24 +477,23 @@
                         class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi rs-extent-container"
                         id="rs-extent-low">
                         <span class="defra-map-key__symbol">
-                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
-                            <rect class="very-low-symbol risk-colour-square" x="5" y="5"></rect>
-                          </svg>
+                            <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                              <rect class="very-low-symbol risk-colour-square" x="5" y="5"></rect>
+                            </svg>
+                          </span>
+                          <span class="risk-severity-text">Very low chance</span>
+                          <span class="risk-context">Less than 0.1% chance each year</span>
                         </span>
-                        <span class="risk-severity-text">Very low chance</span>
-                        <span class="risk-context">Less than 0.1% chance each year</span>
-                      </span>
                         <span
                         class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi rs-extent-container"
                         id="rs-extent-no-data">
-                        <span class="defra-map-key__symbol">
-                          <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
-                            <rect class="no-data-symbol risk-colour-square" x="5" y="5"></rect>
-                          </svg>
+                          <span class="defra-map-key__symbol">
+                            <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                              <rect class="no-data-symbol risk-colour-square" x="5" y="5"></rect>
+                            </svg>
+                          </span>
+                          <span class="risk-severity-text">No data available</span>
                         </span>
-                        <span class="risk-severity-text">No data available</span>
-                      </span>
-  
                       </div>
                     </label>
                   </div>
@@ -504,9 +503,9 @@
                 <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
                   <div class="govuk-radios__item">
                     <input class="risk-radio govuk-radios__input govuk-radios__inputs risk-measurement depth-radio-cc" id="rs-depth-radio-cc"
-                      value="{{maps.categories[1].maps[6].ref}}"
+                      value="{{maps.categories[0].maps[6].ref}}"
                       title="Extent of flooding from surface water (2040-2060)" name="measurements" type="radio">
-                    <label class="govuk-label govuk-radios__label" for="depth-radio-cc">
+                    <label class="govuk-label govuk-radios__label" for="rs-depth-radio-cc">
                       <span class="rivers-and-sea-bulletpoint__heading" id="rivers-and-sea-extent__heading">Depth</span>
                       <div id="sw-extent-desc-container-cc" class="depth-desc-container-cc desc-container hide">
                         <span
@@ -580,8 +579,8 @@
       <div id="reservoirsContainer" class="tech-map-key hide">
         <h1 id="mapKeyLabel" class="defra-map-key__title">
           <span class="key-title" role="text">Reservoirs map<span class="govuk-visually-hidden">for map features</span></span>
-          <button class="defra-map-key__close" id="close-key">
-            <svg id="close-btn" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+          <button class="defra-map-key__close close-key">
+            <svg class="close-btn" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
               <path d="M10,8.6L15.6,3L17,4.4L11.4,10L17,15.6L15.6,17L10,11.4L4.4,17L3,15.6L8.6,10L3,4.4L4.4,3L10,8.6Z"></path>
             </svg>
             <span class="govuk-visually-hidden">Close key</span>

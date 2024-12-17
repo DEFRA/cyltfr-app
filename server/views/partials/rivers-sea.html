@@ -15,7 +15,7 @@
         <h3 class="govuk-heading-s">Yearly chance of flooding</h3>
         <div class="risk-label-group-2 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
           {% if riverAndSeaRisk === "Very low" %}
-          <strong class="govuk-tag govuk-tag--Very-low label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod label-border">
             Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -25,7 +25,7 @@
           {% endif %}
 
           {% if riverAndSeaRisk === "Low" %}
-          <strong class="govuk-tag govuk-tag--Low label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod label-border">
             Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -35,7 +35,7 @@
           {% endif %}
 
           {% if riverAndSeaRisk === "Medium" %}
-          <strong class="govuk-tag govuk-tag--Medium label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod label-border">
             Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -45,7 +45,7 @@
           {% endif %}
 
           {% if riverAndSeaRisk === "High" %}
-          <strong class="govuk-tag govuk-tag--High label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod label-border">
             High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -57,7 +57,7 @@
         <h3 class="govuk-heading-s govuk-!-padding-top-6 govuk-!-margin-bottom-0">Yearly chance of flooding between 2036 and 2069</h3>
         <div class="risk-label-group-2 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
           {% if riverAndSeaRiskCC === "Unavailable" %}
-          <strong class="govuk-tag govuk-tag--No-Data label-mod label-border">
+          <strong class="govuk-tag govuk-tag--no-data label-mod label-border">
             No data available<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           <p class="govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2">This data is currently unavailable. We'll publish the data 
@@ -65,7 +65,7 @@
           </p>
           {% else %}
             {% if riverAndSeaRiskCC === "Very low" %}
-            <strong class="govuk-tag govuk-tag--Very-low label-mod label-border">
+            <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod label-border">
               Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
             </strong>
             {% else %}
@@ -75,7 +75,7 @@
             {% endif %}
 
             {% if riverAndSeaRiskCC === "Low" %}
-            <strong class="govuk-tag govuk-tag--Low label-mod label-border">
+            <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod label-border">
               Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
             </strong>
             {% else %}
@@ -85,7 +85,7 @@
             {% endif %}
 
             {% if riverAndSeaRiskCC === "Medium" %}
-            <strong class="govuk-tag govuk-tag--Medium label-mod label-border">
+            <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod label-border">
               Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
             </strong>
             {% else %}
@@ -95,7 +95,7 @@
             {% endif %}
 
             {% if riverAndSeaRiskCC === "High" %}
-            <strong class="govuk-tag govuk-tag--High label-mod label-border">
+            <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod label-border">
               High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
             </strong>
             {% else %}

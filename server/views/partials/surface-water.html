@@ -15,7 +15,7 @@
         <h3 class="govuk-heading-s">Yearly chance of flooding</h3>
         <div class="risk-label-group-2 govuk-!-margin-top-4 govuk-!-margin-bottom-3">
           {% if surfaceWaterRisk === "Very low" %}
-          <strong class="govuk-tag govuk-tag--Very-low label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod label-border">
             Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -25,7 +25,7 @@
           {% endif %}
 
           {% if surfaceWaterRisk === "Low" %}
-          <strong class="govuk-tag govuk-tag--Low label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod label-border">
             Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -35,7 +35,7 @@
           {% endif %}
 
           {% if surfaceWaterRisk === "Medium" %}
-          <strong class="govuk-tag govuk-tag--Medium label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod label-border">
             Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -45,7 +45,7 @@
           {% endif %}
 
           {% if surfaceWaterRisk === "High" %}
-          <strong class="govuk-tag govuk-tag--High label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod label-border">
             High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -58,7 +58,7 @@
           and 2060</h3>
         <div class="risk-label-group govuk-!-margin-bottom-3">
           {% if surfaceWaterRiskCC === "Very low" %}
-          <strong class="govuk-tag govuk-tag--Very-low label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
             Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -68,7 +68,7 @@
           {% endif %}
 
           {% if surfaceWaterRiskCC === "Low" %}
-          <strong class="govuk-tag govuk-tag--Low label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
             Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -78,7 +78,7 @@
           {% endif %}
 
           {% if surfaceWaterRiskCC === "Medium" %}
-          <strong class="govuk-tag govuk-tag--Medium label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
             Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
@@ -88,7 +88,7 @@
           {% endif %}
 
           {% if surfaceWaterRiskCC === "High" %}
-          <strong class="govuk-tag govuk-tag--High label-mod label-border">
+          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
             High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
           {% else %}
