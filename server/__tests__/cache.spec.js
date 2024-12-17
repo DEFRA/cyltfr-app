@@ -1,12 +1,15 @@
 const mockCatboxRedis = require('@hapi/catbox-redis')
+const config = require('../config')
 
-jest.mock('../config', () => ({
+jest.mock('../config')
+
+config.setConfigOptions({
   setConfigOptions: jest.fn(),
   redisCacheHost: 'mockHost',
   redisCachePort: 1234,
   redisTLS: undefined,
   redisCacheEnabled: true
-}))
+})
 
 describe('cache configuration', () => {
   test('should configure cache with CatboxRedis when redisCacheEnabled is true', () => {
