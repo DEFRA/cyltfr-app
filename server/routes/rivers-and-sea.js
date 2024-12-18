@@ -22,7 +22,25 @@ module.exports = {
     const backLinkUri = '/risk'
 
     try {
-      const risk = await request.server.methods.riskService(x, y, radius)
+      let risk = request.yar.get(`risk-${x}-${y}`)
+      if (!risk) {
+        risk = await request.server.methods.riskService(x, y, radius)
+        const hasError = risk.riverAndSeaRisk?.error ||
+          risk.surfaceWaterRisk?.error ||
+          risk.reservoirDryRisk?.error ||
+          risk.reservoirWetRisk?.error ||
+          risk.leadLocalFloodAuthority?.error ||
+          risk.extraInfo?.error
+
+        if (hasError) {
+          return boom.badRequest(errors.spatialQuery.message, {
+            risk,
+            address
+          })
+        }
+
+        request.yar.set(`risk-${x}-${y}`, risk)
+      }
       const model = new RiversAndSeaViewModel(risk, address, backLinkUri)
       return h.view('rivers-and-sea', model)
     } catch (err) {

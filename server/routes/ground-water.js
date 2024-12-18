@@ -18,9 +18,33 @@ module.exports = {
     const backLinkUri = '/risk'
 
     try {
-      const risk = await request.server.methods.reservoirRisk(x, y, radius)
+      let gwRisk = request.yar.get(`gwrisk-${x}-${y}`)
+      if (!gwRisk) {
+        gwRisk = await request.server.methods.reservoirRisk(x, y, radius)
+        request.yar.set(`gwrisk-${x}-${y}`, gwRisk)
+      }
 
-      const model = new GroundWaterViewModel(risk, address, backLinkUri)
+      let risk = request.yar.get(`risk-${x}-${y}`)
+      if (!risk) {
+        risk = await request.server.methods.riskService(x, y, radius)
+        const hasError = risk.riverAndSeaRisk?.error ||
+            risk.surfaceWaterRisk?.error ||
+            risk.reservoirDryRisk?.error ||
+            risk.reservoirWetRisk?.error ||
+            risk.leadLocalFloodAuthority?.error ||
+            risk.extraInfo?.error
+
+        if (hasError) {
+          return boom.badRequest(errors.spatialQuery.message, {
+            risk,
+            address
+          })
+        }
+
+        request.yar.set(`risk-${x}-${y}`, risk)
+      }
+
+      const model = new GroundWaterViewModel(gwRisk, risk, address, backLinkUri)
       return h.view('ground-water', model)
     } catch (err) {
       return boom.badRequest(errors.riskProfile.message, err)

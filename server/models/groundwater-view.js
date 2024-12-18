@@ -1,19 +1,22 @@
 const { capitaliseAddress } = require('../services/address.js')
+const RiskViewModel = require('./risk-view')
 
-function groundwaterViewModel (risk, address, backLinkUri) {
-  const reservoirDryRisk = !!(risk.reservoirDryRisk?.length)
-  const reservoirWetRisk = !!(risk.reservoirWetRisk?.length)
+function groundwaterViewModel (gwRisk, risk, address, backLinkUri) {
+  const reservoirDryRisk = !!(gwRisk.reservoirDryRisk?.length)
+  const reservoirWetRisk = !!(gwRisk.reservoirWetRisk?.length)
+  const riskView = new RiskViewModel(risk, address, backLinkUri)
   const reservoirRisk = reservoirDryRisk || reservoirWetRisk
 
+  this.surfaceWaterIsFirst = riskView.surfaceWaterIsFirst
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
 
   if (reservoirRisk) {
-    processReservoirs.call(this, reservoirDryRisk, risk, reservoirWetRisk)
+    processReservoirs.call(this, reservoirDryRisk, gwRisk, reservoirWetRisk)
   }
 
   // Groundwater area
-  this.isGroundwaterArea = risk.isGroundwaterArea
+  this.isGroundwaterArea = gwRisk.isGroundwaterArea
   this.easting = address.x
   this.northing = address.y
   this.postcode = address.postcode
@@ -24,7 +27,7 @@ function groundwaterViewModel (risk, address, backLinkUri) {
   this.year = new Date().getFullYear()
 
   this.testInfo = JSON.stringify({
-    isGroundwaterArea: risk.isGroundwaterArea
+    isGroundwaterArea: gwRisk.isGroundwaterArea
   })
 }
 
