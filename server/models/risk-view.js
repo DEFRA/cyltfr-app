@@ -14,6 +14,15 @@ const RiskTitles = {
   High: 'High risk'
 }
 
+const highestLevel = (risk, riskCC) => {
+  const riskL = Levels.indexOf(risk)
+  const riskCCL = Levels.indexOf(riskCC)
+  if (riskL > riskCCL) {
+    return risk
+  }
+  return riskCC
+}
+
 const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
 
 function riskViewModel (risk, address, backLinkUri) {
@@ -41,6 +50,10 @@ function riskViewModel (risk, address, backLinkUri) {
   this.surfaceWaterCCStyle = surfaceWaterRiskCC.toLowerCase().replace(/ /g, '-')
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
+
+  // Adjust the Climate Change risk to the highest of the two risks
+  this.riverAndSeaRiskCC = highestLevel(this.riverAndSeaRisk, this.riverAndSeaRiskCC)
+  this.surfaceWaterRiskCC = highestLevel(this.surfaceWaterRisk, this.surfaceWaterRiskCC)
 
   // Groundwater area
   this.isGroundwaterArea = risk.isGroundwaterArea
