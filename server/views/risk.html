@@ -80,14 +80,4 @@
 
   </div>
 </div>
-<script>
-  const dropdownItems = document.querySelectorAll('.govuk-details')
-
-  const toggleDropdowns = (open) => {
-    dropdownItems.forEach(item => item.open = open)
-  }
-
-  window.onbeforeprint = () => toggleDropdowns(true)
-  window.onafterprint = () => toggleDropdowns(false)
-</script>
 {% endblock %}
