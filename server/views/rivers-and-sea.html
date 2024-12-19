@@ -3,6 +3,13 @@
 {% set pageTitle = "Rivers and the sea: understand your flood risk" %}
 {% set currentpage = "rivers-and-sea" %}
 
+{% block skipLink %}
+  {{ govukSkipLink({
+    href: '#rivers-sea-heading',
+    text: 'Skip to main content'
+  }) }}
+{% endblock %}
+
 {% block beforeContent %}
 <div class="top-page-links">
   <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back to summary</a>
@@ -29,7 +36,7 @@ role="navigation">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-6">
-      <h1 class="govuk-heading-xl govuk-!-margin-top-6">
+      <h1 id="rivers-sea-heading" class="govuk-heading-xl govuk-!-margin-top-6">
         Rivers and the sea: understand your flood risk
       </h1>
       <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
