@@ -49,6 +49,63 @@ afterEach(async () => {
 })
 
 describe('Risk page test', () => {
+  test('print risk-summary page for reservoir risk and surface water', async () => {
+    riskService.__updateReturnValue({
+      isGroundwaterArea: true,
+      floodAlertArea: ['AnyArea'],
+      floodWarningArea: [],
+      reservoirDryRisk: [
+        {
+          reservoirName: 'Agden',
+          location: 'SK2610092300',
+          riskDesignation: 'High-risk',
+          undertaker: 'Yorkshire Water Services Ltd',
+          leadLocalFloodAuthority: 'Sheffield',
+          comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+        }
+      ],
+      leadLocalFloodAuthority: 'Cheshire West and Chester',
+      reservoirWetRisk: [{
+        reservoirName: 'Draycote Water',
+        location: '445110, 270060',
+        riskDesignation: 'High Risk',
+        undertaker: 'Severn Trent Water Authority',
+        leadLocalFloodAuthority: 'Warwickshire',
+        environmentAgencyArea: 'Environment Agency - Staffordshire, Warwickshire and West Midlands',
+        comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+      }],
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
+      surfaceWaterRisk: 'High',
+      extraInfo: null
+    })
+
+    const response = await server.inject(defaultOptions)
+    const { payload } = response
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(payload).toMatch(/There is a risk of flooding from reservoirs in this area./g)
+    expect(payload).toMatch(/Flooding is possible when groundwater levels are high/g)
+  })
+
+  test('print risk-summary page for low reservoir risk and low surface water', async () => {
+    riskService.__updateReturnValue({
+      isGroundwaterArea: false,
+      floodAlertArea: ['AnyArea'],
+      floodWarningArea: [],
+      reservoirDryRisk: null,
+      leadLocalFloodAuthority: 'Cheshire West and Chester',
+      reservoirWetRisk: null,
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
+      surfaceWaterRisk: 'Low',
+      extraInfo: null
+    })
+
+    const response = await server.inject(defaultOptions)
+    const { payload } = response
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(payload).toMatch(/Flooding from reservoirs is unlikely in this area/g)
+    expect(payload).toMatch(/Flooding from groundwater is unlikely in this area/g)
+  })
+
   test('/risk - Risk service error', async () => {
     riskService.getByCoordinates.mockImplementationOnce((_x, _y, _radius) => {
       return Promise.reject(new Error('Error calling risk'))
@@ -302,6 +359,75 @@ describe('Risk page test', () => {
     })
     const response = await server.inject(defaultOptions)
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+  })
+
+  test('should include text specifically for high flood risk', async () => {
+    riskService.__updateReturnValue({
+      isGroundwaterArea: true,
+      floodAlertArea: ['064FAG99SElondon'],
+      floodWarningArea: [],
+      leadLocalFloodAuthority: 'Croydon',
+      reservoirRisk: null,
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
+      surfaceWaterRisk: 'High',
+      extraInfo: null
+    })
+    const response = await server.inject(defaultOptions)
+    const { payload } = response
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(payload).toMatch(/High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high./g)
+  })
+
+  test('should include text specifically for medium flood risk', async () => {
+    riskService.__updateReturnValue({
+      isGroundwaterArea: true,
+      floodAlertArea: ['064FAG99SElondon'],
+      floodWarningArea: [],
+      leadLocalFloodAuthority: 'Croydon',
+      reservoirRisk: null,
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
+      surfaceWaterRisk: 'Medium',
+      extraInfo: null
+    })
+    const response = await server.inject(defaultOptions)
+    const { payload } = response
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(payload).toMatch(/Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high./g)
+  })
+
+  test('should include text specifically for low flood risk', async () => {
+    riskService.__updateReturnValue({
+      isGroundwaterArea: true,
+      floodAlertArea: ['064FAG99SElondon'],
+      floodWarningArea: [],
+      leadLocalFloodAuthority: 'Suffolk',
+      reservoirRisk: null,
+      riverAndSeaRisk: { probabilityForBand: 'Very Low' },
+      surfaceWaterRisk: 'Low',
+      extraInfo: null
+    })
+    const response = await server.inject(defaultOptions)
+    const { payload } = response
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    console.log(payload)
+    expect(payload).toMatch(/Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high./g)
+  })
+
+  test('should include text specifically for very low flood risk', async () => {
+    riskService.__updateReturnValue({
+      isGroundwaterArea: true,
+      floodAlertArea: ['064FAG99SElondon'],
+      floodWarningArea: [],
+      leadLocalFloodAuthority: 'Hertfordshire',
+      reservoirRisk: null,
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
+      surfaceWaterRisk: 'Very Low',
+      extraInfo: null
+    })
+    const response = await server.inject(defaultOptions)
+    const { payload } = response
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(payload).toMatch(/Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high./g)
   })
 
   test('/risk with holding comments', async () => {
