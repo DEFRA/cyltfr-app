@@ -3,6 +3,13 @@
 {% set pageTitle = "Groundwater and reservoirs: understand your flood risk" %}
 {% set currentpage = "groundwater" %}
 
+{% block skipLink %}
+  {{ govukSkipLink({
+    href: '#groundwater-heading',
+    text: 'Skip to main content'
+  }) }}
+{% endblock %}
+
 {% block beforeContent %}
 <div class="top-page-links">
   <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back to summary</a>
@@ -35,7 +42,7 @@
 
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-6">
 
-        <h1 class="govuk-heading-xl govuk-!-margin-top-6">
+        <h1 id="groundwater-heading" class="govuk-heading-xl govuk-!-margin-top-6">
           Groundwater and reservoirs: understand your flood risk
         </h1>
 
