@@ -1,5 +1,6 @@
 import { openKey, closeKey, selectedOption, scenarioDisplayUpdate } from './map-controls.js'
 import { mapPageConsts } from './constants.js'
+import { capabilities } from './capabilities.js'
 
 class MapController {
   constructor (categories) {
@@ -60,7 +61,13 @@ function mapPage () {
   const stateCheck = setInterval(() => {
     if (document.readyState === 'complete') {
       clearInterval(stateCheck)
-      mapPageConsts.maps.loadMap((hasLocation && [easting, northing]))
+      if (capabilities.esri.getDevice().isSupported === false) {
+        // Hide the map and show the message
+        mapPageConsts.mapNotSupported.style.display = 'block'
+        mapPageConsts.mapContainer[0].style.display = 'none'
+      } else {
+        mapPageConsts.maps.loadMap((hasLocation && [easting, northing]))
+      }
     }
   }, 100)
 
