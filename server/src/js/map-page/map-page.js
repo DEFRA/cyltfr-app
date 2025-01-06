@@ -110,7 +110,7 @@ function mapPage () {
         targetLink.setAttribute('tabindex', '12')
       }
 
-      // Function to update tabindex for shadow DOM elements
+      // Function to update tabindex for zoom buttons within the shadow root
       function setTabIndexForShadowRootButton (calciteButtonSelector, tabindexValue) {
         const calciteButton = document.querySelector(calciteButtonSelector)
 
@@ -118,21 +118,28 @@ function mapPage () {
           if (calciteButton.getAttribute('tabindex') !== String(tabindexValue)) {
             calciteButton.setAttribute('tabindex', tabindexValue)
           }
-
           // Access shadow root
-          const shadowRoot = calciteButton?.shadowRoot
+          const shadowRoot = calciteButton.shadowRoot
           if (shadowRoot) {
-            // Accesses button within shadow root as this is what is focusable by default
-            const shadowObserver = new MutationObserver(() => {
+            const updateShadowButtonTabIndex = () => {
+              // Access the button within shadow root
               const shadowButton = shadowRoot.querySelector('button')
-
               if (shadowButton) {
-                shadowButton.setAttribute('tabindex', '-1')
-                shadowObserver.disconnect()
+                shadowButton.setAttribute('tabindex', tabindexValue)
+                // Override focus behavior of calcite-button so functional part of button is focused
+                calciteButton.addEventListener('focus', () => {
+                  shadowButton.focus()
+                })
               }
+            }
+            // Observe shadow DOM for changes
+            const shadowObserver = new MutationObserver(() => {
+              updateShadowButtonTabIndex()
+              shadowObserver.disconnect()
             })
-
             shadowObserver.observe(shadowRoot, { childList: true, subtree: true })
+
+            updateShadowButtonTabIndex()
           } else {
             console.warn('ShadowRoot not accessible for:', calciteButton)
           }
