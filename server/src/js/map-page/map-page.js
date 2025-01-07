@@ -103,7 +103,7 @@ function mapPage () {
     mutations.forEach(() => {
       const target = document.querySelector('.esri-view-surface')
       if (target && target.getAttribute('tabindex') !== '4') {
-        target.setAttribute('tabindex', '4')
+        target.setAttribute('tabindex', '5')
       }
       const targetLink = document.querySelector('.esri-attribution__link')
       if (targetLink && targetLink.getAttribute('tabindex') !== '12') {
@@ -145,7 +145,7 @@ function mapPage () {
           }
         }
       }
-      setTabIndexForShadowRootButton('calcite-button[title="Zoom in"]', 5)
+      setTabIndexForShadowRootButton('calcite-button[title="Zoom in"]', 6)
       setTabIndexForShadowRootButton('calcite-button[title="Zoom out"]', 6)
     })
   })
