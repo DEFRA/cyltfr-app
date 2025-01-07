@@ -12,9 +12,10 @@ module.exports = {
       : undefined,
     maxCookieSize: 0,
     storeBlank: false,
+    name: 'cyltfr_session',
     cookieOptions: {
       password: config.cookiePassword,
-      isSecure: false,
+      isSecure: (!config.isDev),
       isHttpOnly: true
     }
   }
