@@ -102,7 +102,7 @@ function mapPage () {
   const observer = new MutationObserver((mutations) => {
     mutations.forEach(() => {
       const target = document.querySelector('.esri-view-surface')
-      if (target && target.getAttribute('tabindex') !== '4') {
+      if (target && target.getAttribute('tabindex') !== '5') {
         target.setAttribute('tabindex', '5')
       }
       const targetLink = document.querySelector('.esri-attribution__link')
