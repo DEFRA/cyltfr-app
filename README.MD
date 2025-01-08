@@ -15,8 +15,12 @@
 [![Licence](https://img.shields.io/badge/licence-OGLv3-blue.svg)](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3)
 
 # Check Your Long Term Flood Risk Services Front end application (cyltfr-app)
-Repo for the Check Your Long Term Flood service front end application.
+Repo for the Check Your Long Term Flood (CYLTFR) service front end application.
 
+This repository is part of the CYLTFR service which also includes:
+<https://github.com/DEFRA/cyltfr-service>
+<https://github.com/DEFRA/cyltfr-data>
+<https://github.com/DEFRA/cyltfr-admin>
 
 ## Prerequisites
 Node v20.x
