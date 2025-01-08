@@ -1,5 +1,6 @@
 import { openKey, closeKey, selectedOption, scenarioDisplayUpdate } from './map-controls.js'
 import { mapPageConsts } from './constants.js'
+const MutationObserver = require('mutation-observer')
 
 class MapController {
   constructor (categories) {
