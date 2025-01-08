@@ -1,5 +1,6 @@
 import { openKey, closeKey, selectedOption, scenarioDisplayUpdate } from './map-controls.js'
 import { mapPageConsts } from './constants.js'
+const MutationObserver = require('mutation-observer')
 
 class MapController {
   constructor (categories) {
@@ -89,6 +90,71 @@ function mapPage () {
       })
     }
   }, 1000)
+
+  // Removes skip to main content function from map pages
+  document.addEventListener('DOMContentLoaded', function () {
+    const skipLink = document.querySelector('.govuk-skip-link')
+    if (skipLink) {
+      skipLink.remove()
+    }
+  })
+
+  // Locates the ESRI components so that tabindex can be added
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach(() => {
+      const target = document.querySelector('.esri-view-surface')
+      if (target && target.getAttribute('tabindex') !== '5') {
+        target.setAttribute('tabindex', '5')
+      }
+      const targetLink = document.querySelector('.esri-attribution__link')
+      if (targetLink && targetLink.getAttribute('tabindex') !== '12') {
+        targetLink.setAttribute('tabindex', '12')
+      }
+
+      // Function to update tabindex for zoom buttons within the shadow root
+      function setTabIndexForShadowRootButton (calciteButtonSelector, tabindexValue) {
+        const calciteButton = document.querySelector(calciteButtonSelector)
+
+        if (calciteButton) {
+          if (calciteButton.getAttribute('tabindex') !== String(tabindexValue)) {
+            calciteButton.setAttribute('tabindex', tabindexValue)
+          }
+          // Access shadow root
+          const shadowRoot = calciteButton.shadowRoot
+          if (shadowRoot) {
+            const updateShadowButtonTabIndex = () => {
+              // Access the button within shadow root
+              const shadowButton = shadowRoot.querySelector('button')
+              if (shadowButton) {
+                shadowButton.setAttribute('tabindex', tabindexValue)
+                // Override focus behavior of calcite-button so functional part of button is focused
+                calciteButton.addEventListener('focus', () => {
+                  shadowButton.focus()
+                })
+              }
+            }
+            // Observe shadow DOM for changes
+            const shadowObserver = new MutationObserver(() => {
+              updateShadowButtonTabIndex()
+              shadowObserver.disconnect()
+            })
+            shadowObserver.observe(shadowRoot, { childList: true, subtree: true })
+
+            updateShadowButtonTabIndex()
+          } else {
+            console.warn('ShadowRoot not accessible for:', calciteButton)
+          }
+        }
+      }
+      setTabIndexForShadowRootButton('calcite-button[title="Zoom in"]', 6)
+      setTabIndexForShadowRootButton('calcite-button[title="Zoom out"]', 6)
+    })
+  })
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  })
 
   // This function updates the map to the radio button you select (extent, depth, depth CC)
   // and adds the show flooding toggle functionality

@@ -323,6 +323,16 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   --calcite-ui-focus-color: #ffdd0000;
 }
 
+.esri-attribution__link:focus {
+  outline: 0px solid transparent;
+  background-color: #ffdd00;
+  box-shadow: inset 0px -5px 0px 0px #0b0c0c
+}
+
+.esri-attribution__link:focus-visible {
+  outline: 0px solid transparent;
+}
+
 .ol-zoom.ol-zoom-checked {
   top: calc(100% - 200px);
 }
