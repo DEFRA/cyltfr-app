@@ -17,13 +17,13 @@
 # Check Your Long Term Flood Risk Services Front end application (cyltfr-app)
 Repo for the Check Your Long Term Flood (CYLTFR) service front end application.
 
-This repository is part of the CYLTFR service which also includes:
-<https://github.com/DEFRA/cyltfr-service>
-<https://github.com/DEFRA/cyltfr-data>
+This repository is part of the CYLTFR service which also includes:\
+<https://github.com/DEFRA/cyltfr-service>\
+<https://github.com/DEFRA/cyltfr-data>\
 <https://github.com/DEFRA/cyltfr-admin>
 
 ## Prerequisites
-Node v20.x
+Node v20.x\
 Docker v20.10.0+
 
 ### Build app
