@@ -2,7 +2,7 @@ module.exports = [
   {
     method: 'GET',
     path: '/information-for-planning',
-    handler: (request, h) => {
+    handler: (_request, h) => {
       const backLinkUri = '/postcode'
       const model = {
         backLinkUri
