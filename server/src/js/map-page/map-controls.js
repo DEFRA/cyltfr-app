@@ -61,6 +61,27 @@ export function scenarioDisplayUpdate (scenarioBar) {
   })
 }
 
+// Reset scenario display styling when chosing different measurement (e.g. from depth to extent)
+export const resetDepthBarStyling = function () {
+  const scenariosRadios = document.querySelectorAll('.scenario-radio')
+  const scenarioHeading = document.querySelectorAll('.scenario-heading')
+  const selectedScenario = document.querySelectorAll('.selected-scenario')
+  const firstRadioHeading = document.querySelectorAll('.first-radio')
+  scenarioHeading.forEach(radioTextHeading => {
+    radioTextHeading.style.textDecoration = 'underline'
+    radioTextHeading.style.textDecorationThickness = '2px'
+  })
+  scenariosRadios.forEach(radio => {
+    radio.style.borderBottom = 'none'
+  })
+  selectedScenario.forEach(scenario => {
+    scenario.style.borderBottom = '7px solid rgb(29, 112, 184)'
+  })
+  firstRadioHeading.forEach(radio => {
+    radio.style.textDecoration = 'none'
+  })
+}
+
 // Function to update the map interface once the open key button is pressed on a device
 export function openKey () {
   mapControlsConsts.keyDisplay.classList.remove('hide')
