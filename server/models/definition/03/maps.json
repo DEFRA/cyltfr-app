@@ -639,7 +639,7 @@
           "ref": "Reservoirs_13-RESERVOIRS",
           "name": "Extent of flooding",
           "title": "Maximum extent of flooding from reservoirs:",
-          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Reservoir_Flood_Extents/VectorTileServer",
+          "url": "https://tiles.arcgis.com/tiles/JZM7qJpmv7vJ0Hzx/arcgis/rest/services/Reservoir_Flood_Extents_NON_PRODUCTION/VectorTileServer",
           "legend": {
             "title": "Reservoirs",
             "keys": [
