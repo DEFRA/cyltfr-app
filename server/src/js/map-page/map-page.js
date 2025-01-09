@@ -1,4 +1,4 @@
-import { openKey, closeKey, selectedOption, scenarioDisplayUpdate } from './map-controls.js'
+import { openKey, closeKey, selectedOption, scenarioDisplayUpdate, resetDepthBarStyling } from './map-controls.js'
 import { mapPageConsts } from './constants.js'
 const MutationObserver = require('mutation-observer')
 
@@ -235,9 +235,11 @@ mapPageConsts.techMapOptions.forEach((optionBtn) => {
 // Show or hide depth scenario bars and relevant description containers
 mapPageConsts.riskMeasurementRadio.forEach(function (radio) {
   radio.addEventListener('change', () => {
+    scenarioDisplayUpdate()
     hideDescriptions()
     showSelectedDescription()
     updateKeyButtonPosition()
+    resetDepthBarStyling()
   })
 })
 
@@ -269,7 +271,6 @@ mapPageConsts.exitMapBtn.addEventListener('click', function () {
 
 // Close and open key assignments
 if (!mapPageConsts.mapPageQuery) {
-  console.log('mapPageConsts.closeKeyBtns', mapPageConsts.closeKeyBtns)
   if (mapPageConsts.closeKeyBtns) {
     mapPageConsts.closeKeyBtns.forEach((btn) => {
       btn.addEventListener('click', closeKey)
