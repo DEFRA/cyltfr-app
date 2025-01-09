@@ -5,6 +5,7 @@ const routes = [].concat(
   require('../routes/england-only'),
   require('../routes/risk-data'),
   require('../routes/risk'),
+  require('../routes/information-for-planning'),
   require('../routes/map'),
   require('../routes/managing-flood-risk'),
   require('../routes/public'),
