@@ -9,6 +9,7 @@ module.exports = {
   handler: async (request, h) => {
     try {
       const address = request.yar.get('address')
+      request.yar.set('previousPage', request.path)
 
       if (!address) {
         return h.redirect('/postcode')

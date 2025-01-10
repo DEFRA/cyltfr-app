@@ -10,6 +10,7 @@ module.exports = [
     path: '/postcode',
     handler: (request, h) => {
       request.yar.set('address', null)
+      request.yar.set('previousPage', request.path)
       const postcode = request.yar.get('postcode')
       const error = request.query.error
       const backLinkUri = config.floodRiskUrl
