@@ -1,12 +1,14 @@
 function defineBackLink (currentPage, previousPage) {
-  if (
-    currentPage === '/map' ||
-    currentPage === '/cookies' ||
-    currentPage === '/privacy-notice' ||
-    currentPage === '/terms-and-conditions' ||
-    currentPage === '/accessibility-statement' ||
-    currentPage === '/os-terms'
-  ) {
+  const backLinkPages = [
+    '/map',
+    '/cookies',
+    '/privacy-notice',
+    '/terms-and-conditions',
+    '/accessibility-statement',
+    '/os-terms'
+  ]
+
+  if (backLinkPages.includes(currentPage)) {
     return previousPage || '/postcode'
   }
   return '/postcode'
