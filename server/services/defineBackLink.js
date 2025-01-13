@@ -3,7 +3,8 @@ function defineBackLink (currentPage, previousPage) {
     currentPage === '/map' ||
     currentPage === '/cookies' ||
     currentPage === '/privacy-notice' ||
-    currentPage === '/terms-and-conditions'
+    currentPage === '/terms-and-conditions' ||
+    currentPage === '/accessibility-statement'
   ) {
     return previousPage || '/postcode'
   }
