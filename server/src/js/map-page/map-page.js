@@ -163,10 +163,19 @@ function mapPage () {
     mapController.setCurrent(ref)
     const selectedAddressCheckbox = document.getElementById('selected-address-checkbox')
     const showFloodingCheckbox = document.getElementById('display-layers-checkbox')
+    const techMapShowFloodingCheckbox = document.querySelectorAll('.display-layers-checkbox-toggle')
     const mapReferenceValue = selectedOption()
 
     const displayMapRef = showFloodingCheckbox.checked ? mapReferenceValue : `${mapReferenceValue}DONOTDISPLAY`
     mapPageConsts.maps.showMap(`${displayMapRef}`, selectedAddressCheckbox.checked)
+
+    // Show or hide the flooding layers on the tech map
+    techMapShowFloodingCheckbox.forEach((checkbox) => {
+      checkbox.addEventListener('change', () => {
+        const displayMapRef = checkbox.checked ? mapReferenceValue : `${mapReferenceValue}DONOTDISPLAY`
+        mapPageConsts.maps.showMap(`${displayMapRef}`, selectedAddressCheckbox.checked)
+      })
+    })
   }
 
   // Default to the first category/map
@@ -387,7 +396,6 @@ mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
 if (!mapPageConsts.params.includes('map=')) {
   mapPageConsts.rsAndResOptions.classList.remove('hide')
   mapPageConsts.selectedAddressCheckbox.classList.add('hide')
-  mapPageConsts.selectedAddressToggle.forEach((element) => element.classList.add('hide'))
 }
 
 // Update first radio to checked when changing to other key option
