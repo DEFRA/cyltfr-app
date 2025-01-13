@@ -38,6 +38,10 @@ function riskViewModel (risk, address, backLinkUri) {
   const reservoirWetRisk = !!(risk.reservoirWetRisk?.length)
   const reservoirRisk = reservoirDryRisk || reservoirWetRisk
 
+  if (reservoirRisk) {
+    processReservoirs.call(this, reservoirDryRisk, risk, reservoirWetRisk)
+  }
+
   // The below functions are added as some of the incoming data varies in whether the first
   // letter is capitalised or not. This ensures that the first words letter is always capitalised.
   this.riverAndSeaRisk = riverAndSeaRisk.charAt(0).toUpperCase() + riverAndSeaRisk.slice(1).toLowerCase()
@@ -120,6 +124,33 @@ function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel) {
   if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl.html' }
   if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/sw.html' }
   if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl-sw.html' }
+}
+
+function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
+  const reservoirs = []
+
+  const add = function (item) {
+    reservoirs.push({
+      name: item.reservoirName,
+      owner: item.undertaker,
+      authority: item.leadLocalFloodAuthority,
+      location: item.location,
+      riskDesignation: item.riskDesignation,
+      comments: item.comments
+    })
+  }
+
+  if (reservoirDryRisk) {
+    risk.reservoirDryRisk.forEach(add)
+  }
+
+  if (reservoirWetRisk) {
+    risk.reservoirWetRisk
+      .filter(item => !reservoirs.find(r => r.name === item.reservoirName))
+      .forEach(item => add(item))
+  }
+
+  this.reservoirs = reservoirs
 }
 
 function processExtraInfo (risk) {

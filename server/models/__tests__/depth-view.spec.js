@@ -14,21 +14,21 @@ describe('Depth view model', () => {
   test('Sets Surface water risk-level to very low if empty', async () => {
     const swDepth = {
       200: {
-        current: 'Medium'
+        cc: 'Medium'
       }
     }
     const result = depth(swDepth, null, address)
-    expect(result).toMatchObject({ sw200: 'Medium', sw200cc: 'Very low' })
+    expect(result).toMatchObject({ sw200cc: 'Medium', sw200: 'Very low' })
   })
 
   test('Sets Rivers and sea water risk-level to very low if empty', async () => {
     const rsDepth = {
       200: {
-        current: 'Medium'
+        cc: 'Medium'
       }
     }
     const result = depth(null, rsDepth, address)
-    expect(result).toMatchObject({ rs200: 'Medium', rs200cc: 'Very low' })
+    expect(result).toMatchObject({ rs200cc: 'Medium', rs200: 'Very low' })
   })
 
   test('Sets Rivers and sea risk-level to very low if 200 current is missing', async () => {
@@ -54,7 +54,7 @@ describe('Depth view model', () => {
       }
     }
     const result = depth(swDepth, null, address)
-    expect(result).toMatchObject({ sw200: 'Medium', sw200cc: 'Very low', sw200ccclassname: 'very-low' })
+    expect(result).toMatchObject({ sw200: 'Medium', sw200cc: 'Medium', sw200ccclassname: 'medium' })
   })
 
   test('Sets Rivers and sea class name correctly in lower case', async () => {
@@ -64,7 +64,27 @@ describe('Depth view model', () => {
       }
     }
     const result = depth(null, rsDepth, address)
-    expect(result).toMatchObject({ rs200: 'Medium', rs200cc: 'Very low', rs200ccclassname: 'very-low' })
+    expect(result).toMatchObject({ rs200: 'Medium', rs200cc: 'Medium', rs200ccclassname: 'medium' })
+  })
+
+  test('Sets Rivers and sea level change ignored for lower cc data', async () => {
+    const rsDepth = {
+      200: {
+        current: 'Very low',
+        cc: 'Low'
+      },
+      300: {
+        current: 'Medium',
+        cc: 'Low'
+      },
+      600: {
+        current: 'High',
+        cc: 'High'
+      }
+
+    }
+    const result = depth(null, rsDepth, address)
+    expect(result).toMatchObject({ rs300: 'Medium', rs300cc: 'Medium' })
   })
 
   test('Sets Rivers and sea level change', async () => {
@@ -84,6 +104,6 @@ describe('Depth view model', () => {
 
     }
     const result = depth(null, rsDepth, address)
-    expect(result).toMatchObject({ rs200Change: 1, rs300Change: -1, rs600Change: 0 })
+    expect(result).toMatchObject({ rs200Change: 1, rs300Change: 0, rs600Change: 0 })
   })
 })

@@ -7,12 +7,6 @@ function getByCoordinates (x, y, radius) {
   return util.getJson(uri)
 }
 
-function reservoirRisk (x, y) {
-  const uri = `${config.serviceUrl}/reservoir/${x}/${y}`
-
-  return util.getJson(uri)
-}
-
 function swDepthRisk (x, y) {
   const uri = `${config.serviceUrl}/swdepth/${x}/${y}`
 
@@ -26,5 +20,5 @@ function rsDepthRisk (x, y) {
 }
 
 module.exports = {
-  getByCoordinates, swDepthRisk, rsDepthRisk, reservoirRisk
+  getByCoordinates, swDepthRisk, rsDepthRisk
 }

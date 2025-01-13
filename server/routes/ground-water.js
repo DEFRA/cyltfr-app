@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom')
 const errors = require('../models/errors.json')
-const GroundWaterViewModel = require('../models/groundwater-view')
+const GroundWaterViewModel = require('../models/risk-view')
 
 module.exports = {
   method: 'GET',
@@ -18,12 +18,6 @@ module.exports = {
     const backLinkUri = '/risk'
 
     try {
-      let gwRisk = request.yar.get(`gwrisk-${x}-${y}`)
-      if (!gwRisk) {
-        gwRisk = await request.server.methods.reservoirRisk(x, y, radius)
-        request.yar.set(`gwrisk-${x}-${y}`, gwRisk)
-      }
-
       let risk = request.yar.get(`risk-${x}-${y}`)
       if (!risk) {
         risk = await request.server.methods.riskService(x, y, radius)
@@ -44,7 +38,7 @@ module.exports = {
         request.yar.set(`risk-${x}-${y}`, risk)
       }
 
-      const model = new GroundWaterViewModel(gwRisk, risk, address, backLinkUri)
+      const model = new GroundWaterViewModel(risk, address, backLinkUri)
       return h.view('ground-water', model)
     } catch (err) {
       return boom.badRequest(errors.riskProfile.message, err)

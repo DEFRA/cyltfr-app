@@ -1,10 +1,10 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const riskService = require('../../services/risk')
-const { reservoirRisk } = require('../../services/risk')
+const { getByCoordinates } = require('../../services/risk')
 const config = require('../../config')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
-const defaultOptions = {
+let defaultOptions = {
   method: 'GET',
   url: '/risk'
 }
@@ -30,14 +30,19 @@ describe('GET /ground-water', () => {
     })
     server = await createServer()
     await server.initialize()
-    const initial = mockOptions()
-
-    const homepageresponse = await server.inject(initial)
-    expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    checkCookie(homepageresponse)
   })
 
   beforeEach(async () => {
+    defaultOptions = {
+      method: 'GET',
+      url: '/risk'
+    }
+    cookie = ''
+    const initial = mockOptions()
+    const homepageresponse = await server.inject(initial)
+    expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    checkCookie(homepageresponse)
+
     const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
@@ -98,7 +103,7 @@ describe('GET /ground-water', () => {
       url: '/ground-water',
       headers: defaultOptions.headers
     }
-    reservoirRisk.mockImplementationOnce(() => {
+    getByCoordinates.mockImplementationOnce(() => {
       throw new Error()
     })
     const response = await server.inject(mockRequest)
@@ -107,15 +112,17 @@ describe('GET /ground-water', () => {
   })
 
   test('should create an array of reservoirs if there is a reservoirs risk', async () => {
-    riskService.reservoirRisk.mockResolvedValue({
-      reservoirDryRisk: [{
-        reservoirName: 'Dry Risk Resevoir',
-        location: 'SJ917968',
-        riskDesignation: 'High-risk',
-        undertaker: 'United Utilities PLC',
-        leadLocalFloodAuthority: 'Tameside',
-        comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
-      }]
+    getByCoordinates.mockImplementationOnce(() => {
+      return Promise.resolve({
+        reservoirDryRisk: [{
+          reservoirName: 'Dry Risk Resevoir',
+          location: 'SJ917968',
+          riskDesignation: 'High-risk',
+          undertaker: 'United Utilities PLC',
+          leadLocalFloodAuthority: 'Tameside',
+          comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+        }]
+      })
     })
 
     const mockRequest = {
@@ -131,7 +138,7 @@ describe('GET /ground-water', () => {
   })
 
   test('should add any reservoirs that are not in the list when it is wet', async () => {
-    riskService.reservoirRisk.mockResolvedValue({
+    riskService.getByCoordinates.mockResolvedValue({
       reservoirDryRisk: [{
         reservoirName: 'Dry Risk Resevoir',
         location: 'SJ917968',

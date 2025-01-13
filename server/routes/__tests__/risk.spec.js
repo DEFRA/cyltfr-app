@@ -2,7 +2,7 @@ const STATUS_CODES = require('http2').constants
 const createServer = require('../..')
 const riskService = require('../../services/risk')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
-const defaultOptions = {
+let defaultOptions = {
   method: 'GET',
   url: '/risk'
 }
@@ -16,11 +16,6 @@ jest.mock('../../services/risk')
 beforeAll(async () => {
   server = await createServer()
   await server.initialize()
-  const initial = mockOptions()
-
-  const homepageresponse = await server.inject(initial)
-  expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-  cookie = homepageresponse.headers['set-cookie'][0].split(';')[0]
 })
 
 afterAll(async () => {
@@ -28,6 +23,15 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
+  defaultOptions = {
+    method: 'GET',
+    url: '/risk'
+  }
+  const initial = mockOptions()
+
+  const homepageresponse = await server.inject(initial)
+  expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+  cookie = homepageresponse.headers['set-cookie'][0].split(';')[0]
   const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
   let postResponse = await server.inject(postOptions)
   expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
