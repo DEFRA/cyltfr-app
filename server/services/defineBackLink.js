@@ -4,7 +4,8 @@ function defineBackLink (currentPage, previousPage) {
     currentPage === '/cookies' ||
     currentPage === '/privacy-notice' ||
     currentPage === '/terms-and-conditions' ||
-    currentPage === '/accessibility-statement'
+    currentPage === '/accessibility-statement' ||
+    currentPage === '/os-terms'
   ) {
     return previousPage || '/postcode'
   }

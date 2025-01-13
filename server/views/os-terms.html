@@ -2,6 +2,12 @@
 
 {% set pageTitle = "Ordnance Survey terms and conditions" %}
 
+{% block beforeContent %}
+<div class="top-page-links">
+  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+</div>
+{% endblock %}
+
 {% block content %}
 <div id="os-terms-page">
   <div class="govuk-grid-row">
