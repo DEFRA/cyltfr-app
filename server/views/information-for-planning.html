@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% set pageTitle = "Information for planning" %}
+
+{% block beforeContent %}
+<div class="top-page-links">
+  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="information-for-planning-page">
+  <div class="page-summary ">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-padding-top-0">
+          Are you looking for planning information? 
+        </h1>
+        <p class="govuk-body">The climate change scenarios shown on this map may help to inform risk assessments. 
+          The available data are not suitable for what you need to assess planned development.</p>
+        <p class="govuk-body">You can:</p>
+          <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
+            <li>carry on to the <a href="/map" class="govuk-link">flood risk map</a></li>
+            <li>read <a href="https://www.gov.uk/guidance/flood-risk-assessments-climate-change-allowances" class="govuk-link">when and how to use climate change allowances in flood risk assessments</a></li>
+            <li>use the <a href="https://flood-map-for-planning.service.gov.uk" class="govuk-link">flood risk information for planning service</a></li>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
