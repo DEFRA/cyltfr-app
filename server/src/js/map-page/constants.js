@@ -10,6 +10,7 @@ const extentRadioSw = document.getElementById('sw-extent-radio')
 const extentRadioRs = document.getElementById('rs-extent-radio')
 const keyContainer = 'key-container'
 const selectedAddressCheckbox = document.getElementById('selected-address')
+const selectedAddressToggle = document.querySelectorAll('.selected-address-toggle')
 const extentDescContainer = document.getElementsByClassName('extent-desc-container')
 const extentDescCcContainer = document.getElementsByClassName('extent-desc-container-cc')
 const extentRadio = document.getElementsByClassName('extent-radio')
@@ -52,6 +53,7 @@ export const mapPageConsts = {
   riskMeasurementRadio,
   keyContainer,
   selectedAddressCheckbox,
+  selectedAddressToggle,
   extentDescContainer,
   extentDescCcContainer,
   extentRadio,
