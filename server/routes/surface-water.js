@@ -24,6 +24,19 @@ module.exports = {
 
       try {
         const risk = await request.server.methods.riskService(x, y, radius)
+        const hasError = risk.riverAndSeaRisk?.error ||
+            risk.surfaceWaterRisk?.error ||
+            risk.reservoirDryRisk?.error ||
+            risk.reservoirWetRisk?.error ||
+            risk.leadLocalFloodAuthority?.error ||
+            risk.extraInfo?.error
+
+        if (hasError) {
+          return boom.badRequest(errors.spatialQuery.message, {
+            risk,
+            address
+          })
+        }
 
         return h.view('surface-water', new SurfaceWaterViewModel(risk, address, backLinkUri))
       } catch (err) {

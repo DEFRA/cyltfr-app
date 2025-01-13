@@ -21,13 +21,26 @@ function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {
   }
 
   if (swDepthJson) {
+    swDepthJson = correctCCdata(swDepthJson)
     swDepthFlatten(depthData, swDepthJson)
   }
   if (rsDepthJson) {
+    rsDepthJson = correctCCdata(rsDepthJson)
     rsDepthFlatten(depthData, rsDepthJson)
   }
 
   return depthData
+}
+
+function correctCCdata (depthJson) {
+  for (const key in depthJson) {
+    const currentLevelIndex = Levels.indexOf(depthJson[key].current)
+    const ccLevelIndex = Levels.indexOf(depthJson[key].cc)
+    if (ccLevelIndex < currentLevelIndex) {
+      depthJson[key].cc = depthJson[key].current
+    }
+  }
+  return depthJson
 }
 
 function flattenDepthData (depthData, depthJson, prefix) {

@@ -4,7 +4,7 @@ const riskService = require('../../services/risk')
 const { getByCoordinates } = require('../../services/risk')
 const config = require('../../config')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
-const defaultOptions = {
+let defaultOptions = {
   method: 'GET',
   url: '/risk'
 }
@@ -30,14 +30,19 @@ describe('GET /surface-water', () => {
     })
     server = await createServer()
     await server.initialize()
+  })
+
+  beforeEach(async () => {
+    defaultOptions = {
+      method: 'GET',
+      url: '/risk'
+    }
+    cookie = ''
     const initial = mockOptions()
 
     const homepageresponse = await server.inject(initial)
     expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     checkCookie(homepageresponse)
-  })
-
-  beforeEach(async () => {
     const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)

@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom')
 const errors = require('../models/errors.json')
-const GroundWaterViewModel = require('../models/groundwater-view')
+const GroundWaterViewModel = require('../models/risk-view')
 
 module.exports = {
   method: 'GET',
@@ -18,7 +18,20 @@ module.exports = {
     const backLinkUri = '/risk'
 
     try {
-      const risk = await request.server.methods.reservoirRisk(x, y, radius)
+      const risk = await request.server.methods.riskService(x, y, radius)
+      const hasError = risk.riverAndSeaRisk?.error ||
+        risk.surfaceWaterRisk?.error ||
+        risk.reservoirDryRisk?.error ||
+        risk.reservoirWetRisk?.error ||
+        risk.leadLocalFloodAuthority?.error ||
+        risk.extraInfo?.error
+
+      if (hasError) {
+        return boom.badRequest(errors.spatialQuery.message, {
+          risk,
+          address
+        })
+      }
 
       const model = new GroundWaterViewModel(risk, address, backLinkUri)
       return h.view('ground-water', model)

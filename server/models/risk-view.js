@@ -14,6 +14,15 @@ const RiskTitles = {
   High: 'High risk'
 }
 
+const highestLevel = (risk, riskCC) => {
+  const riskL = Levels.indexOf(risk)
+  const riskCCL = Levels.indexOf(riskCC)
+  if (riskL > riskCCL) {
+    return risk
+  }
+  return riskCC
+}
+
 const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
 
 function riskViewModel (risk, address, backLinkUri) {
@@ -29,6 +38,10 @@ function riskViewModel (risk, address, backLinkUri) {
   const reservoirWetRisk = !!(risk.reservoirWetRisk?.length)
   const reservoirRisk = reservoirDryRisk || reservoirWetRisk
 
+  if (reservoirRisk) {
+    processReservoirs.call(this, reservoirDryRisk, risk, reservoirWetRisk)
+  }
+
   // The below functions are added as some of the incoming data varies in whether the first
   // letter is capitalised or not. This ensures that the first words letter is always capitalised.
   this.riverAndSeaRisk = riverAndSeaRisk.charAt(0).toUpperCase() + riverAndSeaRisk.slice(1).toLowerCase()
@@ -41,6 +54,10 @@ function riskViewModel (risk, address, backLinkUri) {
   this.surfaceWaterCCStyle = surfaceWaterRiskCC.toLowerCase().replace(/ /g, '-')
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
+
+  // Adjust the Climate Change risk to the highest of the two risks
+  this.riverAndSeaRiskCC = highestLevel(this.riverAndSeaRisk, this.riverAndSeaRiskCC)
+  this.surfaceWaterRiskCC = highestLevel(this.surfaceWaterRisk, this.surfaceWaterRiskCC)
 
   // Groundwater area
   this.isGroundwaterArea = risk.isGroundwaterArea
@@ -107,6 +124,33 @@ function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel) {
   if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl.html' }
   if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/sw.html' }
   if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl-sw.html' }
+}
+
+function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
+  const reservoirs = []
+
+  const add = function (item) {
+    reservoirs.push({
+      name: item.reservoirName,
+      owner: item.undertaker,
+      authority: item.leadLocalFloodAuthority,
+      location: item.location,
+      riskDesignation: item.riskDesignation,
+      comments: item.comments
+    })
+  }
+
+  if (reservoirDryRisk) {
+    risk.reservoirDryRisk.forEach(add)
+  }
+
+  if (reservoirWetRisk) {
+    risk.reservoirWetRisk
+      .filter(item => !reservoirs.find(r => r.name === item.reservoirName))
+      .forEach(item => add(item))
+  }
+
+  this.reservoirs = reservoirs
 }
 
 function processExtraInfo (risk) {

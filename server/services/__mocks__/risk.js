@@ -27,8 +27,4 @@ riskService.getByCoordinates.mockImplementation((_x, _y, _radius) => {
   return Promise.resolve(returnValue)
 })
 
-riskService.reservoirRisk.mockImplementation((_x, _y) => {
-  return Promise.resolve(returnValue)
-})
-
 module.exports = riskService
