@@ -7,6 +7,12 @@
 
 {% set pageTitle = "Cookies" %}
 
+{% block beforeContent %}
+<div class="top-page-links">
+  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+</div>
+{% endblock %}
+
 {% block content %}
   <main>
     <div class="govuk-grid-row">

@@ -24,6 +24,7 @@ module.exports = [
     method: 'GET',
     path: '/search',
     handler: async (request, h) => {
+      request.yar.set('previousPage', request.path)
       let addresses
       let { postcode } = request.query
       if (!postcode) {
