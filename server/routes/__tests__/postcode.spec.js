@@ -73,6 +73,34 @@ describe('postcode page', () => {
     expect(payload).toMatch(/value="CV37 6YZ"/g)
   })
 
+  test('should prefill postcode if one has been cached friendly captcha on', async () => {
+    captchaCheck.captchaCheck.mockResolvedValue({ tokenValid: true })
+    config.friendlyCaptchaEnabled = true
+    const { getOptions } = mockSearchOptions('CV37 6YZ', cookie)
+    // Inject the search options request
+    const response = await server.inject(getOptions)
+    let { payload, headers } = response
+    // Check if the search page is correct
+    expect(payload).toMatch(/Select an address/g)
+    // Extract the set-cookie header to get the session cookie
+    const setCookieHeader = headers['set-cookie']
+    const sessionCookie = setCookieHeader && setCookieHeader[0].split(';')[0]
+    // Ensure the session cookie is present
+    expect(sessionCookie).toBeDefined()
+    // Inject the postcode get request with the session cookie
+    const postcodeGet = {
+      method: 'GET',
+      url: '/postcode',
+      headers: {
+        cookie: sessionCookie
+      }
+    }
+    const postcodeGetResponse = await server.inject(postcodeGet)
+    payload = postcodeGetResponse.payload
+    // Check if the postcode is being prefilled
+    expect(payload).toMatch(/value="CV37 6YZ"/g)
+  })
+
   test.each([
     { postcode: '', description: 'postcode is missing' },
     { postcode: 'INVALID', description: 'postcode is invalid' }
