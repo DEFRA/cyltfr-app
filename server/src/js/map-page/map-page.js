@@ -396,6 +396,7 @@ mapPageConsts.scenarioRadioButtons.forEach(function (radio) {
 if (!mapPageConsts.params.includes('map=')) {
   mapPageConsts.rsAndResOptions.classList.remove('hide')
   mapPageConsts.selectedAddressCheckbox.classList.add('hide')
+  mapPageConsts.selectedAddressToggle.forEach((element) => element.classList.add('hide'))
 }
 
 // Update first radio to checked when changing to other key option
