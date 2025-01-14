@@ -48,16 +48,16 @@ function riskViewModel (risk, address, backLinkUri) {
   this.riverAndSeaRiskCC = riverAndSeaRiskCC.charAt(0).toUpperCase() + riverAndSeaRiskCC.slice(1).toLowerCase()
   this.surfaceWaterRisk = surfaceWaterRisk.charAt(0).toUpperCase() + surfaceWaterRisk.slice(1).toLowerCase()
   this.surfaceWaterRiskCC = surfaceWaterRiskCC.charAt(0).toUpperCase() + surfaceWaterRiskCC.slice(1).toLowerCase()
-  this.riversSeaRiskStyle = riverAndSeaRisk.toLowerCase().replace(/ /g, '-')
-  this.surfaceWaterStyle = surfaceWaterRisk.toLowerCase().replace(/ /g, '-')
-  this.riversSeaRiskCCStyle = riverAndSeaRiskCC.toLowerCase().replace(/ /g, '-')
-  this.surfaceWaterCCStyle = surfaceWaterRiskCC.toLowerCase().replace(/ /g, '-')
-  this.reservoirRisk = reservoirRisk
-  this.backLink = backLinkUri
-
   // Adjust the Climate Change risk to the highest of the two risks
   this.riverAndSeaRiskCC = highestLevel(this.riverAndSeaRisk, this.riverAndSeaRiskCC)
   this.surfaceWaterRiskCC = highestLevel(this.surfaceWaterRisk, this.surfaceWaterRiskCC)
+
+  this.riversSeaRiskStyle = this.riverAndSeaRisk.toLowerCase().replace(/ /g, '-')
+  this.surfaceWaterStyle = this.surfaceWaterRisk.toLowerCase().replace(/ /g, '-')
+  this.riversSeaRiskCCStyle = this.riverAndSeaRiskCC.toLowerCase().replace(/ /g, '-')
+  this.surfaceWaterCCStyle = this.surfaceWaterRiskCC.toLowerCase().replace(/ /g, '-')
+  this.reservoirRisk = reservoirRisk
+  this.backLink = backLinkUri
 
   // Groundwater area
   this.isGroundwaterArea = risk.isGroundwaterArea
