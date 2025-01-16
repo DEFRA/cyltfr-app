@@ -247,7 +247,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     background-color: #f3f2f1;
   }
 
-  .defra-map__options-top:focus-visible {
+  .defra-map__options-top:focus {
     outline: 3px solid transparent;
     box-shadow: $focusBorder;
   }

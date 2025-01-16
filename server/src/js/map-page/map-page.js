@@ -66,6 +66,7 @@ function mapPage () {
   }, 100)
 
   // This is to style the zoom buttons as they  cannot be styled with CSS as it is within a shadow root
+  /*
   setTimeout(() => {
     const zoomButtons = document.querySelectorAll('.esri-widget--button')
     if (zoomButtons) {
@@ -90,6 +91,7 @@ function mapPage () {
       })
     }
   }, 1000)
+*/
 
   // Removes skip to main content function from map pages
   document.addEventListener('DOMContentLoaded', function () {
