@@ -3,10 +3,11 @@
 {% set pageTitle = "Rivers and the sea: understand your flood risk" %}
 {% set currentpage = "rivers-and-sea" %}
 
-{% block head %}
-{{ super() }}
-<link href="{{ assetPath }}/stylesheets/risk-data.css" rel="stylesheet" />
-<link href="{{ assetPath }}/stylesheets/rivers-and-sea.css" rel="stylesheet" />
+{% block skipLink %}
+  {{ govukSkipLink({
+    href: '#rivers-sea-heading',
+    text: 'Skip to main content'
+  }) }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -35,7 +36,7 @@ role="navigation">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-6">
-      <h1 class="govuk-heading-xl govuk-!-margin-top-6">
+      <h1 id="rivers-sea-heading" class="govuk-heading-xl govuk-!-margin-top-6">
         Rivers and the sea: understand your flood risk
       </h1>
       <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
@@ -96,7 +97,7 @@ role="navigation">
       {% endif %}
 
       <h2 class="govuk-heading-l govuk-!-padding-top-6">What to do next</h2>
-      {% if riverAndSeaRisk !== 'Very Low' %}
+      {% if riverAndSeaRisk !== 'Very low' %}
       <p class="govuk-body">Sign up to <a class="govuk-link" href="https://www.gov.uk/sign-up-for-flood-warnings" 
         previewlistener="true">receive flood warnings by phone, text or email</a>.</p>
       {% endif %}

@@ -31,6 +31,7 @@ module.exports = {
         osToken: responses[1].access_token,
         osTokenExpiry: responses[1].expires_in,
         osMapUrl: config.osMapsUrl,
+        mapTransparency: config.mapTransparency,
         osMapHost: `${mapUrl.protocol}//${mapUrl.host}/`
       }
       //

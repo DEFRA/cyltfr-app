@@ -8,6 +8,7 @@ const schema = joi.object().keys({
   serviceUrl: joi.string().uri().required(),
   dataVersion: joi.string().default('01'),
   simulateAddressService: joi.boolean().default(false),
+  performanceLogging: joi.boolean().default(false),
   httpTimeoutMs: joi.number().required().min(0).max(30000),
   G4AnalyticsAccount: joi.string().default(''),
   GTagManagerId: joi.string().default(''),
@@ -20,6 +21,7 @@ const schema = joi.object().keys({
   osMapsSecret: joi.string().required().allow(''),
   osTokenEndpoint: joi.string().default('https://api.os.uk/oauth2/token/v1'),
   osTokenExpiryTime: joi.number().default(60 * 60 * 1000),
+  mapTransparency: joi.number().default(0.7),
   http_proxy: joi.string(),
   rateLimitEnabled: joi.boolean().default(false),
   rateLimitRequests: joi.number().integer().when('rateLimitEnabled', { is: true, then: joi.required() }).default(0),
@@ -57,6 +59,7 @@ const names = {
   serviceUrl: 'SERVICE_URL',
   simulateAddressService: 'SIMULATE_ADDRESS_SERVICE',
   dataVersion: 'DATA_VERSION',
+  performanceLogging: 'PERFORMANCE_LOGGING',
   httpTimeoutMs: 'HTTP_TIMEOUT_MS',
   G4AnalyticsAccount: 'G4_ANALYTICS_ACCOUNT',
   GTagManagerId: 'GTAG_MANAGER_ID',
@@ -69,6 +72,7 @@ const names = {
   osMapsSecret: 'OS_MAPS_SECRET',
   osTokenEndpoint: 'OS_TOKEN_ENDPOINT',
   osTokenExpiryTime: 'OS_TOKEN_EXPIRY_TIME',
+  mapTransparency: 'MAP_TRANSPARENCY',
   http_proxy: 'http_proxy',
   rateLimitEnabled: 'RATE_LIMIT_ENABLED',
   rateLimitRequests: 'RATE_LIMIT_REQUESTS',
@@ -136,6 +140,7 @@ if (result.error) {
 const value = result.value
 
 // Add some helper props
+value.simulatedDataPath = './server/simulated_data/'
 value.isDev = value.env === 'dev'
 value.isTest = value.env === 'test'
 value.isProd = value.env.startsWith('prod-')

@@ -12,4 +12,10 @@ describe('defineBackLink', () => {
     const backLink = defineBackLink.defineBackLink(currentPage, previousPage)
     expect(backLink).toEqual(expectedBackLink)
   })
+  test('Back link is /postcode when currentPage is not map', () => {
+    const currentPage = '/risk'
+    const previousPage = '/search'
+    const backLink = defineBackLink.defineBackLink(currentPage, previousPage)
+    expect(backLink).toEqual('/postcode')
+  })
 })

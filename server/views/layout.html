@@ -57,12 +57,12 @@ window.loadAnalytics = () => {
 {% endblock %}
 
 {% block header %}
-{% if G4AnalyticsAccount and cookiesPolicy.analytics %}
+{% if GTagManagerId and cookiesPolicy.analytics %}
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TCRVQCCW"
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{GTagManagerId}}"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  {% endif %}
+{% endif %}
   {{ govukHeader({
     homepageUrl: "https://www.gov.uk",
     containerClasses: "govuk-width-container",
@@ -74,9 +74,9 @@ window.loadAnalytics = () => {
 <div class="govuk-width-container">
   {{ govukPhaseBanner({
     tag: {
-      text: "beta"
+      text: "Beta"
     },
-    html: 'This is a new service – your <a class="govuk-link" href="/feedback">feedback</a> will help us to improve it.'
+    html: 'This is a new service. Help us improve it and <a class="govuk-link" href="/feedback">give your feedback</a>.'
   }) }}
 </div>
 {% endblock %}
@@ -116,10 +116,6 @@ window.loadAnalytics = () => {
       {
         href: "/accessibility-statement",
         text: "Accessibility statement"
-      },
-      {
-        href: "/risk-data",
-        text: "Get flood risk data"
       }
     ],
     html: 'Built by the <a href="https://www.gov.uk/government/organisations/environment-agency" class="govuk-footer__link">Environment Agency</a>

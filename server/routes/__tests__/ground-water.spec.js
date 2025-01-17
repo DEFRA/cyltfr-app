@@ -4,7 +4,7 @@ const riskService = require('../../services/risk')
 const { getByCoordinates } = require('../../services/risk')
 const config = require('../../config')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
-const defaultOptions = {
+let defaultOptions = {
   method: 'GET',
   url: '/risk'
 }
@@ -30,14 +30,19 @@ describe('GET /ground-water', () => {
     })
     server = await createServer()
     await server.initialize()
-    const initial = mockOptions()
-
-    const homepageresponse = await server.inject(initial)
-    expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    checkCookie(homepageresponse)
   })
 
   beforeEach(async () => {
+    defaultOptions = {
+      method: 'GET',
+      url: '/risk'
+    }
+    cookie = ''
+    const initial = mockOptions()
+    const homepageresponse = await server.inject(initial)
+    expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    checkCookie(homepageresponse)
+
     const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
@@ -63,7 +68,7 @@ describe('GET /ground-water', () => {
     riskService.__resetReturnValue()
   })
 
-  it('redirects to postcode page if user does not have an address set in session', async () => {
+  test('redirects to postcode page if user does not have an address set in session', async () => {
     // Get postcode page first to clear the previous address selection
     const mockRequest = {
       method: 'GET',
@@ -80,7 +85,7 @@ describe('GET /ground-water', () => {
     expect(swResponse.headers.location).toBe('/postcode')
   })
 
-  it('returns 200 OK and renders rivers and sea page if user has an address set in session', async () => {
+  test('returns 200 OK and renders rivers and sea page if user has an address set in session', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/ground-water',
@@ -92,7 +97,7 @@ describe('GET /ground-water', () => {
     expect(response.result).toContain('ground-water')
   })
 
-  it('should show an error page if an error occurs', async () => {
+  test('should show an error page if an error occurs', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/ground-water',
@@ -106,16 +111,18 @@ describe('GET /ground-water', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
   })
 
-  it('should create an array of reservoirs if there is a reservoirs risk', async () => {
-    riskService.getByCoordinates.mockResolvedValue({
-      reservoirDryRisk: [{
-        reservoirName: 'Dry Risk Resevoir',
-        location: 'SJ917968',
-        riskDesignation: 'High-risk',
-        undertaker: 'United Utilities PLC',
-        leadLocalFloodAuthority: 'Tameside',
-        comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
-      }]
+  test('should create an array of reservoirs if there is a reservoirs risk', async () => {
+    getByCoordinates.mockImplementationOnce(() => {
+      return Promise.resolve({
+        reservoirDryRisk: [{
+          reservoirName: 'Dry Risk Resevoir',
+          location: 'SJ917968',
+          riskDesignation: 'High-risk',
+          undertaker: 'United Utilities PLC',
+          leadLocalFloodAuthority: 'Tameside',
+          comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+        }]
+      })
     })
 
     const mockRequest = {
@@ -130,7 +137,7 @@ describe('GET /ground-water', () => {
     expect(response.result).toContain('Dry Risk Resevoir')
   })
 
-  it('should add any reservoirs that are not in the list when it is wet', async () => {
+  test('should add any reservoirs that are not in the list when it is wet', async () => {
     riskService.getByCoordinates.mockResolvedValue({
       reservoirDryRisk: [{
         reservoirName: 'Dry Risk Resevoir',

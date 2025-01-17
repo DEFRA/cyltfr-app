@@ -1,18 +1,12 @@
 {% extends 'layout.html' %}
 {% from "components/details/macro.njk" import govukDetails %}
 
-{% set pageTitle = "Your long term flood risk assessment" %}
+{% set pageTitle = "Flood risk summary" %}
 
 {% block beforeContent %}
 <div class="top-page-links">
   <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back to select an address</a>
 </div>
-{% endblock %}
-
-{% block head %}
-{{ super() }}
-<link href="{{ assetPath }}/stylesheets/risk-page.css" rel="stylesheet" />
-<link href="{{ assetPath }}/stylesheets/rivers-and-sea.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -28,14 +22,16 @@
         <p class="govuk-body">This information tells you the flood risk of the land around a building, not the building itself.</p>
         {{ govukDetails({
           summaryText: "How we assess an area's flood risk",
-          html: "<p class='govuk-body'>Our data does not include every feature like kerbs, or fences and walls around a building. 
-            That means we cannot tell you the flood risk of every individual property.</p>
-          <p class='govuk-body'>Neighbouring houses may have different levels of flood risk. 
+          html: "<p class='govuk-body'>We use computer models to estimate flood risk,
+            based on the best data we have available.</p>
+          <p class='govuk-body'>The models do not include every local feature like kerbs,
+            fences and walls. That means we cannot tell you the flood risk of every individual property.</p>
+          <p class='govuk-body'>Neighbouring houses in a street may have different levels of flood risk.
             This could be because one is on higher land or is nearer water, for example.</p>
-          <p class='govuk-body'>An area can be at risk even if it has not flooded before. 
+          <p class='govuk-body'>An area can be at risk even if it has not flooded before.
             If an area has flooded before, any future flooding might not cover the same area.</p>
-          <p class='govuk-body'>Flooding is hard to predict, especially further into the future. 
-            Flood risks could be bigger or smaller than what we show, and could change over time.</p>"
+          <p class='govuk-body'>Flooding is hard to predict, especially further into the future.
+          Flood risks could be bigger or smaller than what we show, and could change over time.</p>"
         }) }}
         
         {% include highestRisk %}
@@ -44,7 +40,7 @@
           summaryText: "Flood risk and climate change",
           html: "<p class='govuk-body'>Climate change is increasing the chances of flooding.</p>
           <p class='govuk-body'>Climate models project we will see warmer and wetter winters, and more frequent and
-            extreme weather events.</p>
+            intense extreme weather events.</p>
           <p class='govuk-body'>The models use projected rainfall, sea levels and river flows. They estimate
             flood risk in different ways, with different time periods.</p>
           <p class='govuk-body'>Our flood risk data covers the following time periods:</p>
@@ -84,57 +80,4 @@
 
   </div>
 </div>
-  <!-- Print summary -->
-  <div class="print-summary">
-    <table class="govuk-table">
-      <caption class="govuk-table__caption">{{ address.address }}</caption>
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Rivers and sea risk</th>
-          <td class="govuk-table__cell"><b>{{ riversAndSeaTitle }}</b><br>
-            {% if riversAndSeaTextName %}
-            {% include riversAndSeaTextName %}
-            {% endif %}</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Surface water risk</th>
-          <td class="govuk-table__cell">
-            <p>
-              <b>{{ surfaceWaterTitle }}</b><br>
-              {% if surfaceWaterTextName %}
-              {% include surfaceWaterTextName %}
-              {% endif %}
-            </p>
-            <p class="govuk-body">
-              Lead local flood authorities (LLFA) manage the risk from surface water flooding and may hold more
-              detailed information.
-              {% if leadLocalFloodAuthority %}Your LLFA is <b>{{leadLocalFloodAuthority}}</b>.{% endif %}
-            </p>
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Reservoir risk</th>
-          <td class="govuk-table__cell">
-            {% if reservoirRisk %}
-            There is a risk of flooding from reservoirs in this area, reservoirs that can affect this area are:
-            <ul class="govuk-list govuk-list--bullet">
-              {% for reservoir in reservoirs %}
-              <li>{{reservoir.name}}</li>
-              {% endfor %}
-            </ul>
-            {% else %}
-            Flooding from reservoirs is unlikely in this area
-            {% endif %}
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Groundwater risk</th>
-          <td class="govuk-table__cell">
-            {{ "Flooding is possible in the local area when groundwater levels are high" if isGroundwaterArea else
-            "Flooding from groundwater is unlikely in this area" }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  {% endblock %}
+{% endblock %}

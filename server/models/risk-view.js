@@ -1,7 +1,7 @@
 const { capitaliseAddress } = require('../services/address.js')
 
 const RiskLevel = {
-  VeryLow: 'Very Low',
+  VeryLow: 'Very low',
   Low: 'Low',
   Medium: 'Medium',
   High: 'High'
@@ -12,6 +12,15 @@ const RiskTitles = {
   Low: 'Low risk',
   Medium: 'Medium risk',
   High: 'High risk'
+}
+
+const highestLevel = (risk, riskCC) => {
+  const riskL = Levels.indexOf(risk)
+  const riskCCL = Levels.indexOf(riskCC)
+  if (riskL > riskCCL) {
+    return risk
+  }
+  return riskCC
 }
 
 const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
@@ -29,22 +38,26 @@ function riskViewModel (risk, address, backLinkUri) {
   const reservoirWetRisk = !!(risk.reservoirWetRisk?.length)
   const reservoirRisk = reservoirDryRisk || reservoirWetRisk
 
-  this.riverAndSeaRisk = riverAndSeaRisk
-  this.riverAndSeaRiskCC = riverAndSeaRiskCC
-  this.surfaceWaterRisk = surfaceWaterRisk
-  this.surfaceWaterRiskCC = surfaceWaterRiskCC
-  this.riverAndSeaClassName = riverAndSeaRisk.toLowerCase().replace(' ', '-')
-  this.surfaceWaterClassName = surfaceWaterRisk.toLowerCase().replace(' ', '-')
-  this.riversSeaRiskStyle = riverAndSeaRisk.replace(/ /g, '-')
-  this.surfaceWaterStyle = surfaceWaterRisk.replace(/ /g, '-')
-  this.riversSeaRiskCCStyle = riverAndSeaRiskCC.replace(/ /g, '-')
-  this.surfaceWaterCCStyle = surfaceWaterRiskCC.replace(/ /g, '-')
-  this.reservoirRisk = reservoirRisk
-  this.backLink = backLinkUri
-
   if (reservoirRisk) {
     processReservoirs.call(this, reservoirDryRisk, risk, reservoirWetRisk)
   }
+
+  // The below functions are added as some of the incoming data varies in whether the first
+  // letter is capitalised or not. This ensures that the first words letter is always capitalised.
+  this.riverAndSeaRisk = riverAndSeaRisk.charAt(0).toUpperCase() + riverAndSeaRisk.slice(1).toLowerCase()
+  this.riverAndSeaRiskCC = riverAndSeaRiskCC.charAt(0).toUpperCase() + riverAndSeaRiskCC.slice(1).toLowerCase()
+  this.surfaceWaterRisk = surfaceWaterRisk.charAt(0).toUpperCase() + surfaceWaterRisk.slice(1).toLowerCase()
+  this.surfaceWaterRiskCC = surfaceWaterRiskCC.charAt(0).toUpperCase() + surfaceWaterRiskCC.slice(1).toLowerCase()
+  // Adjust the Climate Change risk to the highest of the two risks
+  this.riverAndSeaRiskCC = highestLevel(this.riverAndSeaRisk, this.riverAndSeaRiskCC)
+  this.surfaceWaterRiskCC = highestLevel(this.surfaceWaterRisk, this.surfaceWaterRiskCC)
+
+  this.riversSeaRiskStyle = this.riverAndSeaRisk.toLowerCase().replace(/ /g, '-')
+  this.surfaceWaterStyle = this.surfaceWaterRisk.toLowerCase().replace(/ /g, '-')
+  this.riversSeaRiskCCStyle = this.riverAndSeaRiskCC.toLowerCase().replace(/ /g, '-')
+  this.surfaceWaterCCStyle = this.surfaceWaterRiskCC.toLowerCase().replace(/ /g, '-')
+  this.reservoirRisk = reservoirRisk
+  this.backLink = backLinkUri
 
   // Groundwater area
   this.isGroundwaterArea = risk.isGroundwaterArea
@@ -133,7 +146,7 @@ function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
 
   if (reservoirWetRisk) {
     risk.reservoirWetRisk
-      .filter(item => !reservoirs.find(r => r.location === item.location))
+      .filter(item => !reservoirs.find(r => r.name === item.reservoirName))
       .forEach(item => add(item))
   }
 

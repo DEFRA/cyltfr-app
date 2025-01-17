@@ -4,7 +4,7 @@ const riskService = require('../../services/risk')
 const { getByCoordinates } = require('../../services/risk')
 const config = require('../../config')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
-const defaultOptions = {
+let defaultOptions = {
   method: 'GET',
   url: '/risk'
 }
@@ -30,14 +30,19 @@ describe('GET /rivers-and-sea', () => {
     })
     server = await createServer()
     await server.initialize()
+  })
+
+  beforeEach(async () => {
+    defaultOptions = {
+      method: 'GET',
+      url: '/risk'
+    }
+    cookie = ''
     const initial = mockOptions()
 
     const homepageresponse = await server.inject(initial)
     expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     checkCookie(homepageresponse)
-  })
-
-  beforeEach(async () => {
     const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
@@ -63,7 +68,7 @@ describe('GET /rivers-and-sea', () => {
     riskService.__resetReturnValue()
   })
 
-  it('redirects to postcode page if user does not have an address set in session', async () => {
+  test('redirects to postcode page if user does not have an address set in session', async () => {
     // Get postcode page first to clear the previous address selection
     const mockRequest = {
       method: 'GET',
@@ -80,7 +85,7 @@ describe('GET /rivers-and-sea', () => {
     expect(swResponse.headers.location).toBe('/postcode')
   })
 
-  it('returns 200 OK and renders rivers and sea page if user has an address set in session', async () => {
+  test('returns 200 OK and renders rivers and sea page if user has an address set in session', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/rivers-and-sea',
@@ -92,7 +97,7 @@ describe('GET /rivers-and-sea', () => {
     expect(response.result).toContain('rivers-and-sea')
   })
 
-  it('should show an error page if an error occurs', async () => {
+  test('should show an error page if an error occurs', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/rivers-and-sea',
@@ -106,7 +111,7 @@ describe('GET /rivers-and-sea', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
   })
 
-  it('should return "Very low" risk probability when riverAndSeaRisk is not present', async () => {
+  test('should return "Very low" risk probability when riverAndSeaRisk is not present', async () => {
     const mockRequest = {
       method: 'GET',
       url: '/rivers-and-sea',
@@ -119,7 +124,7 @@ describe('GET /rivers-and-sea', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('govuk-tag--Very-Low')
+    expect(response.result).toContain('govuk-tag--very-low')
   })
 
   test('risk address not in england', async () => {

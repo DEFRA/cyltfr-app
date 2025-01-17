@@ -1,3 +1,5 @@
+const { defineBackLink } = require('../services/defineBackLink.js')
+
 module.exports = {
   method: 'GET',
   path: '/feedback',
@@ -12,11 +14,16 @@ module.exports = {
         ? request.headers['user-agent']
         : ''
 
+      const path = request.path
+      const previousPage = request.yar.get('previousPage')
+      const backLinkUri = defineBackLink(path, previousPage)
+
       return h.view('feedback', {
         ref: encodeURIComponent(ref),
         feedback: false,
-        pageTitle: 'Provide feedback about this service',
-        userAgent: encodeURIComponent(agent)
+        pageTitle: 'Give feedback on the Check Your Long Term Flood Risk service',
+        userAgent: encodeURIComponent(agent),
+        backLinkUri
       })
     }
   }

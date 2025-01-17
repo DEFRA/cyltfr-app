@@ -2,12 +2,18 @@
 
 {% set pageTitle = "Privacy notice" %}
 
+{% block beforeContent %}
+<div class="top-page-links">
+  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+</div>
+{% endblock %}
+
 {% block content %}
 <div id="privacy-notice-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">{{ pageTitle }}</h1>
-      <h1 class="govuk-heading-m">Who we are</h1>
+      <h2 class="govuk-heading-m">Who we are</h2>
 
       <p class="govuk-body">
         The Environment Agency is the data controller for Check your long term flood risk. Our <a href="https://www.gov.uk/government/organisations/environment-agency/about/personal-information-charter" class="govuk-link">personal information charter</a> explains your rights and how we deal with your personal information.

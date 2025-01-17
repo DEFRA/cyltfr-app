@@ -3,10 +3,11 @@
 {% set pageTitle = "Groundwater and reservoirs: understand your flood risk" %}
 {% set currentpage = "groundwater" %}
 
-{% block head %}
-{{ super() }}
-<link href="{{ assetPath }}/stylesheets/risk-data.css" rel="stylesheet" />
-<link href="{{ assetPath }}/stylesheets/rivers-and-sea.css" rel="stylesheet" />
+{% block skipLink %}
+  {{ govukSkipLink({
+    href: '#groundwater-heading',
+    text: 'Skip to main content'
+  }) }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -41,7 +42,7 @@
 
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-6">
 
-        <h1 class="govuk-heading-xl govuk-!-margin-top-6">
+        <h1 id="groundwater-heading" class="govuk-heading-xl govuk-!-margin-top-6">
           Groundwater and reservoirs: understand your flood risk
         </h1>
 
@@ -100,7 +101,7 @@
           </summary>
           {% for reservoir in reservoirs %}
           <ul class="govuk-list reservoirs" id="reservoirs-risk-reservoir-list">
-            <li><strong>{{reservoir.name}}</strong> (grid reference {{reservoir.location}})</li>
+            <li><strong>{{reservoir.name}}</strong> {% if (reservoir.location) %}(grid reference {{reservoir.location}}){% endif %}</li>
             <li>Owner: {{reservoir.owner}}</li>
             <li>Lead Local Flood Authority: {{reservoir.authority}}</li>
             <li>Comments: {{reservoir.comments}}</li>

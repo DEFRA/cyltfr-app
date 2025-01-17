@@ -36,10 +36,25 @@ body {
   display: none !important;
 }
 
+.esri-view .esri-view-surface:focus {
+  outline-color: #00000000 !important;
+  --esri-view-outline-color: #00000000 !important;
+  --esri-view-outline: 10px solid var(--esri-view-outline-color) !important;
+}
+
 .esri-view .esri-view-surface:focus-visible {
   outline-color: #ffdd00 !important;
   --esri-view-outline-color: #ffdd00 !important;
   --esri-view-outline: 10px solid var(--esri-view-outline-color) !important;
+}
+
+.esri-view .esri-view-surface:focus-visible::after {
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border: 5px solid black;
+  z-index: -1;
 }
 
 .map-container {
@@ -47,8 +62,9 @@ body {
   height: 100%;
   margin: 0;
   display: grid;
-  grid-template-columns: 5fr 1fr;
+  grid-template-columns: 5fr 320px;
   justify-content: end;
+  justify-items: end;
   flex-basis: 100%;
   flex-wrap: wrap;
 
@@ -80,7 +96,7 @@ body {
   .defra-map-info__container {
     background-color: white;
     display: flex;
-    margin-top: 10px;
+    margin: 10px 10px 0 0;
     float: right;
     clear: right;
     z-index: 11;
@@ -98,6 +114,10 @@ body {
   }
 
   #close-btn {
+    width: 20px;
+    height: 20px;
+  }
+  .close-btn {
     width: 20px;
     height: 20px;
   }

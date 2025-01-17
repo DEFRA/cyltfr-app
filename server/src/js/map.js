@@ -11,6 +11,9 @@ import Graphic from '@arcgis/core/Graphic.js'
 
 let map, callback, currentLayer, tokenFetchRunning
 const TOKEN_PREFETCH_SECS = 30
+const currentPageURL = new URLSearchParams(document.location.search)
+const mapPageQuery = currentPageURL.get('map')
+const initialZoomLevel = mapPageQuery === null ? 1 : 7
 
 async function refreshOsToken () {
   tokenFetchRunning = true
@@ -54,7 +57,7 @@ export async function loadMap (point) {
   const mapView = new MapView({
     container: 'map',
     map,
-    zoom: 7,
+    zoom: initialZoomLevel,
     center: centrePoint,
     constraints: {
       minZoom: 0,
@@ -96,7 +99,7 @@ export async function loadMap (point) {
   mapView.when(function () {
     // MapView is now ready for display and can be used. Here we will
     // use goTo to view a particular location at a given zoom level and center
-    mapView.ui.move('zoom', 'bottom-left')
+    mapView.ui.move('zoom', 'bottom-right')
   })
 
   if (callback) {
@@ -115,6 +118,7 @@ function createFeatureLayers (layers) {
           id: featureMap.ref,
           url: featureMap.url,
           apiKey: window.mapConfig.mapToken,
+          opacity: window.mapConfig.mapTransparency,
           visible: false
         }))
       }

@@ -1,9 +1,10 @@
 $govuk-assets-path: '/assets/';
 
 @import "govuk-frontend/dist/govuk/all";
-@import "./legend";
-@import "./overlay";
-@import "./social";
+@import "./depth-gauges";
+@import "./risk-page";
+@import "./risk-data";
+@import "./rivers-and-sea";
 
 .nojs-hidden {
   display: none;

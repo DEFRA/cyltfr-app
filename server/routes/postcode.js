@@ -10,9 +10,9 @@ module.exports = [
     path: '/postcode',
     handler: (request, h) => {
       request.yar.set('address', null)
-      request.yar.set('postcode', null)
-      const error = request.query.error
       request.yar.set('previousPage', request.path)
+      const postcode = request.yar.get('postcode')
+      const error = request.query.error
       const backLinkUri = config.floodRiskUrl
 
       if (error) {
@@ -28,9 +28,9 @@ module.exports = [
           console.log('Captcha Bypass set to : %s', request.yar.get('captchabypass'))
           // if it does equal config value then set the captchabypass session setting.
         }
-        return h.view('postcode', new PostcodeViewModel(null, null, config.sessionTimeout))
+        return h.view('postcode', new PostcodeViewModel(postcode, null, config.sessionTimeout))
       }
-      return h.view('postcode', new PostcodeViewModel(null, null, null, backLinkUri))
+      return h.view('postcode', new PostcodeViewModel(postcode, null, null, backLinkUri))
     },
     options: {
       description: 'Get the postcode page'

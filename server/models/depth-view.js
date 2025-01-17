@@ -1,13 +1,13 @@
 const { capitaliseAddress } = require('../services/address.js')
 
-const RiskLevel = {
-  VeryLow: 'Very Low',
-  Low: 'Low',
-  Medium: 'Medium',
-  High: 'High'
+const riskLevel = {
+  veryLow: 'Very low',
+  low: 'Low',
+  medium: 'Medium',
+  high: 'High'
 }
 
-const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
+const Levels = Object.keys(riskLevel).map(l => riskLevel[l])
 
 function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {
   const depthData = {
@@ -21,67 +21,70 @@ function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {
   }
 
   if (swDepthJson) {
+    swDepthJson = correctCCdata(swDepthJson)
     swDepthFlatten(depthData, swDepthJson)
   }
   if (rsDepthJson) {
+    rsDepthJson = correctCCdata(rsDepthJson)
     rsDepthFlatten(depthData, rsDepthJson)
   }
 
   return depthData
 }
 
+function correctCCdata (depthJson) {
+  for (const key in depthJson) {
+    const currentLevelIndex = Levels.indexOf(depthJson[key].current)
+    const ccLevelIndex = Levels.indexOf(depthJson[key].cc)
+    if (ccLevelIndex < currentLevelIndex) {
+      depthJson[key].cc = depthJson[key].current
+    }
+  }
+  return depthJson
+}
+
+function flattenDepthData (depthData, depthJson, prefix) {
+  depthData[`${prefix}200`] = depthJson['200']?.current ? formatRiskLevel(depthJson['200'].current) : riskLevel.veryLow
+  depthData[`${prefix}300`] = depthJson['300']?.current ? formatRiskLevel(depthJson['300'].current) : riskLevel.veryLow
+  depthData[`${prefix}600`] = depthJson['600']?.current ? formatRiskLevel(depthJson['600'].current) : riskLevel.veryLow
+  depthData[`${prefix}200cc`] = depthJson['200']?.cc ? formatRiskLevel(depthJson['200'].cc) : riskLevel.veryLow
+  depthData[`${prefix}300cc`] = depthJson['300']?.cc ? formatRiskLevel(depthJson['300'].cc) : riskLevel.veryLow
+  depthData[`${prefix}600cc`] = depthJson['600']?.cc ? formatRiskLevel(depthJson['600'].cc) : riskLevel.veryLow
+
+  depthData[`${prefix}200classname`] = formatClassName(depthData[`${prefix}200`])
+  depthData[`${prefix}300classname`] = formatClassName(depthData[`${prefix}300`])
+  depthData[`${prefix}600classname`] = formatClassName(depthData[`${prefix}600`])
+  depthData[`${prefix}200ccclassname`] = formatClassName(depthData[`${prefix}200cc`])
+  depthData[`${prefix}300ccclassname`] = formatClassName(depthData[`${prefix}300cc`])
+  depthData[`${prefix}600ccclassname`] = formatClassName(depthData[`${prefix}600cc`])
+
+  depthData[`${prefix}200Level`] = Levels.indexOf(depthData[`${prefix}200`])
+  depthData[`${prefix}300Level`] = Levels.indexOf(depthData[`${prefix}300`])
+  depthData[`${prefix}600Level`] = Levels.indexOf(depthData[`${prefix}600`])
+  depthData[`${prefix}200ccLevel`] = Levels.indexOf(depthData[`${prefix}200cc`])
+  depthData[`${prefix}300ccLevel`] = Levels.indexOf(depthData[`${prefix}300cc`])
+  depthData[`${prefix}600ccLevel`] = Levels.indexOf(depthData[`${prefix}600cc`])
+
+  depthData[`${prefix}200Change`] = depthData[`${prefix}200ccLevel`] - depthData[`${prefix}200Level`]
+  depthData[`${prefix}300Change`] = depthData[`${prefix}300ccLevel`] - depthData[`${prefix}300Level`]
+  depthData[`${prefix}600Change`] = depthData[`${prefix}600ccLevel`] - depthData[`${prefix}600Level`]
+}
+
 function rsDepthFlatten (depthData, rsDepthJson) {
-  depthData.rs200 = rsDepthJson['200']?.current || RiskLevel.VeryLow
-  depthData.rs300 = rsDepthJson['300']?.current || RiskLevel.VeryLow
-  depthData.rs600 = rsDepthJson['600']?.current || RiskLevel.VeryLow
-  depthData.rs200cc = rsDepthJson['200']?.cc || RiskLevel.VeryLow
-  depthData.rs300cc = rsDepthJson['300']?.cc || RiskLevel.VeryLow
-  depthData.rs600cc = rsDepthJson['600']?.cc || RiskLevel.VeryLow
-
-  depthData.rs200classname = depthData.rs200.replace(' ', '-')
-  depthData.rs300classname = depthData.rs300.replace(' ', '-')
-  depthData.rs600classname = depthData.rs600.replace(' ', '-')
-  depthData.rs200ccclassname = depthData.rs200cc.replace(' ', '-')
-  depthData.rs300ccclassname = depthData.rs300cc.replace(' ', '-')
-  depthData.rs600ccclassname = depthData.rs600cc.replace(' ', '-')
-
-  depthData.rs200Level = Levels.indexOf(depthData.rs200)
-  depthData.rs300Level = Levels.indexOf(depthData.rs300)
-  depthData.rs600Level = Levels.indexOf(depthData.rs600)
-  depthData.rs200ccLevel = Levels.indexOf(depthData.rs200cc)
-  depthData.rs300ccLevel = Levels.indexOf(depthData.rs300cc)
-  depthData.rs600ccLevel = Levels.indexOf(depthData.rs600cc)
-
-  depthData.rs200Change = depthData.rs200ccLevel - depthData.rs200Level
-  depthData.rs300Change = depthData.rs300ccLevel - depthData.rs300Level
-  depthData.rs600Change = depthData.rs600ccLevel - depthData.rs600Level
+  flattenDepthData(depthData, rsDepthJson, 'rs')
 }
 
 function swDepthFlatten (depthData, swDepthJson) {
-  depthData.sw200 = swDepthJson['200']?.current || RiskLevel.VeryLow
-  depthData.sw300 = swDepthJson['300']?.current || RiskLevel.VeryLow
-  depthData.sw600 = swDepthJson['600']?.current || RiskLevel.VeryLow
-  depthData.sw200cc = swDepthJson['200']?.cc || RiskLevel.VeryLow
-  depthData.sw300cc = swDepthJson['300']?.cc || RiskLevel.VeryLow
-  depthData.sw600cc = swDepthJson['600']?.cc || RiskLevel.VeryLow
+  flattenDepthData(depthData, swDepthJson, 'sw')
+}
 
-  depthData.sw200classname = depthData.sw200.replace(' ', '-')
-  depthData.sw300classname = depthData.sw300.replace(' ', '-')
-  depthData.sw600classname = depthData.sw600.replace(' ', '-')
-  depthData.sw200ccclassname = depthData.sw200cc.replace(' ', '-')
-  depthData.sw300ccclassname = depthData.sw300cc.replace(' ', '-')
-  depthData.sw600ccclassname = depthData.sw600cc.replace(' ', '-')
+function formatRiskLevel (riskValue) {
+  if (!riskValue) { return riskValue }
+  return riskValue.charAt(0).toUpperCase() + riskValue.slice(1).toLowerCase()
+}
 
-  depthData.sw200Level = Levels.indexOf(depthData.sw200)
-  depthData.sw300Level = Levels.indexOf(depthData.sw300)
-  depthData.sw600Level = Levels.indexOf(depthData.sw600)
-  depthData.sw200ccLevel = Levels.indexOf(depthData.sw200cc)
-  depthData.sw300ccLevel = Levels.indexOf(depthData.sw300cc)
-  depthData.sw600ccLevel = Levels.indexOf(depthData.sw600cc)
-
-  depthData.sw200Change = depthData.sw200ccLevel - depthData.sw200Level
-  depthData.sw300Change = depthData.sw300ccLevel - depthData.sw300Level
-  depthData.sw600Change = depthData.sw600ccLevel - depthData.sw600Level
+function formatClassName (riskValue) {
+  return riskValue.replace(' ', '-').toLowerCase()
 }
 
 module.exports = depthViewModel

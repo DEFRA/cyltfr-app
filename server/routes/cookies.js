@@ -1,4 +1,5 @@
 const joi = require('joi')
+const { defineBackLink } = require('../services/defineBackLink.js')
 
 module.exports = [
   {
@@ -7,7 +8,10 @@ module.exports = [
     handler: async (request, h) => {
       const { query } = request
       const { updated } = query
-      return h.view('cookies', { updated })
+      const path = request.path
+      const previousPage = request.yar.get('previousPage')
+      const backLinkUri = defineBackLink(path, previousPage)
+      return h.view('cookies', { updated, backLinkUri })
     },
     options: {
       description: 'Get Cookies Page',

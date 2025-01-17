@@ -9,6 +9,7 @@ module.exports = {
   handler: async (request, h) => {
     try {
       const address = request.yar.get('address')
+      request.yar.set('previousPage', request.path)
 
       if (!address) {
         return h.redirect('/postcode')
@@ -23,13 +24,12 @@ module.exports = {
       try {
         const risk = await request.server.methods.riskService(x, y, radius)
 
-        // FLO-1139 If query 1 to 6 errors then throw default error page
         const hasError = risk.riverAndSeaRisk?.error ||
-          risk.surfaceWaterRisk?.error ||
-          risk.reservoirDryRisk?.error ||
-          risk.reservoirWetRisk?.error ||
-          risk.leadLocalFloodAuthority?.error ||
-          risk.extraInfo?.error
+        risk.surfaceWaterRisk?.error ||
+        risk.reservoirDryRisk?.error ||
+        risk.reservoirWetRisk?.error ||
+        risk.leadLocalFloodAuthority?.error ||
+        risk.extraInfo?.error
 
         if (hasError) {
           return boom.badRequest(errors.spatialQuery.message, {
@@ -37,7 +37,6 @@ module.exports = {
             address
           })
         }
-
         const backLinkUri = '/search'
         return h.view('risk', new RiskViewModel(risk, address, backLinkUri))
       } catch (err) {

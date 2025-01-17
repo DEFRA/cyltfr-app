@@ -2,6 +2,12 @@
 
 {% set pageTitle = "Accessibility statement for Check your long term flood risk" %}
 
+{% block beforeContent %}
+<div class="top-page-links">
+  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+</div>
+{% endblock %}
+
 {% block content %}
 <div id="home-page">
   <div class="govuk-grid-row">
@@ -50,7 +56,7 @@
       </ul>
 
 
-      <h2 class="govuk-heading-l">Feedback and contact information</h2>
+      <h2 class="govuk-heading-l">What to do if you have difficulty using this service</h2>
 
       <p class="govuk-body">If you need information on this website in a different format like an accessible PDF, large
         print, easy read, audio recording or braille:</p>
@@ -96,8 +102,8 @@
       <h3 class="govuk-heading-m">Compliance status</h3>
 
       <p class="govuk-body">
-        This website is partially compliant with the <a class="govuk-link" href="https://www.w3.org/TR/WCAG21/">Web
-          Content Accessibility Guidelines version 2.1 AA standard</a>, due to the following exemptions.
+        This website is partially compliant with the <a class="govuk-link" href="https://www.w3.org/TR/WCAG22/">Web
+          Content Accessibility Guidelines version 2.2 AA standard</a>, due to the following exemptions.
 
       </p>
 
@@ -109,30 +115,43 @@
 
 
 
-      <p class="govuk-body">There are a number of elements of the map user interface that are not fully descriptive or
-        accessible. These are: </p>
+      <p class="govuk-body">There are several instances of non-compliance with WCAG level AA. These are: </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>the colour contrast of the scale icon used on the Ordnance Survey mapping fails to meet the required
-          contrast ratio (WCAG 1.4.3 Contrast - Level AA) in certain situations</li>
-        <li>the colour contrast used in various elements of the mapping fails to meet the required contrast ratio (WCAG
-          1.4.3 Contrast - Level AA) in certain situations</li>
-        <li>the zoom controls provided on the maps do not provide a label that is descriptive enough to inform a user of
-          their function (WCAG 2.4.6 Headings and labels - Level AA)</li>
+        <li>
+          navigation landmarks do not provide a label that is descriptive enough to inform a user of their function, 
+          which does not meet the requirement for WCAG 2.4.6 Headings and labels
+        </li>
+        <li>the Friendly Captcha grey information text does not meet the requirement for WCAG 1.4.3 Contrast (Minimum)</li>
+        <li>the map focus element does not meet the requirement for WCAG 1.4.11 Non-text Contrast</li>
+        <li>
+          the colours used in the flood depth graphic, for both the grey against the white background and the grey 
+          against the blue produce a contrast ratio, which does not meet the requirement for WCAG 1.4.11 Non-text 
+          Contrast
+        </li>
+        <li>
+          zoom controls are removed from various map pages when viewed in WCAG reflow settings at 1280 x 1024px at 
+          a magnification of 400%. Additionally, the positioning of certain elements over the map does not account 
+          for the addition of a scroll bar and some of the text is cropped. This does not meet the requirement for 
+          WCAG 1.4.10 Reflow
+        </li>
       </ul>
 
-      <p class="govuk-body">We are looking to fix these issues in the following ways: </p>
+      <p class="govuk-body">We will to fix these issues in the following ways: </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>We are exploring ways to improve the accessibility of the controls on the map user interface so that they
-          are more descriptive and usable before December 2025.</li>
-        <li>We are planning an investigation of a more accessible scheme to differentiate layers used in mapping across
-          all flood services. We plan to carry out this work before December 2025.</li>
-        <li>We are planning an investigation about offering alternative, more accessible versions of the Ordnance Survey
-          mapping layers before December 2025.</li>
-        <li>We will carry out an accessibility audit in February 2025. This will be followed by usability testing with 
-          people with accessibility needs.</li>
+        <li>we plan to add a descriptive aria-label attribute to the navigation landmark that allows a screen reader 
+          to know this section is for page navigation</li>
+        <li>we will make sure text colours used provide sufficient contrast against the background, so that the outlines 
+          of the text characters are sufficiently defined for low vision users </li>
+        <li>we plan to use the format indicated in the GOV.UK Design System, for understanding focus state styles</li>
+        <li>we will make sure the flood depth graphics achieves a colour contrast ratio of least 3:1 against 
+          any adjacent colours</li>
+        <li>we plan to make sure the map pages can be viewed as a single column at 320px without any loss of content 
+          or functionality </li>
       </ul>
+
+      <p class="govuk-body">We will look to address these issues by December 2025.</p>
 
       <h4 class="govuk-heading-s">Content that's not within the scope of the accessibility regulations</h4>
       <p class="govuk-body">
@@ -148,27 +167,37 @@
       <h2 class="govuk-heading-l">What we’re doing to improve accessibility</h2>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>We commit to providing alternative, non-digital access to the service where requests are made to the
-          Environment Agency</li>
-        <li>We commit to providing accessible pdfs where requests are made to the Environment Agency</li>
+        <li>we have fixed 7 issues that failed to meet the WCAG version 2.2 A standard</li>
+        <li>we are working to fix all other content which fails to meet the WCAG version 2.2 
+          AA standard and we will update this page when these issues are fixed </li>
+        <li>once we have fixed these issues, we will conduct usability testing with people with accessibility needs </li>
       </ul>
 
       <h2 class="govuk-heading-l">Preparation of this accessibility statement</h2>
 
       <p class="govuk-body">
-        This statement was prepared on 24 September 2024. It was last reviewed on 24 September 2024.
+        The original statement was prepared on 22 September 2020.
       </p>
 
       <p class="govuk-body">
-        This website was last tested on 22 June 2023. The test was carried out by the Digital Accessibility Centre (DAC).
+        It was last reviewed on 7 January 2025.
       </p>
 
-      <p class="govuk-body">We tested the following 3 pages, which all users need to interact with to get a flood risk 
-        summary for an area:
+      <p class="govuk-body">
+        This website was last tested on 3 December 2024. The test was carried out by the Digital Accessibility Centre (DAC).
+      </p>
+
+      <p class="govuk-body">We tested the following pages:
         <ul class="govuk-list govuk-list--bullet">
           <li>Where do you want to check</li>
           <li>Select an address</li>
           <li>Flood risk summary</li>
+          <li>Rivers and the sea: understand your flood risk </li>
+          <li>Rivers and sea map</li>
+          <li>Rivers and the sea: possible flood depths</li>
+          <li>Surface water: understand your flood risk</li>
+          <li>Groundwater and reservoirs: understand your flood risk</li>
+          <li>Flood risk map</li>
         </ul>
       </p>
     </div>

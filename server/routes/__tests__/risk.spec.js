@@ -2,7 +2,7 @@ const STATUS_CODES = require('http2').constants
 const createServer = require('../..')
 const riskService = require('../../services/risk')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
-const defaultOptions = {
+let defaultOptions = {
   method: 'GET',
   url: '/risk'
 }
@@ -16,11 +16,6 @@ jest.mock('../../services/risk')
 beforeAll(async () => {
   server = await createServer()
   await server.initialize()
-  const initial = mockOptions()
-
-  const homepageresponse = await server.inject(initial)
-  expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-  cookie = homepageresponse.headers['set-cookie'][0].split(';')[0]
 })
 
 afterAll(async () => {
@@ -28,6 +23,15 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
+  defaultOptions = {
+    method: 'GET',
+    url: '/risk'
+  }
+  const initial = mockOptions()
+
+  const homepageresponse = await server.inject(initial)
+  expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+  cookie = homepageresponse.headers['set-cookie'][0].split(';')[0]
   const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
   let postResponse = await server.inject(postOptions)
   expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
@@ -82,7 +86,6 @@ describe('Risk page test', () => {
     const response = await server.inject(defaultOptions)
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(payload).toMatch(/<caption class="govuk-table__caption">11, BANCROFT PLACE, STRATFORD-UPON-AVON, CV37 6YZ<\/caption>/g)
     expect(payload).toMatch(/There is a risk of flooding from reservoirs in this area./g)
     expect(payload).toMatch(/Flooding is possible when groundwater levels are high/g)
   })
@@ -103,7 +106,6 @@ describe('Risk page test', () => {
     const response = await server.inject(defaultOptions)
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(payload).toMatch(/<caption class="govuk-table__caption">11, BANCROFT PLACE, STRATFORD-UPON-AVON, CV37 6YZ<\/caption>/g)
     expect(payload).toMatch(/Flooding from reservoirs is unlikely in this area/g)
     expect(payload).toMatch(/Flooding from groundwater is unlikely in this area/g)
   })
@@ -377,7 +379,7 @@ describe('Risk page test', () => {
     const response = await server.inject(defaultOptions)
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(payload).toMatch(/High risk means that this area has a chance of flooding of greater than 3.3% each year./g)
+    expect(payload).toMatch(/High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high./g)
   })
 
   test('should include text specifically for medium flood risk', async () => {
@@ -394,7 +396,7 @@ describe('Risk page test', () => {
     const response = await server.inject(defaultOptions)
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(payload).toMatch(/Medium risk means that this area has a chance of flooding of between 1% and 3.3% each year./g)
+    expect(payload).toMatch(/Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high./g)
   })
 
   test('should include text specifically for low flood risk', async () => {
@@ -411,7 +413,8 @@ describe('Risk page test', () => {
     const response = await server.inject(defaultOptions)
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(payload).toMatch(/Low risk means that this area has a chance of flooding of between 0.1% and 1% each year./g)
+    console.log(payload)
+    expect(payload).toMatch(/Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high./g)
   })
 
   test('should include text specifically for very low flood risk', async () => {
@@ -428,7 +431,7 @@ describe('Risk page test', () => {
     const response = await server.inject(defaultOptions)
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(payload).toMatch(/Very low risk means that this area has a chance of flooding of less than 0.1% each year./g)
+    expect(payload).toMatch(/Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high./g)
   })
 
   test('/risk with holding comments', async () => {

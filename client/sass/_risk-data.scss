@@ -38,28 +38,7 @@
   font-size: 1rem;
   line-height: 1.5;
 }
- 
-@media print {
-  .gem-c-contents-list--font-size-19 .gem-c-contents-list__title,
-  .gem-c-contents-list--font-size-19 .gem-c-contents-list__list {
-    font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .gem-c-contents-list--font-size-19 .gem-c-contents-list__title,
-  .gem-c-contents-list--font-size-19 .gem-c-contents-list__list {
-    font-size: 19px;
-    font-size: 1.1875rem;
-    line-height: 1.5;
-  }
-}
-@media print {
-  .gem-c-contents-list--font-size-19 .gem-c-contents-list__title,
-  .gem-c-contents-list--font-size-19 .gem-c-contents-list__list {
-    font-size: 14pt;
-    line-height: 1.5;
-  }
-}
+
 .gem-c-contents-list--font-size-24 .gem-c-contents-list__title,
 .gem-c-contents-list--font-size-24 .gem-c-contents-list__list {
   font-family: "GDS Transport", Arial, sans-serif;
@@ -70,28 +49,7 @@
   font-size: 1.125rem;
   line-height: 1.5;
 }
- 
-@media print {
-  .gem-c-contents-list--font-size-24 .gem-c-contents-list__title,
-  .gem-c-contents-list--font-size-24 .gem-c-contents-list__list {
-    font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .gem-c-contents-list--font-size-24 .gem-c-contents-list__title,
-  .gem-c-contents-list--font-size-24 .gem-c-contents-list__list {
-    font-size: 24px;
-    font-size: 1.5rem;
-    line-height: 1.5;
-  }
-}
-@media print {
-  .gem-c-contents-list--font-size-24 .gem-c-contents-list__title,
-  .gem-c-contents-list--font-size-24 .gem-c-contents-list__list {
-    font-size: 18pt;
-    line-height: 1.5;
-  }
-}
+
 .gem-c-contents-list__title {
   color: #0b0c0c;
   font-family: "GDS Transport", Arial, sans-serif;
@@ -103,30 +61,7 @@
   line-height: 1.5;
   margin: 0;
 }
- 
-@media print {
-  .gem-c-contents-list__title {
-    color: #000000;
-  }
-}
-@media print {
-  .gem-c-contents-list__title {
-    font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .gem-c-contents-list__title {
-    font-size: 16px;
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-}
-@media print {
-  .gem-c-contents-list__title {
-    font-size: 14pt;
-    line-height: 1.5;
-  }
-}
+
 .gem-c-contents-list__list,
 .gem-c-contents-list__nested-list {
   color: #0b0c0c;
@@ -141,34 +76,7 @@
   padding: 0;
   list-style-type: none;
 }
- 
-@media print {
-  .gem-c-contents-list__list,
-  .gem-c-contents-list__nested-list {
-    color: #000000;
-  }
-}
-@media print {
-  .gem-c-contents-list__list,
-  .gem-c-contents-list__nested-list {
-    font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .gem-c-contents-list__list,
-  .gem-c-contents-list__nested-list {
-    font-size: 16px;
-    font-size: 1rem;
-    line-height: 1.25;
-  }
-}
-@media print {
-  .gem-c-contents-list__list,
-  .gem-c-contents-list__nested-list {
-    font-size: 14pt;
-    line-height: 1.2;
-  }
-}
+
 .gem-c-contents-list--no-underline .gem-c-contents-list__link {
   text-decoration: none;
 }
@@ -202,12 +110,7 @@
   line-height: 1.3;
   list-style-type: none;
 }
- 
-@media (min-width: 40.0625em) {
-  .gem-c-contents-list__list-item {
-    padding-top: 7.5px;
-  }
-}
+
 .gem-c-contents-list__list-item--dashed {
   position: relative;
   padding-left: 25px;
@@ -230,4 +133,112 @@
 .lte-ie8 .gem-c-contents-list__list-item--dashed .gem-c-contents-list__link {
   display: inline-block;
   vertical-align: top;
+}
+
+
+@media print {
+  .gem-c-contents-list__title {
+    color: #000000;
+  }
+}
+@media print {
+  .gem-c-contents-list__title {
+    font-family: sans-serif;
+  }
+}
+
+@media print {
+  .gem-c-contents-list__list,
+  .gem-c-contents-list__nested-list {
+    color: #000000;
+  }
+}
+@media print {
+  .gem-c-contents-list__list,
+  .gem-c-contents-list__nested-list {
+    font-family: sans-serif;
+  }
+}
+
+@media print {
+  .gem-c-contents-list__list,
+  .gem-c-contents-list__nested-list {
+    font-size: 14pt;
+    line-height: 1.2;
+  }
+}
+
+@media print {
+  .gem-c-contents-list--font-size-24 .gem-c-contents-list__title,
+  .gem-c-contents-list--font-size-24 .gem-c-contents-list__list {
+    font-family: sans-serif;
+  }
+}
+
+@media print {
+  .gem-c-contents-list--font-size-24 .gem-c-contents-list__title,
+  .gem-c-contents-list--font-size-24 .gem-c-contents-list__list {
+    font-size: 18pt;
+    line-height: 1.5;
+  }
+}
+
+@media print {
+  .gem-c-contents-list--font-size-19 .gem-c-contents-list__title,
+  .gem-c-contents-list--font-size-19 .gem-c-contents-list__list {
+    font-family: sans-serif;
+  }
+}
+@media print {
+  .gem-c-contents-list--font-size-19 .gem-c-contents-list__title,
+  .gem-c-contents-list--font-size-19 .gem-c-contents-list__list {
+    font-size: 14pt;
+    line-height: 1.5;
+  }
+}
+@media (min-width: 40.0625em) {
+  .gem-c-contents-list--font-size-19 .gem-c-contents-list__title,
+  .gem-c-contents-list--font-size-19 .gem-c-contents-list__list {
+    font-size: 19px;
+    font-size: 1.1875rem;
+    line-height: 1.5;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .gem-c-contents-list--font-size-24 .gem-c-contents-list__title,
+  .gem-c-contents-list--font-size-24 .gem-c-contents-list__list {
+    font-size: 24px;
+    font-size: 1.5rem;
+    line-height: 1.5;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .gem-c-contents-list__list,
+  .gem-c-contents-list__nested-list {
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .gem-c-contents-list__list-item {
+    padding-top: 7.5px;
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .gem-c-contents-list__title {
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+@media print {
+  .gem-c-contents-list__title {
+    font-size: 14pt;
+    line-height: 1.5;
+  }
 }

@@ -3,6 +3,7 @@ const util = require('../../util')
 const address1 = require('./data/address1.json')
 const address2 = require('./data/address2.json')
 const config = require('../../config')
+const simulatedData = require('../../routes/simulated/data/address-service.json')
 
 let returnValue = {}
 function setReturnValue (value) {
@@ -17,6 +18,7 @@ function setReturnValue (value) {
 }
 
 jest.mock('../../util')
+jest.mock('../../config')
 
 util.getJson = jest.fn(async () => {
   return returnValue
@@ -57,5 +59,48 @@ describe('Address service', () => {
   test('Config file osPostcodeUrl does not have parameters in the url', async () => {
     expect(config.osPostcodeUrl).not.toMatch(/dataset=DPA/g)
     expect(config.osPostcodeUrl).not.toMatch(/postcode=/g)
+  })
+})
+
+describe('simulatedFind function', () => {
+  test('returns simulated data when file is not found', async () => {
+    config.setConfigOptions({ simulatedDataPath: './server/routes/simulated/data/' })
+    const inputPostcode = 'INVALID POSTCODE'
+    const result = await addressService.simulatedFind(inputPostcode)
+    expect(result).toEqual(simulatedData)
+  })
+
+  test('returns correct data when file is found', async () => {
+    const inputPostcode = 'NP18 3EZ'
+    config.setConfigOptions({ simulatedDataPath: './server/routes/simulated/data/' })
+    const result = await addressService.simulatedFind(inputPostcode)
+    expect(result.length).toBeGreaterThan(0)
+    expect(result[0]).toHaveProperty('uprn')
+    expect(result[0]).toHaveProperty('postcode')
+    expect(result[0].postcode).toEqual('NP18 3EZ')
+    expect(result[0]).toHaveProperty('address')
+    expect(result[0]).toHaveProperty('country_code')
+    expect(result[0]).toHaveProperty('x')
+    expect(result[0]).toHaveProperty('y')
+  })
+})
+
+describe('Address service module.exports.find', () => {
+  beforeEach(() => {
+    jest.resetModules()
+  })
+
+  test('find is set to simulatedFind when simulateAddressService is true', async () => {
+    jest.mock('../../config', () => ({ simulateAddressService: true }))
+    const updatedAddressService = require('../address')
+
+    expect(updatedAddressService.find).toBe(updatedAddressService.simulatedFind)
+  })
+
+  test('find is not set to simulatedFind when simulateAddressService is false', async () => {
+    jest.mock('../../config', () => ({ simulateAddressService: false }))
+    const updatedAddressService = require('../address')
+
+    expect(updatedAddressService.find).not.toBe(updatedAddressService.simulatedFind)
   })
 })
