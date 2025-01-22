@@ -65,32 +65,6 @@ function mapPage () {
     }
   }, 100)
 
-  // This is to style the zoom buttons as they  cannot be styled with CSS as it is within a shadow root
-  setTimeout(() => {
-    const zoomButtons = document.querySelectorAll('.esri-widget--button')
-    if (zoomButtons) {
-      zoomButtons.forEach(button => {
-        let isMouseUsed = false
-        button.addEventListener('mousedown', function () {
-          isMouseUsed = true
-          this.classList.add('no-focus')
-        })
-        button.addEventListener('click', function () {
-          if (isMouseUsed) {
-            this.classList.remove('no-focus')
-            this.blur()
-          }
-          isMouseUsed = false
-        })
-        button.addEventListener('keydown', function (event) {
-          if (event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') {
-            isMouseUsed = false
-          }
-        })
-      })
-    }
-  }, 1000)
-
   // Removes skip to main content function from map pages
   document.addEventListener('DOMContentLoaded', function () {
     const skipLink = document.querySelector('.govuk-skip-link')
