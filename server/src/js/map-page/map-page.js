@@ -84,6 +84,10 @@ function mapPage () {
       if (targetLink && targetLink.getAttribute('tabindex') !== '12') {
         targetLink.setAttribute('tabindex', '12')
       }
+      // Removes target attribute from esri link
+      if (targetLink.hasAttribute('target')) {
+        targetLink.removeAttribute('target')
+      }
 
       // Function to update tabindex for zoom buttons within the shadow root
       function setTabIndexForShadowRootButton (calciteButtonSelector, tabindexValue) {
