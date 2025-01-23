@@ -77,11 +77,11 @@ function mapPage () {
   const observer = new MutationObserver((mutations) => {
     mutations.forEach(() => {
       const mapContainer = document.querySelector('.esri-view-surface')
-      if (mapContainer && mapContainer.getAttribute('tabindex') !== '5') {
+      if (mapContainer?.getAttribute('tabindex') !== '5') {
         mapContainer.setAttribute('tabindex', '5')
       }
       const esriLink = document.querySelector('.esri-attribution__link')
-      if (esriLink && esriLink.getAttribute('tabindex') !== '12') {
+      if (esriLink?.getAttribute('tabindex') !== '12') {
         esriLink.setAttribute('tabindex', '12')
       }
       // Removes target attribute from esri link
