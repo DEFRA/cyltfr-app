@@ -85,7 +85,7 @@ function mapPage () {
         esriLink.setAttribute('tabindex', '12')
       }
       // Removes target attribute from esri link
-      if (esriLink.hasAttribute('target')) {
+      if (esriLink?.hasAttribute('target')) {
         esriLink.removeAttribute('target')
       }
 
