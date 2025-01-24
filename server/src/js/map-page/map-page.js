@@ -76,13 +76,17 @@ function mapPage () {
   // Locates the ESRI components so that tabindex can be added
   const observer = new MutationObserver((mutations) => {
     mutations.forEach(() => {
-      const target = document.querySelector('.esri-view-surface')
-      if (target && target.getAttribute('tabindex') !== '5') {
-        target.setAttribute('tabindex', '5')
+      const mapContainer = document.querySelector('.esri-view-surface')
+      if (mapContainer?.getAttribute('tabindex') !== '5') {
+        mapContainer.setAttribute('tabindex', '5')
       }
-      const targetLink = document.querySelector('.esri-attribution__link')
-      if (targetLink && targetLink.getAttribute('tabindex') !== '12') {
-        targetLink.setAttribute('tabindex', '12')
+      const esriLink = document.querySelector('.esri-attribution__link')
+      if (esriLink?.getAttribute('tabindex') !== '12') {
+        esriLink.setAttribute('tabindex', '12')
+      }
+      // Removes target attribute from esri link
+      if (esriLink?.hasAttribute('target')) {
+        esriLink.removeAttribute('target')
       }
 
       // Function to update tabindex for zoom buttons within the shadow root
