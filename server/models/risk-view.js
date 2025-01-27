@@ -15,10 +15,12 @@ const RiskTitles = {
 }
 
 const highestLevel = (risk, riskCC) => {
-  const riskL = Levels.indexOf(risk)
-  const riskCCL = Levels.indexOf(riskCC)
-  if (riskL > riskCCL) {
-    return risk
+  if (riskCC !== 'Unavailable') {
+    const riskL = Levels.indexOf(risk)
+    const riskCCL = Levels.indexOf(riskCC)
+    if (riskL > riskCCL) {
+      return risk
+    }
   }
   return riskCC
 }
