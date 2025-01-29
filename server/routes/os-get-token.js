@@ -9,7 +9,7 @@ module.exports = {
     try {
       const mapTokenExpiry = request.yar.get('mapTokenExpiry')
       if (Date.now() > mapTokenExpiry) {
-        return Boom.badRequest(errors.osGetTokenMapExpired.message)
+        return h.response({ error: errors.osGetTokenMapExpired.message }).code(200)
       }
       const payload = await osApi.osGetAccessToken()
       return h.response(payload).type('application/json')
