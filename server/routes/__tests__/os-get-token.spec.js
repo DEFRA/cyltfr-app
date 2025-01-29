@@ -31,7 +31,8 @@ describe('/os-get-token page', () => {
     }
 
     const response = await server.inject(options)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST) // 400
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
+    expect(response.result).toEqual({ error: 'Ordnance survey Token fetch failed. Map token expired.' })
   })
 
   test('/os-get-token with map page visit', async () => {
