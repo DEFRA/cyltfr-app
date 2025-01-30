@@ -50,7 +50,7 @@ describe('/os-get-token page', () => {
 
     options.url = '/os-get-token'
     const tokenResponse = await server.inject(options)
-    expect(tokenResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_NO_CONTENT) // 204
+    expect(tokenResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
   })
 
   test('catch with 400 error if there are any failures in OS API call', async () => {
@@ -69,6 +69,6 @@ describe('/os-get-token page', () => {
 
     options.url = '/os-get-token'
     const tokenResponse = await server.inject(options)
-    expect(tokenResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST) // 400
+    expect(tokenResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE) // 503
   })
 })

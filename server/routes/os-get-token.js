@@ -16,7 +16,7 @@ module.exports = {
       const payload = await osApi.osGetAccessToken()
       return h.response(payload).type('application/json')
     } catch (err) {
-      return Boom.badRequest(errors.osGetToken, err)
+      return Boom.serverUnavailable(errors.osGetToken, err)
     }
   },
   options: {
