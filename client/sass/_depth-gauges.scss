@@ -221,7 +221,6 @@ $mobile-width: 480px;
   margin-bottom: 10px;
 }
 
-// Stack gauges vertically
 @media (max-width: $mobile-width) {
   .gauge-display {
     flex-wrap: wrap;
