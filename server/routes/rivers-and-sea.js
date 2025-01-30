@@ -31,7 +31,7 @@ module.exports = {
         risk.extraInfo?.error
 
       if (hasError) {
-        return boom.badRequest(errors.spatialQuery.message, {
+        return boom.serverUnavailable(errors.spatialQuery.message, {
           risk,
           address
         })
@@ -40,7 +40,7 @@ module.exports = {
       const model = new RiversAndSeaViewModel(risk, address, backLinkUri)
       return h.view('rivers-and-sea', model)
     } catch (err) {
-      return boom.badRequest(errors.riskProfile.message, err)
+      return boom.serverUnavailable(errors.riskProfile.message, err)
     }
   },
   options: {

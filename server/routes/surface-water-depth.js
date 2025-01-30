@@ -25,7 +25,7 @@ module.exports = {
 
       return h.view('surface-water-depth', surfaceWaterDepthViewModel(swDepth, null, address, backLinkUri))
     } catch (err) {
-      return boom.badRequest(errors.riskProfile.message, err)
+      return boom.serverUnavailable(errors.riskProfile.message, err)
     }
   },
   options: {

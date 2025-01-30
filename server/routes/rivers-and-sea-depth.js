@@ -25,7 +25,7 @@ module.exports = {
       const model = riversAndSeaDepthViewModel(null, rsDepth, address, backLinkUri)
       return h.view('rivers-and-sea-depth', model)
     } catch (err) {
-      return boom.badRequest(errors.riskProfile.message, err)
+      return boom.serverUnavailable(errors.riskProfile.message, err)
     }
   },
   options: {

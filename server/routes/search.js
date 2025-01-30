@@ -70,7 +70,7 @@ module.exports = [
         const backLinkUri = '/postcode'
         return h.view('search', new SearchViewModel(postcode, addresses, null, warnings, backLinkUri))
       } catch (err) {
-        return boom.badRequest(errors.addressByPostcode.message, err)
+        return boom.serverUnavailable(errors.addressByPostcode.message, err)
       }
     },
     options: {
