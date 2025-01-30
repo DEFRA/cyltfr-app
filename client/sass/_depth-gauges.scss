@@ -205,34 +205,34 @@ $mobile-width: 480px;
   display: flex;
   overflow-x: auto;
   flex-wrap: nowrap;
-}
   
-.gauge-display__item {
-  position: relative;
-  width: 50%;
-  min-width: 226px;
-  margin-bottom: 20px;
-}
+  .gauge-display__item {
+    position: relative;
+    width: 50%;
+    min-width: 226px;
+    margin-bottom: 20px;
+  }
   
-.gauge-display__item-all-gauges {
-  position: relative;
-  width: 50%;
-  min-width: 226px;
-  margin-bottom: 10px;
+  .gauge-display__item-all-gauges {
+    position: relative;
+    width: 50%;
+    min-width: 226px;
+    margin-bottom: 10px;
+  }
 }
 
 @media (max-width: $mobile-width) {
   .gauge-display {
     flex-wrap: wrap;
-  }
 
-  .gauge-display__item-all-gauges {
-    display: block;
-    margin-bottom: 20px;
-  }
+    .gauge-display__item-all-gauges {
+      display: block;
+      margin-bottom: 20px;
+    }
 
-  .gauge-display__item-all-gauges:last-child {
-    margin-bottom: 0px;
+    .gauge-display__item-all-gauges:last-child {
+      margin-bottom: 0px;
+    }
   }
 }
 
