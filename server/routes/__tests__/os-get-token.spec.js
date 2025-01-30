@@ -1,6 +1,7 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const { mockOptions } = require('../../../test/mock')
+const osApi = require('../../services/osapi')
 let server, cookie
 
 jest.mock('../../config')
@@ -24,17 +25,18 @@ afterAll(async () => {
 })
 
 describe('/os-get-token page', () => {
-  test('/os-get-token without map page visit', async () => {
+  test('/os-get-token without map page visit returns error but still returns 200ok', async () => {
     const options = {
       method: 'GET',
       url: '/os-get-token'
     }
 
     const response = await server.inject(options)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST) // 400
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
+    expect(response.result).toEqual({ error: 'Ordnance survey Token fetch failed. Map token expired.' })
   })
 
-  test('/os-get-token with map page visit', async () => {
+  test('/os-get-token with map page visit returns OS API token payload', async () => {
     const options = {
       method: 'GET',
       url: '/map',
@@ -48,6 +50,25 @@ describe('/os-get-token page', () => {
 
     options.url = '/os-get-token'
     const tokenResponse = await server.inject(options)
-    expect(tokenResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_NO_CONTENT) // 204
+    expect(tokenResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
+  })
+
+  test('catch with 400 error if there are any failures in OS API call', async () => {
+    const options = {
+      method: 'GET',
+      url: '/map',
+      headers: {
+        cookie
+      }
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
+
+    osApi.osGetAccessToken.mockImplementation(() => { throw new Error('osGetToken') })
+
+    options.url = '/os-get-token'
+    const tokenResponse = await server.inject(options)
+    expect(tokenResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE) // 503
   })
 })

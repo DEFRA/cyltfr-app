@@ -19,14 +19,14 @@ async function refreshOsToken () {
   tokenFetchRunning = true
   const response = await fetch('/os-get-token')
   tokenFetchRunning = false
-  if (response.ok) {
-    const tokenValues = await response.json()
-    window.mapConfig.osToken = tokenValues.access_token
+  const formattedResponse = await response.json()
+  if (formattedResponse.error) {
+    throw new Error('os-get-token failed')
+  } else {
+    window.mapConfig.osToken = formattedResponse.access_token
     setTimeout(() => {
       refreshOsToken()
-    }, (tokenValues.expires_in - TOKEN_PREFETCH_SECS) * 1000)
-  } else {
-    throw new Error('os-get-token failed')
+    }, (formattedResponse.expires_in - TOKEN_PREFETCH_SECS) * 1000)
   }
 }
 
