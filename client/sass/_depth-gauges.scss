@@ -1,4 +1,5 @@
 $left-offset: -3.65em;
+$mobile-width: 480px;
 
 .defra-flood-impact-list {
   font-family: "GDS Transport", arial, sans-serif;
@@ -204,19 +205,35 @@ $left-offset: -3.65em;
   display: flex;
   overflow-x: auto;
   flex-wrap: nowrap;
+}
   
-  .gauge-display__item {
-    position: relative;
-    width: 50%;
-    min-width: 226px;
+.gauge-display__item {
+  position: relative;
+  width: 50%;
+  min-width: 226px;
+  margin-bottom: 20px;
+}
+  
+.gauge-display__item-all-gauges {
+  position: relative;
+  width: 50%;
+  min-width: 226px;
+  margin-bottom: 10px;
+}
+
+// Stack gauges vertically
+@media (max-width: $mobile-width) {
+  .gauge-display {
+    flex-wrap: wrap;
+  }
+
+  .gauge-display__item-all-gauges {
+    display: block;
     margin-bottom: 20px;
   }
-  
-  .gauge-display__item-all-gauges {
-    position: relative;
-    width: 50%;
-    min-width: 226px;
-    margin-bottom: 10px;
+
+  .gauge-display__item-all-gauges:last-child {
+    margin-bottom: 0px;
   }
 }
 
