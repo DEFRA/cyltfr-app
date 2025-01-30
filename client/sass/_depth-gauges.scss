@@ -1,4 +1,5 @@
 $left-offset: -3.65em;
+$mobile-width: 480px;
 
 .defra-flood-impact-list {
   font-family: "GDS Transport", arial, sans-serif;
@@ -217,6 +218,21 @@ $left-offset: -3.65em;
     width: 50%;
     min-width: 226px;
     margin-bottom: 10px;
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .gauge-display {
+    flex-wrap: wrap;
+
+    .gauge-display__item-all-gauges {
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .gauge-display__item-all-gauges:last-child {
+      margin-bottom: 0px;
+    }
   }
 }
 
