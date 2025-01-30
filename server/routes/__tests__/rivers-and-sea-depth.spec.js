@@ -103,7 +103,7 @@ describe('GET /rivers-and-sea-depth', () => {
     })
     const response = await server.inject(mockRequest)
 
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
   test('risk address not in england', async () => {

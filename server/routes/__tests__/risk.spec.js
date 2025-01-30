@@ -116,7 +116,7 @@ describe('Risk page test', () => {
     })
 
     const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
   test('/risk - riverAndSeaRisk error', async () => {
@@ -133,7 +133,7 @@ describe('Risk page test', () => {
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
   test('/risk - surfaceWaterRisk error', async () => {
@@ -150,7 +150,7 @@ describe('Risk page test', () => {
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
   test('/risk reservoirDryRisk error', async () => {
@@ -167,7 +167,7 @@ describe('Risk page test', () => {
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
   test('/risk reservoirWetRisk error', async () => {
@@ -183,7 +183,7 @@ describe('Risk page test', () => {
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
   test('/risk leadLocalFloodAuthority error', async () => {
@@ -200,7 +200,7 @@ describe('Risk page test', () => {
       extraInfo: null
     })
     const response = await server.inject(defaultOptions)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
   /**

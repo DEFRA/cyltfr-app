@@ -108,7 +108,7 @@ describe('GET /ground-water', () => {
     })
     const response = await server.inject(mockRequest)
 
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
   test('should create an array of reservoirs if there is a reservoirs risk', async () => {

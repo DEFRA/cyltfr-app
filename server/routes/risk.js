@@ -32,7 +32,7 @@ module.exports = {
         risk.extraInfo?.error
 
         if (hasError) {
-          return boom.badRequest(errors.spatialQuery.message, {
+          return boom.serverUnavailable(errors.spatialQuery.message, {
             risk,
             address
           })
@@ -40,10 +40,10 @@ module.exports = {
         const backLinkUri = '/search'
         return h.view('risk', new RiskViewModel(risk, address, backLinkUri))
       } catch (err) {
-        return boom.badRequest(errors.riskProfile.message, err)
+        return boom.serverUnavailable(errors.riskProfile.message, err)
       }
     } catch (err) {
-      return boom.badRequest(errors.addressById.message, err)
+      return boom.serverUnavailable(errors.addressById.message, err)
     }
   },
   options: {
