@@ -6,7 +6,7 @@ const schema = joi.object().keys({
   host: joi.string().hostname().required(),
   port: joi.number().required(),
   serviceUrl: joi.string().uri().required(),
-  dataVersion: joi.string().default('01'),
+  dataVersion: joi.string().default('test'),
   simulateAddressService: joi.boolean().default(false),
   performanceLogging: joi.boolean().default(false),
   httpTimeoutMs: joi.number().required().min(0).max(30000),
