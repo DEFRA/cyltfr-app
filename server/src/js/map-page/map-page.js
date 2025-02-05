@@ -65,32 +65,6 @@ function mapPage () {
     }
   }, 100)
 
-  // This is to style the zoom buttons as they  cannot be styled with CSS as it is within a shadow root
-  setTimeout(() => {
-    const zoomButtons = document.querySelectorAll('.esri-widget--button')
-    if (zoomButtons) {
-      zoomButtons.forEach(button => {
-        let isMouseUsed = false
-        button.addEventListener('mousedown', function () {
-          isMouseUsed = true
-          this.classList.add('no-focus')
-        })
-        button.addEventListener('click', function () {
-          if (isMouseUsed) {
-            this.classList.remove('no-focus')
-            this.blur()
-          }
-          isMouseUsed = false
-        })
-        button.addEventListener('keydown', function (event) {
-          if (event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') {
-            isMouseUsed = false
-          }
-        })
-      })
-    }
-  }, 1000)
-
   // Removes skip to main content function from map pages
   document.addEventListener('DOMContentLoaded', function () {
     const skipLink = document.querySelector('.govuk-skip-link')
@@ -102,13 +76,17 @@ function mapPage () {
   // Locates the ESRI components so that tabindex can be added
   const observer = new MutationObserver((mutations) => {
     mutations.forEach(() => {
-      const target = document.querySelector('.esri-view-surface')
-      if (target && target.getAttribute('tabindex') !== '5') {
-        target.setAttribute('tabindex', '5')
+      const mapContainer = document.querySelector('.esri-view-surface')
+      if (mapContainer?.getAttribute('tabindex') !== '5') {
+        mapContainer.setAttribute('tabindex', '5')
       }
-      const targetLink = document.querySelector('.esri-attribution__link')
-      if (targetLink && targetLink.getAttribute('tabindex') !== '12') {
-        targetLink.setAttribute('tabindex', '12')
+      const esriLink = document.querySelector('.esri-attribution__link')
+      if (esriLink?.getAttribute('tabindex') !== '12') {
+        esriLink.setAttribute('tabindex', '12')
+      }
+      // Removes target attribute from esri link
+      if (esriLink?.hasAttribute('target')) {
+        esriLink.removeAttribute('target')
       }
 
       // Function to update tabindex for zoom buttons within the shadow root
@@ -279,14 +257,12 @@ mapPageConsts.exitMapBtn.addEventListener('click', function () {
 })
 
 // Close and open key assignments
-if (!mapPageConsts.mapPageQuery) {
-  if (mapPageConsts.closeKeyBtns) {
-    mapPageConsts.closeKeyBtns.forEach((btn) => {
-      btn.addEventListener('click', closeKey)
-    })
-  } else {
-    mapPageConsts.closeKeyBtn.addEventListener('click', closeKey)
-  }
+if (mapPageConsts.closeKeyBtn) {
+  mapPageConsts.closeKeyBtn.addEventListener('click', closeKey)
+} else {
+  mapPageConsts.closeKeyBtns.forEach((btn) => {
+    btn.addEventListener('click', closeKey)
+  })
 }
 mapPageConsts.openKeyBtn.addEventListener('click', function (event) {
   event.stopPropagation()

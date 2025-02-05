@@ -108,7 +108,7 @@ describe('GET /rivers-and-sea', () => {
     })
     const response = await server.inject(mockRequest)
 
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
   test('should return "Very low" risk probability when riverAndSeaRisk is not present', async () => {
