@@ -1,0 +1,247 @@
+<!-- Surface water key -->
+<div id="surfaceWaterContainer" class="tech-map-key">
+  <h1 id="mapKeyLabel" class="defra-map-key__title">
+    <span class="key-title" role="text">Surface water map<span class="govuk-visually-hidden">for map features</span></span>
+    <button class="defra-map-key__close close-key">
+      <svg class="close-btn" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
+        <path d="M10,8.6L15.6,3L17,4.4L11.4,10L17,15.6L15.6,17L10,11.4L4.4,17L3,15.6L8.6,10L3,4.4L4.4,3L10,8.6Z"></path>
+      </svg>
+      <span class="govuk-visually-hidden">Close key</span>
+    </button>
+  </h1>
+
+  <div class="defra-map-key__content">
+    <div class="govuk-form-group" id="map-key__section">
+      <div id="sw-section-container">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+            <h2 id="defra-map-key__section-title-top-title" class="defra-map-key__section-title" ontoken="this.onscrolling = false">Yearly chance of flooding</h2>
+          </legend>
+      
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="risk-radio govuk-radios__input govuk-radios__inputs risk-measurement extent-radio" id="sw-extent-radio" tabindex="1"
+                value="{{maps.categories[1].maps[0].ref}}"
+                title="Extent of flooding from surface water" name="measurements" type="radio" checked="">
+              <label class="govuk-label govuk-radios__label" for="sw-extent-radio">
+                <span class="surface-water-bulletpoint__heading" id="surface-water-extent__heading">Extent</span>
+      
+                <div id="sw-extent-desc-container" class="extent-desc-container desc-container">
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-extent-high">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="high-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">High chance</span>
+                    <span class="risk-context">More than 3.3% chance each year</span>
+                  </span>
+      
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-extent-med">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="medium-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Medium chance</span>
+                    <span class="risk-context">Between 1% and 3.3% chance each year</span>
+                  </span>
+      
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-extent-low">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="low-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Low chance</span>
+                    <span class="risk-context">Between 0.1% and 1% chance each year</span>
+                  </span>
+                  
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="risk-radio govuk-radios__input govuk-radios__inputs risk-measurement depth-radio" id="depthRadioBtn" tabindex="1"
+                value="{{maps.categories[1].maps[2].ref}}"
+                title="Depth of flooding from surface water" name="measurements" type="radio">
+              <label class="govuk-label govuk-radios__label" for="depthRadioBtn">
+                <span class="surface-water-bulletpoint__heading" id="surface-water-depth__heading">Depth</span>
+      
+                <div id="sw-depth-desc-container" class="depth-desc-container desc-container hide">
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-depth-high">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="high-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">High chance</span>
+                    <span class="risk-context">More than 3.3% chance each year</span>
+                  </span>
+      
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-depth-med">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="medium-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Medium chance</span>
+                    <span class="risk-context">Between 1% and 3.3% chance each year</span>
+                  </span>
+      
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-depth-low">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="low-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Low chance</span>
+                    <span class="risk-context">Between 0.1% and 1% chance each year</span>
+                  </span>
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-depth-very-low">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="very-low-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Very low chance</span>
+                    <span class="risk-context">Less than 0.1% chance each year</span>
+                  </span>
+                  
+                </div>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+            <h2 class="defra-map-key__section-title" ontoken="this.onscrolling = false">Yearly chance of flooding between 2040 and 2060</h2>
+          </legend>
+      
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="risk-radio govuk-radios__input govuk-radios__inputs extent-radio-cc risk-measurement" id="sw-extent-radio-cc" tabindex="1"
+                value="{{maps.categories[1].maps[1].ref}}"
+                title="Extent of flooding from surface water (2040-2060)" name="measurements" type="radio">
+              <label class="govuk-label govuk-radios__label" for="sw-extent-radio-cc">
+                <span class="surface-water-bulletpoint__heading" id="surface-water-extent-cc__heading">Extent</span>
+                <div id="sw-extent-desc-container-cc" class="extent-desc-container-cc desc-container hide">
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-extent-cc-high">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="high-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">High chance</span>
+                    <span class="risk-context">More than 3.3% chance each year</span>
+                  </span>
+      
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-extent-cc-med">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="medium-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Medium chance</span>
+                    <span class="risk-context">Between 1% and 3.3% chance each year</span>
+                  </span>
+      
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-extent-cc-low">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="low-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Low chance</span>
+                    <span class="risk-context">Between 0.1% and 1% chance each year</span>
+                  </span>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="risk-radio govuk-radios__input govuk-radios__inputs risk-measurement depth-radio-cc" id="depth-radio-cc" tabindex="1"
+                value="{{maps.categories[1].maps[6].ref}}"
+                title="Extent of flooding from surface water (2040-2060)" name="measurements" type="radio">
+              <label class="govuk-label govuk-radios__label" for="depth-radio-cc">
+                <span class="surface-water-bulletpoint__heading" id="surface-water-depth-cc__heading">Depth</span>
+                <div id="sw-depth-desc-container-cc" class="depth-desc-container-cc desc-container hide">
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-depth-cc-high">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="high-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">High chance</span>
+                    <span class="risk-context">More than 3.3% chance each year</span>
+                  </span>
+      
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-depth-cc-med">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="medium-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Medium chance</span>
+                    <span class="risk-context">Between 1% and 3.3% chance each year</span>
+                  </span>
+      
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-depth-cc-low">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="low-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Low chance</span>
+                    <span class="risk-context">Between 0.1% and 1% chance each year</span>
+                  </span>
+                  <span
+                    class="defra-map-key__symbol-container-v3 defra-map-key__symbol-container--multi sw-extent-container"
+                    id="sw-depth-cc-very-low">
+                    <span class="defra-map-key__symbol">
+                      <svg class="risk-square-svg" aria-hidden="true" focusable="false" viewBox="0 0 36 36">
+                        <rect class="very-low-symbol risk-colour-square" x="5" y="5"></rect>
+                      </svg>
+                    </span>
+                    <span class="risk-severity-text">Very low chance</span>
+                    <span class="risk-context">Less than 0.1% chance each year</span>
+                  </span>
+                  
+                </div>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      {% include './toggles.html' %}
+    </div>
+  </div>
+</div>
