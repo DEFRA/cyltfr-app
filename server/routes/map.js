@@ -17,6 +17,12 @@ module.exports = {
     description: 'Get the map page',
     handler: async (request, h) => {
       let view = 'map'
+      const browserInfo = request.headers['user-agent']
+      const unsupportedBrowsers = ['MSIE', 'Trident', 'iOS']
+
+      if (unsupportedBrowsers.some(browser => browserInfo.includes(browser))) {
+        return h.view('unsupported-browser')
+      }
       const { query } = request
       const { easting, northing } = query
       const address = request.yar.get('address')
