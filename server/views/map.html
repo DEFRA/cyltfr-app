@@ -635,6 +635,9 @@
     </div>
   </div>
 </div>
+<div id="map-not-supported" style="display: none">
+  <p class="govuk-body">Your device is not supported. A map is available with a more up-to-date browser or device.</p>
+</div>
 {% endblock %}
 
 {% block bodyEnd %}
@@ -644,6 +647,7 @@
   window.mapConfig = JSON.parse({{ mapConfig | dump | safe }})
 </script>
 <script src="{{ assetPath }}/nunjucks-slim.js"></script>
+<script src="{{ assetPath }}/js/capabilities.js"></script>
 <script src="{{ assetPath }}/js/map.js"></script>
 <script src="{{ assetPath }}/js/mapPage.js"></script>
 

@@ -1,12 +1,7 @@
 import { openKey, closeKey, selectedOption, scenarioDisplayUpdate, resetDepthBarStyling } from './map-controls.js'
 import { mapPageConsts } from './constants.js'
 const MutationObserver = require('mutation-observer')
-const gl = document.createElement('canvas').getContext('webgl2')
-if (!gl) {
-  console.log('your browser/OS/drivers do not support WebGL2')
-} else {
-  console.log('webgl2 works!')
-}
+
 class MapController {
   constructor (categories) {
     this._categories = categories
@@ -63,7 +58,6 @@ function mapPage () {
   const easting = parseInt(getParameterByName('easting'), 10)
   const northing = parseInt(getParameterByName('northing'), 10)
   const hasLocation = !!easting
-  console.log('about to check state')
   const stateCheck = setInterval(() => {
     if (document.readyState === 'complete') {
       clearInterval(stateCheck)
