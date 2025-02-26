@@ -40,6 +40,8 @@ const upTo90Cc = document.getElementsByClassName('up-to-90-cc-radio')
 const params = window.location.search
 const currentPageURL = new URLSearchParams(document.location.search)
 const mapPageQuery = currentPageURL.get('map')
+const mapContainer = document.getElementsByClassName('map-container')
+const mapNotSupported = document.getElementById('map-not-supported')
 
 export const mapPageConsts = {
   closeKeyBtn,
@@ -74,7 +76,9 @@ export const mapPageConsts = {
   mapPageQuery,
   upTo20,
   upTo20Cc,
-  params
+  params,
+  mapContainer,
+  mapNotSupported
 }
 
 export const mapControlsConsts = {

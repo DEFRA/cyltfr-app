@@ -4,6 +4,7 @@ module.exports = {
   mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
   devtool: 'source-map',
   entry: {
+    capabilities: './server/src/js/map-page/capabilities.js',
     mapPage: './server/src/js/map-page/map-page.js',
     map: {
       dependOn: 'mapPage',
