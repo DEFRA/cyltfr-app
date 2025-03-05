@@ -18,11 +18,10 @@ module.exports = {
     }
 
     const { x, y } = address
-    const radius = 15
     const backLinkUri = '/risk'
 
     try {
-      const risk = await request.server.methods.riskService(x, y, radius)
+      const risk = await request.server.methods.riskService(x, y)
       const hasError = risk.riverAndSeaRisk?.error ||
         risk.surfaceWaterRisk?.error ||
         risk.reservoirDryRisk?.error ||
