@@ -569,6 +569,12 @@
                 "icon": "light blue"
               }
             ]
+          },
+          "styleOverride": {
+            "paint": {
+              "fill-color": "#FFCCCB",
+              "opacity": 0.5
+            }
           }
         },
         {
