@@ -571,10 +571,91 @@
             ]
           },
           "styleOverride": {
-            "paint": {
-              "fill-color": "#FFCCCB",
-              "opacity": 0.5
-            }
+            "version": 8,
+            "sprite": "../sprites/sprite",
+            "glyphs": "../fonts/{fontstack}/{range}.pbf",
+            "sources": {
+              "esri": {
+                "type": "vector",
+                "bounds": [
+                  -6.98424,
+                  49.8816,
+                  2.07311,
+                  55.8115
+                ],
+                "minzoom": 1,
+                "maxzoom": 14,
+                "scheme": "xyz",
+                "url": "../../"
+              }
+            },
+            "layers": [
+              {
+                "id": "Risk of Flooding from Surface Water Depth CCSW1 > 300mm/High/1",
+                "type": "fill",
+                "source": "esri",
+                "source-layer": "Risk of Flooding from Surface Water Depth CCSW1 > 300mm",
+                "filter": [
+                  "==",
+                  "_symbol",
+                  0
+                ],
+                "minzoom": 4.7597,
+                "layout": {},
+                "paint": {
+                  "fill-color": "#555C9D"
+                }
+              },
+              {
+                "id": "Risk of Flooding from Surface Water Depth CCSW1 > 300mm/Medium/1",
+                "type": "fill",
+                "source": "esri",
+                "source-layer": "Risk of Flooding from Surface Water Depth CCSW1 > 300mm",
+                "filter": [
+                  "==",
+                  "_symbol",
+                  1
+                ],
+                "minzoom": 4.7597,
+                "layout": {},
+                "paint": {
+                  "fill-color": "#9AA0DE"
+                }
+              },
+              {
+                "id": "Risk of Flooding from Surface Water Depth CCSW1 > 300mm/Low/1",
+                "type": "fill",
+                "source": "esri",
+                "source-layer": "Risk of Flooding from Surface Water Depth CCSW1 > 300mm",
+                "filter": [
+                  "==",
+                  "_symbol",
+                  2
+                ],
+                "minzoom": 4.7597,
+                "layout": {},
+                "paint": {
+                  "fill-color": "#C4E1FF"
+                }
+              },
+              {
+                "id": "Risk of Flooding from Surface Water Depth CCSW1 > 300mm/Very low/1",
+                "type": "fill",
+                "source": "esri",
+                "source-layer": "Risk of Flooding from Surface Water Depth CCSW1 > 300mm",
+                "filter": [
+                  "==",
+                  "_symbol",
+                  3
+                ],
+                "minzoom": 4.7597,
+                "layout": {},
+                "paint": {
+                  "fill-color": "#CCCCCC",
+                  "fill-opacity": 0
+                }
+              }
+            ]
           }
         },
         {

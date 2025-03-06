@@ -119,33 +119,13 @@ function createFeatureLayers (layers) {
           url: featureMap.url,
           apiKey: window.mapConfig.mapToken,
           opacity: 0.5,
-          visible: false,
-          renderer: {
-            type: "unique-value",
-            field: "TYPE",
-            uniqueValueInfos: {
-              "value": 'value',
-              "symbol": {
-                "fill-color": '#FF0000',
-                "type": "simple-fill",
-                "style": "solid",
-                "outline": {
-                  "style": "none"
-                }
-              },
-              "label": 'value'
-            }
-          }
+          visible: false
         })
-        console.log('featureMap.styleOverride', featureMap.styleOverride)
         if (featureMap.styleOverride) {
-          console.log('in override')
-          console.log('vectorTileLayer: ', vectorTileLayer.currentStyleInfo)
-          console.log('after')
-
-          // vectorTileLayer.loadStyle(featureMap.styleOverride)
-          console.log('vectorTileLayer: ', vectorTileLayer)
-          console.log('vectorTileLayer: ', vectorTileLayer.opacity)
+          vectorTileLayer.load().then((vl) => {
+            // console.log('loaded vectorTileLayer: ', vl.currentStyleInfo)
+            vl.currentStyleInfo.style = featureMap.styleOverride
+          })
         }
         layers.push(vectorTileLayer)
       }
