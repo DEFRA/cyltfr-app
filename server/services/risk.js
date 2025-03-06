@@ -1,8 +1,8 @@
 const util = require('../util')
 const config = require('../config')
 
-function getByCoordinates (x, y, radius) {
-  const uri = `${config.serviceUrl}/floodrisk/${x}/${y}/${radius}`
+function getByCoordinates (x, y) {
+  const uri = `${config.serviceUrl}/floodrisk/${x}/${y}`
 
   return util.getJson(uri)
 }

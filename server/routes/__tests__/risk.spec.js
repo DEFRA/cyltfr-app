@@ -111,7 +111,7 @@ describe('Risk page test', () => {
   })
 
   test('/risk - Risk service error', async () => {
-    riskService.getByCoordinates.mockImplementationOnce((_x, _y, _radius) => {
+    riskService.getByCoordinates.mockImplementationOnce((_x, _y) => {
       return Promise.reject(new Error('Error calling risk'))
     })
 

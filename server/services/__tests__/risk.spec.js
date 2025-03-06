@@ -12,8 +12,8 @@ describe('Risk service', () => {
   })
 
   test('Calls getByCoordinates', async () => {
-    risk.getByCoordinates(1, 2, 3)
-    expect(util.getJson).toHaveBeenCalledWith('http://localhost:8050/floodrisk/1/2/3')
+    risk.getByCoordinates(1, 2)
+    expect(util.getJson).toHaveBeenCalledWith('http://localhost:8050/floodrisk/1/2')
   })
 
   test('Calls swdepth', async () => {
