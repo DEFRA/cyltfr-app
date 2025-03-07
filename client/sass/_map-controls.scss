@@ -305,9 +305,9 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     @media screen and (max-width: $tablet-width) and (max-resolution: 2dppx) {
       display: none;
     }
-    @media screen and (min-resolution: 2.2dppx) {
+    @media screen and (min-resolution: 2.1dppx) {
       position: absolute;
-      bottom: 50px;
+      bottom: 45px;
       margin-right: -5px;
     }
   }

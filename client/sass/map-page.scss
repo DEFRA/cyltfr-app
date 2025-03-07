@@ -106,6 +106,12 @@ body {
     }
   }
 
+  @media screen and (max-width: 320px) and (min-resolution: 2.1dppx) {
+    #copyright-text {
+        font-size: 8px;
+    }
+}
+
   #close-btn {
     width: 20px;
     height: 20px;
