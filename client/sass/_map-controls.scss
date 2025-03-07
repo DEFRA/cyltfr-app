@@ -15,7 +15,6 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 
   .defra-map-controls-bottom {
     padding-right: 15px;
-    pointer-events: auto;
     position: absolute;
     bottom: 20px;
     right: -15px;
@@ -28,6 +27,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
       padding-right: 0;
       bottom: 18px;
     }
+  }
+
+  .defra-map-info__content {
+    pointer-events: auto;
   }
 
   .defra-map__open-key {
@@ -298,9 +301,14 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   .esri-zoom {
     margin-bottom: 25px;
     margin-right: 15px;
-
-    @media screen and (max-width: $tablet-width) {
+  
+    @media screen and (max-width: $tablet-width) and (max-resolution: 2dppx) {
       display: none;
+    }
+    @media screen and (min-resolution: 2.2dppx) {
+      position: absolute;
+      bottom: 50px;
+      margin-right: -5px;
     }
   }
   
