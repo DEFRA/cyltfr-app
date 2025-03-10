@@ -183,6 +183,11 @@
 
   <div id="progress"></div>
 </div>
+<div id="map-not-supported" style="display: none">
+ 
+  {% include 'partials/unsupported.html' %}
+
+</div>
 {% endblock %}
 
 {% block bodyEnd %}
@@ -192,6 +197,7 @@
   window.mapConfig = JSON.parse({{ mapConfig | dump | safe }})
 </script>
 <script src="{{ assetPath }}/nunjucks-slim.js"></script>
+<script src="{{ assetPath }}/js/capabilities.js"></script>
 <script src="{{ assetPath }}/js/map.js"></script>
 <script src="{{ assetPath }}/js/mapPage.js"></script>
 
