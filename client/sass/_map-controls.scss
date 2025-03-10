@@ -305,10 +305,13 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     @media screen and (max-width: $tablet-width) and (max-resolution: 2dppx) {
       display: none;
     }
-    @media screen and (min-resolution: 2.1dppx) {
+    @media screen and (min-resolution: 2.2dppx) {
       position: absolute;
       bottom: 45px;
       margin-right: -5px;
+    }
+    @media screen and (max-width: 320px) and (min-resolution: 2.1dppx) {
+      bottom: 40px;
     }
   }
   
@@ -339,6 +342,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 
 .esri-attribution__link:focus-visible {
   outline: 0px solid transparent;
+}
+
+.esri-attribution__powered-by {
+  padding: 0 10px !important;
 }
 
 .ol-zoom.ol-zoom-checked {
