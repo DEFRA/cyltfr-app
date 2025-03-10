@@ -118,7 +118,7 @@ function createFeatureLayers (layers) {
           id: featureMap.ref,
           url: featureMap.url,
           apiKey: window.mapConfig.mapToken,
-          opacity: 0.5,
+          opacity: window.mapConfig.mapTransparency,
           visible: false
         })
         if (featureMap.styleOverride) {
