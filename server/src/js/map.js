@@ -123,7 +123,6 @@ function createFeatureLayers (layers) {
         })
         if (featureMap.styleOverride) {
           vectorTileLayer.load().then((vl) => {
-            // console.log('loaded vectorTileLayer: ', vl.currentStyleInfo)
             vl.currentStyleInfo.style = featureMap.styleOverride
           })
         }
