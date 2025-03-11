@@ -75,7 +75,7 @@ body {
     width: 90px;
     height: 24px;
 
-    @media screen and (max-width: $small-mobile-width) {
+    @media screen and (max-device-width: $small-mobile-width) {
       bottom: 40px;
     }
   }
@@ -105,13 +105,7 @@ body {
       font-family: $gov-font;
     }
   }
-
-  @media screen and (max-width: 320px) and (min-resolution: 2.1dppx) {
-    #copyright-text {
-        font-size: 8px;
-    }
-}
-
+  
   #close-btn {
     width: 20px;
     height: 20px;
