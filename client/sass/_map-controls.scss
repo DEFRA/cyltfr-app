@@ -305,11 +305,16 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
     @media screen and (max-device-width: $tablet-width) {
       display: none;
     }
-    @media screen and (min-resolution: 2.2dppx) {
+    @media screen and (min-device-width: $desktop-width) and (min-resolution: 2.2dppx) {
       position: absolute;
       bottom: 45px;
       margin-right: -5px;
     }
+    @media screen and (min-device-width: $desktop-width) and (max-width: $tablet-width) and (min-resolution: 1.75dppx) {
+      position: absolute;
+      bottom: 45px;
+      margin-right: -5px;
+  }
   }
   
   .esri-zoom.with-scenario-bar {

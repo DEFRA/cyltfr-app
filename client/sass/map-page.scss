@@ -78,6 +78,9 @@ body {
     @media screen and (max-device-width: $small-mobile-width) {
       bottom: 40px;
     }
+    @media screen and (min-device-width: $desktop-width) and (max-width: $small-mobile-width) and (min-resolution: 4dppx) {
+      bottom: 20px;
+    }
   }
 
   .os-logo-position-change {
