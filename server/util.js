@@ -4,7 +4,7 @@ const FETCH_ERROR_MSG = 'Requested resource returned a non 200 status code'
 
 const config = require('./config')
 const wreck = require('@hapi/wreck').defaults({
-  // timeout: config.httpTimeoutMs
+  timeout: config.httpTimeoutMs
 })
 let wreckExt
 
