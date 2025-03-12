@@ -19,7 +19,7 @@ const { performance } = require('node:perf_hooks')
 const get = (url, options = {}, ext = false) => {
   const thisWreck = (ext && wreckExt) ? wreckExt : wreck
   const startTick = performance.now()
-  // Header with UA added for AWS WAF as it is required
+  // Header with UA added for AWS WAF as it is required, otherwise it will block the request
   options.headers = {
     ...options.headers,
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
@@ -47,7 +47,7 @@ const get = (url, options = {}, ext = false) => {
 const post = (url, options = {}, ext = false) => {
   const thisWreck = (ext && wreckExt) ? wreckExt : wreck
   const startTick = performance.now()
-  // Header with UA added for AWS WAF as it is required
+  // Header with UA added for AWS WAF as it is required, otherwise it will block the request
   options.headers = {
     ...options.headers,
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
