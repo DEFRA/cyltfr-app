@@ -132,4 +132,36 @@ describe('util.js tests', () => {
       expect(error.message).toEqual('Requested resource returned a non 200 status code')
     }
   })
+
+  test('get includes User-Agent header in the request', async () => {
+    const url = MOCK_URL
+    const options = {}
+    const response = { res: { statusCode: STATUS_CODES.HTTP_STATUS_OK }, payload: 'response' }
+
+    wreck.get.mockResolvedValue(response)
+
+    await util.get(url, options)
+
+    expect(wreck.get).toHaveBeenCalledWith(url, expect.objectContaining({
+      headers: expect.objectContaining({
+        'User-Agent': 'hapi-wreck/18 (cyltfr-app)'
+      })
+    }))
+  })
+
+  test('post includes User-Agent header in the request', async () => {
+    const url = MOCK_URL
+    const options = {}
+    const response = { res: { statusCode: STATUS_CODES.HTTP_STATUS_OK }, payload: 'response' }
+
+    wreck.post.mockResolvedValue(response)
+
+    await util.post(url, options)
+
+    expect(wreck.post).toHaveBeenCalledWith(url, expect.objectContaining({
+      headers: expect.objectContaining({
+        'User-Agent': 'hapi-wreck/18 (cyltfr-app)'
+      })
+    }))
+  })
 })
