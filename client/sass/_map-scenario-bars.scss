@@ -89,6 +89,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   width: 660px;
 }
 
+.defra-map-scenarios {
+  pointer-events: auto;
+}
+
 .defra-map-scenarios .govuk-radios{
   z-index: 15;
   position: relative;
