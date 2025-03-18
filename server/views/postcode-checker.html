@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% set pageTitle = "Temporary postcode checker" %}
+
+{% block content %}
+<div id="risk-data-page">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl"Postcode checker</h1>
+      <h2 class="govuk-heading-l" id="how-to-access">Temporary test page</h2>
+      <iframe title="Postcode Flood Risk" frameborder="0" width="800px" height="800px" scrolling="yes" 
+        src="https://environment-test.data.gov.uk/flood-risk-postcode-tool/widget"></iframe>
+    </div>
+  </div>
+</div>
+{% endblock %}

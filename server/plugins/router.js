@@ -21,6 +21,7 @@ const routes = [].concat(
   require('../routes/rivers-and-sea-depth'),
   require('../routes/ground-water'),
   require('../routes/surface-water-depth'),
+  require('../routes/postcode-checker'),
   require('../routes/os-get-token')
 )
 
