@@ -63,10 +63,12 @@ export const capabilities = {
 }
 
 const checkCapabilities = () => {
+  const body = document.querySelector('body')
   if (capabilities.esri.getDevice().isSupported === false) {
     // Hide the map and show the message
     mapPageConsts.mapNotSupported.style.display = 'block'
     mapPageConsts.mapContainer[0].style.display = 'none'
+    body.style.height = 'auto'
   }
 }
 
