@@ -30,6 +30,10 @@ module.exports = {
             return h.view('429').code(statusCode)
           }
 
+          if (statusCode === 401) {
+            return h.continue
+          }
+
           // Then return the `500` view
           switch (response.message) {
             case errors.addressByPostcode.message:

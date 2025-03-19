@@ -22,7 +22,22 @@ async function createServer () {
     cache
   })
 
+  const validate = async (request, username, password, h) => {
+    let isValid = false
+    let credentials = null
+    if ((username === 'admin') && (password === config.checkerPassword)) {
+      isValid = true
+      credentials = { name: 'admin' }
+    }
+    return { isValid, credentials }
+  }
   // Register the plugins
+  await server.register(require('@hapi/basic'))
+  server.auth.strategy('simple', 'basic', {
+    validate,
+    unauthorizedAttributes: { realm: 'Enter your credentials' }
+  })
+
   await server.register(require('@hapi/h2o2'))
   await server.register(require('@hapi/inert'))
   await server.register(require('./plugins/views'))

@@ -5,6 +5,7 @@ module.exports = {
     return h.view('postcode-checker')
   },
   options: {
-    description: 'Temporary postcode checker page'
+    description: 'Temporary postcode checker page',
+    auth: 'simple'
   }
 }
