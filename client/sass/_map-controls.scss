@@ -15,7 +15,6 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 
   .defra-map-controls-bottom {
     padding-right: 15px;
-    pointer-events: auto;
     position: absolute;
     bottom: 20px;
     right: -15px;
@@ -28,6 +27,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
       padding-right: 0;
       bottom: 18px;
     }
+  }
+
+  .defra-map-info__content {
+    pointer-events: auto;
   }
 
   .defra-map__open-key {
@@ -131,6 +134,7 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   .scenario-heading {
     text-decoration: underline;
     text-decoration-thickness: 2px;
+    font-size: 16px;
   }
 
   .first-radio {
@@ -298,10 +302,20 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   .esri-zoom {
     margin-bottom: 25px;
     margin-right: 15px;
-
-    @media screen and (max-width: $tablet-width) {
+  
+    @media screen and (max-device-width: $tablet-width) {
       display: none;
     }
+    @media screen and (min-device-width: $desktop-width) and (min-resolution: 2.2dppx) {
+      position: absolute;
+      bottom: 45px;
+      margin-right: -5px;
+    }
+    @media screen and (min-device-width: $desktop-width) and (max-width: $tablet-width) and (min-resolution: 1.75dppx) {
+      position: absolute;
+      bottom: 45px;
+      margin-right: -5px;
+  }
   }
   
   .esri-zoom.with-scenario-bar {
@@ -331,6 +345,10 @@ $gov-font: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 
 .esri-attribution__link:focus-visible {
   outline: 0px solid transparent;
+}
+
+.esri-attribution__powered-by {
+  padding: 0 10px !important;
 }
 
 .ol-zoom.ol-zoom-checked {

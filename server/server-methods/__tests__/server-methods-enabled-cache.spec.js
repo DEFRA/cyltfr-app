@@ -12,7 +12,6 @@ const defaultOptions = {
 
 const x = 40.7128
 const y = -74.0060
-const radius = 15
 const location = 'WA4 1AB'
 
 jest.mock('../../services/flood')
@@ -91,7 +90,7 @@ describe('server methods', () => {
     })
 
     test('should return original cached risk details', async () => {
-      const response = await server.methods.riskService(x, y, radius)
+      const response = await server.methods.riskService(x, y)
 
       expect(response).toEqual(
         expect.objectContaining({
@@ -108,7 +107,7 @@ describe('server methods', () => {
 
       riskService.__updateReturnValue({ leadLocalFloodAuthority: 'Wessex' })
 
-      const changedResponse = await server.methods.riskService(x, y, radius)
+      const changedResponse = await server.methods.riskService(x, y)
 
       expect(changedResponse).toEqual(
         expect.objectContaining({

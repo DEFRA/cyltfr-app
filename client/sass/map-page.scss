@@ -71,13 +71,15 @@ body {
     position: absolute;
     left: 10px;
     bottom: 10px;
-    pointer-events: auto;
     display: block;
     width: 90px;
     height: 24px;
 
-    @media screen and (max-width: $small-mobile-width) {
+    @media screen and (max-device-width: $small-mobile-width) {
       bottom: 40px;
+    }
+    @media screen and (min-device-width: $desktop-width) and (max-width: $small-mobile-width) and (min-resolution: 4dppx) {
+      bottom: 20px;
     }
   }
 
@@ -106,7 +108,7 @@ body {
       font-family: $gov-font;
     }
   }
-
+  
   #close-btn {
     width: 20px;
     height: 20px;

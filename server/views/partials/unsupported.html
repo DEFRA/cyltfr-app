@@ -1,0 +1,76 @@
+{% set pageTitle = "Unsupported browser" %}
+{% set currentpage = "unsupported" %}
+
+{% block skipLink %}
+{{ govukSkipLink({
+href: '#unsupported-heading',
+text: 'Skip to main content'
+}) }}
+{% endblock %}
+
+{% block header %}
+{% if GTagManagerId and cookiesPolicy.analytics %}
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{GTagManagerId}}"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+{% endif %}
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk",
+    containerClasses: "govuk-width-container",
+    serviceName: serviceName,
+    serviceUrl: serviceUrl
+  }) 
+}}
+
+<div class="govuk-width-container">
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Beta"
+    },
+    html: 'This is a new service. Help us improve it and <a class="govuk-link" href="/feedback">give your feedback</a>.'
+  }) }}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-main-wrapper">
+<div class="govuk-width-container">
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-xl" id="unsupported-heading">You are using an unsupported device or browser</h1>
+		<p class="govuk-body">Update your browser or device to see the flood risk map.</p>
+	</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+{{ govukFooter({
+  meta: {
+    items: [
+      {
+        href: "/cookies",
+        text: "Cookies"
+      },
+      {
+        href: "/privacy-notice",
+        text: "Privacy notice"
+      },
+      {
+        href: "/terms-and-conditions",
+        text: "Terms and conditions"
+      },
+      {
+        href: "/accessibility-statement",
+        text: "Accessibility statement"
+      }
+    ],
+    html: 'Built by the <a href="https://www.gov.uk/government/organisations/environment-agency" class="govuk-footer__link">Environment Agency</a>
+    <br><br><p class="govuk-body-s">© Crown Copyright and Database Rights 2024 <a href="http://www.ordnancesurvey.co.uk" class="govuk-link">Ordnance Survey (OS)</a> AC0000807064.
+    <br>Use of the address and mapping data is subject to&nbsp;the <a href="/os-terms" class="govuk-link">Ordnance Survey terms and conditions</a>.</p>'
+  }
+}) }}
+{% endblock %}

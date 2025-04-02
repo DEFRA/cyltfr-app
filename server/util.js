@@ -14,11 +14,17 @@ if (config.http_proxy) {
     agent: new HttpsProxyAgent(config.http_proxy)
   })
 }
-
+const customUaHeader = 'hapi-wreck/18 (cyltfr-app)'
 const { performance } = require('node:perf_hooks')
-const get = (url, options, ext = false) => {
+const get = (url, options = {}, ext = false) => {
   const thisWreck = (ext && wreckExt) ? wreckExt : wreck
   const startTick = performance.now()
+  // Header with UA added for AWS WAF as it is required, otherwise it will block the request
+  options.headers = {
+    ...options.headers,
+    'User-Agent': customUaHeader
+  }
+
   return thisWreck.get(url, options)
     .then(response => {
       if (config.performanceLogging) {
@@ -38,9 +44,15 @@ const get = (url, options, ext = false) => {
     })
 }
 
-const post = (url, options, ext = false) => {
+const post = (url, options = {}, ext = false) => {
   const thisWreck = (ext && wreckExt) ? wreckExt : wreck
   const startTick = performance.now()
+  // Header with UA added for AWS WAF as it is required, otherwise it will block the request
+  options.headers = {
+    ...options.headers,
+    'User-Agent': customUaHeader
+  }
+
   return thisWreck.post(url, options)
     .then(response => {
       if (config.performanceLogging) {
