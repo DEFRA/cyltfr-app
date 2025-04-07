@@ -4,7 +4,7 @@
   "description": "Long term flood risk information",
   "main": "index.js",
   "engines": {
-    "node": ">=20.11.0"
+    "node": ">=22.14.0"
   },
   "scripts": {
     "prepare": "husky .husky",
