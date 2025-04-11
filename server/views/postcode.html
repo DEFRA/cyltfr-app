@@ -159,9 +159,9 @@
       enableTimeout(0)
     }
   </script>
-  <script type="module" src="{{ assetPath }}/js/widget.module.min.js" async defer onload="setupCaptcha()">
+  <script type="module" src="{{ assetPath }}/js/site.min.js" async defer onload="setupCaptcha()">
   </script>
-  <script nomodule src="{{ assetPath }}/js/widget.polyfilled.min.js" async defer onload="setupCaptcha()">
+  <script nomodule src="{{ assetPath }}/js/site.compat.min.js" async defer onload="setupCaptcha()">
   </script>
   <script src="{{ assetPath }}/js/captcha-refresh.js"></script>
 {% endif %}
