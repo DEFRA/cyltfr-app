@@ -7,7 +7,7 @@ async function validateCaptcha (token, server) {
   // If we need to verify the token, do this here.
   const uri = `${friendlyCaptchaUrl}`
   const requestData = {
-    response: token,
+    response: token
   }
   const options = {
     headers: {
