@@ -32,7 +32,7 @@ const schema = joi.object().keys({
   redisCacheHost: joi.string().hostname().when('redisCacheEnabled', { is: true, then: joi.required() }),
   redisCachePort: joi.number().integer().when('redisCacheEnabled', { is: true, then: joi.required() }),
   cookiePassword: joi.string().min(32).required(),
-  friendlyCaptchaEnabled: joi.boolean().default(false),
+  friendlyCaptchaEnabled: joi.boolean().default(true),
   friendlyCaptchaSiteKey: joi.string().when('friendlyCaptchaEnabled', { is: true, then: joi.required() }),
   friendlyCaptchaApiKey: joi.string().when('friendlyCaptchaEnabled', { is: true, then: joi.required() }),
   friendlyCaptchaUrl: joi.string().when('friendlyCaptchaEnabled', { is: true, then: joi.required() }),

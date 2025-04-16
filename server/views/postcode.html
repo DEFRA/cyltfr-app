@@ -98,27 +98,6 @@
  </noscript>
  <script>
     let sessionTimeoutTimer
-    function setupCaptcha() {
-      if (document.readyState === "loading") {
-        window.addEventListener("load", (event) => {
-          afterLoad()
-        })
-      } else {
-        afterLoad()
-      }
-    }
-
-    function afterLoad() {
-      const captchaElement = document.getElementById('FriendlyCaptcha')
-      captchaElement.classList.add('frc-captcha')
-      friendlyChallenge.autoWidget = new friendlyChallenge.WidgetInstance(captchaElement,{
-        startedCallback: fixupFriendlyCaptcha,
-        readyCallback:  fixupFriendlyCaptcha,
-      })
-      friendlyChallenge.autoWidget.start()
-
-      setupCaptchaEventListeners(captchaElement)
-    }
 
     function setupCaptchaEventListeners(captchaElement) {
     const submitButton = document.getElementById("post-code-button")
@@ -147,7 +126,6 @@
       }  
     }
     function friendlyCaptchaExpire() {
-      friendlyChallenge.autoWidget.expire()
       fixupFriendlyCaptcha()
     }
     function fixupFriendlyCaptcha() {
@@ -165,16 +143,15 @@
       }
     }
     function captchaDone(solutionPayload) {
-      enableTimeout(friendlyChallenge.autoWidget.puzzle.expiry)
       fixupFriendlyCaptcha()
     }
     function captchaError() {
       enableTimeout(0)
     }
   </script>
-  <script type="module" src="{{ assetPath }}/js/site.min.js" async defer onload="setupCaptcha()">
+  <script type="module" src="{{ assetPath }}/js/site.min.js" async defer>
   </script>
-  <script nomodule src="{{ assetPath }}/js/site.compat.min.js" async defer onload="setupCaptcha()">
+  <script nomodule src="{{ assetPath }}/js/site.compat.min.js" async defer>
   </script>
   <script src="{{ assetPath }}/js/captcha-refresh.js"></script>
 {% endif %}
