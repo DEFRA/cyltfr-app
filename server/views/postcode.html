@@ -164,7 +164,7 @@
         success.forEach((el) => {if (el.textContent === 'I am human') el.textContent = 'Check complete. I am human'})
       }
     }
-    function captchaDone(responsePayload) {
+    function captchaDone(solutionPayload) {
       enableTimeout(friendlyChallenge.autoWidget.puzzle.expiry)
       fixupFriendlyCaptcha()
     }
