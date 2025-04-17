@@ -137,17 +137,37 @@
         link.target = ''
         link.className += ' govuk-link'
       }
+      // Still needs to be updated
       const success = document.querySelectorAll(".frc-container > div > span.frc-text")
       if (success.length > 0) {
         success.forEach((el) => {if (el.textContent === 'I am human') el.textContent = 'Check complete. I am human'})
       }
     }
+    function observeCaptchaRender() {
+      // Work around to apply accessability changes also when the page is refreshed
+      const observer = new MutationObserver(() => {
+        const captchaLink = document.querySelector("div.frc-banner > a")
+        if (captchaLink) {
+          fixupFriendlyCaptcha()
+          observer.disconnect()
+        }
+      })
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      })
+    }
+    
     function captchaDone(solutionPayload) {
       fixupFriendlyCaptcha()
     }
     function captchaError() {
       enableTimeout(0)
     }
+    document.addEventListener("DOMContentLoaded", function () {
+      fixupFriendlyCaptcha()
+      observeCaptchaRender()
+    })
   </script>
   <script type="module" src="{{ assetPath }}/js/site.min.js" async defer>
   </script>
