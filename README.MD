@@ -23,7 +23,7 @@ This repository is part of the CYLTFR service which also includes:\
 <https://github.com/DEFRA/cyltfr-admin>
 
 ## Prerequisites
-Node v20.x\
+Node v22.x\
 Docker v20.10.0+
 
 ### Build app
