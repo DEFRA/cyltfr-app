@@ -29,7 +29,7 @@
       <form id="postcode-form" method="post">
         {{ govukInput(postcodeInput) }}
         {% if friendlyCaptchaEnabled %}
-          <div style="margin-bottom: 20px;" id="FriendlyCaptcha" class="govuk-body frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="manual" role="status"></div>
+          <div style="margin-bottom: 20px;" id="FriendlyCaptcha" class="govuk-body frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="auto" role="status"></div>
           <div class="govuk-grid-column-two-thirds" style="display: none;" id="nc-browser">
             <p class="govuk-body">The anti-robot check works better and faster in modern browsers such as Edge, Firefox, or Chrome. Please consider updating your browser</p>
           </div>
