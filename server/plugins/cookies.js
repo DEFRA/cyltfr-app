@@ -11,7 +11,6 @@ module.exports = {
     name: 'cookies',
     register: (server, options) => {
       server.state('cookies_policy', cookiePolicyOptions)
-
       server.ext('onPreResponse', (request, h) => {
         if (request.response.variety === 'view') {
           const { state } = request
