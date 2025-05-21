@@ -131,16 +131,10 @@
     function fixupFriendlyCaptcha() {
       // Accessibility edits to the FriendlyCaptcha widget.
       // Stop the FriendlyCaptcha link opening in a new window
-      // Change the "I am Human" text to announce that the Check is complete
       const link = document.querySelector("div.frc-banner > a")
       if (link) {
         link.target = ''
         link.className += ' govuk-link'
-      }
-      // Still needs to be updated
-      const success = document.querySelectorAll(".frc-container > div > span.frc-text")
-      if (success.length > 0) {
-        success.forEach((el) => {if (el.textContent === 'I am human') el.textContent = 'Check complete. I am human'})
       }
     }
     function observeCaptchaRender() {
