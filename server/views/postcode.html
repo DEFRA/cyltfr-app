@@ -130,7 +130,7 @@
     }
     function fixupFriendlyCaptcha() {
       // Accessibility edits to the FriendlyCaptcha widget.
-      // Stop the FriendlyCaptcha link opening in a new window
+      // Stop the Friendly Captcha link opening in a new window.
       const link = document.querySelector("div.frc-banner > a")
       if (link) {
         link.target = ''
@@ -138,7 +138,7 @@
       }
     }
     function observeCaptchaRender() {
-      // Work around to apply accessability changes also when the page is refreshed
+      // Work around to apply Friendly Captcha link accessability change when the page is refreshed as this was not applying previously.
       const observer = new MutationObserver(() => {
         const captchaLink = document.querySelector("div.frc-banner > a")
         if (captchaLink) {
