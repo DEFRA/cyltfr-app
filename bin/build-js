@@ -2,5 +2,5 @@
 
 mkdir -p server/public/build/js
 #nunjucks-precompile client/templates > server/public/build/js/templates.js
-cp node_modules/friendly-challenge/widget.module.min.js server/public/build/js/widget.module.min.js
-cp node_modules/friendly-challenge/widget.polyfilled.min.js server/public/build/js/widget.polyfilled.min.js
+cp node_modules/@friendlycaptcha/sdk/site.min.js server/public/build/js/site.min.js
+cp node_modules/@friendlycaptcha/sdk/site.compat.min.js server/public/build/js/site.compat.min.js
