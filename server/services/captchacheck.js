@@ -1,4 +1,4 @@
-const { sessionTimeout, friendlyCaptchaApiKey, friendlyCaptchaUrl, friendlyCaptchaEnabled } = require('../config')
+const { sessionTimeout, friendlyCaptchaSecretKey, friendlyCaptchaUrl, friendlyCaptchaEnabled } = require('../config')
 const errors = require('../models/errors.json')
 const util = require('../util')
 const sessionTimeoutInMs = sessionTimeout * 60 * 1000
@@ -13,7 +13,7 @@ async function validateCaptcha (token, server) {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'X-API-Key': friendlyCaptchaApiKey
+      'X-API-Key': friendlyCaptchaSecretKey
     },
     json: true,
     payload: requestData
