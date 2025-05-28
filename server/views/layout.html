@@ -33,7 +33,9 @@ window.loadAnalytics = () => {
   function gtag(){dataLayer.push(arguments);}
   globalThis.gtag = gtag
   gtag('js', new Date());
-  gtag('config', '{{G4AnalyticsAccount}}');
+  gtag('config', '{{G4AnalyticsAccount}}', {
+    cookie_flags: 'Secure;SameSite=Lax'
+  });
   {% if GTagManagerId %}
 <!-- Google Tag Manager -->
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

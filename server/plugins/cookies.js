@@ -1,6 +1,6 @@
 const cookiePolicyOptions = {
   ttl: 1000 * 60 * 60 * 24 * 365,
-  isSecure: false,
+  isSecure: true,
   encoding: 'base64json',
   clearInvalid: false,
   isSameSite: 'Lax'
