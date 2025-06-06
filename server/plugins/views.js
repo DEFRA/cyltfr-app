@@ -26,12 +26,12 @@ module.exports = {
             autoescape: true,
             watch: false
           })
-        
+
           env.addGlobal('govukRebrand', true)
           options.compileOptions.environment = env
-        
+
           return next()
-        }        
+        }
       }
     },
     path: '../views',
