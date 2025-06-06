@@ -4,6 +4,7 @@
 {% from "components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% set pageOrErrorTitle = "Error: " + pageTitle if errorSummary else pageTitle %}
+{% set govukRebrand = true %}
 
 {% block head %}
 <meta property="og:url" content="{{ fullUrl | safe }}" />
@@ -12,6 +13,7 @@
 <meta property="og:description" content="{{ ogDescription }}" />
 {% if noIndex %}<meta name="robots" content="noindex" />{% endif %}
 <link href="{{ assetPath }}/stylesheets/application.css" rel="stylesheet" />
+<link rel="icon" sizes="any" href="/assets/rebrand/images/favicon.svg" type="image/svg+xml">
 
 {% if G4AnalyticsAccount %}
 <!-- Google tag (gtag.js) -->

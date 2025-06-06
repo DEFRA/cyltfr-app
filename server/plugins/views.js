@@ -18,7 +18,7 @@ module.exports = {
           }
         },
         prepare: (options, next) => {
-          options.compileOptions.environment = nunjucks.configure([
+          const env = nunjucks.configure([
             path.join(options.relativeTo || process.cwd(), options.path),
             'node_modules/govuk-frontend/dist/govuk/',
             'node_modules/govuk-frontend/dist/govuk/components/'
@@ -26,9 +26,12 @@ module.exports = {
             autoescape: true,
             watch: false
           })
-
+        
+          env.addGlobal('govukRebrand', true)
+          options.compileOptions.environment = env
+        
           return next()
-        }
+        }        
       }
     },
     path: '../views',
