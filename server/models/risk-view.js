@@ -82,6 +82,7 @@ function riskViewModel (risk, address, backLinkUri) {
   this.year = new Date().getFullYear()
   this.riversAndSeaTitle = RiskTitles[riverAndSeaRisk]
   this.surfaceWaterTitle = RiskTitles[surfaceWaterRisk]
+  this.surfaceWaterRiskCCOverride = risk.surfaceWaterRiskCCOverride || false
 
   if (riverAndSeaRisk) {
     const name = riverAndSeaRisk.toLowerCase()
