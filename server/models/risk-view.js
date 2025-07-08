@@ -84,6 +84,7 @@ function riskViewModel (risk, address, backLinkUri) {
   this.surfaceWaterTitle = RiskTitles[surfaceWaterRisk]
   this.surfaceWaterRiskOverride = risk.surfaceWaterRiskOverride || false
   this.surfaceWaterRiskCCOverride = risk.surfaceWaterRiskCCOverride || false
+  this.riverAndSeaRiskOverride = risk.riverAndSeaRiskOverride || false
 
   if (riverAndSeaRisk) {
     const name = riverAndSeaRisk.toLowerCase()
