@@ -56,47 +56,55 @@
         </div>
         <h3 class="govuk-heading-s govuk-!-padding-top-6 govuk-!-margin-bottom-0">Yearly chance of flooding between 2040
           and 2060</h3>
-        <div class="risk-label-group govuk-!-margin-bottom-3">
-          {% if surfaceWaterRiskCC === "Very low" %}
-          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
-            Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
-          </strong>
-          {% else %}
-          <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
-            Very low
-          </strong>
-          {% endif %}
+          <div class="risk-label-group govuk-!-margin-bottom-3">
+            {% if surfaceWaterRiskOverride %}
+              <strong class="govuk-tag govuk-tag--no-data label-mod label-border">
+                No data available<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+              </strong>
+              <p class="govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2">This data is currently unavailable. We'll publish the data 
+                when it becomes available.  
+              </p>
+            {% else %}
+              {% if surfaceWaterRiskCC === "Very low" %}
+                <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
+                  Very low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+                </strong>
+              {% else %}
+                <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+                  Very low
+                </strong>
+              {% endif %}
 
-          {% if surfaceWaterRiskCC === "Low" %}
-          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
-            Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
-          </strong>
-          {% else %}
-          <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
-            Low
-          </strong>
-          {% endif %}
+              {% if surfaceWaterRiskCC === "Low" %}
+                <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
+                  Low<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+                </strong>
+              {% else %}
+                <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+                  Low
+                </strong>
+              {% endif %}
 
-          {% if surfaceWaterRiskCC === "Medium" %}
-          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
-            Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
-          </strong>
-          {% else %}
-          <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
-            Medium
-          </strong>
-          {% endif %}
-
-          {% if surfaceWaterRiskCC === "High" %}
-          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
-            High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
-          </strong>
-          {% else %}
-          <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
-            High
-          </strong>
-          {% endif %}
-        </div>
+              {% if surfaceWaterRiskCC === "Medium" %}
+                <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
+                  Medium<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+                </strong>
+              {% else %}
+                <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+                  Medium
+                </strong>
+              {% endif %}
+              {% if surfaceWaterRiskCC === "High" %}
+                <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod label-border">
+                  High<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+                </strong>
+              {% else %}
+                <strong class="govuk-tag govuk-tag--grey label-mod" aria-hidden="true">
+                  High
+                </strong>
+              {% endif %}
+            {% endif %}
+          </div>
         <h3 class="govuk-heading-s govuk-!-padding-top-6 govuk-!-margin-bottom-0">What surface water is</h3>
         <p class="govuk-body govuk-!-margin-top-2">Surface water flooding is sometimes known as flash flooding.
           It happens when rainwater cannot drain away through normal drainage systems.
