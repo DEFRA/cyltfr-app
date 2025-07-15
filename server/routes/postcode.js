@@ -55,7 +55,7 @@ module.exports = [
         return redirectToHomeCounty(h, postcode, 'northern-ireland')
       }
 
-      const captchaCheckResults = await captchaCheck(request.payload['frc-captcha-solution'], postcode, request.yar, request.server)
+      const captchaCheckResults = await captchaCheck(request.payload['frc-captcha-response'], postcode, request.yar, request.server)
       if (captchaCheckResults.tokenValid) {
         // Include a # in the redirected URL, or the browser will jump to any previous url fragment (like #main-content)
         // See https://www.rfc-editor.org/rfc/rfc9110.html#field.location
@@ -71,7 +71,7 @@ module.exports = [
       validate: {
         payload: joi.object().keys({
           postcode: joi.string().trim().required().allow(''),
-          'frc-captcha-solution': joi.string()
+          'frc-captcha-response': joi.string()
         }).required()
       }
     }

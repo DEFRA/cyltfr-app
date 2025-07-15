@@ -387,7 +387,7 @@ describe('/captchacheck test', () => {
 
     expect(results.tokenValid).toBeFalsy()
     expect(util.post.mock.calls).toHaveLength(1)
-    expect(notifyResult).toEqual('FriendlyCaptcha server check returned error: \'an error\'')
+    expect(notifyResult).toEqual('FriendlyCaptcha server check failed: unknown_error - Unknown error')
   })
 
   test('makes a call for a new token and handle rejection without notify', async () => {

@@ -4,6 +4,7 @@
 {% from "components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% set pageOrErrorTitle = "Error: " + pageTitle if errorSummary else pageTitle %}
+{% set govukRebrand = true %}
 
 {% block head %}
 <meta property="og:url" content="{{ fullUrl | safe }}" />
@@ -12,6 +13,8 @@
 <meta property="og:description" content="{{ ogDescription }}" />
 {% if noIndex %}<meta name="robots" content="noindex" />{% endif %}
 <link href="{{ assetPath }}/stylesheets/application.css" rel="stylesheet" />
+<!-- added to include updated favicon-->
+<link rel="icon" sizes="any" href="/assets/rebrand/images/favicon.svg" type="image/svg+xml">
 
 {% if G4AnalyticsAccount %}
 <!-- Google tag (gtag.js) -->
@@ -116,6 +119,10 @@ window.loadAnalytics = () => {
       {
         href: "/accessibility-statement",
         text: "Accessibility statement"
+      },
+      {
+        href: "/risk-data",
+        text: "Get flood risk data"
       }
     ],
     html: 'Built by the <a href="https://www.gov.uk/government/organisations/environment-agency" class="govuk-footer__link">Environment Agency</a>

@@ -7,13 +7,13 @@ async function validateCaptcha (token, server) {
   // If we need to verify the token, do this here.
   const uri = `${friendlyCaptchaUrl}`
   const requestData = {
-    solution: token,
-    secret: friendlyCaptchaSecretKey
+    response: token
   }
   const options = {
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json'
+      Accept: 'application/json',
+      'X-API-Key': friendlyCaptchaSecretKey
     },
     json: true,
     payload: requestData
@@ -22,7 +22,9 @@ async function validateCaptcha (token, server) {
     const apiResponse = await util.post(uri, options, true)
     if (!apiResponse.success) {
       if (server.methods.notify) {
-        server.methods.notify(`FriendlyCaptcha server check returned error: '${apiResponse.errors.toString()}'`)
+        const errorDetail = apiResponse?.error?.detail || 'Unknown error'
+        const errorCode = apiResponse?.error?.error_code || 'unknown_error'
+        server.methods.notify(`FriendlyCaptcha server check failed: ${errorCode} - ${errorDetail}`)
       }
       return false
     }
