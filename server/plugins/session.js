@@ -16,7 +16,7 @@ module.exports = {
     cookieOptions: {
       password: config.cookiePassword,
       isSecure: (!config.isDev),
-      isHttpOnly: (!config.isDev),
+      isHttpOnly: true,
       isSameSite: 'Lax'
     }
   }
