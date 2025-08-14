@@ -20,6 +20,15 @@
         </h1>
         <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
         <p class="govuk-body">This information tells you the flood risk of the land around a building, not the building itself.</p>
+
+        {% include highestRisk %}
+
+        {% if riverAndSeaRisk !== 'Very low' %}
+        <h2 class="govuk-heading-m">Get flood warnings by text, phone or email</h2>
+        <p class="govuk-body">You can <a class="govuk-link" href="https://www.gov.uk/sign-up-for-flood-warnings" 
+          previewlistener="true">sign up for free flood warnings</a> and get messages by text, phone or email.</p>
+        {% endif %}
+
         {{ govukDetails({
           summaryText: "How we assess an area's flood risk",
           html: "<p class='govuk-body'>We use computer models to estimate flood risk,
@@ -33,8 +42,6 @@
           <p class='govuk-body'>Flooding is hard to predict, especially further into the future.
           Flood risks could be bigger or smaller than what we show, and could change over time.</p>"
         }) }}
-        
-        {% include highestRisk %}
 
         {{ govukDetails({
           summaryText: "Flood risk and climate change",
