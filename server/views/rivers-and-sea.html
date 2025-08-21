@@ -98,6 +98,10 @@ role="navigation">
       {% endif %}
 
       <h2 class="govuk-heading-l govuk-!-padding-top-6">What to do next</h2>
+      {% if riverAndSeaRisk !== 'Very low' %}
+      <p class="govuk-body">Sign up to <a class="govuk-link" href="https://www.gov.uk/sign-up-for-flood-warnings" 
+        previewlistener="true">get flood warnings by phone, text or email</a>.</p>
+      {% endif %}
       <p class="govuk-body">Read about how to <a class="govuk-link" href="https://www.gov.uk/prepare-for-flooding" 
         previewlistener="true">prepare yourself and your property for flooding</a>.</p>
       <p class="govuk-body govuk-!-padding-bottom-6 govuk-!-margin-bottom-6">You should check your flood risk regularly 
