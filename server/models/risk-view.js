@@ -113,7 +113,8 @@ function riskViewModel (risk, address, backLinkUri) {
 
   this.firstSource = 'partials/' + this.firstSource
   this.secondSource = 'partials/' + this.secondSource
-  this.additionalInformation = 'partials/groundwaterAndReservoirs.html'
+  this.groundwater = 'partials/groundwater.html'
+  this.reservoirs = 'partials/reservoirs.html'
   this.surfaceWaterIsFirst = surfaceWaterIsFirst
   this.testInfo = JSON.stringify({
     riverAndSeaRisk,

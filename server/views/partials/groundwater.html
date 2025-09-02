@@ -1,0 +1,42 @@
+<div class="govuk-summary-card govuk-!-margin-top-3" id="groundwater">
+  <div class="govuk-summary-card__title-wrapper vlow card-padding-left">
+    <h2 class="govuk-summary-card__title card-title__font-size">Groundwater</h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <a class="govuk-link" href="/ground-water">
+          More about your groundwater flood risk
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="govuk-summary-card__content">
+    <p class="govuk-body">We use groundwater flood alert areas to check the risk of flooding from groundwater.</p>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+          {% if isGroundwaterArea %}
+          <strong class="govuk-tag govuk-tag--grey label-mod label-border label-additional" aria-hidden="true">
+            This location is inside a groundwater flood alert area. 
+          </strong>
+          <p class="govuk-body">You can sign up to <a class="govuk-link" href="https://www.gov.uk/sign-up-for-flood-warnings" 
+            previewlistener="true">get groundwater flood alerts</a>.</p>
+          {% else %}
+          <strong class="govuk-tag govuk-tag--grey label-mod label-border label-additional" aria-hidden="true">
+            This location is outside of a groundwater flood alert area.
+          </strong>
+          {% endif %}
+
+          {{ govukDetails({
+          summaryText: "What this means",
+          html: "<p class='govuk-body'>This location is part of a groundwater flood alert area. 
+            We monitor groundwater levels in this area, based on previous groundwater flooding.</p>
+          <p class='govuk-body'>Not all locations in a flood alert area are at risk of groundwater flooding.</p>"
+          }) }}
+
+          <h3 class="govuk-heading-s govuk-!-margin-top-4 govuk-!-margin-bottom-2">What groundwater is</h3>
+          <p class="govuk-body">Groundwater is the water that is usually held in rocks and soil underground.</p>
+          <p class="govuk-body">Groundwater flooding happens when this water rises and flows above the surface.</p>
+          <p class="govuk-body">Flooding from rivers is more likely when groundwater levels are high.</p>
+      </div>
+    </dl>
+  </div>
+</div>
