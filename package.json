@@ -49,7 +49,7 @@
     "@hapi/yar": "^11.0.0",
     "blipp": "4.0.2",
     "dotenv": "^16.4.5",
-    "govuk-frontend": "^5.10.0",
+    "govuk-frontend": "^5.11.1",
     "hapi-pino": "^12.0.0",
     "hapi-rate-limit": "^7.0.0",
     "https-proxy-agent": "^7.0.0",
