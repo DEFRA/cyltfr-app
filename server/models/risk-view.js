@@ -61,20 +61,15 @@ function riskViewModel (risk, address, backLinkUri) {
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
 
-  // Alert and warning area
-  console.log('Flood Alert Areas:', risk.floodAlertAreas)
-  console.log('Flood Warning Areas:', risk.floodWarningAreas)
-
-  this.isFloodWarningArea =
-    (Array.isArray(risk.floodAlertAreas) && risk.floodAlertAreas.length > 0) ||
-    (Array.isArray(risk.floodWarningAreas) && risk.floodWarningAreas.length > 0)
-
   // Groundwater area
   this.isGroundwaterArea = risk.isGroundwaterArea
   this.extraInfo = risk.extraInfo
 
   this.hasHoldingComments = false
   this.hasLlfaComments = false
+
+  // Flood Warning area
+  this.isFloodWarningArea = Array.isArray(risk.floodWarningAreas) && risk.floodWarningAreas.length > 0
 
   // Extra info
   processExtraInfo.call(this, risk)
