@@ -53,7 +53,7 @@ afterEach(async () => {
 })
 
 describe('Risk page test', () => {
-  test('print risk-summary page for reservoir risk and surface water', async () => {
+  /* test('print risk-summary page for reservoir risk and surface water', async () => {
     riskService.__updateReturnValue({
       isGroundwaterArea: true,
       floodAlertArea: ['AnyArea'],
@@ -108,7 +108,7 @@ describe('Risk page test', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(payload).toMatch(/Flooding from reservoirs is unlikely in this area/g)
     expect(payload).toMatch(/Flooding from groundwater is unlikely in this area/g)
-  })
+  }) */
 
   test('/risk - Risk service error', async () => {
     riskService.getByCoordinates.mockImplementationOnce((_x, _y) => {

@@ -1,46 +1,33 @@
-<div class="govuk-summary-card govuk-!-margin-top-3 govuk-!-margin-bottom-9" id="additional-information">
+<div class="govuk-summary-card govuk-!-margin-top-3" id="groundwater">
   <div class="govuk-summary-card__title-wrapper vlow card-padding-left">
-    <h2 class="govuk-summary-card__title card-title__font-size">Other flood risks</h2>
-
+    <h2 class="govuk-summary-card__title card-title__font-size">Reservoirs</h2>
     <ul class="govuk-summary-card__actions">
       <li class="govuk-summary-card__action">
-        <a class="govuk-link" href="/ground-water">
-          More about groundwater and reservoirs
+        <a class="govuk-link" href="/reservoirs">
+          More about your reservoir flood risk
         </a>
       </li>
     </ul>
-
   </div>
   <div class="govuk-summary-card__content">
-
-    <h3 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-2">Groundwater</h3>
-
-
     <dl class="govuk-summary-list">
-
-
-
       <div class="govuk-summary-list__row">
-        <p class="govuk-body govuk-!-padding-top-2 govuk-!-padding-bottom-4">
-          {% if isGroundwaterArea %}
-          Flooding is possible when groundwater levels are high.
-          {% else %}
-          Flooding from groundwater is unlikely in this area.
-          {% endif %}
-        </p>
-
-
-        <h3 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-2">Reservoirs</h3>
-
-        <p class="govuk-body govuk-!-padding-top-2 govuk-!-padding-bottom-4">
-          {% if reservoirRisk %}
+        {% if reservoirRisk %}
+        <strong class="govuk-tag govuk-tag--grey label-mod label-border label-additional govuk-body govuk-!-margin-top-4" aria-hidden="true">
           There is a risk of flooding from reservoirs in this area.
-          {% else %}
+        </strong>
+        {% else %}
+        <strong class="govuk-tag govuk-tag--grey label-mod label-border label-additional govuk-body govuk-!-margin-top-4" aria-hidden="true">
           Flooding from reservoirs is unlikely in this area.
-          {% endif %}
-        </p>
+        </strong>
+        {% endif %}
 
+          <h3 class="govuk-heading-s govuk-!-margin-top-4 govuk-!-margin-bottom-2">What a reservoir is</h3>
+          <p class="govuk-body">A reservoir is a large natural or artificial lake that is designed to collect and store water.</p>
+          <p class="govuk-body">They are usually formed by building a dam across a river, or by building a large tank or surrounding embankment. 
+            If one of these dams or embankments fails, then water could escape from the reservoir. 
+            This would result in land or properties being flooded.</p>
       </div>
     </dl>
-
   </div>
+</div>
