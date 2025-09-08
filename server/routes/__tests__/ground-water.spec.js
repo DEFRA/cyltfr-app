@@ -111,11 +111,11 @@ describe('GET /ground-water', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
-  /* test('should create an array of reservoirs if there is a reservoirs risk', async () => {
+  test('should create an array of reservoirs if there is a reservoirs risk', async () => {
     getByCoordinates.mockImplementationOnce(() => {
       return Promise.resolve({
         reservoirDryRisk: [{
-          reservoirName: 'Dry Risk Resevoir',
+          reservoirName: 'Dry Risk Reservoir',
           location: 'SJ917968',
           riskDesignation: 'High-risk',
           undertaker: 'United Utilities PLC',
@@ -134,13 +134,13 @@ describe('GET /ground-water', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('Dry Risk Resevoir')
+    expect(response.result).toContain('Dry Risk Reservoir')
   })
 
   test('should add any reservoirs that are not in the list when it is wet', async () => {
     riskService.getByCoordinates.mockResolvedValue({
       reservoirDryRisk: [{
-        reservoirName: 'Dry Risk Resevoir',
+        reservoirName: 'Dry Risk Reservoir',
         location: 'SJ917968',
         riskDesignation: 'High-risk',
         undertaker: 'United Utilities PLC',
@@ -166,7 +166,7 @@ describe('GET /ground-water', () => {
     const response = await server.inject(mockRequest)
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('Dry Risk Resevoir')
+    expect(response.result).toContain('Dry Risk Reservoir')
     expect(response.result).toContain('Wet Risk Reservoir')
-  }) */
+  })
 })
