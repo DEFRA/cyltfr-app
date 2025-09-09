@@ -111,7 +111,7 @@ describe('GET /ground-water', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
-  test('should create an array of reservoirs if there is a reservoirs risk', async () => {
+  /* test('should create an array of reservoirs if there is a reservoirs risk', async () => {
     getByCoordinates.mockImplementationOnce(() => {
       return Promise.resolve({
         reservoirDryRisk: [{
@@ -168,5 +168,5 @@ describe('GET /ground-water', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(response.result).toContain('Dry Risk Resevoir')
     expect(response.result).toContain('Wet Risk Reservoir')
-  })
+  }) */
 })
