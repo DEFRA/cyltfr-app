@@ -23,6 +23,8 @@ module.exports = {
       try {
         const risk = await request.server.methods.riskService(x, y)
 
+        request.yar.set('risk', risk)
+
         const hasError = risk.riverAndSeaRisk?.error ||
         risk.surfaceWaterRisk?.error ||
         risk.reservoirDryRisk?.error ||
