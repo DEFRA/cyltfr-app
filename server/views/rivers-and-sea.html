@@ -79,7 +79,7 @@ role="navigation">
         previewlistener="true">View a rivers and sea map</a> to see where any flood water might spread to.</p>
 
       <h2 class="govuk-heading-l govuk-!-padding-top-6">How deep any flood water could be</h2>
-      {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC or riverAndSeaRisk == "Unavailable" %}
+      {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC or riverAndSeaRiskCC === "Unavailable" %}
         <p class="govuk-body">This data is currently unavailable. We'll publish the data when it becomes available.</p>
       {% else %}
         <p class="govuk-body">Even a small amount of water can cause serious damage so it's a good idea to know how deep 
