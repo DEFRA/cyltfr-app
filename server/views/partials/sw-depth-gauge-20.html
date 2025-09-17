@@ -82,15 +82,15 @@
         </dt>
         <dd class="defra-flood-impact-list-v13__value defra-flood-impact-list-v13__value--latest">
           <div class="defra-flood-impact-list-v13__container govuk-!-padding-left-4" style="height: 40px;">
-          {% if not surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
+            {% if not surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
             <strong class="govuk-tag govuk-tag--{{ sw200ccclassname }} label-mod-depth-14 govuk-!-margin-left-2 label-border">
               {{ sw200cc }}<span class="govuk-visually-hidden">which is the highest likelihood</span>
             </strong>
-          {% else %}
-            <strong class="govuk-tag govuk-tag--no-data label-mod-no-data label-border govuk-!-margin-left-2">
+            {% else %}
+            <strong class="govuk-tag govuk-tag--no-data label-mod-depth-no-data label-border govuk-!-margin-left-2">
               No data available<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
             </strong>
-          {% endif %}
+            {% endif %}
             <span class="depth-chance-info" style="padding-left: 18px;"><strong></strong></span>
           </div>
         </dd>
