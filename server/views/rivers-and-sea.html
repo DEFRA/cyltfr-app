@@ -49,7 +49,7 @@ role="navigation">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-l govuk-!-padding-top-6 govuk-!-margin-bottom-4">How likely a river or sea flood is</h2>
-      {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC or riverAndSeaRisk == "Unavailable" %}
+      {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC or riverAndSeaRiskCC === "Unavailable" %}
         <p class="govuk-body govuk-!-padding-top-4">The yearly chance of flooding from rivers and the sea is:
           <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod-depth">
             <span>{{ riverAndSeaRisk }}</span>
