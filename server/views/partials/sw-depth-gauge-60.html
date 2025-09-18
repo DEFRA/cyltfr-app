@@ -49,7 +49,7 @@
   <div class="gauge-display__item-all-gauges">
     <h3 class="govuk-heading-s govuk-!-margin-bottom-4">2040 – 2060</h3>
     <dl class="defra-flood-impact-list-v13">
-      {% if not surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
+      {% if not surfaceWaterRiskOverride and not surfaceWaterRiskOverrideCC %}
       <div class="defra-flood-impact-list-v13__row defra-flood-impact-list-v13__row--current">
       {% else %}
       <div class="defra-flood-impact-list-v13__row">
@@ -60,7 +60,7 @@
         </dt>
         <dd class="defra-flood-impact-list-v13__value defra-flood-impact-list-v13__value--latest">
           <div class="defra-flood-impact-list-v13__container govuk-!-padding-left-4" style="height: 40px;">
-            {% if not surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
+            {% if not surfaceWaterRiskOverride and not surfaceWaterRiskOverrideCC %}
             <strong class="govuk-tag govuk-tag--{{ sw600ccclassname }} label-mod-depth-14 govuk-!-margin-left-2 label-border">
               {{ sw600cc }}<span class="govuk-visually-hidden">which is the highest likelihood</span>
             </strong>
@@ -69,7 +69,7 @@
           </div>
         </dd>
       </div>
-      {% if not surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
+      {% if not surfaceWaterRiskOverride and not surfaceWaterRiskOverrideCC %}
       <div class="defra-flood-impact-list-v13__row defra-flood-impact-list-v13__row--current">
       {% else %}
       <div class="defra-flood-impact-list-v13__row">
@@ -85,7 +85,7 @@
           </div>
         </dd>
       </div>
-      {% if not surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
+      {% if not surfaceWaterRiskOverride and not surfaceWaterRiskOverrideCC %}
       <div class="defra-flood-impact-list-v13__row defra-flood-impact-list-v13__row--current">
       {% else %}
       <div class="defra-flood-impact-list-v13__row">
