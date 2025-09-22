@@ -3,6 +3,20 @@ const path = require('path')
 module.exports = {
   mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
   devtool: 'source-map',
+  module: {
+    rules: [
+      {
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false
+        }
+      },
+      {
+        test: /\.css$/,
+        use: ['css-loader']
+      }
+    ]
+  },
   entry: {
     capabilities: './server/src/js/map-page/capabilities.js',
     mapPage: './server/src/js/map-page/map-page.js',
