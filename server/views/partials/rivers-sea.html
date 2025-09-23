@@ -56,7 +56,7 @@
         </div>
         <h3 class="govuk-heading-s govuk-!-padding-top-6 govuk-!-margin-bottom-0">Yearly chance of flooding between 2036 and 2069</h3>
         <div class="risk-label-group govuk-!-margin-bottom-3">
-          {% if riverAndSeaRiskCC === "Unavailable" %}
+          {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC or riverAndSeaRiskCC === "Unavailable" %}
           <strong class="govuk-tag govuk-tag--no-data label-mod label-border">
             No data available<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
           </strong>
