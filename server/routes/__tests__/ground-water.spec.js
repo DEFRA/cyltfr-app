@@ -110,4 +110,63 @@ describe('GET /ground-water', () => {
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
+
+  test('should create an array of reservoirs if there is a reservoirs risk', async () => {
+    getByCoordinates.mockImplementationOnce(() => {
+      return Promise.resolve({
+        reservoirDryRisk: [{
+          reservoirName: 'Dry Risk Reservoir',
+          location: 'SJ917968',
+          riskDesignation: 'High-risk',
+          undertaker: 'United Utilities PLC',
+          leadLocalFloodAuthority: 'Tameside',
+          comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+        }]
+      })
+    })
+
+    const mockRequest = {
+      method: 'GET',
+      url: '/ground-water',
+      headers: defaultOptions.headers
+    }
+
+    const response = await server.inject(mockRequest)
+
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(response.result).toContain('Dry Risk Reservoir')
+  })
+
+  test('should add any reservoirs that are not in the list when it is wet', async () => {
+    riskService.getByCoordinates.mockResolvedValue({
+      reservoirDryRisk: [{
+        reservoirName: 'Dry Risk Reservoir',
+        location: 'SJ917968',
+        riskDesignation: 'High-risk',
+        undertaker: 'United Utilities PLC',
+        leadLocalFloodAuthority: 'Tameside',
+        comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+      }],
+      reservoirWetRisk: [{
+        reservoirName: 'Wet Risk Reservoir',
+        location: 'Another location',
+        riskDesignation: 'High-risk',
+        undertaker: 'United Utilities PLC',
+        leadLocalFloodAuthority: 'Tameside',
+        comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+      }]
+    })
+
+    const mockRequest = {
+      method: 'GET',
+      url: '/ground-water',
+      headers: defaultOptions.headers
+    }
+
+    const response = await server.inject(mockRequest)
+
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(response.result).toContain('Dry Risk Reservoir')
+    expect(response.result).toContain('Wet Risk Reservoir')
+  })
 })
