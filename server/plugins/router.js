@@ -17,10 +17,11 @@ const routes = [].concat(
   require('../routes/terms-and-conditions'),
   require('../routes/healthcheck'),
   require('../routes/surface-water'),
+  require('../routes/surface-water-depth'),
   require('../routes/rivers-and-sea'),
   require('../routes/rivers-and-sea-depth'),
   require('../routes/ground-water'),
-  require('../routes/surface-water-depth'),
+  require('../routes/reservoirs'),
   require('../routes/os-get-token')
 )
 
