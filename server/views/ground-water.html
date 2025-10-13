@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
+{% from "components/details/macro.njk" import govukDetails %}
 
-{% set pageTitle = "Groundwater and reservoirs: understand your flood risk" %}
+{% set pageTitle = "Groundwater: understand your flood risk" %}
 {% set currentpage = "groundwater" %}
 
 {% block skipLink %}
@@ -30,6 +31,7 @@ role="navigation">
     {% include 'partials/nav-sw.njk' %}
     {% endif %}
     {% include 'partials/nav-gw.njk' %}
+    {% include 'partials/nav-re.njk' %}
   </ol>
 </nav>
 
@@ -38,57 +40,71 @@ role="navigation">
     <div class="govuk-grid-column-two-thirds">
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-6">
       <h1 id="groundwater-heading" class="govuk-heading-xl govuk-!-margin-top-6">
-        Groundwater and reservoirs: understand your flood risk
+        Groundwater: understand your flood risk
       </h1>
       <p class="govuk-body govuk-!-margin-bottom-2"><strong>Your selected location:</strong> {{fullAddress}}</p>
       <p class="govuk-body govuk-!-margin-bottom-6">This information tells you the flood risk of the land around a
         building, not the building itself.
       </p>
 
-      <h2 class="govuk-heading-l govuk-!-padding-top-6">Groundwater</h2>
-      <p class="govuk-body">
-        {{ "Flooding is possible when groundwater levels are high." if isGroundwaterArea else
-        "Flooding from groundwater is unlikely in this area." }}
-      </p>
-
-      <h3 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">What groundwater is</h3>
-      <p class="govuk-body">Groundwater is the water that is usually held in rocks and soil underground.</p>
-      <p class="govuk-body">Groundwater flooding happens when this water rises and flows above the surface.</p>
-      <p class="govuk-body govuk-!-margin-bottom-6">We use flood alert data to check the risk of flooding from
-        groundwater.</p>
-
-      <h2 class="govuk-heading-l govuk-!-padding-top-6">Reservoirs</h2>
-      <p class="govuk-body">{{ "There is a risk of flooding from reservoirs in this area." if reservoirRisk else
-        "Flooding from reservoirs is unlikely in this area." }}</p>
-
-      <h3 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">What a reservoir is and how we
-        check an area's risk</h3>
-      <p class="govuk-body">A reservoir is a large natural or artificial lake that is designed to collect and
-        store water.</p>
-      <p class="govuk-body">We use predicted scenarios to understand the risk of flooding from reservoirs.</p>
-      <p class="govuk-body">Flooding from reservoirs is extremely unlikely. An area is considered at risk if people's 
-        lives could be threatened in the event of a dam or reservoir failure.</p>
-
-      {% if (reservoirRisk) %}
-      <a class="govuk-link govuk-body" href="/map?easting={{easting}}&northing={{northing}}&map=Reservoirs">View a map
-        of the risk of flooding from reservoirs</a>
-      <br><br>
-      <details class="govuk-details reservoirs" data-module="govuk-details">
-        <summary class="govuk-details__summary reservoirs" data-journey-click="ltfri:risk:reservoir-details">
-          <span class="govuk-details__summary-text reservoirs">
-            Reservoirs that could affect this area
-          </span>
-        </summary>
-        {% for reservoir in reservoirs %}
-        <ul class="govuk-list reservoirs" id="reservoirs-risk-reservoir-list">
-          <li><strong>{{reservoir.name}}</strong> {% if (reservoir.location) %}(grid reference {{reservoir.location}}){% endif %}</li>
-          <li>Owner: {{reservoir.owner}}</li>
-          <li>Lead Local Flood Authority: {{reservoir.authority}}</li>
-          <li>Comments: {{reservoir.comments}}</li>
-        </ul>
-        {% endfor %}
-      </details>
+      {% if isGroundwaterArea %}
+      <strong class="govuk-tag govuk-tag--grey label-mod label-border label-additional" aria-hidden="true">
+        This location is inside a groundwater flood alert area. 
+      </strong>
+      {% else %}
+      <strong class="govuk-tag govuk-tag--grey label-mod label-border label-additional" aria-hidden="true">
+        This location is outside of a groundwater flood alert area.
+      </strong>
       {% endif %}
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">Why groundwater flooding is a problem</h2>
+      <p class="govuk-body">Groundwater flooding is a problem because:</p>
+      <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+        <li>water will come up through the ground or the floor
+        </li>
+        <li>It usually happens days, weeks or months after lots of rain and can last a long time
+        </li>
+        <li>it often happens in the places you don't expect, like on the side of a hill
+        </li>
+      </ul>
+      <p class="govuk-body govuk-!-margin-bottom-6">High groundwater levels can make other types of flooding worse, as water cannot drain away.</p>
+
+      {{ govukDetails({
+          summaryText: "How we assess an area's flood risk",
+          html: "<p class='govuk-body'>We use computer models to estimate flood risk,
+            based on the best data we have available.</p>
+          <p class='govuk-body'>The models do not include every local feature like kerbs,
+            fences and walls. That means we cannot tell you the flood risk of every individual property.</p>
+          <p class='govuk-body'>Neighbouring houses in a street may have different levels of flood risk.
+            This could be because one is on higher land or is nearer water, for example.</p>
+          <p class='govuk-body'>An area can be at risk even if it has not flooded before.
+            If an area has flooded before, any future flooding might not cover the same area.</p>
+          <p class='govuk-body'>Flooding is hard to predict, especially further into the future.
+          Flood risks could be bigger or smaller than what we show, and could change over time.</p>"
+        }) }}
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">What to do next </h2>
+      <p class="govuk-body">You cannot completely protect your property from flooding, but there are things you can do to reduce the:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the amount of water that gets in </li>
+        <li>the damage from flood water</li>
+        <li>the cost and time of cleaning up after a flood</li>
+      </ul>
+      <p class="govuk-body">You can:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Read about how to <a class="govuk-link" href="https://www.gov.uk/prepare-for-flooding">protect yourself from future flooding</a></li>
+        <li>Make a <a class="govuk-link" href="https://www.gov.uk/government/publications/personal-flood-plan">personal flood plan</a></li>
+        <li>Read about <a class="govuk-link" href="https://www.gov.uk/guidance/adapting-your-home-or-business-to-the-risk-of-flooding">adapt your
+            home or business to flooding</a></li>
+        <li><a class="govuk-link" href="https://www.gov.uk/sign-up-for-flood-warnings">Sign up to get flood warnings</a></li>
+        <li>Read a more about <a class="govuk-link" href="https://www.gov.uk/guidance/groundwater-flooding">groundwater flooding</a></li>
+      </ul>
+      <p class="govuk-body">You should check your flood risk regularly because the information may change.</p>
+      <h3 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">If you need more details on groundwater flood risk</h3>
+      <p class="govuk-body">Lead local flood authorities are responsible for managing flood risk from groundwater. 
+        They may hold more detailed information, including previous groundwater flooding details for this area.</p>
+      <p class="govuk-body govuk-!-padding-bottom-6 govuk-!-margin-bottom-6">Your lead local flood authority is 
+        <strong>{{leadLocalFloodAuthority}}</strong>.</p>
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
     </div>
   </div>
@@ -121,6 +137,17 @@ role="navigation">
       <span class="govuk-pagination__link-label">Surface water</span></a>
   </div>
   {% endif %}
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="/reservoirs" rel="next"
+      previewlistener="true"> <svg class="govuk-pagination__icon govuk-pagination__icon--next"
+        xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false"
+        viewBox="0 0 15 13">
+        <path
+          d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
+        </path>
+      </svg> <span class="govuk-pagination__link-title">Next</span><span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">Reservoirs</span></a>
+  </div>
 </nav>
 <!-- end of nav -->
 {% endblock %}
