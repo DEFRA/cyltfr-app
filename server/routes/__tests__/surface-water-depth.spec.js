@@ -81,12 +81,19 @@ describe('GET /surface-water-depth', () => {
   })
 
   test('returns 200 OK and renders surface water page if user has an address set in session', async () => {
+    // This request assumes that beforeEach has already set the session with a valid address
     const mockRequest = {
       method: 'GET',
       url: '/surface-water-depth',
       headers: defaultOptions.headers
     }
+
     const response = await server.inject(mockRequest)
+
+    // Debugging tip: log response if test fails
+    if (response.statusCode !== STATUS_CODES.HTTP_STATUS_OK) {
+      console.log('Response payload:', response.result)
+    }
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(response.result).toContain('surface-water-depth')

@@ -78,11 +78,6 @@ role="navigation">
     <p class="govuk-body"><a class="govuk-link" href="/map?easting={{easting}}&northing={{northing}}&map=SurfaceWater"
         previewlistener="true">View a surface water map</a> to see where any flood water might spread to.</p>
     <h2 class="govuk-heading-l govuk-!-padding-top-6">How deep any flood water could be</h2>
-    {% if surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
-      <p class="govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2">This data is currently unavailable. We'll publish the data 
-        when it becomes available.  
-      </p>
-    {% else %}
       <p class="govuk-body">Even a small amount of water can cause serious damage so it's a good idea to know how deep any flooding could be.</p>
       <p class="govuk-body">You cannot completely protect your property from flooding, but there's a lot you can do to reduce:</p>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
@@ -93,7 +88,6 @@ role="navigation">
       <p class="govuk-body">
         <a class="govuk-link" href="/surface-water-depth">See how deep any flood water could be at your selected location</a>.
       </p>
-    {% endif %}
 
     <h2 class="govuk-heading-l govuk-!-padding-top-6">What to do next</h2>
       <p class="govuk-body">Read about how to <a class="govuk-link" href="https://www.gov.uk/prepare-for-flooding">prepare yourself and your property for flooding</a>.</p>

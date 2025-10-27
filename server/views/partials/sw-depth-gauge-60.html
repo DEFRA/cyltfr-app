@@ -49,21 +49,31 @@
   <div class="gauge-display__item-all-gauges">
     <h3 class="govuk-heading-s govuk-!-margin-bottom-4">2040 – 2060</h3>
     <dl class="defra-flood-impact-list-v13">
+      {% if not surfaceWaterRiskOverride and not surfaceWaterRiskOverrideCC %}
       <div class="defra-flood-impact-list-v13__row defra-flood-impact-list-v13__row--current">
+      {% else %}
+      <div class="defra-flood-impact-list-v13__row">
+      {% endif %}
         <dt class="defra-flood-impact-list__key">
           60cm
           <span class="unbold-depth">(2ft)</span>
         </dt>
         <dd class="defra-flood-impact-list-v13__value defra-flood-impact-list-v13__value--latest">
           <div class="defra-flood-impact-list-v13__container govuk-!-padding-left-4" style="height: 40px;">
+            {% if not surfaceWaterRiskOverride and not surfaceWaterRiskOverrideCC %}
             <strong class="govuk-tag govuk-tag--{{ sw600ccclassname }} label-mod-depth-14 govuk-!-margin-left-2 label-border">
               {{ sw600cc }}<span class="govuk-visually-hidden">which is the highest likelihood</span>
             </strong>
+            {% endif %}
             <span class="depth-chance-info"></span>
           </div>
         </dd>
       </div>
+      {% if not surfaceWaterRiskOverride and not surfaceWaterRiskOverrideCC %}
       <div class="defra-flood-impact-list-v13__row defra-flood-impact-list-v13__row--current">
+      {% else %}
+      <div class="defra-flood-impact-list-v13__row">
+      {% endif %}
         <dt class="defra-flood-impact-list__key" aria-hidden="true">
           30cm
           <span class="unbold-depth" aria-hidden="true">(1ft)</span>
@@ -75,13 +85,22 @@
           </div>
         </dd>
       </div>
+      {% if not surfaceWaterRiskOverride and not surfaceWaterRiskOverrideCC %}
       <div class="defra-flood-impact-list-v13__row defra-flood-impact-list-v13__row--current">
+      {% else %}
+      <div class="defra-flood-impact-list-v13__row">
+      {% endif %}
         <dt class="defra-flood-impact-list__key" aria-hidden="true">
           20cm
           <span class="unbold-depth" aria-hidden="true">(8in)</span>
         </dt>
         <dd class="defra-flood-impact-list-v13__value defra-flood-impact-list-v13__value--latest">
           <div class="defra-flood-impact-list-v13__container govuk-!-padding-left-4" style="height: 40px;">
+            {% if surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
+            <strong class="govuk-tag govuk-tag--no-data label-mod-depth-no-data label-border govuk-!-margin-left-2">
+              No data available<span class="govuk-visually-hidden"> within a scale of very low, low, medium and high.</span>
+            </strong>
+            {% endif %}
             <span class="depth-chance-info" style="padding-left: 18px;"><strong></strong></span>
           </div>
         </dd>
