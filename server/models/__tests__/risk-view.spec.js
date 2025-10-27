@@ -112,4 +112,93 @@ describe('Risk view model', () => {
     const result = new Risk(riskData, address, null)
     expect(result.isFloodWarningArea).toBe(true)
   })
+
+  test('Includes only valid holding comments', async () => {
+    const riskData = {
+      isGroundwaterArea: false,
+      floodAlertArea: [],
+      floodWarningArea: [],
+      leadLocalFloodAuthority: 'Cheshire West and Chester',
+      reservoirRisk: null,
+      riverAndSeaRisk: { probabilityForBand: 'Medium' },
+      riverAndSeaRiskCC: { probabilityForBand: 'Unavailable' },
+      surfaceWaterRisk: 'Medium',
+      extraInfo: [
+        {
+          info: 'A Test Comment',
+          apply: 'holding'
+        },
+        {
+          info: null,
+          apply: 'holding'
+        },
+        {
+          info: '',
+          apply: 'holding'
+        }
+      ]
+    }
+    const result = new Risk(riskData, address, null)
+    expect(result).toMatchObject({ hasHoldingComments: true, hasLlfaComments: false })
+    expect(result.holdingComments).toHaveLength(1)
+  })
+
+  test('Includes only valid llfa comments', async () => {
+    const riskData = {
+      isGroundwaterArea: false,
+      floodAlertArea: [],
+      floodWarningArea: [],
+      leadLocalFloodAuthority: 'Cheshire West and Chester',
+      reservoirRisk: null,
+      riverAndSeaRisk: { probabilityForBand: 'Medium' },
+      riverAndSeaRiskCC: { probabilityForBand: 'Unavailable' },
+      surfaceWaterRisk: 'Medium',
+      extraInfo: [
+        {
+          info: 'Flood report',
+          apply: 'llfa'
+        },
+        {
+          info: null,
+          apply: 'llfa'
+        },
+        {
+          info: '',
+          apply: 'llfa'
+        }
+      ]
+    }
+    const result = new Risk(riskData, address, null)
+    expect(result).toMatchObject({ hasHoldingComments: false, hasLlfaComments: true })
+    expect(result.llfaComments).toHaveLength(1)
+  })
+
+  test('Duplicate llfa comments are removed', async () => {
+    const riskData = {
+      isGroundwaterArea: false,
+      floodAlertArea: [],
+      floodWarningArea: [],
+      leadLocalFloodAuthority: 'Cheshire West and Chester',
+      reservoirRisk: null,
+      riverAndSeaRisk: { probabilityForBand: 'Medium' },
+      riverAndSeaRiskCC: { probabilityForBand: 'Unavailable' },
+      surfaceWaterRisk: 'Medium',
+      extraInfo: [
+        {
+          info: 'Flood report',
+          apply: 'llfa'
+        },
+        {
+          info: 'Proposed schemes',
+          apply: 'llfa'
+        },
+        {
+          info: 'Flood report',  // Duplicate - will be removed
+          apply: 'llfa'
+        }
+      ]
+    }
+    const result = new Risk(riskData, address, null)
+    expect(result.llfaComments).toHaveLength(2)
+  })
 })
