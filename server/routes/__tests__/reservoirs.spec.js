@@ -1,10 +1,10 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const riskService = require('../../services/risk')
-const { swDepthRisk } = require('../../services/risk')
+const { getByCoordinates } = require('../../services/risk')
 const config = require('../../config')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
-const defaultOptions = {
+let defaultOptions = {
   method: 'GET',
   url: '/risk'
 }
@@ -23,21 +23,26 @@ function checkCookie (response) {
   }
 }
 
-describe('GET /surface-water-depth', () => {
+describe('GET /reservoirs', () => {
   beforeAll(async () => {
     config.setConfigOptions({
       friendlyCaptchaEnabled: false
     })
     server = await createServer()
     await server.initialize()
-    const initial = mockOptions()
-
-    const homepageresponse = await server.inject(initial)
-    expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    checkCookie(homepageresponse)
   })
 
   beforeEach(async () => {
+    defaultOptions = {
+      method: 'GET',
+      url: '/risk'
+    }
+    cookie = ''
+    const initial = mockOptions()
+    const homepageresponse = await server.inject(initial)
+    expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    checkCookie(homepageresponse)
+
     const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
@@ -74,38 +79,31 @@ describe('GET /surface-water-depth', () => {
 
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
 
-    mockRequest.url = '/surface-water-depth'
+    mockRequest.url = '/reservoirs'
     const swResponse = await server.inject(mockRequest)
     expect(swResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(swResponse.headers.location).toBe('/postcode')
   })
 
-  test('returns 200 OK and renders surface water page if user has an address set in session', async () => {
-    // This request assumes that beforeEach has already set the session with a valid address
+  test('returns 200 OK and renders reservoirs page if user has an address set in session', async () => {
     const mockRequest = {
       method: 'GET',
-      url: '/surface-water-depth',
+      url: '/reservoirs',
       headers: defaultOptions.headers
     }
-
     const response = await server.inject(mockRequest)
 
-    // Debugging tip: log response if test fails
-    if (response.statusCode !== STATUS_CODES.HTTP_STATUS_OK) {
-      console.log('Response payload:', response.result)
-    }
-
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toContain('surface-water-depth')
+    expect(response.result).toContain('reservoirs')
   })
 
   test('should show an error page if an error occurs', async () => {
     const mockRequest = {
       method: 'GET',
-      url: '/surface-water-depth',
+      url: '/reservoirs',
       headers: defaultOptions.headers
     }
-    swDepthRisk.mockImplementationOnce(() => {
+    getByCoordinates.mockImplementationOnce(() => {
       throw new Error()
     })
     const response = await server.inject(mockRequest)
@@ -113,34 +111,62 @@ describe('GET /surface-water-depth', () => {
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_SERVICE_UNAVAILABLE)
   })
 
-  test('risk address not in england', async () => {
-    const initial = mockOptions()
-
-    const homepageresponse = await server.inject(initial)
-    expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    const cookie = homepageresponse.headers['set-cookie'][0].split(';')[0]
-
-    const { getOptions, postOptions } = mockSearchOptions('NP18 3EZ', cookie)
-    let postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP18 3EZ')}`)
-
-    const getResponse = await server.inject(getOptions)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    postOptions.url = `/search?postcode=${encodeURIComponent('NP18 3EZ')}`
-    postOptions.payload = 'address=0'
-
-    postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch('/england-only')
+  test('should create an array of reservoirs if there is a reservoirs risk', async () => {
+    getByCoordinates.mockImplementationOnce(() => {
+      return Promise.resolve({
+        reservoirDryRisk: [{
+          reservoirName: 'Dry Risk Resevoir',
+          location: 'SJ917968',
+          riskDesignation: 'High-risk',
+          undertaker: 'United Utilities PLC',
+          leadLocalFloodAuthority: 'Tameside',
+          comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+        }]
+      })
+    })
 
     const mockRequest = {
       method: 'GET',
-      url: '/surface-water-depth',
-      headers: { cookie }
+      url: '/reservoirs',
+      headers: defaultOptions.headers
     }
+
     const response = await server.inject(mockRequest)
-    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(response.headers.location).toMatch('/england-only')
+
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(response.result).toContain('Dry Risk Resevoir')
+  })
+
+  test('should add any reservoirs that are not in the list when it is wet', async () => {
+    riskService.getByCoordinates.mockResolvedValue({
+      reservoirDryRisk: [{
+        reservoirName: 'Dry Risk Resevoir',
+        location: 'SJ917968',
+        riskDesignation: 'High-risk',
+        undertaker: 'United Utilities PLC',
+        leadLocalFloodAuthority: 'Tameside',
+        comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+      }],
+      reservoirWetRisk: [{
+        reservoirName: 'Wet Risk Reservoir',
+        location: 'Another location',
+        riskDesignation: 'High-risk',
+        undertaker: 'United Utilities PLC',
+        leadLocalFloodAuthority: 'Tameside',
+        comments: 'If you have questions about local emergency plans for this reservoir you should contact the named Local Authority'
+      }]
+    })
+
+    const mockRequest = {
+      method: 'GET',
+      url: '/reservoirs',
+      headers: defaultOptions.headers
+    }
+
+    const response = await server.inject(mockRequest)
+
+    expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(response.result).toContain('Dry Risk Resevoir')
+    expect(response.result).toContain('Wet Risk Reservoir')
   })
 })

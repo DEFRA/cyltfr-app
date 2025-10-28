@@ -30,6 +30,7 @@ role="navigation">
     {% include 'partials/nav-sw.njk' %}
     {% endif %}
     {% include 'partials/nav-gw.njk' %}
+    {% include 'partials/nav-re.njk' %}
   </ol>
 </nav>
 
@@ -79,7 +80,7 @@ role="navigation">
         previewlistener="true">View a rivers and sea map</a> to see where any flood water might spread to.</p>
 
       <h2 class="govuk-heading-l govuk-!-padding-top-6">How deep any flood water could be</h2>
-      {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC or riverAndSeaRiskCC === "Unavailable" %}
+      {% if riverAndSeaRisk == "Unavailable" %}
         <p class="govuk-body">This data is currently unavailable. We'll publish the data when it becomes available.</p>
       {% else %}
         <p class="govuk-body">Even a small amount of water can cause serious damage so it's a good idea to know how deep 
@@ -98,7 +99,7 @@ role="navigation">
       {% endif %}
 
       <h2 class="govuk-heading-l govuk-!-padding-top-6">What to do next</h2>
-      {% if riverAndSeaRisk !== 'Very low' %}
+      {% if isFloodWarningArea %}
       <p class="govuk-body">Sign up to <a class="govuk-link" href="https://www.gov.uk/sign-up-for-flood-warnings" 
         previewlistener="true">get flood warnings by phone, text or email</a>.</p>
       {% endif %}
@@ -132,7 +133,7 @@ role="navigation">
                   d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
                 </path>
               </svg> <span class="govuk-pagination__link-title">Next</span><span class="govuk-visually-hidden">:</span>
-              <span class="govuk-pagination__link-label">Groundwater and reservoirs</span></a>
+              <span class="govuk-pagination__link-label">Groundwater</span></a>
           </div>
           {% else %}
           <div class="govuk-pagination__next">

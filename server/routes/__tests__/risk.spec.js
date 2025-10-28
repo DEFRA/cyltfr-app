@@ -87,7 +87,7 @@ describe('Risk page test', () => {
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(payload).toMatch(/There is a risk of flooding from reservoirs in this area./g)
-    expect(payload).toMatch(/Flooding is possible when groundwater levels are high/g)
+    expect(payload).toMatch(/This location is inside a groundwater flood alert area./g)
   })
 
   test('print risk-summary page for low reservoir risk and low surface water', async () => {
@@ -107,7 +107,7 @@ describe('Risk page test', () => {
     const { payload } = response
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(payload).toMatch(/Flooding from reservoirs is unlikely in this area/g)
-    expect(payload).toMatch(/Flooding from groundwater is unlikely in this area/g)
+    expect(payload).toMatch(/This location is outside of a groundwater flood alert area./g)
   })
 
   test('/risk - Risk service error', async () => {

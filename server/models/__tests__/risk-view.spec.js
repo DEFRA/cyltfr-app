@@ -97,4 +97,19 @@ describe('Risk view model', () => {
     const result = new Risk(riskData, address, null)
     expect(result).toMatchObject({ riverAndSeaRisk: 'Medium', riverAndSeaRiskCC: 'Unavailable' })
   })
+
+  test('Sets isFloodWarningArea to true when in floodWarningArea', () => {
+    const riskData = {
+      isGroundwaterArea: false,
+      floodAlertArea: [],
+      floodWarningAreas: [{ id: 1, name: 'Test Area' }],
+      leadLocalFloodAuthority: 'Cheshire West and Chester',
+      reservoirRisk: null,
+      riverAndSeaRisk: { probabilityForBand: 'Low' },
+      surfaceWaterRisk: 'Medium',
+      extraInfo: null
+    }
+    const result = new Risk(riskData, address, null)
+    expect(result.isFloodWarningArea).toBe(true)
+  })
 })

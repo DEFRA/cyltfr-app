@@ -68,6 +68,9 @@ function riskViewModel (risk, address, backLinkUri) {
   this.hasHoldingComments = false
   this.hasLlfaComments = false
 
+  // Flood Warning area
+  this.isFloodWarningArea = Array.isArray(risk.floodWarningAreas) && risk.floodWarningAreas.length > 0
+
   // Extra info
   processExtraInfo.call(this, risk)
 
@@ -113,7 +116,8 @@ function riskViewModel (risk, address, backLinkUri) {
 
   this.firstSource = 'partials/' + this.firstSource
   this.secondSource = 'partials/' + this.secondSource
-  this.additionalInformation = 'partials/groundwaterAndReservoirs.html'
+  this.groundwaterCard = 'partials/groundwater.html'
+  this.reservoirsCard = 'partials/reservoirs.html'
   this.surfaceWaterIsFirst = surfaceWaterIsFirst
   this.testInfo = JSON.stringify({
     riverAndSeaRisk,

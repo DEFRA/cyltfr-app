@@ -9,7 +9,7 @@ const riskLevel = {
 
 const Levels = Object.keys(riskLevel).map(l => riskLevel[l])
 
-function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {
+function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri, riskOverrides = {}) {
   const depthData = {
     easting: address.x,
     northing: address.y,
@@ -17,7 +17,11 @@ function depthViewModel (swDepthJson, rsDepthJson, address, backLinkUri) {
     lines: address.address.split(', '),
     address,
     fullAddress: capitaliseAddress(address.address),
-    backLink: backLinkUri
+    backLink: backLinkUri,
+    surfaceWaterRiskOverride: riskOverrides.surfaceWaterRiskOverride || false,
+    surfaceWaterRiskOverrideCC: riskOverrides.surfaceWaterRiskOverrideCC || false,
+    riverAndSeaRiskOverride: riskOverrides.riverAndSeaRiskOverride || false,
+    riverAndSeaRiskOverrideCC: riskOverrides.riverAndSeaRiskOverrideCC || false
   }
 
   if (swDepthJson) {

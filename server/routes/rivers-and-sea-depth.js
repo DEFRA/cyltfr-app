@@ -22,7 +22,12 @@ module.exports = {
 
     try {
       const rsDepth = await request.server.methods.rsDepth(x, y)
-      const model = riversAndSeaDepthViewModel(null, rsDepth, address, backLinkUri)
+      const risk = request.yar.get('risk') || {}
+      const riverAndSeaOverrides = {
+        riverAndSeaRiskOverride: risk.riverAndSeaRiskOverride || false,
+        riverAndSeaRiskOverrideCC: risk.riverAndSeaRiskOverrideCC || false
+      }
+      const model = riversAndSeaDepthViewModel(null, rsDepth, address, backLinkUri, riverAndSeaOverrides)
       return h.view('rivers-and-sea-depth', model)
     } catch (err) {
       return boom.serverUnavailable(errors.riskProfile.message, err)

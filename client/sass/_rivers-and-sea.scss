@@ -35,6 +35,11 @@
   padding: 8px 12px 8px 12px;
   white-space: nowrap;
 }
+.label-long {
+  max-width: none !important;
+  margin-bottom: 15px;
+  padding: 8px 12px 8px 12px;
+}
 .risk-label-group {
   margin-top: 10px;
   display: flex;

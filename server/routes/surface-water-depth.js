@@ -22,8 +22,13 @@ module.exports = {
 
     try {
       const swDepth = await request.server.methods.swDepth(x, y)
+      const risk = request.yar.get('risk') || {}
+      const surfaceWaterOverrides = {
+        surfaceWaterRiskOverride: risk.surfaceWaterRiskOverride || false,
+        surfaceWaterRiskOverrideCC: risk.surfaceWaterRiskOverrideCC || false
+      }
 
-      return h.view('surface-water-depth', surfaceWaterDepthViewModel(swDepth, null, address, backLinkUri))
+      return h.view('surface-water-depth', surfaceWaterDepthViewModel(swDepth, null, address, backLinkUri, surfaceWaterOverrides))
     } catch (err) {
       return boom.serverUnavailable(errors.riskProfile.message, err)
     }

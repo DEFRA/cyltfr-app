@@ -30,6 +30,7 @@ role="navigation">
     {% include 'partials/nav-sw.njk' %}
     {% endif %}
     {% include 'partials/nav-gw.njk' %}
+    {% include 'partials/nav-re.njk' %}
   </ol>
 </nav>
 
@@ -77,11 +78,6 @@ role="navigation">
     <p class="govuk-body"><a class="govuk-link" href="/map?easting={{easting}}&northing={{northing}}&map=SurfaceWater"
         previewlistener="true">View a surface water map</a> to see where any flood water might spread to.</p>
     <h2 class="govuk-heading-l govuk-!-padding-top-6">How deep any flood water could be</h2>
-    {% if surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
-      <p class="govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2">This data is currently unavailable. We'll publish the data 
-        when it becomes available.  
-      </p>
-    {% else %}
       <p class="govuk-body">Even a small amount of water can cause serious damage so it's a good idea to know how deep any flooding could be.</p>
       <p class="govuk-body">You cannot completely protect your property from flooding, but there's a lot you can do to reduce:</p>
       <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
@@ -92,7 +88,6 @@ role="navigation">
       <p class="govuk-body">
         <a class="govuk-link" href="/surface-water-depth">See how deep any flood water could be at your selected location</a>.
       </p>
-    {% endif %}
 
     <h2 class="govuk-heading-l govuk-!-padding-top-6">What to do next</h2>
       <p class="govuk-body">Read about how to <a class="govuk-link" href="https://www.gov.uk/prepare-for-flooding">prepare yourself and your property for flooding</a>.</p>
@@ -149,7 +144,7 @@ role="navigation">
                 d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
               </path>
             </svg> <span class="govuk-pagination__link-title">Next</span><span class="govuk-visually-hidden">:</span>
-            <span class="govuk-pagination__link-label">Groundwater and reservoirs</span></a>
+            <span class="govuk-pagination__link-label">Groundwater</span></a>
         </div>
   {% endif %}
     </nav>
