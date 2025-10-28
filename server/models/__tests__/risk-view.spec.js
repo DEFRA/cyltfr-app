@@ -193,7 +193,7 @@ describe('Risk view model', () => {
           apply: 'llfa'
         },
         {
-          info: 'Flood report',  // Duplicate - will be removed
+          info: 'Flood report',
           apply: 'llfa'
         }
       ]
