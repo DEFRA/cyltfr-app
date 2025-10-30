@@ -2,6 +2,7 @@
 
 {% from "components/footer/macro.njk" import govukFooter %}
 {% from "components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "components/service-navigation/macro.njk" import govukServiceNavigation %}
 
 {% set pageOrErrorTitle = "Error: " + pageTitle if errorSummary else pageTitle %}
 {% set govukRebrand = true %}
@@ -68,11 +69,14 @@ window.loadAnalytics = () => {
 {% endif %}
   {{ govukHeader({
     homepageUrl: "https://www.gov.uk",
-    containerClasses: "govuk-width-container",
-    serviceName: serviceName,
-    serviceUrl: serviceUrl
+    containerClasses: "govuk-width-container"
   }) 
 }}
+
+{{ govukServiceNavigation({
+  serviceName: serviceName,
+  serviceUrl: serviceUrl
+}) }}
 
 <div class="govuk-width-container">
   {{ govukPhaseBanner({
