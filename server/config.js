@@ -99,6 +99,19 @@ const names = {
   esriClientSecret: 'ESRI_CLIENT_SECRET'
 }
 
+const protectedProperties = [
+  'osSearchKey',
+  'osMapsKey',
+  'osMapsSecret',
+  'friendlyCaptchaSiteKey',
+  'friendlyCaptchaSecretKey',
+  'friendlyCaptchaBypass',
+  'cookiePassword',
+  'esriClientID',
+  'esriClientSecret',
+  'errbitkey'
+]
+
 const config = {}
 
 Object.keys(names).forEach((key) => {
@@ -145,7 +158,19 @@ value.isDev = value.env === 'dev'
 value.isTest = value.env === 'test'
 value.isProd = value.env.startsWith('prod-')
 
-console.log('Server config', value)
+const sanitisedConfig = Object.entries(value).reduce((sanitised, [key, val]) => {
+  const isProtected = protectedProperties.includes(key)
+
+  if (!isProtected) {
+    sanitised[key] = val
+    return sanitised
+  }
+
+  sanitised[key] = `[REDACTED:${key.length}]`
+  return sanitised
+}, {})
+
+console.log('Server config', sanitisedConfig)
 
 value.names = names
 
