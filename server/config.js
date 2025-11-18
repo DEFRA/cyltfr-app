@@ -1,4 +1,5 @@
 const joi = require('joi')
+const logSanitisedConfig = require('./sanitise-log')
 
 // Define config schema
 const schema = joi.object().keys({
@@ -144,8 +145,9 @@ value.simulatedDataPath = './server/simulated_data/'
 value.isDev = value.env === 'dev'
 value.isTest = value.env === 'test'
 value.isProd = value.env.startsWith('prod-')
+value.isLocalEnv = process.env.IS_LOCAL_ENV === 'true'
 
-console.log('Server config', value)
+logSanitisedConfig(value)
 
 value.names = names
 
