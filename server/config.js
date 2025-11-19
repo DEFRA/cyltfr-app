@@ -53,6 +53,19 @@ const schema = joi.object().keys({
   esriClientSecret: joi.string()
 })
 
+const protectedProperties = [
+  'osSearchKey',
+  'osMapsKey',
+  'osMapsSecret',
+  'friendlyCaptchaSiteKey',
+  'friendlyCaptchaSecretKey',
+  'friendlyCaptchaBypass',
+  'cookiePassword',
+  'esriClientID',
+  'esriClientSecret',
+  'errbitkey'
+]
+
 const names = {
   env: 'NODE_ENV',
   host: 'RISK_APP_HOST',
@@ -147,7 +160,7 @@ value.isTest = value.env === 'test'
 value.isProd = value.env.startsWith('prod-')
 value.isLocalEnv = process.env.IS_LOCAL_ENV === 'true'
 
-logSanitisedConfig(value)
+logSanitisedConfig(value, protectedProperties)
 
 value.names = names
 
