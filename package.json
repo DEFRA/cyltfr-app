@@ -65,6 +65,7 @@
     "husky": "^9.1.7",
     "jest": "^30.2.0",
     "lint-staged": "^16.2.6",
+    "neostandard": "^0.12.2",
     "nodemon": "^3.1.11",
     "sass": "^1.94.1",
     "standard": "^17.1.2",
