@@ -54,10 +54,10 @@ function riskViewModel (risk, address, backLinkUri) {
   this.riverAndSeaRiskCC = highestLevel(this.riverAndSeaRisk, this.riverAndSeaRiskCC)
   this.surfaceWaterRiskCC = highestLevel(this.surfaceWaterRisk, this.surfaceWaterRiskCC)
 
-  this.riversSeaRiskStyle = this.riverAndSeaRisk.toLowerCase().replace(/ /g, '-')
-  this.surfaceWaterStyle = this.surfaceWaterRisk.toLowerCase().replace(/ /g, '-')
-  this.riversSeaRiskCCStyle = this.riverAndSeaRiskCC.toLowerCase().replace(/ /g, '-')
-  this.surfaceWaterCCStyle = this.surfaceWaterRiskCC.toLowerCase().replace(/ /g, '-')
+  this.riversSeaRiskStyle = this.riverAndSeaRisk.toLowerCase().replaceAll(' ', '-')
+  this.surfaceWaterStyle = this.surfaceWaterRisk.toLowerCase().replaceAll(' ', '-')
+  this.riversSeaRiskCCStyle = this.riverAndSeaRiskCC.toLowerCase().replaceAll(' ', '-')
+  this.surfaceWaterCCStyle = this.surfaceWaterRiskCC.toLowerCase().replaceAll(' ', '-')
   this.reservoirRisk = reservoirRisk
   this.backLink = backLinkUri
 
@@ -92,12 +92,12 @@ function riskViewModel (risk, address, backLinkUri) {
 
   if (riverAndSeaRisk) {
     const name = riverAndSeaRisk.toLowerCase()
-    this.riversAndSeaTextName = `partials/riskdescriptions/${name.replace(/ /g, '-')}.html`
+    this.riversAndSeaTextName = `partials/riskdescriptions/${name.replaceAll(' ', '-')}.html`
   }
 
   if (surfaceWaterRisk) {
     const name = surfaceWaterRisk.toLowerCase()
-    this.surfaceWaterTextName = `partials/riskdescriptions/${name.replace(/ /g, '-')}.html`
+    this.surfaceWaterTextName = `partials/riskdescriptions/${name.replaceAll(' ', '-')}.html`
   }
 
   const riversAndSeaLevel = Levels.indexOf(riverAndSeaRisk)
@@ -156,7 +156,7 @@ function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
 
   if (reservoirWetRisk) {
     risk.reservoirWetRisk
-      .filter(item => !reservoirs.find(r => r.name === item.reservoirName))
+      .filter(item => !reservoirs.some(r => r.name === item.reservoirName))
       .forEach(item => add(item))
   }
 
