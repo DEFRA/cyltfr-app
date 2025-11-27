@@ -1,4 +1,5 @@
 const joi = require('joi')
+const logSanitisedConfig = require('./sanitise-log')
 
 // Define config schema
 const schema = joi.object().keys({
@@ -51,6 +52,19 @@ const schema = joi.object().keys({
   esriClientID: joi.string(),
   esriClientSecret: joi.string()
 })
+
+const protectedProperties = [
+  'osSearchKey',
+  'osMapsKey',
+  'osMapsSecret',
+  'friendlyCaptchaSiteKey',
+  'friendlyCaptchaSecretKey',
+  'friendlyCaptchaBypass',
+  'cookiePassword',
+  'esriClientID',
+  'esriClientSecret',
+  'errbitkey'
+]
 
 const names = {
   env: 'NODE_ENV',
@@ -144,8 +158,9 @@ value.simulatedDataPath = './server/simulated_data/'
 value.isDev = value.env === 'dev'
 value.isTest = value.env === 'test'
 value.isProd = value.env.startsWith('prod-')
+value.isLocalEnv = process.env.IS_LOCAL_ENV === 'true'
 
-console.log('Server config', value)
+logSanitisedConfig(value, protectedProperties)
 
 value.names = names
 
