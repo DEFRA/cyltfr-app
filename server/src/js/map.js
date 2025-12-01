@@ -1,11 +1,9 @@
-import Extent from '@arcgis/core/geometry/Extent.js'
 import ArcMap from '@arcgis/core/Map.js'
 import Basemap from '@arcgis/core/Basemap.js'
 import MapView from '@arcgis/core/views/MapView.js'
 import Point from '@arcgis/core/geometry/Point.js'
 import SpatialReference from '@arcgis/core/geometry/SpatialReference.js'
 import VectorTileLayer from '@arcgis/core/layers/VectorTileLayer.js'
-import WebTileLayer from '@arcgis/core/layers/WebTileLayer.js'
 import esriConfig from '@arcgis/core/config.js'
 import Graphic from '@arcgis/core/Graphic.js'
 
@@ -13,7 +11,7 @@ let map, callback, currentLayer, tokenFetchRunning
 const TOKEN_PREFETCH_SECS = 30
 const currentPageURL = new URLSearchParams(document.location.search)
 const mapPageQuery = currentPageURL.get('map')
-const initialZoomLevel = mapPageQuery === null ? 1 : 7
+const initialZoomLevel = mapPageQuery === null ? 3 : 7
 
 async function refreshOsToken () {
   tokenFetchRunning = true
@@ -61,7 +59,7 @@ export async function loadMap (point) {
     center: centrePoint,
     constraints: {
       minZoom: 0,
-      maxZoom: 9,
+      maxZoom: 15,
       rotationEnabled: false
     }
   })
@@ -133,41 +131,9 @@ function createFeatureLayers (layers) {
 }
 
 function createBaseLayer () {
-  const bng = new SpatialReference({ wkid: 27700 })
-
-  const extent = new Extent({
-    xmin: -238375.0,
-    ymin: 0.0,
-    xmax: 900000.0,
-    ymax: 1376256.0,
-    spatialReference: bng
-  })
-
-  const layer = new WebTileLayer({
+  const layer = new VectorTileLayer({
     id: 'base-map',
-    urlTemplate: window.mapConfig.osMapUrl + '{level}/{col}/{row}.png',
-    fullExtent: extent,
-    spatialReference: bng,
-    tileInfo: {
-      lods: [
-        { level: 0, resolution: 896.0, scale: 3386450 },
-        { level: 1, resolution: 448.0, scale: 1693225 },
-        { level: 2, resolution: 224.0, scale: 846612 },
-        { level: 3, resolution: 112.0, scale: 423306 },
-        { level: 4, resolution: 56.0, scale: 211653 },
-        { level: 5, resolution: 28.0, scale: 105827 },
-        { level: 6, resolution: 14.0, scale: 52913 },
-        { level: 7, resolution: 7.0, scale: 26457 },
-        { level: 8, resolution: 3.5, scale: 13228 },
-        { level: 9, resolution: 1.75, scale: 6614 }
-      ],
-      origin: new Point({
-        x: -238375.0,
-        y: 1376256.0,
-        spatialReference: bng
-      }),
-      spatialReference: bng
-    }
+    url: window.mapConfig.osMapUrl
   })
 
   setTimeout(() => { refreshOsToken() }, (window.mapConfig.osTokenExpiry - TOKEN_PREFETCH_SECS) * 1000)
