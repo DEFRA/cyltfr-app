@@ -1,5 +1,5 @@
 module.exports = function logSanitisedConfig (config, protectedProperties) {
-  if (!config.isLocalEnv) {
+  if (config.isLocalEnv) {
     console.log('Server config', config)
   } else {
     const sanitisedConfig = Object.fromEntries(
