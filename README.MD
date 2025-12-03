@@ -84,6 +84,7 @@ Docker v20.10.0+
 | ERRBIT_PROXY                | Errbit proxy                            |    no     |             |                             |       |
 | ESRI_CLIENT_ID              | ESRI Client ID                          |   yes     |             |                             |       |
 | ESRI_CLIENT_SECRET          | ESRI Client Secret                      |   yes     |             |                             |       |
+| IS_LOCAL_ENV                | Flag the service is running locally |   no      | false |||
 
 For testing production (P01) ESRI layers get the Client ID and Secret from either Matthew C or Paul S.
 

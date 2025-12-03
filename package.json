@@ -54,7 +54,7 @@
     "hapi-pino": "^13.0.0",
     "hapi-rate-limit": "^8.0.0",
     "https-proxy-agent": "^7.0.6",
-    "joi": "^18.0.1",
+    "joi": "^18.0.2",
     "mutation-observer": "^1.0.3",
     "node-fetch": "2.7.0",
     "nunjucks": "^3.2.4"
@@ -67,7 +67,7 @@
     "lint-staged": "^16.2.6",
     "neostandard": "^0.12.2",
     "nodemon": "^3.1.11",
-    "sass": "^1.94.1",
+    "sass": "^1.94.2",
     "standard": "^17.1.2",
     "webpack": "^5.103.0",
     "webpack-cli": "^6.0.1"
