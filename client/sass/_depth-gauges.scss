@@ -201,6 +201,15 @@ $mobile-width: 480px;
   border: 0px;
 }
 
+@media (forced-colors: active) {
+  .defra-flood-impact-list-v13__row--current:before {
+    background-color: CanvasText;
+  }
+  .defra-flood-impact-list-v13__row--current .defra-flood-impact-list-v13__value:before {
+    background-color: CanvasText;
+  }
+}
+
 .gauge-display {
   display: flex;
   overflow-x: auto;
