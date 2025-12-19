@@ -1,6 +1,6 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { postcodeRegex, redirectToHomeCounty } = require('../helpers')
+const { postcodeRegex, redirectToHomeCounty, normalisePostcode } = require('../helpers')
 const config = require('../config')
 const SearchViewModel = require('../models/search-view')
 const errors = require('../models/errors.json')
@@ -98,11 +98,6 @@ module.exports = [
       const { address } = request.payload
       const addresses = request.yar.get('addresses')
 
-      // throw for postcode mismatch when address is within addresses index range
-      if (addresses?.length > 0 && postcode !== addresses?.[0]?.postcode) {
-        return h.redirect('/postcode#')
-      }
-
       if (!Array.isArray(addresses)) {
         return h.redirect('/postcode#')
       }
@@ -113,6 +108,10 @@ module.exports = [
       }
       if (address < 0) {
         errorMessage = 'Select an address'
+      }
+      // throw for postcode mismatch when address is within addresses index range
+      if (addresses?.length > 0 && normalisePostcode(postcode) !== normalisePostcode(addresses?.[0]?.postcode)) {
+        return h.redirect('/postcode#')
       }
       let warnings
       try {
