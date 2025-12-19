@@ -98,9 +98,15 @@ module.exports = [
       const { address } = request.payload
       const addresses = request.yar.get('addresses')
 
+      // throw for postcode mismatch when address is within addresses index range
+      if (addresses?.length > 0 && postcode !== addresses?.[0]?.postcode) {
+        return h.redirect('/postcode#')
+      }
+
       if (!Array.isArray(addresses)) {
         return h.redirect('/postcode#')
       }
+
       let errorMessage
       if (addresses.length <= 0) {
         errorMessage = 'Enter a valid postcode'
@@ -116,6 +122,11 @@ module.exports = [
         const model = new SearchViewModel(postcode, addresses, errorMessage, warnings)
 
         return h.view('search', model)
+      }
+
+      // throw if address index is out of bounds
+      if (!addresses[address]) {
+        return h.redirect('/postcode#')
       }
 
       const addressRecord = addresses[address]
