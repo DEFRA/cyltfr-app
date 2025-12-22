@@ -152,6 +152,51 @@ describe('search page route', () => {
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
   })
 
+  test('/search - Postcode selection out of range', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+
+    postOptions.url = getOptions.url
+    postOptions.payload = 'address=99'
+    const tab2SelectResponse = await server.inject(postOptions)
+    expect(tab2SelectResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(tab2SelectResponse.headers.location).toMatch('/postcode#')
+  })
+
+  test('/search - Postcode mismatch with session data', async () => {
+    const tab1Postcode = 'W6 0WU'
+    const { getOptions: tab1GetOptions, postOptions: tab1PostOptions } = mockSearchOptions(tab1Postcode, cookie)
+    floodService.__updateReturnValue({})
+
+    // Get first address search results
+    const tab1GetResponse = await server.inject(tab1GetOptions)
+    expect(tab1GetResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    const tab1PostResponse = await server.inject(tab1PostOptions)
+    expect(tab1PostResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(tab1PostResponse.headers.location).toMatch(SEARCH_REDIRECT)
+
+    // Get second address search results and go to risk
+    const tab2Postcode = 'BS20 6AQ'
+    const { getOptions: tab2GetOptions, postOptions: tab2PostOptions } = mockSearchOptions(tab2Postcode, cookie)
+    floodService.__updateReturnValue({})
+    const tab2GetResponse = await server.inject(tab2GetOptions)
+    expect(tab2GetResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    tab2PostOptions.url = tab2GetOptions.url
+    tab2PostOptions.payload = 'address=0'
+    const tab2SelectResponse = await server.inject(tab2PostOptions)
+    expect(tab2SelectResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(tab2SelectResponse.headers.location).toMatch('/risk')
+
+    // This should trigger postcode mismatch since session now contains BS20 6AQ data
+    tab1PostOptions.url = tab1GetOptions.url
+    tab1PostOptions.payload = 'address=7'
+    const tab1SelectResponse = await server.inject(tab1PostOptions)
+    expect(tab1SelectResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(tab1SelectResponse.headers.location).toMatch('/postcode#')
+  })
+
   test('/search - Address service error', async () => {
     const { getOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
     floodService.__updateReturnValue({})

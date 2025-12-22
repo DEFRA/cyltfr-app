@@ -1,6 +1,6 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { postcodeRegex, redirectToHomeCounty } = require('../helpers')
+const { postcodeRegex, redirectToHomeCounty, normalisePostcode } = require('../helpers')
 const config = require('../config')
 const SearchViewModel = require('../models/search-view')
 const errors = require('../models/errors.json')
@@ -101,12 +101,17 @@ module.exports = [
       if (!Array.isArray(addresses)) {
         return h.redirect('/postcode#')
       }
+
       let errorMessage
       if (addresses.length <= 0) {
         errorMessage = 'Enter a valid postcode'
       }
       if (address < 0) {
         errorMessage = 'Select an address'
+      }
+      // throw for postcode mismatch when address is within addresses index range
+      if (addresses?.length > 0 && normalisePostcode(postcode) !== normalisePostcode(addresses?.[0]?.postcode)) {
+        return h.redirect('/postcode#')
       }
       let warnings
       try {
@@ -116,6 +121,11 @@ module.exports = [
         const model = new SearchViewModel(postcode, addresses, errorMessage, warnings)
 
         return h.view('search', model)
+      }
+
+      // throw if address index is out of bounds
+      if (!addresses[address]) {
+        return h.redirect('/postcode#')
       }
 
       const addressRecord = addresses[address]
