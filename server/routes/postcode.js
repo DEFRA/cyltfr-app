@@ -40,7 +40,7 @@ module.exports = [
     method: 'POST',
     path: '/postcode',
     handler: async (request, h) => {
-      const postcode = request.payload.postcode.replace(/[^a-zA-Z0-9 ]/g, '')
+      const postcode = request.payload.postcode.replaceAll(/[^a-zA-Z0-9 ]/g, '')
 
       if (!postcode || !postcode.match(postcodeRegex)) {
         const errorMessage = 'Enter a full postcode in England'
