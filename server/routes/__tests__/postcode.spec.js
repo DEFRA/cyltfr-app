@@ -43,12 +43,12 @@ describe('postcode page', () => {
     const { postOptions } = mockSearchOptions('NP18 3EZ', cookie)
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP18 3EZ')}`)
+    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP183EZ')}`)
   })
 
   test('should prefill postcode if one has been cached', async () => {
     captchaCheck.captchaCheck.mockResolvedValue({ tokenValid: true })
-    const { getOptions } = mockSearchOptions('CV37 6YZ', cookie)
+    const { getOptions } = mockSearchOptions('CV376YZ', cookie)
     // Inject the search options request
     const response = await server.inject(getOptions)
     let { payload, headers } = response
@@ -70,13 +70,13 @@ describe('postcode page', () => {
     const postcodeGetResponse = await server.inject(postcodeGet)
     payload = postcodeGetResponse.payload
     // Check if the postcode is being prefilled
-    expect(payload).toMatch(/value="CV37 6YZ"/g)
+    expect(payload).toMatch(/value="CV376YZ"/g)
   })
 
   test('should prefill postcode if one has been cached friendly captcha on', async () => {
     captchaCheck.captchaCheck.mockResolvedValue({ tokenValid: true })
     config.friendlyCaptchaEnabled = true
-    const { getOptions } = mockSearchOptions('CV37 6YZ', cookie)
+    const { getOptions } = mockSearchOptions('CV376YZ', cookie)
     // Inject the search options request
     const response = await server.inject(getOptions)
     let { payload, headers } = response
@@ -98,7 +98,7 @@ describe('postcode page', () => {
     const postcodeGetResponse = await server.inject(postcodeGet)
     payload = postcodeGetResponse.payload
     // Check if the postcode is being prefilled
-    expect(payload).toMatch(/value="CV37 6YZ"/g)
+    expect(payload).toMatch(/value="CV376YZ"/g)
   })
 
   test.each([
