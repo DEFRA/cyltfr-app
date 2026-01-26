@@ -6,7 +6,7 @@ class Postcode {
   }
 
   static compare (postcode1, postcode2) {
-    if (!postcode1 || !postcode2) return false
+    if (!postcode1 || !postcode2) { return false }
     return normalisePostcode(postcode1).postcode === normalisePostcode(postcode2).postcode
   }
 
@@ -16,7 +16,7 @@ class Postcode {
 }
 
 function normalisePostcode (postcode) {
-  if (!postcode) return new Postcode(postcode)
+  if (!postcode) { return new Postcode(postcode) }
   postcode = postcode.toString()
 
   let normalised = removeNonAlphanumeric(postcode)
