@@ -72,11 +72,12 @@ function comparePostcode (postcode, yarStoredPostcode) {
   return formattedPostcode === formattedYarPostcode
 }
 
-async function captchaCheck (token, postcode, yar, server) {
+async function captchaCheck (token, postcode, yar) {
   // For testing purposes set FRIENDLY_CAPTCHA_FORCE_FAIL to true in .env
-  // Changes the token to a random value that isnt valid
   if (process.env.FRIENDLY_CAPTCHA_FORCE_FAIL === 'true') {
-    token = Math.floor(Date.now()).toString(36)
+    // Generate a token based on the current time epoch converted to base 36
+    const BASE_STRING_CONVERSION = 36
+    token = Math.floor(Date.now()).toString(BASE_STRING_CONVERSION)
   }
 
   const results = {
