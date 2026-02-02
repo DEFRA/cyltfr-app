@@ -404,4 +404,20 @@ describe('/captchacheck test', () => {
     expect(results.tokenValid).toBeTruthy()
     expect(util.post.mock.calls).toHaveLength(1)
   })
+
+  test('friendlycaptcha force fail works', async () => {
+    process.env.FRIENDLY_CAPTCHA_FORCE_FAIL = 'true'
+    config.setConfigOptions(getConfigOptions({}))
+    const yar = createMockYar()
+    util.post.mockImplementation(() => {
+      return Promise.resolve({ success: false })
+    })
+
+    const captchacheck = require('../captchacheck')
+    const results = await captchacheck.captchaCheck('anytoken', TOKEN_DEFAULT_POSTCODE, yar, null)
+
+    expect(results.tokenValid).toBeFalsy()
+    expect(util.post.mock.calls).toHaveLength(1)
+    process.env.FRIENDLY_CAPTCHA_FORCE_FAIL = 'false'
+  })
 })
