@@ -372,25 +372,7 @@ describe('/captchacheck test', () => {
     expect(util.post.mock.calls).toHaveLength(1)
   })
 
-  test('makes a call for a new token and handle rejection with notify', async () => {
-    config.setConfigOptions(getConfigOptions({}))
-    const yar = createMockYar()
-    const mockpostResult = { success: false, errors: ['an error'] }
-    util.post.mockImplementation(() => {
-      return Promise.resolve(mockpostResult)
-    })
-    const captchacheck = require('../captchacheck')
-    let notifyResult
-    const server = { methods: { notify: (error) => { notifyResult = error } } }
-
-    const results = await captchacheck.captchaCheck('newtoken', TOKEN_DEFAULT_POSTCODE, yar, server)
-
-    expect(results.tokenValid).toBeFalsy()
-    expect(util.post.mock.calls).toHaveLength(1)
-    expect(notifyResult).toEqual('FriendlyCaptcha server check failed: unknown_error - Unknown error')
-  })
-
-  test('makes a call for a new token and handle rejection without notify', async () => {
+  test('makes a call for a new token and handle rejection', async () => {
     config.setConfigOptions(getConfigOptions({}))
     const yar = createMockYar()
     const mockpostResult = { success: false, errors: ['an error'] }
@@ -399,38 +381,23 @@ describe('/captchacheck test', () => {
     })
     const captchacheck = require('../captchacheck')
     const server = { methods: { } }
-
     const results = await captchacheck.captchaCheck('newtoken', TOKEN_DEFAULT_POSTCODE, yar, server)
 
     expect(results.tokenValid).toBeFalsy()
+    expect(results.error.code).toBe('unknown_error')
+    expect(results.error.detail).toBe('Unknown error')
+    expect(results.errorMessage).toBe('An error occured during the FriendlyCaptcha check. Please try again.')
     expect(util.post.mock.calls).toHaveLength(1)
   })
 
-  test('makes a call for a new token and handles error as success', async () => {
+  test('makes a call for a new token and handles error', async () => {
     config.setConfigOptions(getConfigOptions({}))
     const yar = createMockYar()
     util.post.mockImplementation(() => {
       throw new Error('an error')
     })
     const captchacheck = require('../captchacheck')
-    let notifyResult
-    const server = { methods: { notify: (error) => { notifyResult = error } } }
-
-    const results = await captchacheck.captchaCheck('newtoken', TOKEN_DEFAULT_POSTCODE, yar, server)
-
-    expect(results.tokenValid).toBeTruthy()
-    expect(util.post.mock.calls).toHaveLength(1)
-    expect(notifyResult).toBeInstanceOf(Error)
-  })
-
-  test('makes a call for a new token and handles error without notify', async () => {
-    config.setConfigOptions(getConfigOptions({}))
-    const yar = createMockYar()
-    util.post.mockImplementation(() => {
-      throw new Error('an error')
-    })
     const server = { methods: { } }
-    const captchacheck = require('../captchacheck')
 
     const results = await captchacheck.captchaCheck('newtoken', TOKEN_DEFAULT_POSTCODE, yar, server)
 

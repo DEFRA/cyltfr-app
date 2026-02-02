@@ -3,7 +3,7 @@ const errors = require('../models/errors.json')
 const util = require('../util')
 const sessionTimeoutInMs = sessionTimeout * 60 * 1000
 
-async function validateCaptcha (token, server) {
+async function validateCaptcha (token) {
   // If we need to verify the token, do this here.
   const uri = `${friendlyCaptchaUrl}`
   const requestData = {
@@ -18,18 +18,22 @@ async function validateCaptcha (token, server) {
     json: true,
     payload: requestData
   }
+
   try {
     const apiResponse = await util.post(uri, options, true)
-    if (!apiResponse.success) {
-      if (server.methods.notify) {
-        const errorDetail = apiResponse?.error?.detail || 'Unknown error'
-        const errorCode = apiResponse?.error?.error_code || 'unknown_error'
-        server.methods.notify(`FriendlyCaptcha server check failed: ${errorCode} - ${errorDetail}`)
-      }
-      return false
+    if (!apiResponse?.success) {
+      const err = new Error('FriendlyCaptcha server check failed')
+      err.name = 'FriendlyCaptchaError'
+      err.code = apiResponse?.error?.error_code || 'unknown_error'
+      err.detail = apiResponse?.error?.detail || 'Unknown error'
+      throw err
     }
   } catch (error) {
-    if (server.methods.notify) { server.methods.notify(error) }
+    // Fail open for network errors
+    if (error?.name === 'FriendlyCaptchaError') {
+      throw error
+    }
+    return true
   }
   return true
 }
@@ -69,6 +73,12 @@ function comparePostcode (postcode, yarStoredPostcode) {
 }
 
 async function captchaCheck (token, postcode, yar, server) {
+  // For testing purposes set FRIENDLY_CAPTCHA_FORCE_FAIL to true in .env
+  // Changes the token to a random value that isnt valid
+  if (process.env.FRIENDLY_CAPTCHA_FORCE_FAIL === 'true') {
+    token = Math.floor(Date.now()).toString(36)
+  }
+
   const results = {
     token,
     tokenPostcode: postcode,
@@ -118,18 +128,21 @@ async function captchaCheck (token, postcode, yar, server) {
   if (token) {
     // call out and check token
     clearStoredValues(yar)
-    if (await validateCaptcha(token, server)) {
+
+    try {
+      await validateCaptcha(token)
       results.tokenValid = true
-    } else {
+    } catch (error) {
       results.errorMessage = errors.friendlyCaptchaError.message
+      results.error = error
     }
+    storeResults(results, yar)
+    return results
   } else {
     results.errorMessage = errors.friendlyCaptchaError.message
     clearStoredValues(yar)
     return results
   }
-  storeResults(results, yar)
-  return results
 }
 
 module.exports = {
