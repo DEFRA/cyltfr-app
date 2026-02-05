@@ -123,9 +123,14 @@ describe('postcode page', () => {
   test('should return error view when captcha validation fails', async () => {
     const mockCaptchaCheck = {
       tokenValid: false,
-      errorMessage: 'Captcha validation failed. Please try again.'
+      errorMessage: 'Captcha validation failed. Please try again.',
+      error: {
+        code: 'response_invalid',
+        detail: '[12345]'
+      }
     }
 
+    server.methods.notify = jest.fn()
     captchaCheck.captchaCheck.mockResolvedValue(mockCaptchaCheck)
 
     const options = {
@@ -140,6 +145,8 @@ describe('postcode page', () => {
       }
     }
     const response = await server.inject(options)
+
+    expect(server.methods.notify).toHaveBeenCalledWith('FriendlyCaptcha server check failed: response_invalid - [12345]', expect.any(Object))
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(response.result).toContain('Captcha validation failed. Please try again.')
   })

@@ -3,6 +3,7 @@ const joi = require('joi')
 const { postcodeRegex, redirectToHomeCounty } = require('../helpers')
 const PostcodeViewModel = require('../models/postcode-view')
 const { captchaCheck } = require('../services/captchacheck')
+const { airbrakeSessionData } = require('../models/error-session-data')
 
 module.exports = [
   {
@@ -61,7 +62,10 @@ module.exports = [
         // See https://www.rfc-editor.org/rfc/rfc9110.html#field.location
         return h.redirect(`/search?postcode=${encodeURIComponent(postcode)}#`)
       } else {
-        // check what error was returned
+        const sessionInfo = airbrakeSessionData(request, captchaCheckResults)
+
+        request.server.methods.notify(`FriendlyCaptcha server check failed: ${sessionInfo.error.code} - ${sessionInfo.error.detail}`, { sessionInfo })
+
         const model = new PostcodeViewModel(postcode, captchaCheckResults.errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }
