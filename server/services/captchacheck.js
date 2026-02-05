@@ -3,7 +3,7 @@ const errors = require('../models/errors.json')
 const util = require('../util')
 const sessionTimeoutInMs = sessionTimeout * 60 * 1000
 
-async function validateCaptcha (token, server) {
+async function validateCaptcha (token) {
   // If we need to verify the token, do this here.
   const uri = `${friendlyCaptchaUrl}`
   const requestData = {
@@ -18,18 +18,22 @@ async function validateCaptcha (token, server) {
     json: true,
     payload: requestData
   }
+
   try {
     const apiResponse = await util.post(uri, options, true)
-    if (!apiResponse.success) {
-      if (server.methods.notify) {
-        const errorDetail = apiResponse?.error?.detail || 'Unknown error'
-        const errorCode = apiResponse?.error?.error_code || 'unknown_error'
-        server.methods.notify(`FriendlyCaptcha server check failed: ${errorCode} - ${errorDetail}`)
-      }
-      return false
+    if (!apiResponse?.success) {
+      const err = new Error('FriendlyCaptcha server check failed')
+      err.name = 'FriendlyCaptchaError'
+      err.code = apiResponse?.error?.error_code || 'unknown_error'
+      err.detail = apiResponse?.error?.detail || 'Unknown error'
+      throw err
     }
   } catch (error) {
-    if (server.methods.notify) { server.methods.notify(error) }
+    // Fail open for network errors
+    if (error?.name === 'FriendlyCaptchaError') {
+      throw error
+    }
+    return true
   }
   return true
 }
@@ -68,7 +72,14 @@ function comparePostcode (postcode, yarStoredPostcode) {
   return formattedPostcode === formattedYarPostcode
 }
 
-async function captchaCheck (token, postcode, yar, server) {
+async function captchaCheck (token, postcode, yar) {
+  // For testing purposes set FRIENDLY_CAPTCHA_FORCE_FAIL to true in .env
+  if (process.env.FRIENDLY_CAPTCHA_FORCE_FAIL === 'true') {
+    // Generate a token based on the current time epoch converted to base 36
+    const BASE_STRING_CONVERSION = 36
+    token = Math.floor(Date.now()).toString(BASE_STRING_CONVERSION)
+  }
+
   const results = {
     token,
     tokenPostcode: postcode,
@@ -118,18 +129,21 @@ async function captchaCheck (token, postcode, yar, server) {
   if (token) {
     // call out and check token
     clearStoredValues(yar)
-    if (await validateCaptcha(token, server)) {
+
+    try {
+      await validateCaptcha(token)
       results.tokenValid = true
-    } else {
+    } catch (error) {
       results.errorMessage = errors.friendlyCaptchaError.message
+      results.error = error
     }
+    storeResults(results, yar)
+    return results
   } else {
     results.errorMessage = errors.friendlyCaptchaError.message
     clearStoredValues(yar)
     return results
   }
-  storeResults(results, yar)
-  return results
 }
 
 module.exports = {

@@ -3,6 +3,7 @@ const joi = require('joi')
 const { redirectToHomeCounty } = require('../helpers')
 const PostcodeViewModel = require('../models/postcode-view')
 const { captchaCheck } = require('../services/captchacheck')
+const { airbrakeSessionData } = require('../models/error-session-data')
 const { Postcode } = require('../services/postcode-normalisation')
 
 module.exports = [
@@ -63,7 +64,10 @@ module.exports = [
         request.yar.set('postcode', postcodeInfo.postcode)
         return h.redirect(`/search?postcode=${encodeURIComponent(postcodeInfo.postcode)}#`)
       } else {
-        // check what error was returned
+        const sessionInfo = airbrakeSessionData(request, captchaCheckResults)
+
+        request.server.methods.notify(`FriendlyCaptcha server check failed: ${sessionInfo.error.code} - ${sessionInfo.error.detail}`, { sessionInfo })
+
         const model = new PostcodeViewModel(postcodeInfo.postcode, captchaCheckResults.errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }
