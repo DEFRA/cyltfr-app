@@ -91,7 +91,7 @@ function mapPage () {
         }
       }
 
-      // Function to update tabindex for zoom buttons within the shadow root
+      // Function to update tabindex and role for zoom buttons within the shadow root
       function setTabIndexForShadowRootButton (calciteButtonSelector, tabindexValue) {
         const calciteButton = document.querySelector(calciteButtonSelector)
 
@@ -99,6 +99,11 @@ function mapPage () {
           if (calciteButton.getAttribute('tabindex') !== String(tabindexValue)) {
             calciteButton.setAttribute('tabindex', tabindexValue)
           }
+
+          if (calciteButton.getAttribute('role') !== 'button') {
+            calciteButton.setAttribute('role', 'button')
+          }
+
           // Access shadow root
           const shadowRoot = calciteButton.shadowRoot
           if (shadowRoot) {
@@ -107,6 +112,7 @@ function mapPage () {
               const shadowButton = shadowRoot.querySelector('button')
               if (shadowButton) {
                 shadowButton.setAttribute('tabindex', tabindexValue)
+                shadowButton.setAttribute('role', 'button')
                 // Override focus behavior of calcite-button so functional part of button is focused
                 calciteButton.addEventListener('focus', () => {
                   shadowButton.focus()
