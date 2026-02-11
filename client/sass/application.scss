@@ -4,6 +4,7 @@ $govuk-assets-path: '/assets/';
 @import "./depth-gauges";
 @import "./risk-page";
 @import "./risk-data";
+@import "./border-utils";
 
 .nojs-hidden {
   display: none;
