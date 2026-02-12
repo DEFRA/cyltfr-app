@@ -73,6 +73,23 @@ function mapPage () {
     }
   })
 
+  // In the event the cookie banner is still present on the map page and then a user accept or rejects then hides the banner
+  // This redirects the focus correctly to the first element in the tabbing order
+  document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('js-hide')) {
+      e.preventDefault()
+
+      const nextTab =
+        document.getElementById('sw-extent-radio') ||
+        document.getElementById('rs-extent-radio') ||
+        document.getElementById('reservoirs-radio')
+
+      if (nextTab) {
+        nextTab.focus()
+      }
+    }
+  })
+
   // Locates the ESRI components so that tabindex can be added
   const observer = new MutationObserver((mutations) => {
     mutations.forEach(() => {
