@@ -79,13 +79,13 @@ function mapPage () {
     if (e.target.classList.contains('js-hide')) {
       e.preventDefault()
 
-      const nextTab =
+      const nextTabindex =
         document.getElementById('sw-extent-radio') ||
         document.getElementById('rs-extent-radio') ||
         document.getElementById('reservoirs-radio')
 
-      if (nextTab) {
-        nextTab.focus()
+      if (nextTabindex) {
+        nextTabindex.focus()
       }
     }
   })
