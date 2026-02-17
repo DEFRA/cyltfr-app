@@ -5,6 +5,7 @@ const config = require('../config')
 const SearchViewModel = require('../models/search-view')
 const errors = require('../models/errors.json')
 const { captchaCheck } = require('../services/captchacheck')
+const postcodeRedirect = '/postcode#'
 
 const getWarnings = async (postcode, request) => {
   try {
@@ -99,7 +100,7 @@ module.exports = [
       const addresses = request.yar.get('addresses')
 
       if (!Array.isArray(addresses)) {
-        return h.redirect('/postcode#')
+        return h.redirect(postcodeRedirect)
       }
 
       let errorMessage
@@ -111,7 +112,7 @@ module.exports = [
       }
       // throw for postcode mismatch when address is within addresses index range
       if (addresses?.length > 0 && normalisePostcode(postcode) !== normalisePostcode(addresses?.[0]?.postcode)) {
-        return h.redirect('/postcode#')
+        return h.redirect(postcodeRedirect)
       }
       let warnings
       try {
@@ -125,7 +126,7 @@ module.exports = [
 
       // throw if address index is out of bounds
       if (!addresses[address]) {
-        return h.redirect('/postcode#')
+        return h.redirect(postcodeRedirect)
       }
 
       const addressRecord = addresses[address]
