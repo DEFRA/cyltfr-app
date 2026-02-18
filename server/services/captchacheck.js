@@ -99,7 +99,9 @@ async function captchaCheck (token, postcode, yar) {
     return results
   }
 
-  if (invalidTokenState(token)) return invalidToken(results, yar)
+  if (invalidTokenState(token)) {
+    return invalidToken(results, yar)
+  }
 
   const storedToken = yar.get('token')
 
