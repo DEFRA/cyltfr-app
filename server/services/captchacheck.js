@@ -99,13 +99,7 @@ async function captchaCheck (token, postcode, yar) {
     return results
   }
 
-  if (token && (token === 'undefined' || token === '.FETCHING' ||
-      token === '.UNSTARTED' || token === '.UNFINISHED' || token === '.ERROR' || token === '.EXPIRED')) {
-    clearStoredValues(yar)
-    results.errorMessage = 'You cannot continue until Friendly Captcha' +
-      ' has checked that you\'re not a robot'
-    return results
-  }
+  if (invalidTokenState(token)) return invalidToken(results, yar)
 
   const storedToken = yar.get('token')
 
@@ -144,6 +138,20 @@ async function captchaCheck (token, postcode, yar) {
     clearStoredValues(yar)
     return results
   }
+}
+
+function invalidTokenState (token) {
+  return token && [
+    'undefined', '.FETCHING', '.UNSTARTED',
+    '.UNFINISHED', '.ERROR', '.EXPIRED'
+  ].includes(token)
+}
+
+function invalidToken (results, yar) {
+  clearStoredValues(yar)
+  results.errorMessage =
+    'You cannot continue until Friendly Captcha has checked that you\'re not a robot'
+  return results
 }
 
 module.exports = {
