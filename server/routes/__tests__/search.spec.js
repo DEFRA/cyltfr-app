@@ -138,13 +138,6 @@ describe('search page route', () => {
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
   })
 
-  test('/search - Invalid postcode - fails regexp', async () => {
-    const { getOptions } = mockSearchOptions('invalid', cookie)
-    floodService.__updateReturnValue({})
-    const getResponse = await server.inject(getOptions)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
-  })
-
   test('/search - Invalid postcode - passes regexp', async () => {
     const { getOptions } = mockSearchOptions('XX11 1XX', cookie)
     floodService.__updateReturnValue({})

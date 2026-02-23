@@ -1,10 +1,11 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { postcodeRegex, redirectToHomeCounty, normalisePostcode } = require('../helpers')
+const { redirectToHomeCounty } = require('../helpers')
 const config = require('../config')
 const SearchViewModel = require('../models/search-view')
 const errors = require('../models/errors.json')
 const { captchaCheck } = require('../services/captchacheck')
+const { Postcode } = require('../services/postcode-normalisation')
 
 const getWarnings = async (postcode, request) => {
   try {
@@ -26,10 +27,11 @@ module.exports = [
     handler: async (request, h) => {
       request.yar.set('previousPage', request.path)
       let addresses
-      let { postcode } = request.query
-      if (!postcode) {
-        postcode = request.yar.get('postcode')
-        if (!postcode) {
+      let postcodeInfo = Postcode.normalise(request.query.postcode)
+
+      if (!postcodeInfo.postcode) {
+        postcodeInfo = Postcode.normalise(request.yar.get('postcode'))
+        if (!postcodeInfo.postcode) {
           return h.redirect('/postcode')
         }
       }
@@ -37,19 +39,19 @@ module.exports = [
       // Our Address service doesn't support NI addresses
       // but all NI postcodes start with BT so redirect to
       // "england-only" page if that's the case.
-      if (postcode.toUpperCase().startsWith('BT')) {
-        return redirectToHomeCounty(h, postcode, 'northern-ireland')
+      if (postcodeInfo.isNI) {
+        return redirectToHomeCounty(h, postcodeInfo.postcode, 'northern-ireland')
       }
 
       try {
-        const captchaCheckResults = await captchaCheck('', postcode, request.yar)
+        const captchaCheckResults = await captchaCheck('', postcodeInfo.postcode, request.yar)
 
         if (!captchaCheckResults.tokenValid) {
           return h.redirect('/postcode')
         }
 
         try {
-          addresses = await request.server.methods.find(postcode)
+          addresses = await request.server.methods.find(postcodeInfo.postcode)
         } catch {
           return h.redirect('/postcode?error=postcode_does_not_exist')
         }
@@ -57,18 +59,18 @@ module.exports = [
         // Set addresses to session
         request.yar.set({
           addresses,
-          postcode
+          postcode: postcodeInfo.postcode
         })
 
         if (!addresses || !addresses.length) {
-          return h.view('search', new SearchViewModel(postcode))
+          return h.view('search', new SearchViewModel(postcodeInfo.postcode))
         }
         let warnings
         try {
-          warnings = await getWarnings(postcode, request)
+          warnings = await getWarnings(postcodeInfo.postcode, request)
         } catch {}
         const backLinkUri = '/postcode'
-        return h.view('search', new SearchViewModel(postcode, addresses, null, warnings, backLinkUri))
+        return h.view('search', new SearchViewModel(addresses[0].postcode, addresses, null, warnings, backLinkUri))
       } catch (err) {
         return boom.serverUnavailable(errors.addressByPostcode.message, err)
       }
@@ -82,7 +84,7 @@ module.exports = [
       },
       validate: {
         query: joi.object().keys({
-          postcode: joi.string().trim().regex(postcodeRegex).default('')
+          postcode: joi.any()
         })
       }
     }
@@ -91,15 +93,16 @@ module.exports = [
     method: 'POST',
     path: '/search',
     handler: async (request, h) => {
-      let { postcode } = request.query
-      if (!postcode) {
-        postcode = request.yar.get('postcode')
+      const redirectPath = '/postcode#'
+      let postcodeInfo = Postcode.normalise(request.query.postcode)
+      if (!postcodeInfo.postcode) {
+        postcodeInfo = Postcode.normalise(request.yar.get('postcode'))
       }
       const { address } = request.payload
       const addresses = request.yar.get('addresses')
 
       if (!Array.isArray(addresses)) {
-        return h.redirect('/postcode#')
+        return h.redirect(redirectPath)
       }
 
       let errorMessage
@@ -109,23 +112,25 @@ module.exports = [
       if (address < 0) {
         errorMessage = 'Select an address'
       }
+
       // throw for postcode mismatch when address is within addresses index range
-      if (addresses?.length > 0 && normalisePostcode(postcode) !== normalisePostcode(addresses?.[0]?.postcode)) {
-        return h.redirect('/postcode#')
+      if (addresses.length > 0 && !Postcode.compare(postcodeInfo.postcode, addresses[0].postcode)) {
+        return h.redirect(redirectPath)
       }
+
       let warnings
       try {
-        warnings = await getWarnings(postcode, request)
+        warnings = await getWarnings(postcodeInfo.postcode, request)
       } catch {}
       if (errorMessage) {
-        const model = new SearchViewModel(postcode, addresses, errorMessage, warnings)
+        const model = new SearchViewModel(postcodeInfo.postcode, addresses, errorMessage, warnings)
 
         return h.view('search', model)
       }
 
       // throw if address index is out of bounds
       if (!addresses[address]) {
-        return h.redirect('/postcode#')
+        return h.redirect(redirectPath)
       }
 
       const addressRecord = addresses[address]
@@ -133,7 +138,7 @@ module.exports = [
         address: addressRecord
       })
       if (addressRecord.country_code !== 'E') {
-        return redirectToHomeCounty(h, postcode, addressRecord.country_code)
+        return redirectToHomeCounty(h, postcodeInfo.postcode, addressRecord.country_code)
       }
       // Set addresses to session
       return h.redirect('/risk#')
@@ -142,7 +147,7 @@ module.exports = [
       description: 'Post to the search page',
       validate: {
         query: joi.object().keys({
-          postcode: joi.string().trim().regex(postcodeRegex).default('')
+          postcode: joi.any()
         }),
         payload: joi.object().keys({
           address: joi.number().required()
