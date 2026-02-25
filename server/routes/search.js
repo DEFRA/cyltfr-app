@@ -114,7 +114,7 @@ module.exports = [
       }
 
       // throw for postcode mismatch when address is within addresses index range
-      if (addresses.length > 0 && !Postcode.compare(postcodeInfo.postcode, addresses[0].postcode)) {
+      if (addresses?.length > 0 && !Postcode.compare(postcodeInfo.postcode, addresses[0].postcode)) {
         return h.redirect(redirectPath)
       }
 
