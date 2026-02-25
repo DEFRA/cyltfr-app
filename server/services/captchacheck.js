@@ -1,6 +1,7 @@
 const { sessionTimeout, friendlyCaptchaSecretKey, friendlyCaptchaUrl, friendlyCaptchaEnabled } = require('../config')
 const errors = require('../models/errors.json')
 const util = require('../util')
+const { Postcode } = require('./postcode-normalisation')
 const sessionTimeoutInMs = sessionTimeout * 60 * 1000
 
 async function validateCaptcha (token) {
@@ -64,12 +65,6 @@ function tokenExpired (yar) {
     }
   }
   return true
-}
-
-function comparePostcode (postcode, yarStoredPostcode) {
-  const formattedPostcode = postcode.split(' ').join('').toUpperCase()
-  const formattedYarPostcode = yarStoredPostcode.split(' ').join('').toUpperCase()
-  return formattedPostcode === formattedYarPostcode
 }
 
 async function captchaCheck (token, postcode, yar) {
@@ -155,7 +150,7 @@ function matchesStoredToken (token, storedToken) {
 }
 
 function validateStoredToken (results, postcode, yar) {
-  if (!comparePostcode(postcode, yar.get('tokenPostcode'))) {
+  if (!Postcode.compare(postcode, yar.get('tokenPostcode'))) {
     return errorAndClear(results, yar)
   }
 
