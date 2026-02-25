@@ -36,14 +36,14 @@ describe('server methods', () => {
 
   beforeEach(async () => {
     riskService.__resetReturnValue()
-    const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
+    const { getOptions, postOptions } = mockSearchOptions('CV376YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('CV37 6YZ')}`)
+    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('CV376YZ')}`)
 
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    postOptions.url = `/search?postcode=${encodeURIComponent('CV37 6YZ')}`
+    postOptions.url = `/search?postcode=${encodeURIComponent('CV376YZ')}`
     postOptions.payload = 'address=0'
 
     postResponse = await server.inject(postOptions)
@@ -58,33 +58,36 @@ describe('server methods', () => {
 
   describe('cache enabled', () => {
     test('should return initial cached address', async () => {
-      const response = await server.methods.find('CV37 6YZ')
+      const response = await server.methods.find('CV376YZ')
       expect(response).toEqual([
         expect.objectContaining({
           uprn: '100070216073',
           postcode: 'CV37 6YZ',
           address: '11, BANCROFT PLACE, STRATFORD-UPON-AVON, CV37 6YZ',
-          country: 'ENGLAND'
+          country: 'ENGLAND',
+          country_code: 'E'
         })
       ])
 
-      addressService.updateAddress('CV37 6YZ', [
+      addressService.updateAddress('CV376YZ', [
         {
           uprn: '100070216073',
           postcode: 'CV37 6YZ',
           address: '12, BANCROFT PLACE, STRATFORD-UPON-AVON, CV37 6YZ',
-          country: 'ENGLAND'
+          country: 'ENGLAND',
+          country_code: 'E'
         }
       ])
 
-      const changedResponse = await server.methods.find('CV37 6YZ')
+      const changedResponse = await server.methods.find('CV376YZ')
 
       expect(changedResponse).toEqual([
         expect.objectContaining({
           uprn: '100070216073',
           postcode: 'CV37 6YZ',
           address: '11, BANCROFT PLACE, STRATFORD-UPON-AVON, CV37 6YZ',
-          country: 'ENGLAND'
+          country: 'ENGLAND',
+          country_code: 'E'
         })
       ])
     })

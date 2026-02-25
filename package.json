@@ -18,7 +18,7 @@
     "test": "npm run test:lint && npm run test:audit --omit=dev && npm run test:jest",
     "test:jest": " DOTENV_CONFIG_PATH=./.env.unittest jest --no-cache  --detectOpenHandles --runInBand --forceExit",
     "test:lint": "eslint",
-    "test:audit": "npm audit",
+    "test:audit": "npm audit --omit=dev",
     "test:watch": "jest --watch",
     "debug": "node --inspect-brk=0.0.0.0:9229 index.js",
     "pre-commit": "npm run test && lint-staged",
