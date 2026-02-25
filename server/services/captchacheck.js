@@ -1,6 +1,7 @@
 const { sessionTimeout, friendlyCaptchaSecretKey, friendlyCaptchaUrl, friendlyCaptchaEnabled } = require('../config')
 const errors = require('../models/errors.json')
 const util = require('../util')
+const { Postcode } = require('./postcode-normalisation')
 const sessionTimeoutInMs = sessionTimeout * 60 * 1000
 
 async function validateCaptcha (token) {
@@ -66,12 +67,6 @@ function tokenExpired (yar) {
   return true
 }
 
-function comparePostcode (postcode, yarStoredPostcode) {
-  const formattedPostcode = postcode.split(' ').join('').toUpperCase()
-  const formattedYarPostcode = yarStoredPostcode.split(' ').join('').toUpperCase()
-  return formattedPostcode === formattedYarPostcode
-}
-
 async function captchaCheck (token, postcode, yar) {
   // For testing purposes set FRIENDLY_CAPTCHA_FORCE_FAIL to true in .env
   if (process.env.FRIENDLY_CAPTCHA_FORCE_FAIL === 'true') {
@@ -99,31 +94,14 @@ async function captchaCheck (token, postcode, yar) {
     return results
   }
 
-  if (token && (token === 'undefined' || token === '.FETCHING' ||
-      token === '.UNSTARTED' || token === '.UNFINISHED' || token === '.ERROR' || token === '.EXPIRED')) {
-    clearStoredValues(yar)
-    results.errorMessage = 'You cannot continue until Friendly Captcha' +
-      ' has checked that you\'re not a robot'
-    return results
+  if (invalidTokenState(token)) {
+    return invalidToken(results, yar)
   }
 
   const storedToken = yar.get('token')
 
-  if ((token && (token === storedToken)) || (storedToken && (!token))) {
-    if (comparePostcode(postcode, yar.get('tokenPostcode'))) {
-      if (tokenExpired(yar)) {
-        clearStoredValues(yar)
-        results.errorMessage = errors.friendlyCaptchaError.message
-        return results
-      }
-      results.tokenValid = yar.get('tokenValid')
-      results.tokenSet = yar.get('tokenSet')
-      return results
-    } else {
-      clearStoredValues(yar)
-      results.errorMessage = errors.friendlyCaptchaError.message
-      return results
-    }
+  if (matchesStoredToken(token, storedToken)) {
+    return validateStoredToken(results, postcode, yar)
   }
 
   if (token) {
@@ -144,6 +122,46 @@ async function captchaCheck (token, postcode, yar) {
     clearStoredValues(yar)
     return results
   }
+}
+
+function invalidTokenState (token) {
+  return token && [
+    'undefined', '.FETCHING', '.UNSTARTED',
+    '.UNFINISHED', '.ERROR', '.EXPIRED'
+  ].includes(token)
+}
+
+function invalidToken (results, yar) {
+  clearStoredValues(yar)
+  results.errorMessage =
+    'You cannot continue until Friendly Captcha has checked that you\'re not a robot'
+  return results
+}
+
+function errorAndClear (results, yar) {
+  clearStoredValues(yar)
+  results.errorMessage = errors.friendlyCaptchaError.message
+  return results
+}
+
+function matchesStoredToken (token, storedToken) {
+  return (token && token === storedToken) ||
+         (storedToken && !token)
+}
+
+function validateStoredToken (results, postcode, yar) {
+  if (!Postcode.compare(postcode, yar.get('tokenPostcode'))) {
+    return errorAndClear(results, yar)
+  }
+
+  if (tokenExpired(yar)) {
+    return errorAndClear(results, yar)
+  }
+
+  results.tokenValid = yar.get('tokenValid')
+  results.tokenSet = yar.get('tokenSet')
+
+  return results
 }
 
 module.exports = {
