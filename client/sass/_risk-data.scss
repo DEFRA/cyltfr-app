@@ -51,7 +51,7 @@
 }
 
 .gem-c-contents-list__title {
-  color: #0b0c0c;
+  color: govuk-colour("black");
   font-family: "GDS Transport", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -64,7 +64,7 @@
 
 .gem-c-contents-list__list,
 .gem-c-contents-list__nested-list {
-  color: #0b0c0c;
+  color: govuk-colour("black");
   font-family: "GDS Transport", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -87,10 +87,10 @@
  
 .gem-c-contents-list--no-underline .gem-c-contents-list__link:focus, .gem-c-contents-list--no-underline .gem-c-contents-list__link:active:focus, .gem-c-contents-list--no-underline .gem-c-contents-list__link:link:focus, .gem-c-contents-list--no-underline .gem-c-contents-list__link:visited:focus {
   outline: 3px solid transparent;
-  background-color: #ffdd00;
-  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
+  background-color: govuk-functional-colour("focus");
+  box-shadow: 0 -2px govuk-functional-colour("focus"), 0 4px govuk-colour("black");
   text-decoration: none;
-  color: #0b0c0c !important;
+  color: govuk-colour("black") !important;
 }
  
 .gem-c-contents-list__list-item--parent > .gem-c-contents-list__link {
@@ -99,10 +99,10 @@
  
 .gem-c-contents-list__link:focus, .gem-c-contents-list__link:active:focus, .gem-c-contents-list__link:link:focus, .gem-c-contents-list__link:visited:focus {
   outline: 3px solid transparent;
-  background-color: #ffdd00;
-  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
+  background-color: govuk-functional-colour("focus");
+  box-shadow: 0 -2px govuk-functional-colour("focus"), 0 4px govuk-colour("black");
   text-decoration: none;
-  color: #0b0c0c !important;
+  color: govuk-colour("black") !important;
 }
  
 .gem-c-contents-list__list-item {
@@ -138,7 +138,7 @@
 
 @media print {
   .gem-c-contents-list__title {
-    color: #000000;
+    color: govuk-colour("black");
   }
 }
 @media print {
@@ -150,7 +150,7 @@
 @media print {
   .gem-c-contents-list__list,
   .gem-c-contents-list__nested-list {
-    color: #000000;
+    color: govuk-colour("black");
   }
 }
 @media print {
