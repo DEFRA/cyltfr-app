@@ -1,9 +1,10 @@
 const config = require('../config')
 const joi = require('joi')
-const { postcodeRegex, redirectToHomeCounty } = require('../helpers')
+const { redirectToHomeCounty } = require('../helpers')
 const PostcodeViewModel = require('../models/postcode-view')
 const { captchaCheck } = require('../services/captchacheck')
 const { airbrakeSessionData } = require('../models/error-session-data')
+const { Postcode } = require('../services/postcode-normalisation')
 
 module.exports = [
   {
@@ -41,32 +42,33 @@ module.exports = [
     method: 'POST',
     path: '/postcode',
     handler: async (request, h) => {
-      const { postcode } = request.payload
+      const postcodeInfo = Postcode.normalise(request.payload.postcode)
 
-      if (!postcode || !postcode.match(postcodeRegex)) {
+      if (!postcodeInfo.postcode || !postcodeInfo.isValid) {
         const errorMessage = 'Enter a full postcode in England'
-        const model = new PostcodeViewModel(postcode, errorMessage, config.sessionTimeout)
+        const model = new PostcodeViewModel(postcodeInfo.postcode, errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }
 
       // Our Address service doesn't support NI addresses
       // but all NI postcodes start with BT so redirect to
       // "england-only" page if that's the case.
-      if (postcode.toUpperCase().startsWith('BT')) {
-        return redirectToHomeCounty(h, postcode, 'northern-ireland')
+      if (postcodeInfo.isNI) {
+        return redirectToHomeCounty(h, postcodeInfo.postcode, 'northern-ireland')
       }
 
-      const captchaCheckResults = await captchaCheck(request.payload['frc-captcha-response'], postcode, request.yar, request.server)
+      const captchaCheckResults = await captchaCheck(request.payload['frc-captcha-response'], postcodeInfo.postcode, request.yar, request.server)
       if (captchaCheckResults.tokenValid) {
         // Include a # in the redirected URL, or the browser will jump to any previous url fragment (like #main-content)
         // See https://www.rfc-editor.org/rfc/rfc9110.html#field.location
-        return h.redirect(`/search?postcode=${encodeURIComponent(postcode)}#`)
+        request.yar.set('postcode', postcodeInfo.postcode)
+        return h.redirect(`/search?postcode=${encodeURIComponent(postcodeInfo.postcode)}#`)
       } else {
         const sessionInfo = airbrakeSessionData(request, captchaCheckResults)
 
         request.server.methods.notify(`FriendlyCaptcha server check failed: ${sessionInfo.error.code} - ${sessionInfo.error.detail}`, { sessionInfo })
 
-        const model = new PostcodeViewModel(postcode, captchaCheckResults.errorMessage, config.sessionTimeout)
+        const model = new PostcodeViewModel(postcodeInfo.postcode, captchaCheckResults.errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }
     },
@@ -74,7 +76,7 @@ module.exports = [
       description: 'Post to the postcode page',
       validate: {
         payload: joi.object().keys({
-          postcode: joi.string().trim().required().allow(''),
+          postcode: joi.any(),
           'frc-captcha-response': joi.string()
         }).required()
       }
