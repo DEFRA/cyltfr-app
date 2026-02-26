@@ -27,7 +27,6 @@ module.exports = {
             watch: false
           })
 
-          env.addGlobal('govukRebrand', true)
           options.compileOptions.environment = env
 
           return next()

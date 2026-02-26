@@ -5,7 +5,6 @@
 {% from "components/service-navigation/macro.njk" import govukServiceNavigation %}
 
 {% set pageOrErrorTitle = "Error: " + pageTitle if errorSummary else pageTitle %}
-{% set govukRebrand = true %}
 
 {% block head %}
 <meta property="og:url" content="{{ fullUrl | safe }}" />
@@ -14,8 +13,6 @@
 <meta property="og:description" content="{{ ogDescription }}" />
 {% if noIndex %}<meta name="robots" content="noindex" />{% endif %}
 <link href="{{ assetPath }}/stylesheets/application.css" rel="stylesheet" />
-<!-- added to include updated favicon-->
-<link rel="icon" sizes="any" href="/assets/rebrand/images/favicon.svg" type="image/svg+xml">
 
 {% if G4AnalyticsAccount %}
 <!-- Google tag (gtag.js) -->
