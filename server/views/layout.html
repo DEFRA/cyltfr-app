@@ -58,12 +58,12 @@ window.loadAnalytics = () => {
 {% endblock %}
 
 {% block header %}
-{% if GTagManagerId and cookiesPolicy.analytics %}
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{GTagManagerId}}"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-{% endif %}
+  {% if GTagManagerId and cookiesPolicy.analytics %}
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{GTagManagerId}}"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  {% endif %}
   {% block govukHeader %}
     {{ govukHeader({
       homepageUrl: "https://www.gov.uk",
@@ -76,12 +76,14 @@ window.loadAnalytics = () => {
     serviceUrl: serviceUrl
   }) }}
 
-  {{ govukPhaseBanner({
-    tag: {
-      text: "Beta"
-    },
-    html: 'This is a new service. Help us improve it and <a class="govuk-link" href="/feedback">give your feedback</a>.'
-  }) }}
+  {% block headerEnd %}
+    {{ govukPhaseBanner({
+      tag: {
+        text: "Beta"
+      },
+      html: 'This is a new service. Help us improve it and <a class="govuk-link" href="/feedback">give your feedback</a>.'
+    }) }}
+  {% endblock %}
 {% endblock %}
 
 {% block pageTitle %}
