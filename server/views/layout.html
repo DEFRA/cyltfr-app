@@ -64,25 +64,24 @@ window.loadAnalytics = () => {
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 {% endif %}
-  {{ govukHeader({
-    homepageUrl: "https://www.gov.uk",
-    containerClasses: "govuk-width-container"
-  }) 
-}}
+  {% block govukHeader %}
+    {{ govukHeader({
+      homepageUrl: "https://www.gov.uk",
+      containerClasses: "govuk-width-container"
+    }) }}
+  {% endblock %}
 
-{{ govukServiceNavigation({
-  serviceName: serviceName,
-  serviceUrl: serviceUrl
-}) }}
+  {{ govukServiceNavigation({
+    serviceName: serviceName,
+    serviceUrl: serviceUrl
+  }) }}
 
-<div class="govuk-width-container">
   {{ govukPhaseBanner({
     tag: {
       text: "Beta"
     },
     html: 'This is a new service. Help us improve it and <a class="govuk-link" href="/feedback">give your feedback</a>.'
   }) }}
-</div>
 {% endblock %}
 
 {% block pageTitle %}
