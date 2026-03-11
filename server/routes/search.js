@@ -26,21 +26,14 @@ module.exports = [
     path: '/search',
     handler: async (request, h) => {
       request.yar.set('previousPage', request.path)
-      let addresses
-      let postcodeInfo = Postcode.normalise(request.query.postcode)
+      const addresses = request.yar.get('addresses')
+      let postcodeInfo = request.yar.get('postcodeInfo')
 
-      if (!postcodeInfo.postcode) {
-        postcodeInfo = Postcode.normalise(request.yar.get('postcode'))
+      if (!postcodeInfo?.postcode) {
+        postcodeInfo = await Postcode.normalise(request.query.postcode)
         if (!postcodeInfo.postcode) {
           return h.redirect('/postcode')
         }
-      }
-
-      // Our Address service doesn't support NI addresses
-      // but all NI postcodes start with BT so redirect to
-      // "england-only" page if that's the case.
-      if (postcodeInfo.isNI) {
-        return redirectToHomeCounty(h, postcodeInfo.postcode, 'northern-ireland')
       }
 
       try {
@@ -50,17 +43,18 @@ module.exports = [
           return h.redirect('/postcode')
         }
 
-        try {
-          addresses = await request.server.methods.find(postcodeInfo.postcode)
-        } catch {
-          return h.redirect('/postcode?error=postcode_does_not_exist')
-        }
+        // try {
+        //   // addresses = await request.server.methods.find(postcodeInfo.postcode)
+        //   addresses = request.yar.get('addresses')
+        // } catch {
+        //   return h.redirect('/postcode?error=postcode_does_not_exist')
+        // }
 
         // Set addresses to session
-        request.yar.set({
-          addresses,
-          postcode: postcodeInfo.postcode
-        })
+        // request.yar.set({
+        //   addresses,
+        //   postcode: postcodeInfo.postcode
+        // })
 
         if (!addresses || !addresses.length) {
           return h.view('search', new SearchViewModel(postcodeInfo.postcode))
@@ -94,12 +88,15 @@ module.exports = [
     path: '/search',
     handler: async (request, h) => {
       const redirectPath = '/postcode#'
-      let postcodeInfo = Postcode.normalise(request.query.postcode)
+      const addresses = request.yar.get('addresses')
+      let postcodeInfo = request.yar.get('postcodeInfo')
+
+      // let postcodeInfo = Postcode.normalise(request.query.postcode)
       if (!postcodeInfo.postcode) {
         postcodeInfo = Postcode.normalise(request.yar.get('postcode'))
       }
       const { address } = request.payload
-      const addresses = request.yar.get('addresses')
+      // const addresses = request.yar.get('addresses')
 
       if (!Array.isArray(addresses)) {
         return h.redirect(redirectPath)

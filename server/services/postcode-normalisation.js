@@ -1,8 +1,9 @@
 class Postcode {
-  constructor (postcode = null, isValid = false, isNI = false) {
+  constructor (postcode = null, isValid = false, isEngland, region) {
     this.postcode = postcode
     this.isValid = isValid
-    this.isNI = isNI
+    this.isEngland = isEngland
+    this.region = region
   }
 
   static compare (postcode1, postcode2) {
@@ -10,12 +11,12 @@ class Postcode {
     return normalisePostcode(postcode1).postcode === normalisePostcode(postcode2).postcode
   }
 
-  static normalise (postcode) {
-    return normalisePostcode(postcode)
+  static normalise (postcode, find) {
+    return normalisePostcode(postcode, find)
   }
 }
 
-function normalisePostcode (postcode) {
+async function normalisePostcode (postcode, find) {
   if (!postcode) { return new Postcode(postcode) }
   postcode = postcode.toString()
 
@@ -23,11 +24,42 @@ function normalisePostcode (postcode) {
   normalised = removeWhitespace(normalised)
   normalised = characterFormatting(normalised)
 
-  return new Postcode(
-    normalised,
-    isValidPostcodeFormat(normalised),
-    isNIPostcode(normalised)
-  )
+  if (find) {
+    const { isEngland, region, addresses } = find
+      ? await isEnglishPostcode(normalised, find)
+      : { isEngland: null, region: null }
+
+    return {
+      postcodeInfo: new Postcode(
+        normalised,
+        isValidPostcodeFormat(normalised),
+        isEngland,
+        region
+      ),
+      addresses
+    }
+  } else {
+    return new Postcode(
+      normalised,
+      isValidPostcodeFormat(normalised)
+    )
+  }
+}
+
+async function isEnglishPostcode (postcode, find) {
+  const addresses = await find(postcode)
+  const regionInfo = {
+    region: addresses[0].country_code === 'E'
+      ? 'england'
+      : addresses[0].country_code === 'W'
+        ? 'wales'
+        : addresses[0].country_code === 'S'
+          ? 'scotland'
+          : 'northern-ireland',
+    isEngland: addresses[0].country_code === 'E'
+  }
+
+  return { ...regionInfo, addresses }
 }
 
 function removeWhitespace (postcode) {
@@ -47,9 +79,9 @@ function isValidPostcodeFormat (postcode) {
   return postcodeRegex.test(postcode)
 }
 
-function isNIPostcode (postcode) {
-  return postcode.startsWith('BT')
-}
+// function isNIPostcode (postcode) {
+//   return postcode.startsWith('BT')
+// }
 
 module.exports = {
   Postcode

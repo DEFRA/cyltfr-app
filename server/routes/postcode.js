@@ -42,7 +42,7 @@ module.exports = [
     method: 'POST',
     path: '/postcode',
     handler: async (request, h) => {
-      const postcodeInfo = Postcode.normalise(request.payload.postcode)
+      const { postcodeInfo, addresses } = await Postcode.normalise(request.payload.postcode, request.server.methods.find)
 
       if (!postcodeInfo.postcode || !postcodeInfo.isValid) {
         const errorMessage = 'Enter a full postcode in England'
@@ -50,18 +50,18 @@ module.exports = [
         return h.view('postcode', model)
       }
 
-      // Our Address service doesn't support NI addresses
-      // but all NI postcodes start with BT so redirect to
-      // "england-only" page if that's the case.
-      if (postcodeInfo.isNI) {
-        return redirectToHomeCounty(h, postcodeInfo.postcode, 'northern-ireland')
+      // redirect to /england only page with the link to relevant regions flood information if the postcode is valid but not in England
+      if (postcodeInfo.isEngland === false) {
+        return redirectToHomeCounty(h, postcodeInfo.postcode, postcodeInfo.region)
       }
 
       const captchaCheckResults = await captchaCheck(request.payload['frc-captcha-response'], postcodeInfo.postcode, request.yar, request.server)
       if (captchaCheckResults.tokenValid) {
         // Include a # in the redirected URL, or the browser will jump to any previous url fragment (like #main-content)
         // See https://www.rfc-editor.org/rfc/rfc9110.html#field.location
-        request.yar.set('postcode', postcodeInfo.postcode)
+        request.yar.set('postcodeInfo', postcodeInfo)
+        request.yar.set('addresses', addresses)
+        // request.yar.set('postcode', postcodeInfo.postcode)
         return h.redirect(`/search?postcode=${encodeURIComponent(postcodeInfo.postcode)}#`)
       } else {
         const sessionInfo = airbrakeSessionData(request, captchaCheckResults)
