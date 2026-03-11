@@ -193,11 +193,11 @@ $mobile-width: 480px;
 }
 
 .defra-flood-impact-list-v13__row--current:before {
-  background-color: #1d70b8;
+  background-color: govuk-colour("blue");
 }
 
 .defra-flood-impact-list-v13__row--current .defra-flood-impact-list-v13__value:before {
-  background-color: #1d70b8;
+  background-color: govuk-colour("blue");
   border: 0px;
 }
 

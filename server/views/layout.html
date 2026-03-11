@@ -5,7 +5,6 @@
 {% from "components/service-navigation/macro.njk" import govukServiceNavigation %}
 
 {% set pageOrErrorTitle = "Error: " + pageTitle if errorSummary else pageTitle %}
-{% set govukRebrand = true %}
 
 {% block head %}
 <meta property="og:url" content="{{ fullUrl | safe }}" />
@@ -14,8 +13,6 @@
 <meta property="og:description" content="{{ ogDescription }}" />
 {% if noIndex %}<meta name="robots" content="noindex" />{% endif %}
 <link href="{{ assetPath }}/stylesheets/application.css" rel="stylesheet" />
-<!-- added to include updated favicon-->
-<link rel="icon" sizes="any" href="/assets/rebrand/images/favicon.svg" type="image/svg+xml">
 
 {% if G4AnalyticsAccount %}
 <!-- Google tag (gtag.js) -->
@@ -61,31 +58,32 @@ window.loadAnalytics = () => {
 {% endblock %}
 
 {% block header %}
-{% if GTagManagerId and cookiesPolicy.analytics %}
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{GTagManagerId}}"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-{% endif %}
-  {{ govukHeader({
-    homepageUrl: "https://www.gov.uk",
-    containerClasses: "govuk-width-container"
-  }) 
-}}
+  {% if GTagManagerId and cookiesPolicy.analytics %}
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{GTagManagerId}}"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  {% endif %}
+  {% block govukHeader %}
+    {{ govukHeader({
+      homepageUrl: "https://www.gov.uk",
+      containerClasses: "govuk-width-container"
+    }) }}
+  {% endblock %}
 
-{{ govukServiceNavigation({
-  serviceName: serviceName,
-  serviceUrl: serviceUrl
-}) }}
-
-<div class="govuk-width-container">
-  {{ govukPhaseBanner({
-    tag: {
-      text: "Beta"
-    },
-    html: 'This is a new service. Help us improve it and <a class="govuk-link" href="/feedback">give your feedback</a>.'
+  {{ govukServiceNavigation({
+    serviceName: serviceName,
+    serviceUrl: serviceUrl
   }) }}
-</div>
+
+  {% block headerEnd %}
+    {{ govukPhaseBanner({
+      tag: {
+        text: "Beta"
+      },
+      html: 'This is a new service. Help us improve it and <a class="govuk-link" href="/feedback">give your feedback</a>.'
+    }) }}
+  {% endblock %}
 {% endblock %}
 
 {% block pageTitle %}
@@ -104,7 +102,7 @@ window.loadAnalytics = () => {
 <h1 class="govuk-heading-xl">Default page template</h1>
 {% endblock %}
 
-{% block footer %}
+{% block govukFooter %}
 {{ govukFooter({
   meta: {
     items: [

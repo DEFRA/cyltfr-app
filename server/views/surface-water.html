@@ -3,14 +3,14 @@
 {% set pageTitle = "Surface water: understand your flood risk" %}
 {% set currentpage = "surface-water" %}
 
-{% block skipLink %}
+{% block govukSkipLink %}
   {{ govukSkipLink({
     href: '#surface-water-heading',
     text: 'Skip to main content'
   }) }}
 {% endblock %}
 
-{% block beforeContent %}
+{% block containerStart %}
 <div class="top-page-links">
   <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back to summary</a>
 </div>
