@@ -18,31 +18,24 @@ class Postcode {
 
 async function normalisePostcode (postcode, find) {
   if (!postcode) { return new Postcode(postcode) }
-  postcode = postcode.toString()
 
-  let normalised = removeNonAlphanumeric(postcode)
-  normalised = removeWhitespace(normalised)
-  normalised = characterFormatting(normalised)
-
-  if (find) {
-    const { isEngland, region, addresses } = find
-      ? await isEnglishPostcode(normalised, find)
-      : { isEngland: null, region: null }
-
-    return {
-      postcodeInfo: new Postcode(
-        normalised,
-        isValidPostcodeFormat(normalised),
-        isEngland,
-        region
-      ),
-      addresses
-    }
-  } else {
-    return new Postcode(
-      normalised,
-      isValidPostcodeFormat(normalised)
+  const normalised =
+    characterFormatting(
+      removeWhitespace(
+        removeNonAlphanumeric(postcode.toString())
+      )
     )
+
+  const isValid = isValidPostcodeFormat(normalised)
+
+  if (!find) {
+    return new Postcode(normalised, isValid)
+  }
+
+  const { isEngland, region, addresses } = await isEnglishPostcode(normalised, find)
+  return {
+    postcodeInfo: new Postcode(normalised, isValid, isEngland, region),
+    addresses
   }
 }
 

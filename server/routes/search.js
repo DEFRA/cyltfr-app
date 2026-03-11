@@ -36,25 +36,16 @@ module.exports = [
         }
       }
 
+      if (!postcodeInfo.isEngland) {
+        return redirectToHomeCounty(h, postcodeInfo.postcode, postcodeInfo.region)
+      }
+
       try {
         const captchaCheckResults = await captchaCheck('', postcodeInfo.postcode, request.yar)
 
         if (!captchaCheckResults.tokenValid) {
           return h.redirect('/postcode')
         }
-
-        // try {
-        //   // addresses = await request.server.methods.find(postcodeInfo.postcode)
-        //   addresses = request.yar.get('addresses')
-        // } catch {
-        //   return h.redirect('/postcode?error=postcode_does_not_exist')
-        // }
-
-        // Set addresses to session
-        // request.yar.set({
-        //   addresses,
-        //   postcode: postcodeInfo.postcode
-        // })
 
         if (!addresses || !addresses.length) {
           return h.view('search', new SearchViewModel(postcodeInfo.postcode))
@@ -91,12 +82,10 @@ module.exports = [
       const addresses = request.yar.get('addresses')
       let postcodeInfo = request.yar.get('postcodeInfo')
 
-      // let postcodeInfo = Postcode.normalise(request.query.postcode)
       if (!postcodeInfo.postcode) {
         postcodeInfo = Postcode.normalise(request.yar.get('postcode'))
       }
       const { address } = request.payload
-      // const addresses = request.yar.get('addresses')
 
       if (!Array.isArray(addresses)) {
         return h.redirect(redirectPath)

@@ -61,7 +61,7 @@ module.exports = [
         // See https://www.rfc-editor.org/rfc/rfc9110.html#field.location
         request.yar.set('postcodeInfo', postcodeInfo)
         request.yar.set('addresses', addresses)
-        // request.yar.set('postcode', postcodeInfo.postcode)
+
         return h.redirect(`/search?postcode=${encodeURIComponent(postcodeInfo.postcode)}#`)
       } else {
         const sessionInfo = airbrakeSessionData(request, captchaCheckResults)
