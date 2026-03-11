@@ -32,6 +32,10 @@ $govuk-assets-path: '/assets/';
   float: right;
 }
 
+.do-not-display {
+  display: none;
+}
+
 #postcode > dd {
   margin-inline-start: 0;
 }

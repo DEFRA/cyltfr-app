@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 
 {% from "components/input/macro.njk" import govukInput %}
+{% from "components/tag/macro.njk" import govukTag %}
+{% from "components/button/macro.njk" import govukButton %}
 {% from "components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% set pageTitle = "Where do you want to check?" %}
@@ -16,6 +18,19 @@
       {% if errorSummary %}
         {{ govukErrorSummary(errorSummary) }}
       {% endif %}
+      {% if friendlyCaptchaEnabled %}
+      <div id="FriendlyCaptchaErrorSummary" class="do-not-display">
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: [
+          {
+            text: "FriendlyCaptcha encountered an error while performing its checks",
+            href: "#FriendlyCaptchaError"
+          }]
+        })}}
+
+      </div>
+      {% endif %}
       <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
 
       {% if friendlyCaptchaEnabled %}
@@ -29,14 +44,52 @@
       <form id="postcode-form" method="post">
         {{ govukInput(postcodeInput) }}
         {% if friendlyCaptchaEnabled %}
-          <div style="margin-bottom: 20px;" id="FriendlyCaptcha" class="govuk-body frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="auto" role="status"></div>
+
+          <div style="margin-bottom: 20px; display: none;" id="FriendlyCaptcha" class="govuk-body frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="auto" role="status"></div>
+          <div id="FriendlyCaptchaChecking" class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+              <p class="govuk-body">
+                Friendly Captcha check
+                {{govukTag({
+          text: "Checking",
+          classes: "govuk-tag--grey"
+        })}}
+              </p>
+            </div>
+          </div>
+          <div id="FriendlyCaptchaComplete" class="govuk-grid-row do-not-display">
+            <div class="govuk-grid-column-two-thirds">
+              <p class="govuk-body">
+                Friendly Captcha check
+                {{govukTag({
+          text: "Passed"
+        })}}
+              </p>
+            </div>
+          </div>
+          <div id="FriendlyCaptchaError" class="govuk-grid-row do-not-display">
+            <div class="govuk-grid-column-two-thirds govuk-form-group govuk-form-group--error">
+              <p class="govuk-body">
+                Friendly Captcha check
+              </p>
+              <p class="govuk-error-message">
+                FriendlyCaptcha encountered an error while performing its checks
+              </p>
+                {{ govukButton({
+                  text: "Retry",
+                  type: "button",
+                  id: "FriendlyCaptchaResetButton",
+                  href: " "
+                }) }}
+            </div>
+          </div>
           <div class="govuk-grid-column-two-thirds" style="display: none;" id="nc-browser">
-            <p class="govuk-body">The anti-robot check works better and faster in modern browsers such as Edge, Firefox, or Chrome. Please consider updating your browser</p>
+            <p class="govuk-body">The Friendly Captcha check works better and faster in modern browsers such as Edge, Firefox, or Chrome. Please consider updating your browser</p>
           </div>
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
               <p class="govuk-body govuk-hint">
-                Friendly Captcha checks that you aren't a robot. Find out how to use it in our <a href="/privacy-notice" 
+                Friendly Captcha checks that you aren't a robot. Find out how we use it in our <a href="/privacy-notice" 
                 class="govuk-link">privacy notice</a>
               </p>
             </div>
@@ -97,70 +150,52 @@
 </div>
  </noscript>
  <script>
-    let sessionTimeoutTimer
-
     function setupCaptchaEventListeners(captchaElement) {
-    const submitButton = document.getElementById("post-code-button")
+      const frcChecking = document.getElementById('FriendlyCaptchaChecking')
+      const frcComplete = document.getElementById('FriendlyCaptchaComplete')
+      const frcError = document.getElementById('FriendlyCaptchaError')
+      const frcErrorSummary = document.getElementById('FriendlyCaptchaErrorSummary')
+      const submitButton = document.getElementById('post-code-button')
 
-    captchaElement.addEventListener("frc:widget.statechange", function (event) {
-      const detail = event.detail
+      captchaElement.addEventListener("frc:widget.statechange", function (event) {
+        const detail = event.detail
         if (detail.state === "completed") {
+          if (frcChecking) {
+            frcChecking.style.display = 'none'
+          }
+          if (frcComplete) {
+            frcComplete.style.display = 'block'
+          }
           submitButton.disabled = false
-          captchaDone(detail.response)
-        } else if (detail.state === "error") {
+        } else if ((detail.state === "error") || (detail.state === "expired")) {
+          if (frcChecking) {
+            frcChecking.style.display = 'none'
+          }
+          if (frcComplete) {
+            frcComplete.style.display = 'none'
+          }
+          if (frcError) {
+            frcError.style.display = 'block'
+          }
+          if (frcErrorSummary) {
+            frcErrorSummary.style.display = 'block'
+            if (!document.title.includes('Error: ')) {
+              document.title = 'Error: ' + document.title
+            }
+            const errorSummary = frcErrorSummary.querySelector('.govuk-error-summary')
+            if (errorSummary) {
+              errorSummary.focus()
+            }
+          }
           submitButton.disabled = false
-          captchaError()
         } else {
           submitButton.disabled = true
         }
       })
     }
 
-    function enableTimeout(expiry) {
-      if (sessionTimeoutTimer) {
-        clearTimeout(sessionTimeoutTimer)
-        sessionTimeoutTimer = null
-      }
-      if (expiry > 0) {
-        sessionTimeoutTimer = setTimeout(() => friendlyCaptchaExpire(), expiry);
-      }  
-    }
-    function friendlyCaptchaExpire() {
-      fixupFriendlyCaptcha()
-    }
-    function fixupFriendlyCaptcha() {
-      // Accessibility edits to the FriendlyCaptcha widget.
-      // Stop the Friendly Captcha link opening in a new window and add gov styling.
-      const link = document.querySelector("div.frc-banner > a")
-      if (link) {
-        link.target = ''
-        link.className += ' govuk-link'
-      }
-    }
-    function observeCaptchaRender() {
-      // Work around to apply Friendly Captcha link accessability change when the page is refreshed as this was not applying previously.
-      const observer = new MutationObserver(() => {
-        const captchaLink = document.querySelector("div.frc-banner > a")
-        if (captchaLink) {
-          fixupFriendlyCaptcha()
-          observer.disconnect()
-        }
-      })
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      })
-    }
-    
-    function captchaDone(solutionPayload) {
-      fixupFriendlyCaptcha()
-    }
-    function captchaError() {
-      enableTimeout(0)
-    }
     document.addEventListener("DOMContentLoaded", function () {
-      fixupFriendlyCaptcha()
-      observeCaptchaRender()
+      setupCaptchaEventListeners(document.getElementById('FriendlyCaptcha'))
     })
   </script>
   <script type="module" src="{{ assetPath }}/js/site.min.js" async defer>
