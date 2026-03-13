@@ -6,7 +6,8 @@ function defineBackLink (currentPage, previousPage) {
     '/terms-and-conditions',
     '/accessibility-statement',
     '/os-terms',
-    '/feedback'
+    '/feedback',
+    '/risk-data'
   ]
 
   if (backLinkPages.includes(currentPage)) {
