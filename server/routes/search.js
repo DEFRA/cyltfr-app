@@ -1,11 +1,13 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { redirectToHomeCounty } = require('../helpers')
 const config = require('../config')
 const SearchViewModel = require('../models/search-view')
 const errors = require('../models/errors.json')
-const { captchaCheck } = require('../services/captchacheck')
+const redirectPath = '/postcode#'
+const backLinkUri = '/postcode'
+const { redirectToHomeCounty } = require('../helpers')
 const { Postcode } = require('../services/postcode-normalisation')
+const { captchaCheck } = require('../services/captchacheck')
 
 const getWarnings = async (postcode, request) => {
   try {
@@ -27,35 +29,23 @@ module.exports = [
     handler: async (request, h) => {
       request.yar.set('previousPage', request.path)
       const addresses = request.yar.get('addresses')
-      let postcodeInfo = request.yar.get('postcodeInfo')
+      const postcodeInfo = request.yar.get('postcodeInfo')
 
-      if (!postcodeInfo?.postcode) {
-        postcodeInfo = await Postcode.normalise(request.query.postcode)
-        if (!postcodeInfo.postcode) {
-          return h.redirect('/postcode')
-        }
-      }
-
-      if (!postcodeInfo.isEngland) {
-        return redirectToHomeCounty(h, postcodeInfo.postcode, postcodeInfo.region)
+      if (!addresses || !postcodeInfo || !await Postcode.compare(request.query.postcode, postcodeInfo.postcode)) {
+        return h.redirect(redirectPath)
       }
 
       try {
         const captchaCheckResults = await captchaCheck('', postcodeInfo.postcode, request.yar)
 
         if (!captchaCheckResults.tokenValid) {
-          return h.redirect('/postcode')
+          return h.redirect(redirectPath)
         }
 
-        if (!addresses || !addresses.length) {
-          return h.view('search', new SearchViewModel(postcodeInfo.postcode))
-        }
-        let warnings
-        try {
-          warnings = await getWarnings(postcodeInfo.postcode, request)
-        } catch {}
-        const backLinkUri = '/postcode'
-        return h.view('search', new SearchViewModel(addresses[0].postcode, addresses, null, warnings, backLinkUri))
+        // getWarnings doesnt throw an error so no need to catch it
+        const warnings = await getWarnings(postcodeInfo.postcode, request)
+
+        return h.view('search', new SearchViewModel(addresses[0].postcode, addresses, null, warnings, backLinkUri, postcodeInfo.otherRegion))
       } catch (err) {
         return boom.serverUnavailable(errors.addressByPostcode.message, err)
       }
@@ -78,39 +68,29 @@ module.exports = [
     method: 'POST',
     path: '/search',
     handler: async (request, h) => {
-      const redirectPath = '/postcode#'
       const addresses = request.yar.get('addresses')
-      let postcodeInfo = request.yar.get('postcodeInfo')
+      const postcodeInfo = request.yar.get('postcodeInfo')
+      let errorMessage
 
-      if (!postcodeInfo.postcode) {
-        postcodeInfo = Postcode.normalise(request.yar.get('postcode'))
-      }
-      const { address } = request.payload
-
-      if (!Array.isArray(addresses)) {
+      if (!addresses || !postcodeInfo) {
         return h.redirect(redirectPath)
       }
 
-      let errorMessage
-      if (addresses.length <= 0) {
-        errorMessage = 'Enter a valid postcode'
-      }
+      const { address } = request.payload
+
       if (address < 0) {
         errorMessage = 'Select an address'
       }
 
       // throw for postcode mismatch when address is within addresses index range
-      if (addresses?.length > 0 && !Postcode.compare(postcodeInfo.postcode, addresses[0].postcode)) {
+      if (!await Postcode.compare(postcodeInfo.postcode, addresses[0].postcode)) {
         return h.redirect(redirectPath)
       }
 
-      let warnings
-      try {
-        warnings = await getWarnings(postcodeInfo.postcode, request)
-      } catch {}
       if (errorMessage) {
-        const model = new SearchViewModel(postcodeInfo.postcode, addresses, errorMessage, warnings)
-
+        // getWarnings doesnt throw an error so no need to catch it and its only used in errors anyway
+        const warnings = await getWarnings(postcodeInfo.postcode, request)
+        const model = new SearchViewModel(postcodeInfo.postcode, addresses, errorMessage, warnings, backLinkUri, postcodeInfo.otherRegion)
         return h.view('search', model)
       }
 
@@ -126,7 +106,7 @@ module.exports = [
       if (addressRecord.country_code !== 'E') {
         return redirectToHomeCounty(h, postcodeInfo.postcode, addressRecord.country_code)
       }
-      // Set addresses to session
+
       return h.redirect('/risk#')
     },
     options: {

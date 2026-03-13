@@ -1,18 +1,25 @@
 class Postcode {
-  constructor (postcode = null, isValid = false, isEngland, region) {
+  constructor (postcode = null, isValid = false, isEngland, region, otherRegion) {
     this.postcode = postcode
     this.isValid = isValid
     this.isEngland = isEngland
     this.region = region
+    this.otherRegion = otherRegion
   }
 
-  static compare (postcode1, postcode2) {
+  static async compare (postcode1, postcode2) {
     if (!postcode1 || !postcode2) { return false }
-    return normalisePostcode(postcode1).postcode === normalisePostcode(postcode2).postcode
+    const normalizedPostcode1 = await normalisePostcode(postcode1)
+    const normalizedPostcode2 = await normalisePostcode(postcode2)
+    return normalizedPostcode1.postcode === normalizedPostcode2.postcode
   }
 
   static normalise (postcode, find) {
     return normalisePostcode(postcode, find)
+  }
+
+  static formatForDisplay (postcode) {
+    return formatPostcodeForDisplay(postcode)
   }
 }
 
@@ -32,25 +39,37 @@ async function normalisePostcode (postcode, find) {
     return new Postcode(normalised, isValid)
   }
 
-  const { isEngland, region, addresses } = await isEnglishPostcode(normalised, find)
+  const { isEngland, region, addresses, otherRegion } = await isEnglishPostcode(normalised, find)
   return {
-    postcodeInfo: new Postcode(normalised, isValid, isEngland, region),
+    postcodeInfo: new Postcode(normalised, isValid, isEngland, region, otherRegion),
     addresses
   }
 }
 
 async function isEnglishPostcode (postcode, find) {
-  const addresses = await find(postcode)
+  let addresses = await find(postcode)
+
+  const region = addresses[0].country_code === 'E'
+    ? 'england'
+    : addresses[0].country_code === 'W'
+      ? 'wales'
+      : addresses[0].country_code === 'S'
+        ? 'scotland'
+        : 'northern-ireland'
+
+  const otherRegion = addresses.filter(country => country.country_code !== 'E')[0]?.country_code === 'W'
+    ? 'wales'
+    : addresses.filter(country => country.country_code !== 'E')[0]?.country_code === 'S'
+      ? 'scotland'
+      : null
+
   const regionInfo = {
-    region: addresses[0].country_code === 'E'
-      ? 'england'
-      : addresses[0].country_code === 'W'
-        ? 'wales'
-        : addresses[0].country_code === 'S'
-          ? 'scotland'
-          : 'northern-ireland',
-    isEngland: addresses[0].country_code === 'E'
+    region,
+    isEngland: addresses[0].country_code === 'E',
+    otherRegion
   }
+
+  addresses = addresses.filter(country => country.country_code === 'E')
 
   return { ...regionInfo, addresses }
 }
@@ -72,9 +91,20 @@ function isValidPostcodeFormat (postcode) {
   return postcodeRegex.test(postcode)
 }
 
-// function isNIPostcode (postcode) {
-//   return postcode.startsWith('BT')
-// }
+function formatPostcodeForDisplay (postcode) {
+  if (!postcode) { return postcode }
+
+  postcode =
+    characterFormatting(
+      removeWhitespace(
+        removeNonAlphanumeric(postcode.toString())
+      )
+    )
+
+  const blockOne = postcode.slice(0, -3).trim()
+  const blockTwo = postcode.slice(-3)
+  return `${blockOne} ${blockTwo}`
+}
 
 module.exports = {
   Postcode

@@ -40,10 +40,10 @@ describe('postcode page', () => {
 
   test('should redirect to search page when postcode submitted', async () => {
     captchaCheck.captchaCheck.mockResolvedValue({ tokenValid: true })
-    const { postOptions } = mockSearchOptions('NP18 3EZ', cookie)
+    const { postOptions } = mockSearchOptions('YO18 8TB', cookie)
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP183EZ')}`)
+    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('YO188TB')}`)
   })
 
   test('should prefill postcode if one has been cached', async () => {

@@ -24,16 +24,16 @@ describe('postcode-normalisation', () => {
     expect(actualResult.isNI).toBe(expectedResult.isNI)
   })
 
-  test('compare returns true when postcodes are the same', () => {
-    expect(Postcode.compare('CV37 6YZ', 'cv376yz')).toBe(true)
+  test('compare returns true when postcodes are the same', async () => {
+    expect(await Postcode.compare('CV37 6YZ', 'cv376yz')).toBe(true)
   })
 
-  test('compare returns false when postcodes are different', () => {
-    expect(Postcode.compare('CV37 6YZ', 'AB12 3CD')).toBe(false)
+  test('compare returns false when postcodes are different', async () => {
+    expect(await Postcode.compare('CV37 6YZ', 'AB12 3CD')).toBe(false)
   })
 
   test.each(['', null, undefined])
-  ('compare returns false for invalid value "%s"', (input) => {
-    expect(Postcode.compare('CV37 6YZ', input)).toBe(false)
+  ('compare returns false for invalid value "%s"', async (input) => {
+    expect(await Postcode.compare('CV37 6YZ', input)).toBe(false)
   })
 })
