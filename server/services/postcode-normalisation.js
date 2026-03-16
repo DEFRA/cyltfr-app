@@ -9,9 +9,9 @@ class Postcode {
 
   static async compare (postcode1, postcode2) {
     if (!postcode1 || !postcode2) { return false }
-    const normalizedPostcode1 = await normalisePostcode(postcode1)
-    const normalizedPostcode2 = await normalisePostcode(postcode2)
-    return normalizedPostcode1.postcode === normalizedPostcode2.postcode
+    const normalisedPostcode1 = await normalisePostcode(postcode1)
+    const normalisedPostcode2 = await normalisePostcode(postcode2)
+    return normalisedPostcode1.postcodeInfo.postcode === normalisedPostcode2.postcodeInfo.postcode
   }
 
   static normalise (postcode, find) {
@@ -24,7 +24,7 @@ class Postcode {
 }
 
 async function normalisePostcode (postcode, find) {
-  if (!postcode) { return new Postcode(postcode) }
+  if (!postcode || postcode === 'null' || postcode === 'undefined') { return { postcodeInfo: new Postcode(null) } }
 
   const normalised =
     characterFormatting(
@@ -36,7 +36,7 @@ async function normalisePostcode (postcode, find) {
   const isValid = isValidPostcodeFormat(normalised)
 
   if (!find) {
-    return new Postcode(normalised, isValid)
+    return { postcodeInfo: new Postcode(normalised, isValid) }
   }
 
   const { isEngland, region, addresses, otherRegion } = await isEnglishPostcode(normalised, find)

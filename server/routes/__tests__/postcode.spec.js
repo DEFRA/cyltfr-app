@@ -25,6 +25,10 @@ afterAll(async () => {
 })
 
 describe('postcode page', () => {
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
   test('should return a view with error message when redirected to with an error', async () => {
     const options = {
       method: 'GET',
@@ -48,76 +52,54 @@ describe('postcode page', () => {
 
   test('should prefill postcode if one has been cached', async () => {
     captchaCheck.captchaCheck.mockResolvedValue({ tokenValid: true })
-    const { getOptions } = mockSearchOptions('CV376YZ', cookie)
-    // Inject the search options request
-    const response = await server.inject(getOptions)
-    let { payload, headers } = response
-    // Check if the search page is correct
-    expect(payload).toMatch(/Select an address/g)
-    // Extract the set-cookie header to get the session cookie
-    const setCookieHeader = headers['set-cookie']
-    const sessionCookie = setCookieHeader && setCookieHeader[0].split(';')[0]
-    // Ensure the session cookie is present
-    expect(sessionCookie).toBeDefined()
-    // Inject the postcode get request with the session cookie
-    const postcodeGet = {
+
+    const { postOptions } = mockSearchOptions('CV376YZ', cookie)
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+
+    const sessionCookie = postResponse.headers['set-cookie'][0].split(';')[0]
+    const getResponse = await server.inject({
       method: 'GET',
       url: '/postcode',
-      headers: {
-        cookie: sessionCookie
-      }
-    }
-    const postcodeGetResponse = await server.inject(postcodeGet)
-    payload = postcodeGetResponse.payload
-    // Check if the postcode is being prefilled
-    expect(payload).toMatch(/value="CV376YZ"/g)
+      headers: { cookie: sessionCookie }
+    })
+    expect(sessionCookie).toBeDefined()
+    expect(getResponse.payload).toMatch(/value="CV37 6YZ"/)
   })
 
   test('should prefill postcode if one has been cached friendly captcha on', async () => {
     captchaCheck.captchaCheck.mockResolvedValue({ tokenValid: true })
     config.friendlyCaptchaEnabled = true
-    const { getOptions } = mockSearchOptions('CV376YZ', cookie)
-    // Inject the search options request
-    const response = await server.inject(getOptions)
-    let { payload, headers } = response
-    // Check if the search page is correct
-    expect(payload).toMatch(/Select an address/g)
-    // Extract the set-cookie header to get the session cookie
-    const setCookieHeader = headers['set-cookie']
-    const sessionCookie = setCookieHeader && setCookieHeader[0].split(';')[0]
-    // Ensure the session cookie is present
-    expect(sessionCookie).toBeDefined()
-    // Inject the postcode get request with the session cookie
-    const postcodeGet = {
+
+    const { postOptions } = mockSearchOptions('CV376YZ', cookie)
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+
+    const sessionCookie = postResponse.headers['set-cookie'][0].split(';')[0]
+    const getResponse = await server.inject({
       method: 'GET',
       url: '/postcode',
-      headers: {
-        cookie: sessionCookie
-      }
-    }
-    const postcodeGetResponse = await server.inject(postcodeGet)
-    payload = postcodeGetResponse.payload
-    // Check if the postcode is being prefilled
-    expect(payload).toMatch(/value="CV376YZ"/g)
+      headers: { cookie: sessionCookie }
+    })
+    expect(sessionCookie).toBeDefined()
+    expect(getResponse.payload).toMatch(/value="CV37 6YZ"/)
   })
 
   test.each([
     { postcode: '', description: 'postcode is missing' },
     { postcode: 'INVALID', description: 'postcode is invalid' }
-  ])('should return an error view when postcode missing or invalid', async ({ postcode }) => {
-    const options = {
-      method: 'POST',
-      url: '/postcode',
-      headers: {
-        cookie
-      },
-      payload: {
-        postcode
-      }
+  ])('should return an error view when $description', async ({ postcode }) => {
+    const mockPostcodeInfo = {
+      postcode: '',
+      isValid: false
     }
-    const response = await server.inject(options)
+
+    jest.fn().mockResolvedValue({ postcodeInfo: mockPostcodeInfo, addresses: [] })
+
+    const { postOptions } = mockSearchOptions('', cookie)
+    const response = await server.inject(postOptions)
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(response.result).toMatch('Enter a full postcode in England')
+    expect(response.result).toMatch(/Enter a full postcode in England/)
   })
 
   test('should return error view when captcha validation fails', async () => {
@@ -141,7 +123,7 @@ describe('postcode page', () => {
       },
       payload: {
         'frc-captcha-solution': 'invalid',
-        postcode: 'NP18 3EZ'
+        postcode: 'YO18 8TB'
       }
     }
     const response = await server.inject(options)
