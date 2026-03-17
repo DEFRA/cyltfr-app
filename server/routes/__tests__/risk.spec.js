@@ -35,11 +35,11 @@ beforeEach(async () => {
   const { getOptions, postOptions } = mockSearchOptions('CV376YZ', cookie)
   let postResponse = await server.inject(postOptions)
   expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-  expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('CV376YZ')}`)
+  expect(postResponse.headers.location).toMatch('/search#')
 
   const getResponse = await server.inject(getOptions)
   expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-  postOptions.url = `/search?postcode=${encodeURIComponent('CV376YZ')}`
+  postOptions.url = '/search#'
   postOptions.payload = 'address=0'
 
   postResponse = await server.inject(postOptions)
@@ -489,20 +489,20 @@ describe('Risk page test', () => {
     const { getOptions, postOptions } = mockSearchOptions('NP183EZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('NP183EZ')}`)
+    expect(postResponse.headers.location).toMatch('/england-only?postcode=NP183EZ&region=wales#')
 
     const getResponse = await server.inject(getOptions)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    postOptions.url = `/search?postcode=${encodeURIComponent('NP183EZ')}`
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    postOptions.url = '/search#'
     postOptions.payload = 'address=0'
 
     postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch('/england-only')
+    expect(postResponse.headers.location).toMatch('/postcode#')
     defaultOptions.headers = { cookie }
 
     const response = await server.inject(defaultOptions)
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(response.headers.location).toMatch('/england-only')
+    expect(response.headers.location).toMatch('/postcode')
   })
 })

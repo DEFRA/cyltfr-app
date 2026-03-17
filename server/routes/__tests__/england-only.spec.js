@@ -48,7 +48,7 @@ describe('england-only router', () => {
     const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('CV376YZ')}`)
+    expect(postResponse.headers.location).toMatch('/search')
 
     let getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)

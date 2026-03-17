@@ -35,11 +35,11 @@ describe('server methods', () => {
     const { getOptions, postOptions } = mockSearchOptions('DN200RP', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('DN200RP')}`)
+    expect(postResponse.headers.location).toMatch('/search#')
 
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    postOptions.url = `/search?postcode=${encodeURIComponent('DN200RP')}`
+    postOptions.url = '/search#'
     postOptions.payload = 'address=0'
 
     postResponse = await server.inject(postOptions)

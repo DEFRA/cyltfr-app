@@ -43,7 +43,12 @@ module.exports = [
     method: 'POST',
     path: '/postcode',
     handler: async (request, h) => {
-      const { postcodeInfo, addresses } = await Postcode.normalise(request.payload.postcode, request.server.methods.find)
+      let postcodeInfo, addresses
+      try {
+        ({ postcodeInfo, addresses } = await Postcode.normalise(request.payload.postcode, request.server.methods.find))
+      } catch (err) {
+        return h.redirect('/postcode?error=postcode_does_not_exist')
+      }
 
       if (!postcodeInfo.postcode || !postcodeInfo.isValid) {
         const errorMessage = 'Enter a full postcode in England'
@@ -62,7 +67,7 @@ module.exports = [
         request.yar.set('addresses', addresses)
         // Include a # in the redirected URL, or the browser will jump to any previous url fragment (like #main-content)
         // See https://www.rfc-editor.org/rfc/rfc9110.html#field.location
-        return h.redirect(`/search?postcode=${encodeURIComponent(postcodeInfo.postcode)}#`)
+        return h.redirect('/search#')
       } else {
         const sessionInfo = airbrakeSessionData(request, captchaCheckResults)
 

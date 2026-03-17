@@ -3,6 +3,8 @@ const createServer = require('../../../server')
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
 const config = require('../../config')
 const captchaCheck = require('../../services/captchacheck')
+const addressService = require('../../services/address')
+const floodService = require('../../services/flood')
 let server, cookie
 
 jest.mock('../../config')
@@ -47,7 +49,15 @@ describe('postcode page', () => {
     const { postOptions } = mockSearchOptions('YO18 8TB', cookie)
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('YO188TB')}`)
+    expect(postResponse.headers.location).toMatch('/search#')
+
+    const searchCookie = postResponse.headers['set-cookie'][0].split(';')[0]
+    const getResponse = await server.inject({
+      method: 'GET',
+      url: '/search',
+      headers: { cookie: searchCookie }
+    })
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
   })
 
   test('should prefill postcode if one has been cached', async () => {
@@ -131,6 +141,25 @@ describe('postcode page', () => {
     expect(server.methods.notify).toHaveBeenCalledWith('FriendlyCaptcha server check failed: response_invalid - [12345]', expect.any(Object))
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(response.result).toContain('Captcha validation failed. Please try again.')
+  })
+
+  test('/search - Address service error', async () => {
+    const { postOptions } = mockSearchOptions('CV376YZ', cookie)
+    floodService.__updateReturnValue({})
+    addressService.find.mockImplementationOnce(() => { throw new Error('An error') })
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch('/postcode?error=postcode_does_not_exist')
+  })
+
+  test('/search - Address service returns empty address array', async () => {
+    const { postOptions } = mockSearchOptions('CV376YZ', cookie)
+    floodService.__updateReturnValue({})
+    addressService.find.mockImplementationOnce(() => { return Promise.resolve([]) })
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch('/postcode?error=postcode_does_not_exist')
   })
 
   describe('postcode page - captchabypass', () => {

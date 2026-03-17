@@ -49,6 +49,10 @@ async function normalisePostcode (postcode, find) {
 async function isEnglishPostcode (postcode, find) {
   let addresses = await find(postcode)
 
+  if (!addresses || addresses.length === 0) {
+    throw new Error('No addresses found for postcode')
+  }
+
   const region = addresses[0].country_code === 'E'
     ? 'england'
     : addresses[0].country_code === 'W'
