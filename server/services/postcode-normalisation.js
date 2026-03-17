@@ -53,19 +53,31 @@ async function isEnglishPostcode (postcode, find) {
     throw new Error('No addresses found for postcode')
   }
 
-  const region = addresses[0].country_code === 'E'
-    ? 'england'
-    : addresses[0].country_code === 'W'
-      ? 'wales'
-      : addresses[0].country_code === 'S'
-        ? 'scotland'
-        : 'northern-ireland'
+  const primaryCountryCode = addresses[0].country_code
+  let region = null
 
-  const otherRegion = addresses.filter(country => country.country_code !== 'E')[0]?.country_code === 'W'
-    ? 'wales'
-    : addresses.filter(country => country.country_code !== 'E')[0]?.country_code === 'S'
-      ? 'scotland'
-      : null
+  if (primaryCountryCode === 'E') {
+    region = 'england'
+  } else if (primaryCountryCode === 'W') {
+    region = 'wales'
+  } else if (primaryCountryCode === 'S') {
+    region = 'scotland'
+  } else if (primaryCountryCode === 'N') {
+    region = 'northern-ireland'
+  } else {
+    throw new Error('Unknown country code')
+  }
+
+  const secondaryCountryCode = addresses.find(country => country.country_code !== 'E')?.country_code
+  let otherRegion
+
+  if (secondaryCountryCode === 'W') {
+    otherRegion = 'wales'
+  } else if (secondaryCountryCode === 'S') {
+    otherRegion = 'scotland'
+  } else {
+    otherRegion = null
+  }
 
   const regionInfo = {
     region,

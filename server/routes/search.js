@@ -17,7 +17,9 @@ const getWarnings = async (postcode, request) => {
     }
     return warnings
   } catch (error) {
-    if (request.server.methods.notify) request.server.methods.notify(error)
+    if (request.server.methods.notify) {
+      request.server.methods.notify(error)
+    }
     request.log('error', error)
   }
 }
@@ -31,7 +33,6 @@ module.exports = [
       const addresses = request.yar.get('addresses')
       const postcodeInfo = request.yar.get('postcodeInfo')
 
-      // if (!addresses || !postcodeInfo || !await Postcode.compare(request.query.postcode, postcodeInfo.postcode)) {
       if (!addresses || !postcodeInfo) {
         return h.redirect(redirectPath)
       }

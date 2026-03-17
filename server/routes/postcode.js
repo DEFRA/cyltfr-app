@@ -46,7 +46,7 @@ module.exports = [
       let postcodeInfo, addresses
       try {
         ({ postcodeInfo, addresses } = await Postcode.normalise(request.payload.postcode, request.server.methods.find))
-      } catch (err) {
+      } catch {
         return h.redirect('/postcode?error=postcode_does_not_exist')
       }
 
