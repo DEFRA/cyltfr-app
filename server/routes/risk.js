@@ -3,7 +3,7 @@ const RiskViewModel = require('../models/risk-view')
 const { redirectToHomeCounty } = require('../helpers')
 const errors = require('../models/errors.json')
 
-module.exports = {
+module.exports = [{
   method: 'GET',
   path: '/risk',
   handler: async (request, h) => {
@@ -50,4 +50,39 @@ module.exports = {
   options: {
     description: 'Get risk text page'
   }
+},
+{
+  method: 'GET',
+  path: '/point-risk',
+  handler: async (request, h) => {
+    try {
+      const { x, y } = request.query
+
+      try {
+        const risk = await request.server.methods.riskService(x, y)
+
+        request.yar.set('risk', risk)
+
+        const hasError = risk.riverAndSeaRisk?.error ||
+        risk.surfaceWaterRisk?.error ||
+        risk.reservoirDryRisk?.error ||
+        risk.reservoirWetRisk?.error ||
+        risk.leadLocalFloodAuthority?.error ||
+        risk.extraInfo?.error
+
+        if (hasError) {
+          return boom.serverUnavailable(errors.spatialQuery.message, {
+            risk
+          })
+        }
+        const backLinkUri = '/search'
+        return h.view('risk', new RiskViewModel(risk, null, backLinkUri, { x, y }))
+      } catch (err) {
+        return boom.serverUnavailable(errors.riskProfile.message, err)
+      }
+    } catch (err) {
+      return boom.serverUnavailable(errors.addressById.message, err)
+    }
+  }
 }
+]

@@ -27,7 +27,7 @@ const highestLevel = (risk, riskCC) => {
 
 const Levels = Object.keys(RiskLevel).map(l => RiskLevel[l])
 
-function riskViewModel (risk, address, backLinkUri) {
+function riskViewModel (risk, address, backLinkUri, coordinates) {
   const riverAndSeaRisk = risk.riverAndSeaRisk
     ? risk.riverAndSeaRisk.probabilityForBand
     : RiskLevel.VeryLow
@@ -74,12 +74,17 @@ function riskViewModel (risk, address, backLinkUri) {
   // Extra info
   processExtraInfo.call(this, risk)
 
-  this.easting = address.x
-  this.northing = address.y
-  this.postcode = address.postcode
-  this.lines = address.address.split(', ')
-  this.address = address
-  this.fullAddress = capitaliseAddress(address.address)
+  if (address) {
+    this.easting = address.x
+    this.northing = address.y
+    this.postcode = address.postcode
+    this.lines = address.address.split(', ')
+    this.address = address
+    this.fullAddress = capitaliseAddress(address.address)
+  } else if (coordinates) {
+    this.easting = coordinates.x
+    this.northing = coordinates.y
+  }
   this.leadLocalFloodAuthority = risk.leadLocalFloodAuthority
   this.date = Date.now()
   this.year = new Date().getFullYear()

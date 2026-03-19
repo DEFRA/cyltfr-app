@@ -9,7 +9,7 @@ import WebTileLayer from '@arcgis/core/layers/WebTileLayer.js'
 import esriConfig from '@arcgis/core/config.js'
 import Graphic from '@arcgis/core/Graphic.js'
 
-let map, callback, currentLayer, tokenFetchRunning
+let map, callback, currentLayer, tokenFetchRunning, clickMarkerDot, clickedMapPoint
 const TOKEN_PREFETCH_SECS = 30
 const currentPageURL = new URLSearchParams(document.location.search)
 const mapPageQuery = currentPageURL.get('map')
@@ -95,16 +95,142 @@ export async function loadMap (point) {
       mapView.graphics.remove(markerGraphic)
     }
   })
+  ///
+  // events and handlers used are here
+  // https://developers.arcgis.com/javascript/latest/references/core/views/MapView/
+  ///
+  mapView.popup.autoOpenEnabled = false
 
   mapView.when(function () {
-    // MapView is now ready for display and can be used. Here we will
-    // use goTo to view a particular location at a given zoom level and center
+    // ready
     mapView.ui.move('zoom', 'bottom-right')
+
+    const tooltip = createCoordinateTooltip()
+
+    function updateTooltipPosition () {
+      if (!clickedMapPoint) return
+      const screenPoint = mapView.toScreen(clickedMapPoint)
+      tooltip.style.left = `${screenPoint.x + 15}px`
+      tooltip.style.top = `${screenPoint.y - 15}px`
+    }
+
+    let tooltipOpen = false
+
+    function closeTooltip () {
+      tooltip.classList.add('hide')
+      tooltipOpen = false
+      if (clickMarkerDot) {
+        mapView.graphics.remove(clickMarkerDot)
+        clickMarkerDot = null
+      }
+    }
+
+    mapView.on('click', async (event) => {
+      if (tooltipOpen) {
+        closeTooltip()
+        return
+      }
+
+      const { x, y } = event.mapPoint
+      const easting = Math.round(x)
+      const northing = Math.round(y)
+
+      // Update or add click marker
+      if (clickMarkerDot) {
+        mapView.graphics.remove(clickMarkerDot)
+      }
+      clickedMapPoint = new Point({
+        x: easting,
+        y: northing,
+        spatialReference: { wkid: 27700 }
+      })
+      clickMarkerDot = new Graphic({
+        geometry: clickedMapPoint,
+        symbol: {
+          type: 'simple-marker',
+          color: [251, 98, 246, 0.2],
+          size: 14,
+          outline: { color: [251, 98, 246], width: 2 }
+        }
+      })
+      mapView.graphics.add(clickMarkerDot)
+
+      // https://developers.arcgis.com/javascript/latest/references/core/views/MapView/#:~:text=Programmatic%20navigation,-You
+      // https://developers.arcgis.com/javascript/latest/references/core/views/MapView/#goTo:~:text=void-,goTo
+      if (mapView.zoom < 8) {
+        mapView.goTo(
+          { target: clickedMapPoint, zoom: 8 },
+          { duration: 500 }
+        )
+      }
+
+      // Show tooltip with coordinates immediately
+      tooltip.innerHTML = `<button class="map-tooltip-close" aria-label="Close">&times;</button>Fetching flood risk data...<br><b>Easting: ${easting}<br>Northing: ${northing}`
+      tooltip.querySelector('.map-tooltip-close').addEventListener('click', closeTooltip)
+      updateTooltipPosition()
+      tooltip.classList.remove('hide')
+      tooltipOpen = true
+
+      // Fetch risk data and location info
+      try {
+        const [riskResponse, nearestResponse] = await Promise.all([
+          fetch(`/risk-api?x=${easting}&y=${northing}`),
+          fetch(`/nearest?x=${easting}&y=${northing}`)
+        ])
+        const risk = await riskResponse.json()
+        const location = await nearestResponse.json()
+
+        const roughAddress = location.street || location.postcode
+          ? `<p class="govuk-body-s govuk-!-margin-bottom-2">${[location.street, location.postcode].filter(Boolean).join(', ')}</p>`
+          : ''
+
+        tooltip.innerHTML = `
+        <button class="map-tooltip-close" aria-label="Close">&times;</button>
+        <div class="govuk-body">
+          ${roughAddress}
+          <h4 class="govuk-heading-m">Flood risks:</h4>
+
+          <dl class="govuk-summary-list govuk-body govuk-!-font-size-16">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Surface water</dt>
+              <dd class="govuk-summary-list__value govuk-!-text-align-centre">${risk.surfaceWaterRisk ?? 'Very Low'}</dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">River and sea</dt>
+              <dd class="govuk-summary-list__value govuk-!-text-align-centre">${risk.riverAndSeaRisk?.probabilityForBand ?? 'Very Low'}</dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Reservoir (dry)</dt>
+              <dd class="govuk-summary-list__value govuk-!-text-align-centre">${risk.reservoirDryRisk[0]?.riskDesignation ?? 'Very Low'}</dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Lead local flood authority</dt>
+              <dd class="govuk-summary-list__value govuk-!-text-align-centre">${risk.leadLocalFloodAuthority ?? 'unknown'}</dd>
+            </div>
+          </dl>
+
+          <a href="/point-risk?x=${easting}&y=${northing}" class="govuk-link">View full risk profile</a>
+        </div>`
+        tooltip.querySelector('.map-tooltip-close').addEventListener('click', closeTooltip)
+      } catch (err) {
+        console.error('Risk API fetch failed:', err)
+      }
+    })
+
+    // Reposition tooltip when map is panned or zoomed
+    mapView.watch('extent', () => updateTooltipPosition())
   })
 
   if (callback) {
     callback()
   }
+}
+
+function createCoordinateTooltip () {
+  const tooltip = document.createElement('div')
+  tooltip.className = 'map-coordinate-tooltip hide'
+  document.getElementById('map').appendChild(tooltip)
+  return tooltip
 }
 
 function createFeatureLayers (layers) {

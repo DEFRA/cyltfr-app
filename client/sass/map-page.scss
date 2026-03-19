@@ -143,3 +143,33 @@ label[for=location] {
 .govuk-link:hover {
   text-decoration-thickness: 3px;
 }
+
+.map-coordinate-tooltip {
+  position: absolute;
+  z-index: 20;
+  background: whitesmoke;
+  border: 2px solid #0b0c0c;
+  padding: 15px 25px 15px 15px;
+  font-family: $gov-font;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+  max-width: 500px;
+}
+
+.map-tooltip-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+  color: #0b0c0c;
+
+  &:hover {
+    color: #d4351c;
+  }
+}

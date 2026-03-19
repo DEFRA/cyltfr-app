@@ -22,7 +22,9 @@ const routes = [].concat(
   require('../routes/rivers-and-sea-depth'),
   require('../routes/ground-water'),
   require('../routes/reservoirs'),
-  require('../routes/os-get-token')
+  require('../routes/os-get-token'),
+  require('../routes/risk-api'),
+  require('../routes/nearest')
 )
 
 module.exports = {
