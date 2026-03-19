@@ -43,12 +43,7 @@ module.exports = [
     method: 'POST',
     path: '/postcode',
     handler: async (request, h) => {
-      let postcodeInfo, addresses
-      try {
-        ({ postcodeInfo, addresses } = await Postcode.normalise(request.payload.postcode, request.server.methods.find))
-      } catch {
-        return h.redirect('/postcode?error=postcode_does_not_exist')
-      }
+      const { postcodeInfo, addresses } = await Postcode.normalise(request.payload.postcode, request.server.methods.find)
 
       if (!postcodeInfo.postcode || !postcodeInfo.isValid) {
         const errorMessage = 'Enter a full postcode in England'

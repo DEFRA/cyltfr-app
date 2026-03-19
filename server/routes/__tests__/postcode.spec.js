@@ -149,8 +149,8 @@ describe('postcode page', () => {
     addressService.find.mockImplementationOnce(() => { throw new Error('An error') })
 
     const postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch('/postcode?error=postcode_does_not_exist')
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.result).toMatch(/Enter a full postcode in England/)
   })
 
   test('/search - Address service returns empty address array', async () => {
@@ -158,8 +158,20 @@ describe('postcode page', () => {
     floodService.__updateReturnValue({})
     addressService.find.mockImplementationOnce(() => { return Promise.resolve([]) })
     const postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch('/postcode?error=postcode_does_not_exist')
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.result).toMatch(/Enter a full postcode in England/)
+  })
+
+  test('returns an error when url query contains an error parameter', async () => {
+    const getOptions = {
+      method: 'GET',
+      url: '/postcode?error=postcode_does_not_exist',
+      headers: {
+        cookie
+      }
+    }
+    const response = await server.inject(getOptions)
+    expect(response.result).toMatch(/This postcode does not appear to exist/)
   })
 
   describe('postcode page - captchabypass', () => {

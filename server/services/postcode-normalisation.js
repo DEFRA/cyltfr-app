@@ -39,10 +39,14 @@ async function normalisePostcode (postcode, find) {
     return { postcodeInfo: new Postcode(normalised, isValid) }
   }
 
-  const { isEngland, region, addresses, otherRegion } = await isEnglishPostcode(normalised, find)
-  return {
-    postcodeInfo: new Postcode(normalised, isValid, isEngland, region, otherRegion),
-    addresses
+  try {
+    const { isEngland, region, addresses, otherRegion } = await isEnglishPostcode(normalised, find)
+    return {
+      postcodeInfo: new Postcode(normalised, isValid, isEngland, region, otherRegion),
+      addresses
+    }
+  } catch {
+    return { postcodeInfo: new Postcode(normalised, false) }
   }
 }
 
