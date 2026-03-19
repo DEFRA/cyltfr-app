@@ -190,6 +190,20 @@ describe('search page route', () => {
     expect(postResponse.headers.location).toMatch('/risk')
   })
 
+  test('/search - no address selected', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const postcodeResponse = await server.inject(postOptions)
+    expect(postcodeResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    postOptions.url = getOptions.url
+    postOptions.payload = 'address=-1'
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.payload).toMatch('Select an address')
+  })
+
   test('/search - NI address to redirect to england-only', async () => {
     const { postOptions } = mockSearchOptions('BT84AA', cookie)
     floodService.__updateReturnValue({})
