@@ -46,21 +46,21 @@
         {% if friendlyCaptchaEnabled %}
 
           <div style="margin-bottom: 20px; display: none;" id="FriendlyCaptcha" class="govuk-body frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="auto"></div>
-          <div id="FriendlyCaptchaChecking" class="">
+          <div id="FriendlyCaptchaChecking" class="" role="status" aria-live="polite" aria-atomic="true">
               <h3 class="govuk-heading-s">Checking you're not a robot</h3>
               {{govukTag({
                 text: "Checking...",
                 classes: "govuk-tag--blue"
               })}}
           </div>
-          <div id="FriendlyCaptchaComplete" class="do-not-display">
+          <div id="FriendlyCaptchaComplete" class="do-not-display" role="status" aria-live="polite" aria-atomic="true">
               <h3 class="govuk-heading-s">Checking you're not a robot</h3>
               {{govukTag({
                 text: "Complete",
                 classes: "govuk-tag--green"
               })}}
           </div>
-          <div id="FriendlyCaptchaError" class="do-not-display">
+          <div id="FriendlyCaptchaError" class="do-not-display" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="govuk-form-group govuk-form-group--error">
               <h3 class="govuk-heading-s">Checking you're not a robot</h3>
               <p class="govuk-error-message">
@@ -77,12 +77,11 @@
           <div class="" style="display: none;" id="nc-browser">
             <p class="govuk-body">The Friendly Captcha check works better and faster in modern browsers such as Edge, Firefox, or Chrome. Please consider updating your browser</p>
           </div>
-            <p class="govuk-body"></p>
-            <p class="govuk-body govuk-hint">
+            <p class="govuk-body govuk-hint govuk-!-margin-top-7">
               Friendly Captcha checks that you aren't a robot.<br>Find out how we use it in our <a href="/privacy-notice" 
               class="govuk-link">privacy notice</a>
             </p>
-            <p class="govuk-body govuk-hint">
+            <p class="govuk-body govuk-hint govuk-!-margin-bottom-5">
               This can take a few seconds. Do not refresh the page.
             </p>
             <button type="submit" id="post-code-button" class="govuk-button" disabled="true">Continue</button>
