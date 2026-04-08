@@ -101,7 +101,7 @@ async function captchaCheck (token, postcode, yar) {
   const storedToken = yar.get('token')
 
   if (matchesStoredToken(token, storedToken)) {
-    return validateStoredToken(results, postcode, yar)
+    return await validateStoredToken(results, postcode, yar)
   }
 
   if (token) {
@@ -149,8 +149,8 @@ function matchesStoredToken (token, storedToken) {
          (storedToken && !token)
 }
 
-function validateStoredToken (results, postcode, yar) {
-  if (!Postcode.compare(postcode, yar.get('tokenPostcode'))) {
+async function validateStoredToken (results, postcode, yar) {
+  if (!await Postcode.compare(postcode, yar.get('tokenPostcode'))) {
     return errorAndClear(results, yar)
   }
 

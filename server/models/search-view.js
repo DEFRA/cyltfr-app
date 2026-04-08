@@ -2,7 +2,7 @@ const { floodWarningsUrl } = require('../config')
 const { errorSummaryTitle } = require('../helpers')
 
 class SearchViewModel {
-  constructor (postcode, addresses = [], errorMessage, warnings, backLinkUri) {
+  constructor (postcode, addresses = [], errorMessage, warnings, backLinkUri, otherRegion) {
     this.postcode = postcode
 
     const defaultOption = {
@@ -52,6 +52,8 @@ class SearchViewModel {
     this.addresses = JSON.stringify(addresses)
 
     this.backLink = backLinkUri
+
+    this.otherRegion = otherRegion
   }
 }
 

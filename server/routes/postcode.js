@@ -1,7 +1,7 @@
 const config = require('../config')
 const joi = require('joi')
-const { redirectToHomeCounty } = require('../helpers')
 const PostcodeViewModel = require('../models/postcode-view')
+const { redirectToHomeCounty } = require('../helpers')
 const { captchaCheck } = require('../services/captchacheck')
 const { airbrakeSessionData } = require('../models/error-session-data')
 const { Postcode } = require('../services/postcode-normalisation')
@@ -11,9 +11,11 @@ module.exports = [
     method: 'GET',
     path: '/postcode',
     handler: (request, h) => {
+      const postcode = Postcode.formatForDisplay(request.yar.get('postcodeInfo')?.postcode)
       request.yar.set('address', null)
+      request.yar.set('addresses', null)
+      request.yar.set('postcodeInfo', null)
       request.yar.set('previousPage', request.path)
-      const postcode = request.yar.get('postcode')
       const error = request.query.error
       const backLinkUri = config.floodRiskUrl
 
@@ -24,11 +26,10 @@ module.exports = [
       }
 
       if (config.friendlyCaptchaEnabled) {
-        if (Object.prototype.hasOwnProperty.call(request.query, 'captchabypass')) {
-          // if value passed doesn't equal config value, clear out the session setting.
+        if ('captchabypass' in request.query) {
+          // set captchabypass flag
           request.yar.set('captchabypass', (request.query.captchabypass === config.friendlyCaptchaBypass))
           console.log('Captcha Bypass set to : %s', request.yar.get('captchabypass'))
-          // if it does equal config value then set the captchabypass session setting.
         }
         return h.view('postcode', new PostcodeViewModel(postcode, null, config.sessionTimeout))
       }
@@ -42,7 +43,7 @@ module.exports = [
     method: 'POST',
     path: '/postcode',
     handler: async (request, h) => {
-      const postcodeInfo = Postcode.normalise(request.payload.postcode)
+      const { postcodeInfo, addresses } = await Postcode.normalise(request.payload.postcode, request.server.methods.find)
 
       if (!postcodeInfo.postcode || !postcodeInfo.isValid) {
         const errorMessage = 'Enter a full postcode in England'
@@ -50,19 +51,18 @@ module.exports = [
         return h.view('postcode', model)
       }
 
-      // Our Address service doesn't support NI addresses
-      // but all NI postcodes start with BT so redirect to
-      // "england-only" page if that's the case.
-      if (postcodeInfo.isNI) {
-        return redirectToHomeCounty(h, postcodeInfo.postcode, 'northern-ireland')
+      // valid postcode but not england — redirect to regional info page
+      if (postcodeInfo.isEngland === false) {
+        return redirectToHomeCounty(h, postcodeInfo.postcode, postcodeInfo.region)
       }
 
       const captchaCheckResults = await captchaCheck(request.payload['frc-captcha-response'], postcodeInfo.postcode, request.yar, request.server)
       if (captchaCheckResults.tokenValid) {
+        request.yar.set('postcodeInfo', postcodeInfo)
+        request.yar.set('addresses', addresses)
         // Include a # in the redirected URL, or the browser will jump to any previous url fragment (like #main-content)
         // See https://www.rfc-editor.org/rfc/rfc9110.html#field.location
-        request.yar.set('postcode', postcodeInfo.postcode)
-        return h.redirect(`/search?postcode=${encodeURIComponent(postcodeInfo.postcode)}#`)
+        return h.redirect('/search#')
       } else {
         const sessionInfo = airbrakeSessionData(request, captchaCheckResults)
 
