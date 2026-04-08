@@ -1,7 +1,7 @@
 class Postcode {
-  constructor (postcode = null, isValid = false, isEngland, region, otherRegion) {
+  constructor (postcode, isValid, isEngland, region, otherRegion) {
     this.postcode = postcode
-    this.isValid = isValid
+    this.isValid = isValid || false
     this.isEngland = isEngland
     this.region = region
     this.otherRegion = otherRegion
@@ -121,8 +121,9 @@ function formatPostcodeForDisplay (postcode) {
       )
     )
 
-  const blockOne = postcode.slice(0, -3).trim()
-  const blockTwo = postcode.slice(-3)
+  const BLOCK_TWO_LENGTH = -3
+  const blockOne = postcode.slice(0, BLOCK_TWO_LENGTH).trim()
+  const blockTwo = postcode.slice(BLOCK_TWO_LENGTH)
   return `${blockOne} ${blockTwo}`
 }
 
