@@ -45,33 +45,24 @@
         {{ govukInput(postcodeInput) }}
         {% if friendlyCaptchaEnabled %}
 
-          <div style="margin-bottom: 20px; display: none;" id="FriendlyCaptcha" class="govuk-body frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="auto" role="status"></div>
-          <div id="FriendlyCaptchaChecking" class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-              <p class="govuk-body">
-                Friendly Captcha check
-                {{govukTag({
-          text: "Checking",
-          classes: "govuk-tag--grey"
-        })}}
-              </p>
-            </div>
+          <div style="margin-bottom: 20px; display: none;" id="FriendlyCaptcha" class="govuk-body frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="auto"></div>
+          <div id="FriendlyCaptchaChecking" class="">
+              <h3 class="govuk-heading-s">Checking you're not a robot</h3>
+              {{govukTag({
+                text: "Checking...",
+                classes: "govuk-tag--blue"
+              })}}
           </div>
-          <div id="FriendlyCaptchaComplete" class="govuk-grid-row do-not-display">
-            <div class="govuk-grid-column-two-thirds">
-              <p class="govuk-body">
-                Friendly Captcha check
-                {{govukTag({
-          text: "Passed"
-        })}}
-              </p>
-            </div>
+          <div id="FriendlyCaptchaComplete" class="do-not-display">
+              <h3 class="govuk-heading-s">Checking you're not a robot</h3>
+              {{govukTag({
+                text: "Complete",
+                classes: "govuk-tag--green"
+              })}}
           </div>
-          <div id="FriendlyCaptchaError" class="govuk-grid-row do-not-display">
-            <div class="govuk-grid-column-two-thirds govuk-form-group govuk-form-group--error">
-              <p class="govuk-body">
-                Friendly Captcha check
-              </p>
+          <div id="FriendlyCaptchaError" class="do-not-display">
+            <div class="govuk-form-group govuk-form-group--error">
+              <h3 class="govuk-heading-s">Checking you're not a robot</h3>
               <p class="govuk-error-message">
                 FriendlyCaptcha encountered an error while performing its checks
               </p>
@@ -83,22 +74,18 @@
                 }) }}
             </div>
           </div>
-          <div class="govuk-grid-column-two-thirds" style="display: none;" id="nc-browser">
+          <div class="" style="display: none;" id="nc-browser">
             <p class="govuk-body">The Friendly Captcha check works better and faster in modern browsers such as Edge, Firefox, or Chrome. Please consider updating your browser</p>
           </div>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-              <p class="govuk-body govuk-hint">
-                Friendly Captcha checks that you aren't a robot. Find out how we use it in our <a href="/privacy-notice" 
-                class="govuk-link">privacy notice</a>
-              </p>
-            </div>
-          </div>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-              <button type="submit" id="post-code-button" class="govuk-button">Continue</button>
-            </div>
-          </div>
+            <p class="govuk-body"></p>
+            <p class="govuk-body govuk-hint">
+              Friendly Captcha checks that you aren't a robot.<br>Find out how we use it in our <a href="/privacy-notice" 
+              class="govuk-link">privacy notice</a>
+            </p>
+            <p class="govuk-body govuk-hint">
+              This can take a few seconds. Do not refresh the page.
+            </p>
+            <button type="submit" id="post-code-button" class="govuk-button" disabled="true">Continue</button>
         {% else %}
           <button type="submit" id="post-code-button" class="govuk-button">Continue</button>
         {% endif %}
