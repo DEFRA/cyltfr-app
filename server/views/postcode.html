@@ -135,63 +135,11 @@
   </div>
 </div>
  </noscript>
- <script>
-    function setupCaptchaEventListeners(captchaElement) {
-      const frcChecking = document.getElementById('FriendlyCaptchaChecking')
-      const frcComplete = document.getElementById('FriendlyCaptchaComplete')
-      const frcError = document.getElementById('FriendlyCaptchaError')
-      const frcErrorSummary = document.getElementById('FriendlyCaptchaErrorSummary')
-      const submitButton = document.getElementById('post-code-button')
-
-      captchaElement.addEventListener("frc:widget.statechange", function (event) {
-        const detail = event.detail
-        if (detail.state === "completed") {
-          if (frcChecking) {
-            frcChecking.style.display = 'none'
-          }
-          if (frcComplete) {
-            frcComplete.style.display = 'block'
-          }
-          submitButton.disabled = false
-        } else if ((detail.state === "error") || (detail.state === "expired")) {
-          if (frcChecking) {
-            frcChecking.style.display = 'none'
-          }
-          if (frcComplete) {
-            frcComplete.style.display = 'none'
-          }
-          if (frcError) {
-            frcError.style.display = 'block'
-          }
-          if (frcErrorSummary) {
-            frcErrorSummary.style.display = 'block'
-            if (!document.title.includes('Error: ')) {
-              document.title = 'Error: ' + document.title
-            }
-            const errorSummary = frcErrorSummary.querySelector('.govuk-error-summary')
-            if (errorSummary) {
-              errorSummary.focus()
-            }
-          }
-          submitButton.disabled = false
-        } else {
-          submitButton.disabled = true
-        }
-      })
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      setupCaptchaEventListeners(document.getElementById('FriendlyCaptcha'))
-      document.getElementById('FriendlyCaptchaResetButton').addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.reload();
-      });
-    })
-  </script>
   <script type="module" src="{{ assetPath }}/js/site.min.js" async defer>
   </script>
   <script nomodule src="{{ assetPath }}/js/site.compat.min.js" async defer>
   </script>
+  <script src="{{ assetPath }}/js/friendly-captcha-handler.js"></script>
   <script src="{{ assetPath }}/js/captcha-refresh.js"></script>
 {% endif %}
 {% endblock %}
