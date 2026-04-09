@@ -25,26 +25,28 @@ function setupCaptchaEventListeners (captchaElement) {
   const frcErrorSummary = document.getElementById('FriendlyCaptchaErrorSummary')
   const submitButton = document.getElementById('post-code-button')
 
+  function hide (element) {
+    if (element) {
+      element.style.display = 'none'
+    }
+  }
+
+  function show (element) {
+    if (element) {
+      element.style.display = 'block'
+    }
+  }
+
   captchaElement.addEventListener('frc:widget.statechange', function (event) {
     const detail = event.detail
     if (detail.state === 'completed') {
-      if (frcChecking) {
-        frcChecking.style.display = 'none'
-      }
-      if (frcComplete) {
-        frcComplete.style.display = 'block'
-      }
+      hide(frcChecking)
+      show(frcComplete)
       submitButton.disabled = false
     } else if ((detail.state === 'error') || (detail.state === 'expired')) {
-      if (frcChecking) {
-        frcChecking.style.display = 'none'
-      }
-      if (frcComplete) {
-        frcComplete.style.display = 'none'
-      }
-      if (frcError) {
-        frcError.style.display = 'block'
-      }
+      hide(frcChecking)
+      hide(frcComplete)
+      show(frcError)
       if (frcErrorSummary) {
         frcErrorSummary.style.display = 'block'
         if (!document.title.includes('Error: ')) {
