@@ -25,18 +25,6 @@ function setupCaptchaEventListeners (captchaElement) {
   const frcErrorSummary = document.getElementById('FriendlyCaptchaErrorSummary')
   const submitButton = document.getElementById('post-code-button')
 
-  function hide (element) {
-    if (element) {
-      element.style.display = 'none'
-    }
-  }
-
-  function show (element) {
-    if (element) {
-      element.style.display = 'block'
-    }
-  }
-
   captchaElement.addEventListener('frc:widget.statechange', function (event) {
     const detail = event.detail
     if (detail.state === 'completed') {
@@ -62,6 +50,28 @@ function setupCaptchaEventListeners (captchaElement) {
       submitButton.disabled = true
     }
   })
+}
+
+/**
+ * Hides an element after checking it's assigned
+ *
+ * @param {HTMLElement} element - The element to hide if it's assigned
+ */
+function hide (element) {
+  if (element) {
+    element.style.display = 'none'
+  }
+}
+
+/**
+ * Shows an element after checking that it's assigned
+ *
+ * @param {HTMLElement} element - The element to show if it's assigned
+ */
+function show (element) {
+  if (element) {
+    element.style.display = 'block'
+  }
 }
 
 /**
