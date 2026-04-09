@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-const { setupCaptchaEventListeners, initRetryButton } = require('../friendly-captcha-handler')
+const { setupCaptchaEventListeners, initRetryButton, onLoad } = require('../friendly-captcha-handler')
 
 describe('setupCaptchaEventListeners', () => {
   let mockCaptchaElement
@@ -210,5 +210,150 @@ describe('initRetryButton', () => {
     retryButton.dispatchEvent(event)
 
     expect(preventDefaultSpy).toHaveBeenCalled()
+  })
+})
+
+describe('onLoad', () => {
+  let addEventListenerSpy
+  let captchaElement
+  let retryButton
+
+  beforeEach(() => {
+    // Clear any previous DOM
+    document.body.innerHTML = ''
+
+    // Reset mocks
+    jest.clearAllMocks()
+
+    // Spy on document.addEventListener
+    addEventListenerSpy = jest.spyOn(document, 'addEventListener')
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  test('should add DOMContentLoaded event listener when document is defined', () => {
+    onLoad()
+
+    expect(addEventListenerSpy).toHaveBeenCalledWith('DOMContentLoaded', expect.any(Function))
+  })
+
+  test('should call setupCaptchaEventListeners when captcha element exists on DOMContentLoaded', () => {
+    // Setup DOM with captcha element
+    document.body.innerHTML = `
+      <div id="FriendlyCaptcha"></div>
+      <a role="button" id="FriendlyCaptchaResetButton" href="/postcode#">Retry</a>
+    `
+
+    onLoad()
+
+    // Get the DOMContentLoaded callback
+    const domContentLoadedCallback = addEventListenerSpy.mock.calls.find(
+      call => call[0] === 'DOMContentLoaded'
+    )[1]
+
+    captchaElement = document.getElementById('FriendlyCaptcha')
+    const captchaListenerSpy = jest.spyOn(captchaElement, 'addEventListener')
+
+    // Trigger the DOMContentLoaded callback
+    domContentLoadedCallback()
+
+    // Verify that the captcha element has the event listener attached
+    expect(captchaListenerSpy).toHaveBeenCalledWith('frc:widget.statechange', expect.any(Function))
+  })
+
+  test('should call initRetryButton on DOMContentLoaded', () => {
+    // Setup DOM with retry button
+    document.body.innerHTML = `
+      <a role="button" id="FriendlyCaptchaResetButton" href="/postcode#">Retry</a>
+    `
+
+    onLoad()
+
+    // Get the DOMContentLoaded callback
+    const domContentLoadedCallback = addEventListenerSpy.mock.calls.find(
+      call => call[0] === 'DOMContentLoaded'
+    )[1]
+
+    retryButton = document.getElementById('FriendlyCaptchaResetButton')
+    const retryButtonListenerSpy = jest.spyOn(retryButton, 'addEventListener')
+
+    // Trigger the DOMContentLoaded callback
+    domContentLoadedCallback()
+
+    expect(retryButtonListenerSpy).toHaveBeenCalledWith('click', expect.any(Function))
+  })
+
+  test('should not call setupCaptchaEventListeners when captcha element does not exist', () => {
+    // Setup DOM without captcha element
+    document.body.innerHTML = `
+      <a role="button" id="FriendlyCaptchaResetButton" href="/postcode#">Retry</a>
+    `
+
+    onLoad()
+
+    // Get the DOMContentLoaded callback
+    const domContentLoadedCallback = addEventListenerSpy.mock.calls.find(
+      call => call[0] === 'DOMContentLoaded'
+    )[1]
+
+    // Trigger the DOMContentLoaded callback - should not throw error
+    expect(() => {
+      domContentLoadedCallback()
+    }).not.toThrow()
+
+    // Verify captcha element doesn't exist
+    expect(document.getElementById('FriendlyCaptcha')).toBeNull()
+  })
+
+  test('should handle case when document is undefined', () => {
+    // Save original document
+    const originalDocument = global.document
+
+    // Temporarily set document to undefined
+    delete global.document
+
+    // Should not throw error
+    expect(() => {
+      onLoad()
+    }).not.toThrow()
+
+    // Restore document
+    global.document = originalDocument
+  })
+
+  test('should initialize both captcha listeners and retry button when both elements exist', () => {
+    // Setup complete DOM
+    document.body.innerHTML = `
+      <div id="FriendlyCaptchaChecking" style="display: block;"></div>
+      <div id="FriendlyCaptchaComplete" style="display: none;"></div>
+      <div id="FriendlyCaptchaError" style="display: none;"></div>
+      <div id="FriendlyCaptchaErrorSummary" style="display: none;">
+        <div class="govuk-error-summary" tabindex="-1"></div>
+      </div>
+      <button id="post-code-button" disabled="true"></button>
+      <div id="FriendlyCaptcha" class="frc-captcha"></div>
+      <a role="button" id="FriendlyCaptchaResetButton" href="/postcode#">Retry</a>
+    `
+
+    onLoad()
+
+    // Get the DOMContentLoaded callback
+    const domContentLoadedCallback = addEventListenerSpy.mock.calls.find(
+      call => call[0] === 'DOMContentLoaded'
+    )[1]
+
+    captchaElement = document.getElementById('FriendlyCaptcha')
+    retryButton = document.getElementById('FriendlyCaptchaResetButton')
+
+    const captchaListenerSpy = jest.spyOn(captchaElement, 'addEventListener')
+    const retryButtonListenerSpy = jest.spyOn(retryButton, 'addEventListener')
+
+    // Trigger the DOMContentLoaded callback
+    domContentLoadedCallback()
+
+    expect(captchaListenerSpy).toHaveBeenCalledWith('frc:widget.statechange', expect.any(Function))
+    expect(retryButtonListenerSpy).toHaveBeenCalledWith('click', expect.any(Function))
   })
 })

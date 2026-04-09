@@ -89,18 +89,22 @@ function initRetryButton () {
   }
 }
 
+function onLoad () {
 // Initialize on DOM ready
-if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', function () {
-    const captchaElement = document.getElementById('FriendlyCaptcha')
-    if (captchaElement) {
-      setupCaptchaEventListeners(captchaElement)
-    }
-    initRetryButton()
-  })
+  if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', function () {
+      const captchaElement = document.getElementById('FriendlyCaptcha')
+      if (captchaElement) {
+        setupCaptchaEventListeners(captchaElement)
+      }
+      initRetryButton()
+    })
+  }
 }
+
+onLoad()
 
 // Export for testing (UMD pattern)
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { setupCaptchaEventListeners, initRetryButton }
+  module.exports = { setupCaptchaEventListeners, initRetryButton, onLoad }
 }
