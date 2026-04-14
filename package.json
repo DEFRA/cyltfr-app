@@ -36,7 +36,7 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@airbrake/node": "^2.1.9",
-    "@arcgis/core": "^4.34.8",
+    "@arcgis/core": "^5.0.16",
     "@esri/arcgis-rest-request": "^4.10.2",
     "@friendlycaptcha/sdk": "^0.1.37",
     "@hapi/boom": "^10.0.1",
