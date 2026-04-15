@@ -144,7 +144,7 @@ describe('search page route', () => {
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
 
     postOptions.url = getOptions.url
-    postOptions.payload = 'address=99'
+    postOptions.payload = 'address=99&aboutThisAddress=lives-here'
     const tab2SelectResponse = await server.inject(postOptions)
     expect(tab2SelectResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(tab2SelectResponse.headers.location).toMatch('/postcode#')
@@ -172,7 +172,7 @@ describe('search page route', () => {
 
     // Tab 1: selects address=7 — now out of range since session holds BS20 6AQ's 2 addresses
     tab1PostOptions.url = tab1GetOptions.url
-    tab1PostOptions.payload = 'address=7'
+    tab1PostOptions.payload = 'address=7&aboutThisAddress=lives-here'
     const tab1SelectResponse = await server.inject(tab1PostOptions)
     expect(tab1SelectResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(tab1SelectResponse.headers.location).toMatch('/postcode#')
@@ -184,7 +184,7 @@ describe('search page route', () => {
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     postOptions.url = getOptions.url
-    postOptions.payload = 'address=0'
+    postOptions.payload = 'address=0&aboutThisAddress=lives-here'
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(postResponse.headers.location).toMatch('/risk')
@@ -198,7 +198,7 @@ describe('search page route', () => {
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     postOptions.url = getOptions.url
-    postOptions.payload = 'address=-1'
+    postOptions.payload = 'address=-1&aboutThisAddress=lives-here'
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(postResponse.payload).toMatch('Select an address')
