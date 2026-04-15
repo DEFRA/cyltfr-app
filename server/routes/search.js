@@ -73,7 +73,7 @@ module.exports = [
       const addresses = request.yar.get('addresses')
       const postcodeInfo = request.yar.get('postcodeInfo')
       let errorMessage
-      let addressTypeErrorMessage
+      let searchReasonErrorMessage
 
       if (!addresses || !postcodeInfo) {
         return h.redirect(redirectPath)
@@ -86,7 +86,7 @@ module.exports = [
       }
 
       if (!aboutThisAddress) {
-        addressTypeErrorMessage = 'Select an option for this address'
+        searchReasonErrorMessage = 'Select an option for this address'
       }
 
       // throw for postcode mismatch when address is within addresses index range
@@ -94,7 +94,7 @@ module.exports = [
         return h.redirect(redirectPath)
       }
 
-      if (errorMessage || addressTypeErrorMessage) {
+      if (errorMessage || searchReasonErrorMessage) {
         // getWarnings doesnt throw an error so no need to catch it and its only used in errors anyway
         const warnings = await getWarnings(postcodeInfo.postcode, request)
         const model = new SearchViewModel(
@@ -105,7 +105,7 @@ module.exports = [
           backLinkUri,
           postcodeInfo.otherRegion,
           aboutThisAddress,
-          addressTypeErrorMessage
+          searchReasonErrorMessage
         )
         return h.view('search', model)
       }

@@ -2,7 +2,7 @@ const { floodWarningsUrl } = require('../config')
 const { errorSummaryTitle } = require('../helpers')
 
 class SearchViewModel {
-  constructor (postcode, addresses = [], errorMessage, warnings, backLinkUri, otherRegion, aboutThisAddress, addressTypeErrorMessage) {
+  constructor (postcode, addresses = [], errorMessage, warnings, backLinkUri, otherRegion, aboutThisAddress, searchReasonErrorMessage) {
     this.postcode = postcode
 
     const defaultOption = {
@@ -48,10 +48,10 @@ class SearchViewModel {
 
     this.aboutThisAddress = aboutThisAddress
 
-    if (addressTypeErrorMessage) {
-      this.addressTypeErrorMessage = addressTypeErrorMessage
+    if (searchReasonErrorMessage) {
+      this.searchReasonErrorMessage = searchReasonErrorMessage
       errorList.push({
-        text: addressTypeErrorMessage,
+        text: searchReasonErrorMessage,
         href: '#about-this-address'
       })
     }
