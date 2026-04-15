@@ -61,8 +61,10 @@
 
         <br>
 
+        <div id="about-this-address">
         {{ govukRadios({
           name: "aboutThisAddress",
+          value: aboutThisAddress,
           fieldset: {
             legend: {
               text: "About this address",
@@ -71,6 +73,9 @@
           },
           hint: {
             html: "<p class=\"govuk-body\">We ask you to choose an address so we can find the area you want to check.</p><p class=\"govuk-body\">Telling us why you chose this address helps us to improve this service for you.</p>"
+          },
+          errorMessage: addressTypeErrorMessage and {
+            text: addressTypeErrorMessage
           },
           items: [
             {
@@ -95,6 +100,7 @@
             }
           ]
         }) }}
+        </div>
 
         <button type="submit" class="govuk-button">Continue</button>
       </form>
