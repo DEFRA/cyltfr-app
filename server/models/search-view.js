@@ -57,7 +57,7 @@ class SearchViewModel {
       this.searchReasonErrorMessage = searchReasonErrorMessage
       errorList.push({
         text: searchReasonErrorMessage,
-        href: '#about-this-address'
+        href: '#about-this-address-heading'
       })
     }
 

@@ -61,46 +61,44 @@
 
         <br>
 
-        <div id="about-this-address">
-          {{ govukRadios({
-            name: "aboutThisAddress",
-            value: aboutThisAddress,
-            fieldset: {
-              legend: {
-                text: "About this address",
-                classes: "govuk-fieldset__legend--l"
-              }
+        {{ govukRadios({
+          name: "aboutThisAddress",
+          value: aboutThisAddress,
+          fieldset: {
+            legend: {
+              html: "<span id=\"about-this-address-heading\">About this address</span>",
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            html: "<p class=\"govuk-body\">We ask you to choose an address so we can find the area you want to check.</p><p class=\"govuk-body\">Telling us why you chose this address helps us to improve this service for you.</p>"
+          },
+          errorMessage: searchReasonErrorMessage and {
+            text: searchReasonErrorMessage
+          },
+          items: [
+            {
+              value: "lives-here",
+              text: "I, or someone I know lives here",
+              id: "lives-here"
             },
-            hint: {
-              html: "<p class=\"govuk-body\">We ask you to choose an address so we can find the area you want to check.</p><p class=\"govuk-body\">Telling us why you chose this address helps us to improve this service for you.</p>"
+            {
+              value: "move-to",
+              text: "I am thinking of moving to this area",
+              id: "move-to"
             },
-            errorMessage: searchReasonErrorMessage and {
-              text: searchReasonErrorMessage
+            {
+              value: "work",
+              text: "I am checking this for work or study",
+              id: "work"
             },
-            items: [
-              {
-                value: "lives-here",
-                text: "I, or someone I know lives here",
-                id: "lives-here"
-              },
-              {
-                value: "move-to",
-                text: "I am thinking of moving to this area",
-                id: "move-to"
-              },
-              {
-                value: "work",
-                text: "I am checking this for work or study",
-                id: "work"
-              },
-              {
-                value: "other",
-                text: "Prefer not to say",
-                id: "other"
-              }
-            ]
-          }) }}
-        </div>
+            {
+              value: "other",
+              text: "Prefer not to say",
+              id: "other"
+            }
+          ]
+        }) }}
 
         <button type="submit" class="govuk-button">Continue</button>
       </form>
