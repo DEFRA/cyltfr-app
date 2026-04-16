@@ -216,6 +216,7 @@ describe('search page route', () => {
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(postResponse.payload).toMatch('Select an option for this address')
+    expect(postResponse.payload).toMatch(/<option\s+value="0"\s+selected>/)
   })
 
   test('/search - no address and no search reason selected', async () => {

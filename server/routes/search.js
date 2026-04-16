@@ -106,7 +106,8 @@ module.exports = [
           postcodeInfo.otherRegion,
           {
             aboutThisAddress,
-            searchReasonErrorMessage
+            searchReasonErrorMessage,
+            selectedAddress: address
           }
         )
         return h.view('search', model)

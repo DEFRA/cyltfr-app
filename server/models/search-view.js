@@ -3,7 +3,7 @@ const { errorSummaryTitle } = require('../helpers')
 
 class SearchViewModel {
   constructor (postcode, addresses = [], errorMessage, warnings, backLinkUri, otherRegion, options = {}) {
-    const { aboutThisAddress, searchReasonErrorMessage } = options
+    const { aboutThisAddress, searchReasonErrorMessage, selectedAddress } = options
     this.postcode = postcode
 
     const defaultOption = {
@@ -25,6 +25,10 @@ class SearchViewModel {
         text: 'Select an address'
       },
       items
+    }
+
+    if (selectedAddress !== undefined && selectedAddress !== null) {
+      this.addressSelect.value = String(selectedAddress)
     }
 
     if (warnings?.message && warnings?.severity < 4) {
