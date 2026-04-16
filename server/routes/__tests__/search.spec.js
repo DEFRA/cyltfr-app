@@ -1,6 +1,7 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const floodService = require('../../services/flood')
+const SearchViewModel = require('../../models/search-view')
 const DEFAULT_POSTCODE = 'CV376YZ'
 const SEARCH_REDIRECT = '/search#'
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
@@ -26,6 +27,14 @@ afterAll(async () => {
 })
 
 describe('search page route', () => {
+  test('search view model defaults are applied', () => {
+    const model = new SearchViewModel('CV376YZ')
+
+    expect(model.postcode).toEqual('CV376YZ')
+    expect(model.addressSelect.items[0]).toMatchObject({ text: '0 addresses found', value: -1 })
+    expect(model.addresses).toEqual('[]')
+  })
+
   test('/address - No banner warnings', async () => {
     const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
     const noFloodWarning = { }
