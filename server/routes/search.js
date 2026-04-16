@@ -104,8 +104,10 @@ module.exports = [
           warnings,
           backLinkUri,
           postcodeInfo.otherRegion,
-          aboutThisAddress,
-          searchReasonErrorMessage
+          {
+            aboutThisAddress,
+            searchReasonErrorMessage
+          }
         )
         return h.view('search', model)
       }
