@@ -16,14 +16,15 @@ describe('setupCaptchaEventListeners', () => {
   beforeEach(() => {
     // Setup mock DOM
     document.body.innerHTML = `
-      <div id="FriendlyCaptchaChecking" style="display: block;"></div>
-      <div id="FriendlyCaptchaComplete" class="do-not-display" style="display: none;"></div>
-      <div id="FriendlyCaptchaError" class="do-not-display" style="display: none;"></div>
-      <div id="FriendlyCaptchaErrorSummary" class="do-not-display" style="display: none;">
+      <div id="FriendlyCaptchaChecking" id="FriendlyCaptchaChecking" class="" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div id="FriendlyCaptchaComplete" class="govuk-!-display-none" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div id="FriendlyCaptchaError" class="govuk-!-display-none" role="alert" aria-live="assertive" aria-atomic="true" tabindex="-1"></div>
+      <div id="FriendlyCaptchaErrorSummary" class="govuk-!-display-none">
         <div class="govuk-error-summary" tabindex="-1"></div>
       </div>
       <button id="post-code-button" disabled="true"></button>
       <div id="FriendlyCaptcha" class="frc-captcha"></div>
+      <a role="button" id="FriendlyCaptchaResetButton" href="/postcode#">Retry</a>
     `
 
     mockCaptchaElement = document.getElementById('FriendlyCaptcha')
@@ -53,11 +54,11 @@ describe('setupCaptchaEventListeners', () => {
     })
     mockCaptchaElement.dispatchEvent(event)
 
-    expect(frcChecking.style.display).toBe('none')
-    expect(frcComplete.style.display).toBe('block')
+    expect(frcChecking.classList.contains('govuk-!-display-none')).toBeTruthy()
+    expect(frcComplete.classList.contains('govuk-!-display-none')).toBeFalsy()
     expect(submitButton.disabled).toBe(false)
-    expect(frcError.style.display).toBe('none')
-    expect(frcErrorSummary.style.display).toBe('none')
+    expect(frcError.classList.contains('govuk-!-display-none')).toBeTruthy()
+    expect(frcErrorSummary.classList.contains('govuk-!-display-none')).toBeTruthy()
   })
 
   test('should show error state and disable submit button initially for other states', () => {
@@ -79,10 +80,10 @@ describe('setupCaptchaEventListeners', () => {
     })
     mockCaptchaElement.dispatchEvent(event)
 
-    expect(frcChecking.style.display).toBe('none')
-    expect(frcComplete.style.display).toBe('none')
-    expect(frcError.style.display).toBe('block')
-    expect(frcErrorSummary.style.display).toBe('block')
+    expect(frcChecking.classList.contains('govuk-!-display-none')).toBeTruthy()
+    expect(frcComplete.classList.contains('govuk-!-display-none')).toBeTruthy()
+    expect(frcError.classList.contains('govuk-!-display-none')).toBeFalsy()
+    expect(frcErrorSummary.classList.contains('govuk-!-display-none')).toBeFalsy()
     expect(submitButton.disabled).toBe(false)
     expect(errorSummaryElement.focus).toHaveBeenCalled()
   })
@@ -118,10 +119,10 @@ describe('setupCaptchaEventListeners', () => {
     })
     mockCaptchaElement.dispatchEvent(event)
 
-    expect(frcChecking.style.display).toBe('none')
-    expect(frcComplete.style.display).toBe('none')
-    expect(frcError.style.display).toBe('block')
-    expect(frcErrorSummary.style.display).toBe('block')
+    expect(frcChecking.classList.contains('govuk-!-display-none')).toBeTruthy()
+    expect(frcComplete.classList.contains('govuk-!-display-none')).toBeTruthy()
+    expect(frcError.classList.contains('govuk-!-display-none')).toBeFalsy()
+    expect(frcErrorSummary.classList.contains('govuk-!-display-none')).toBeFalsy()
     expect(submitButton.disabled).toBe(false)
     expect(document.title).toContain('Error: ')
     expect(errorSummaryElement.focus).toHaveBeenCalled()
@@ -326,10 +327,10 @@ describe('onLoad', () => {
   test('should initialize both captcha listeners and retry button when both elements exist', () => {
     // Setup complete DOM
     document.body.innerHTML = `
-      <div id="FriendlyCaptchaChecking" style="display: block;"></div>
-      <div id="FriendlyCaptchaComplete" style="display: none;"></div>
-      <div id="FriendlyCaptchaError" style="display: none;"></div>
-      <div id="FriendlyCaptchaErrorSummary" style="display: none;">
+      <div id="FriendlyCaptchaChecking" id="FriendlyCaptchaChecking" class="" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div id="FriendlyCaptchaComplete" class="govuk-!-display-none" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div id="FriendlyCaptchaError" class="govuk-!-display-none" role="alert" aria-live="assertive" aria-atomic="true" tabindex="-1"></div>
+      <div id="FriendlyCaptchaErrorSummary" class="govuk-!-display-none">
         <div class="govuk-error-summary" tabindex="-1"></div>
       </div>
       <button id="post-code-button" disabled="true"></button>

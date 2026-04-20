@@ -36,7 +36,7 @@ function setupCaptchaEventListeners (captchaElement) {
       hide(frcComplete)
       show(frcError)
       if (frcErrorSummary) {
-        frcErrorSummary.style.display = 'block'
+        show(frcErrorSummary)
         if (!document.title.includes('Error: ')) {
           document.title = 'Error: ' + document.title
         }
