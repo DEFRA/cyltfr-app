@@ -1,6 +1,7 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const floodService = require('../../services/flood')
+const captchaCheck = require('../../services/captchacheck')
 const DEFAULT_POSTCODE = 'CV376YZ'
 const SEARCH_REDIRECT = '/search#'
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
@@ -10,11 +11,13 @@ jest.mock('../../config')
 jest.mock('../../services/flood')
 jest.mock('../../services/address')
 jest.mock('../../services/risk')
+jest.mock('../../services/captchacheck')
 
 beforeAll(async () => {
   server = await createServer()
   await server.initialize()
   const initial = mockOptions()
+  captchaCheck.captchaCheck.mockResolvedValue({ tokenValid: true })
 
   const homepageresponse = await server.inject(initial)
   expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
@@ -210,6 +213,26 @@ describe('search page route', () => {
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(postResponse.headers.location).toMatch('/england-only?postcode=BT84AA&region=northern-ireland')
+  })
+
+  test('/search - Wales address to redirect to england-only', async () => {
+    const { postOptions } = mockSearchOptions('NP183EZ', cookie)
+    floodService.__updateReturnValue({})
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch('/england-only?postcode=NP183EZ&region=wales')
+  })
+
+  test('/search - Captcha failure redirects to postcode page', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const postcodeResponse = await server.inject(postOptions)
+    expect(postcodeResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    captchaCheck.captchaCheck.mockResolvedValueOnce({ tokenValid: false })
+
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(getResponse.headers.location).toMatch('/postcode#')
   })
 
   test('Accept & strip unknown query parameters', async () => {

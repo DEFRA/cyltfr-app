@@ -22,7 +22,7 @@ jobs:
           node-version: '22.x'
       - name: Run unit tests
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run test
           sed -i 's/\/home\/runner\/work\/cyltfr-app\/cyltfr-app\//\/github\/workspace\//g' test/output/lcov.info
       - name: SonarCloud Scan

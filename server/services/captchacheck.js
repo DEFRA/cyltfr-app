@@ -101,7 +101,7 @@ async function captchaCheck (token, postcode, yar) {
   const storedToken = yar.get('token')
 
   if (matchesStoredToken(token, storedToken)) {
-    return await validateStoredToken(results, postcode, yar)
+    return validateStoredToken(results, postcode, yar)
   }
 
   if (token) {

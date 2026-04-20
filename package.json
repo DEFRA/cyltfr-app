@@ -38,7 +38,7 @@
     "@airbrake/node": "^2.1.9",
     "@arcgis/core": "^4.34.8",
     "@esri/arcgis-rest-request": "^4.10.2",
-    "@friendlycaptcha/sdk": "^0.1.37",
+    "@friendlycaptcha/sdk": "^0.2.0",
     "@hapi/boom": "^10.0.1",
     "@hapi/catbox-memory": "^6.0.2",
     "@hapi/catbox-redis": "7.0.2",
@@ -64,6 +64,7 @@
     "eslint": "^9.39.4",
     "husky": "^9.1.7",
     "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
     "lint-staged": "^16.4.0",
     "neostandard": "^0.13.0",
     "nodemon": "^3.1.14",
@@ -87,7 +88,8 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "server/**/*.js",
-      "!server/public/**/*",
+      "!server/public/build/**/*",
+      "!server/public/static/js/vendor/*",
       "!server/src/js/**/*.js"
     ],
     "coverageReporters": [

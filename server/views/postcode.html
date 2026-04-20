@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 
 {% from "components/input/macro.njk" import govukInput %}
+{% from "components/tag/macro.njk" import govukTag %}
+{% from "components/button/macro.njk" import govukButton %}
 {% from "components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% set pageTitle = "Where do you want to check?" %}
@@ -16,6 +18,19 @@
       {% if errorSummary %}
         {{ govukErrorSummary(errorSummary) }}
       {% endif %}
+      {% if friendlyCaptchaEnabled %}
+      <div id="FriendlyCaptchaErrorSummary" class="govuk-!-display-none">
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: [
+          {
+            text: "FriendlyCaptcha encountered an error while performing its checks",
+            href: "#FriendlyCaptchaError"
+          }]
+        })}}
+
+      </div>
+      {% endif %}
       <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
 
       {% if friendlyCaptchaEnabled %}
@@ -29,23 +44,47 @@
       <form id="postcode-form" method="post">
         {{ govukInput(postcodeInput) }}
         {% if friendlyCaptchaEnabled %}
-          <div style="margin-bottom: 20px;" id="FriendlyCaptcha" class="govuk-body frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="auto" role="status"></div>
-          <div class="govuk-grid-column-two-thirds" style="display: none;" id="nc-browser">
-            <p class="govuk-body">The anti-robot check works better and faster in modern browsers such as Edge, Firefox, or Chrome. Please consider updating your browser</p>
+
+          <div id="FriendlyCaptcha" class="govuk-!-display-none frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="auto"></div>
+          <div id="FriendlyCaptchaChecking" class="" role="status" aria-live="polite" aria-atomic="true">
+              <h3 class="govuk-heading-s">Checking you are not a robot</h3>
+              {{govukTag({
+                text: "Checking...",
+                classes: "govuk-tag--blue"
+              })}}
           </div>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-              <p class="govuk-body govuk-hint">
-                Friendly Captcha checks that you aren't a robot. Find out how to use it in our <a href="/privacy-notice" 
-                class="govuk-link">privacy notice</a>
+          <div id="FriendlyCaptchaComplete" class="govuk-!-display-none" role="status" aria-live="polite" aria-atomic="true">
+              <h3 class="govuk-heading-s">Checking you are not a robot</h3>
+              {{govukTag({
+                text: "Complete",
+                classes: "govuk-tag--green"
+              })}}
+          </div>
+          <div id="FriendlyCaptchaError" class="govuk-!-display-none" role="alert" aria-live="assertive" aria-atomic="true" tabindex="-1">
+            <div class="govuk-form-group govuk-form-group--error">
+              <h3 class="govuk-heading-s">Checking you are not a robot</h3>
+              <p class="govuk-error-message">
+                FriendlyCaptcha encountered an error while performing its checks
               </p>
+                {{ govukButton({
+                  text: "Retry",
+                  type: "button",
+                  id: "FriendlyCaptchaResetButton",
+                  href: "/postcode#"
+                }) }}
             </div>
           </div>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-              <button type="submit" id="post-code-button" class="govuk-button">Continue</button>
-            </div>
+          <div class="govuk-!-display-none" id="nc-browser">
+            <p class="govuk-body">The Friendly Captcha check works better and faster in modern browsers such as Edge, Firefox, or Chrome. Please consider updating your browser</p>
           </div>
+            <p class="govuk-body govuk-hint govuk-!-margin-top-7">
+              Friendly Captcha checks that you aren't a robot.<br>Find out how we use it in our <a href="/privacy-notice" 
+              class="govuk-link">privacy notice</a>
+            </p>
+            <p class="govuk-body govuk-hint govuk-!-margin-bottom-5">
+              This can take a few seconds. Do not refresh the page.
+            </p>
+            <button type="submit" id="post-code-button" class="govuk-button" disabled="true">Continue</button>
         {% else %}
           <button type="submit" id="post-code-button" class="govuk-button">Continue</button>
         {% endif %}
@@ -96,77 +135,11 @@
   </div>
 </div>
  </noscript>
- <script>
-    let sessionTimeoutTimer
-
-    function setupCaptchaEventListeners(captchaElement) {
-    const submitButton = document.getElementById("post-code-button")
-
-    captchaElement.addEventListener("frc:widget.statechange", function (event) {
-      const detail = event.detail
-        if (detail.state === "completed") {
-          submitButton.disabled = false
-          captchaDone(detail.response)
-        } else if (detail.state === "error") {
-          submitButton.disabled = false
-          captchaError()
-        } else {
-          submitButton.disabled = true
-        }
-      })
-    }
-
-    function enableTimeout(expiry) {
-      if (sessionTimeoutTimer) {
-        clearTimeout(sessionTimeoutTimer)
-        sessionTimeoutTimer = null
-      }
-      if (expiry > 0) {
-        sessionTimeoutTimer = setTimeout(() => friendlyCaptchaExpire(), expiry);
-      }  
-    }
-    function friendlyCaptchaExpire() {
-      fixupFriendlyCaptcha()
-    }
-    function fixupFriendlyCaptcha() {
-      // Accessibility edits to the FriendlyCaptcha widget.
-      // Stop the Friendly Captcha link opening in a new window and add gov styling.
-      const link = document.querySelector("div.frc-banner > a")
-      if (link) {
-        link.target = ''
-        link.className += ' govuk-link'
-      }
-    }
-    function observeCaptchaRender() {
-      // Work around to apply Friendly Captcha link accessability change when the page is refreshed as this was not applying previously.
-      const observer = new MutationObserver(() => {
-        const captchaLink = document.querySelector("div.frc-banner > a")
-        if (captchaLink) {
-          fixupFriendlyCaptcha()
-          observer.disconnect()
-        }
-      })
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      })
-    }
-    
-    function captchaDone(solutionPayload) {
-      fixupFriendlyCaptcha()
-    }
-    function captchaError() {
-      enableTimeout(0)
-    }
-    document.addEventListener("DOMContentLoaded", function () {
-      fixupFriendlyCaptcha()
-      observeCaptchaRender()
-    })
-  </script>
   <script type="module" src="{{ assetPath }}/js/site.min.js" async defer>
   </script>
   <script nomodule src="{{ assetPath }}/js/site.compat.min.js" async defer>
   </script>
+  <script src="{{ assetPath }}/js/friendly-captcha-handler.js"></script>
   <script src="{{ assetPath }}/js/captcha-refresh.js"></script>
 {% endif %}
 {% endblock %}
