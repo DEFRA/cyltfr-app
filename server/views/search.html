@@ -32,7 +32,7 @@
       </div>
       {% endif %}
 
-      <form method="post">
+      <form method="post" id="address-form">
         <dl class="govuk-form-group" id="postcode">
           <dt class="govuk-label">Postcode</dt>
           <dd class="govuk-body">
@@ -106,4 +106,44 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block bodyEnd %}
+  {{ super() }}
+  <script>
+    (() => {
+      const form = document.getElementById('address-form')
+
+      if (!form) {
+        return
+      }
+
+      form.addEventListener('submit', () => {
+        const selectedAddress = form.querySelector('select[name="address"]')?.value
+        const selectedReason = form.querySelector('input[name="aboutThisAddress"]:checked')?.value
+        const hasAddressSelection = selectedAddress !== undefined && Number(selectedAddress) >= 0
+        const hasReasonSelection = Boolean(selectedReason)
+
+        if (typeof globalThis.gtag === 'function' && (!hasAddressSelection || !hasReasonSelection)) {
+          const missingSelection = !hasAddressSelection && !hasReasonSelection
+            ? 'no_selection' : !hasAddressSelection
+            ? 'no_address_selected' : 'no_search_reason_selected'
+
+          globalThis.gtag('event', 'search_reason_submission_incomplete', {
+            missing_selection: missingSelection
+          })
+        }
+
+        if (!hasAddressSelection || !hasReasonSelection) {
+          return
+        }
+
+        if (typeof globalThis.gtag === 'function') {
+          globalThis.gtag('event', 'search_reason_submitted', {
+            about_this_address: selectedReason
+          })
+        }
+      })
+    })()
+  </script>
 {% endblock %}
