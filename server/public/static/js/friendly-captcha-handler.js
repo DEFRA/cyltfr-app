@@ -59,7 +59,7 @@ function setupCaptchaEventListeners (captchaElement) {
  */
 function hide (element) {
   if (element) {
-    element.style.display = 'none'
+    element.classList.add('govuk-!-display-none')
   }
 }
 
@@ -70,7 +70,7 @@ function hide (element) {
  */
 function show (element) {
   if (element) {
-    element.style.display = 'block'
+    element.classList.remove('govuk-!-display-none')
   }
 }
 
