@@ -125,13 +125,21 @@
         const hasReasonSelection = Boolean(selectedReason)
 
         if (typeof globalThis.gtag === 'function' && (!hasAddressSelection || !hasReasonSelection)) {
-          const missingSelection = !hasAddressSelection && !hasReasonSelection
-            ? 'no_selection' : !hasAddressSelection
-            ? 'no_address_selected' : 'no_search_reason_selected'
+          let errorType
+          if (!hasAddressSelection && !hasReasonSelection) {
+            errorType = 'no adrs or type'
+          } else if (!hasAddressSelection) {
+            errorType = 'no adrs'
+          } else {
+            errorType = 'no adrs type'
+          }
 
-          globalThis.gtag('event', 'search_reason_submission_incomplete', {
-            missing_selection: missingSelection
+          globalThis.gtag('event', 'gtag_adrs_search_err', {
+            error_type: errorType
           })
+
+          const errorTypeSelection = `gtag_adrs_search_err_${errorType.replace(/\s+/g, '_')}`
+          globalThis.gtag('event', errorTypeSelection)
         }
 
         if (!hasAddressSelection || !hasReasonSelection) {
@@ -139,9 +147,12 @@
         }
 
         if (typeof globalThis.gtag === 'function') {
-          globalThis.gtag('event', 'search_reason_submitted', {
-            about_this_address: selectedReason
+          globalThis.gtag('event', 'gtag_adrs_search', {
+            search_type: selectedReason
           })
+
+          const searchTypeSelection = `gtag_adrs_search_${selectedReason.replace(/-/g, '_')}`
+          globalThis.gtag('event', searchTypeSelection)
         }
       })
     })()
