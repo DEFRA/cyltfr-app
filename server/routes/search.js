@@ -137,7 +137,7 @@ module.exports = [
         }),
         payload: joi.object().keys({
           address: joi.number().required(),
-          aboutThisAddress: joi.string().valid('lives-here', 'move-to', 'work', 'other').allow('').optional()
+          aboutThisAddress: joi.string().valid('live', 'move', 'work', 'not-spec').allow('').optional()
         })
       }
     }

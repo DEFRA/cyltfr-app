@@ -47,7 +47,7 @@ describe('GET /surface-water-depth', () => {
     checkCookie(getResponse)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     postOptions.url = '/search#'
-    postOptions.payload = 'address=0&aboutThisAddress=lives-here'
+    postOptions.payload = 'address=0&aboutThisAddress=live'
 
     postResponse = await server.inject(postOptions)
     checkCookie(postResponse)
@@ -128,7 +128,7 @@ describe('GET /surface-water-depth', () => {
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     postOptions.url = '/search#'
-    postOptions.payload = 'address=0&aboutThisAddress=lives-here'
+    postOptions.payload = 'address=0&aboutThisAddress=live'
 
     postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
