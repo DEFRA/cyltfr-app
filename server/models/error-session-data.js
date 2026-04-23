@@ -1,4 +1,4 @@
-function airbrakeSessionData (request, captchaCheckResults) {
+function airbrakeSessionData (request, info) {
   const sessionInfo = {}
 
   if (request) {
@@ -14,21 +14,28 @@ function airbrakeSessionData (request, captchaCheckResults) {
     }
   }
 
-  if (captchaCheckResults) {
-    sessionInfo.token = {
-      token: captchaCheckResults.token,
-      tokenSet: captchaCheckResults.tokenSet,
-      tokenDate: captchaCheckResults.tokenSet ? new Date(captchaCheckResults.tokenSet).toISOString() : undefined,
-      tokenValid: captchaCheckResults.tokenValid,
-      tokenPostcode: captchaCheckResults.tokenPostcode
-    }
+  if (info) {
+    if (info.captchaCheckResults) {
+      sessionInfo.token = {
+        token: info.captchaCheckResults.token,
+        tokenSet: info.captchaCheckResults.tokenSet,
+        tokenDate: info.captchaCheckResults.tokenSet ? new Date(info.captchaCheckResults.tokenSet).toISOString() : undefined,
+        tokenValid: info.captchaCheckResults.tokenValid,
+        tokenPostcode: info.captchaCheckResults.tokenPostcode
+      }
 
-    if (captchaCheckResults.error) {
-      sessionInfo.error = {
-        name: captchaCheckResults.error?.name,
-        code: captchaCheckResults.error?.code,
-        message: captchaCheckResults.errorMessage,
-        detail: captchaCheckResults.error?.detail
+      if (info.captchaCheckResults.error) {
+        sessionInfo.error = {
+          name: info.captchaCheckResults.error?.name,
+          code: info.captchaCheckResults.error?.code,
+          message: info.captchaCheckResults.errorMessage,
+          detail: info.captchaCheckResults.error?.detail
+        }
+      }
+    }
+    if (info.postcodeError) {
+      sessionInfo.OSApi = {
+        response: info.postcodeError.response
       }
     }
   }

@@ -43,16 +43,20 @@ module.exports = [
     method: 'POST',
     path: '/postcode',
     handler: async (request, h) => {
-      const { postcodeInfo, addresses } = await Postcode.normalise(request.payload.postcode, request.server.methods.find)
+      const { postcodeInfo, addresses, error, anyFound } = await Postcode.normalise(request.payload.postcode, request.server.methods.find)
 
-      if (!postcodeInfo.postcode || !postcodeInfo.isValid) {
+      if (error) {
+        const sessionInfo = airbrakeSessionData(request, { postcodeError: error })
+        request.server.methods.notify(`OSApi postcode search raised an error: ${sessionInfo.error?.code} - ${sessionInfo.error?.detail}`, { sessionInfo })
+      }
+      if (!postcodeInfo.postcode || !postcodeInfo.isValid || !anyFound) {
         const errorMessage = 'Enter a full postcode in England'
         const model = new PostcodeViewModel(postcodeInfo.postcode, errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }
 
       // valid postcode but not england — redirect to regional info page
-      if (postcodeInfo.isEngland === false) {
+      if ((postcodeInfo.isEngland === false)) {
         return redirectToHomeCounty(h, postcodeInfo.postcode, postcodeInfo.region)
       }
 
@@ -64,7 +68,7 @@ module.exports = [
         // See https://www.rfc-editor.org/rfc/rfc9110.html#field.location
         return h.redirect('/search#')
       } else {
-        const sessionInfo = airbrakeSessionData(request, captchaCheckResults)
+        const sessionInfo = airbrakeSessionData(request, { captchaCheckResults })
 
         request.server.methods.notify(`FriendlyCaptcha server check failed: ${sessionInfo.error.code} - ${sessionInfo.error.detail}`, { sessionInfo })
 
