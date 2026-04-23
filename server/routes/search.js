@@ -47,7 +47,9 @@ module.exports = [
         // getWarnings doesnt throw an error so no need to catch it
         const warnings = await getWarnings(postcodeInfo.postcode, request)
 
-        return h.view('search', new SearchViewModel(addresses[0].postcode, addresses, null, warnings, backLinkUri, postcodeInfo.otherRegion))
+        const previousAboutThisAddress = request.yar.get('aboutThisAddress')
+
+        return h.view('search', new SearchViewModel(addresses[0].postcode, addresses, null, warnings, backLinkUri, postcodeInfo.otherRegion, { aboutThisAddress: previousAboutThisAddress }))
       } catch (err) {
         return boom.serverUnavailable(errors.addressByPostcode.message, err)
       }
