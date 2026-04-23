@@ -1,4 +1,14 @@
 (() => {
+  const getErrorType = (hasAddressSelection, hasReasonSelection) => {
+    if (!hasAddressSelection && !hasReasonSelection) {
+      return 'no adrs or type'
+    }
+    if (!hasAddressSelection) {
+      return 'no adrs'
+    }
+    return 'no adrs type'
+  }
+
   const form = document.getElementById('address-form')
 
   if (!form) {
@@ -12,14 +22,7 @@
     const hasReasonSelection = Boolean(selectedReason)
 
     if (typeof globalThis.gtag === 'function' && (!hasAddressSelection || !hasReasonSelection)) {
-      let errorType
-      if (!hasAddressSelection && !hasReasonSelection) {
-        errorType = 'no adrs or type'
-      } else if (!hasAddressSelection) {
-        errorType = 'no adrs'
-      } else {
-        errorType = 'no adrs type'
-      }
+      const errorType = getErrorType(hasAddressSelection, hasReasonSelection)
 
       globalThis.gtag('event', 'gtag_adrs_search_err', {
         error_type: errorType
