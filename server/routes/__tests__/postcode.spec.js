@@ -112,6 +112,25 @@ describe('postcode page', () => {
     expect(response.result).toMatch(/Enter a full postcode in England/)
   })
 
+  test('/search - Address service error', async () => {
+    const { postOptions } = mockSearchOptions('CV376YZ', cookie)
+    floodService.__updateReturnValue({})
+    addressService.find.mockImplementationOnce(() => { throw new Error('An error') })
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.result).toMatch(/Enter a full postcode in England/)
+  })
+
+  test('/search - Address service returns empty address array', async () => {
+    const { postOptions } = mockSearchOptions('CV376YZ', cookie)
+    floodService.__updateReturnValue({})
+    addressService.find.mockImplementationOnce(() => { return Promise.resolve([]) })
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.result).toMatch(/Enter a full postcode in England/)
+  })
+
   test('should return error view when captcha validation fails', async () => {
     const mockCaptchaCheck = {
       tokenValid: false,

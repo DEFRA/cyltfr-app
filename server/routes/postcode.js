@@ -47,7 +47,9 @@ module.exports = [
 
       if (error) {
         const sessionInfo = airbrakeSessionData(request, { postcodeError: error })
-        request.server.methods.notify(`OSApi postcode search raised an error: ${sessionInfo.error?.code} - ${sessionInfo.error?.detail}`, { sessionInfo })
+        if (request.server.methods.notify) {
+          request.server.methods.notify(`OSApi postcode search raised an error: ${sessionInfo.error?.code} - ${sessionInfo.error?.detail}`, { sessionInfo })
+        }
       }
       if (!postcodeInfo.postcode || !postcodeInfo.isValid || !anyFound) {
         const errorMessage = 'Enter a full postcode in England'
@@ -70,8 +72,9 @@ module.exports = [
       } else {
         const sessionInfo = airbrakeSessionData(request, { captchaCheckResults })
 
-        request.server.methods.notify(`FriendlyCaptcha server check failed: ${sessionInfo.error.code} - ${sessionInfo.error.detail}`, { sessionInfo })
-
+        if (request.server.methods.notify) {
+          request.server.methods.notify(`FriendlyCaptcha server check failed: ${sessionInfo.error.code} - ${sessionInfo.error.detail}`, { sessionInfo })
+        }
         const model = new PostcodeViewModel(postcodeInfo.postcode, captchaCheckResults.errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }
