@@ -40,13 +40,18 @@ async function normalisePostcode (postcode, find) {
   }
 
   try {
-    const { isEngland, region, addresses, otherRegion } = await isEnglishPostcode(normalised, find)
+    const { isEngland, region, addresses, otherRegion, anyFound } = await isEnglishPostcode(normalised, find)
     return {
       postcodeInfo: new Postcode(normalised, isValid, isEngland, region, otherRegion),
+      anyFound,
       addresses
     }
-  } catch {
-    return { postcodeInfo: new Postcode(normalised, false) }
+  } catch (error) {
+    return {
+      postcodeInfo: new Postcode(normalised, false),
+      anyFound: false,
+      error
+    }
   }
 }
 
@@ -54,7 +59,14 @@ async function isEnglishPostcode (postcode, find) {
   let addresses = await find(postcode)
 
   if (!addresses || addresses.length === 0) {
-    throw new Error('No addresses found for postcode')
+    return {
+      isEngland: false,
+      anyFound: false,
+      region: null,
+      addresses: [],
+      otherRegion: null
+    }
+    // throw new Error('No addresses found for postcode')
   }
 
   const primaryCountryCode = addresses[0].country_code
@@ -91,7 +103,7 @@ async function isEnglishPostcode (postcode, find) {
 
   addresses = addresses.filter(country => country.country_code === 'E')
 
-  return { ...regionInfo, addresses }
+  return { ...regionInfo, addresses, anyFound: true }
 }
 
 function removeWhitespace (postcode) {

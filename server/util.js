@@ -31,7 +31,9 @@ const get = (url, options = {}, ext = false) => {
         console.log('Response received from url in %d ms : %s', performance.now() - startTick, url)
       }
       if (response.res.statusCode !== STATUS_CODES.HTTP_STATUS_OK) {
-        throw new Error(FETCH_ERROR_MSG, response)
+        const err = new Error(FETCH_ERROR_MSG)
+        err.response = response
+        throw err
       }
       return response.payload
     })

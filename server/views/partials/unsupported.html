@@ -15,12 +15,14 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 {% endif %}
-  {% block govukHeader %}
-    {{ govukHeader({
-      homepageUrl: "https://www.gov.uk",
-      containerClasses: "govuk-width-container"
-    }) }}
-  {% endblock %}
+  <header>
+    {% block govukHeader %}
+      {{ govukHeader({
+        homepageUrl: "https://www.gov.uk",
+        containerClasses: "govuk-width-container"
+      }) }}
+    {% endblock %}
+  </header>
 
   {{ govukServiceNavigation({
     serviceName: serviceName,
