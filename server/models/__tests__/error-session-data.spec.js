@@ -28,7 +28,7 @@ describe('error-session-data model', () => {
 
   test('Returns session data with request and captchaCheckResults', () => {
     const sessionData = require('../error-session-data')
-    const result = sessionData.airbrakeSessionData(request, captchaResults)
+    const result = sessionData.airbrakeSessionData(request, { captchaCheckResults: captchaResults })
     expect(result.request).toBeDefined()
     expect(result.token).toBeDefined()
     expect(result.error).toBeUndefined()
@@ -44,7 +44,7 @@ describe('error-session-data model', () => {
 
   test('Returns session data with captchaCheckResults only', () => {
     const sessionData = require('../error-session-data')
-    const result = sessionData.airbrakeSessionData(undefined, captchaResults)
+    const result = sessionData.airbrakeSessionData(undefined, { captchaCheckResults: captchaResults })
     expect(result.request).toBeUndefined()
     expect(result.token).toBeDefined()
     expect(result.error).toBeUndefined()

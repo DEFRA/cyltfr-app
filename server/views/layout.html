@@ -24,11 +24,6 @@ window.loadAnalytics = () => {
   script.async = true
   script.src = "https://www.googletagmanager.com/gtag/js?id={{G4AnalyticsAccount}}"
   document.getElementsByTagName("head")[0].appendChild(script)
-  const stageprompt = document.createElement("script")
-  stageprompt.type = "text/javascript"
-  stageprompt.async = true
-  stageprompt.src = "{{ assetPath }}/js/vendor/stageprompt.js"
-  document.getElementsByTagName("head")[0].appendChild(stageprompt)
   
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -43,8 +38,6 @@ window.loadAnalytics = () => {
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','{{GTagManagerId}}')
   {% endif %}
-
-  window.addEventListener("load", () => {GOVUK.performance.stageprompt.setupForGoogleAnalytics()})
 
   window.loadAnalytics = () => { return false }
 }

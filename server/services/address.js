@@ -37,7 +37,7 @@ async function callOsApi (postcode, offset = 0) {
 }
 
 function processPayload (results, payload) {
-  const allItems = payload.results.map(item => item.DPA ? item.DPA : item.LPI).filter(item => item.POSTAL_ADDRESS_CODE !== 'N')
+  const allItems = payload.results?.map(item => item.DPA ? item.DPA : item.LPI).filter(item => item.POSTAL_ADDRESS_CODE !== 'N') || []
   allItems.forEach((item) => {
     if (!(results.find(result => result.UPRN === item.UPRN))) {
       results.push(item)
