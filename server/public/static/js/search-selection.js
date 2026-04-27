@@ -1,3 +1,4 @@
+// Google Analytics for search page
 (() => {
   const getErrorType = (hasAddressSelection, hasReasonSelection) => {
     if (!hasAddressSelection && !hasReasonSelection) {
@@ -10,10 +11,6 @@
   }
 
   const form = document.getElementById('address-form')
-
-  if (!form) {
-    return
-  }
 
   form.addEventListener('submit', () => {
     const selectedAddress = form.querySelector('select[name="address"]')?.value
