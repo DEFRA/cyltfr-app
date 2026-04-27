@@ -31,9 +31,9 @@ module.exports = [
           request.yar.set('captchabypass', (request.query.captchabypass === config.friendlyCaptchaBypass))
           console.log('Captcha Bypass set to : %s', request.yar.get('captchabypass'))
         }
-        return h.view('postcode', new PostcodeViewModel(postcode, null, config.sessionTimeout))
+        return h.view('postcode', new PostcodeViewModel(postcode, null, config.sessionTimeout, null, request.yar.get('captchabypass')))
       }
-      return h.view('postcode', new PostcodeViewModel(postcode, null, null, backLinkUri))
+      return h.view('postcode', new PostcodeViewModel(postcode, null, null, backLinkUri, request.yar.get('captchabypass')))
     },
     options: {
       description: 'Get the postcode page'
