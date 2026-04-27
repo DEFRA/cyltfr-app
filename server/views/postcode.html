@@ -43,7 +43,7 @@
 
       <form id="postcode-form" method="post">
         {{ govukInput(postcodeInput) }}
-        {% if friendlyCaptchaEnabled %}
+        {% if friendlyCaptchaEnabled and not disableCaptcha %}
 
           <div id="FriendlyCaptcha" class="govuk-!-display-none frc-captcha" data-sitekey={{friendlyCaptchaSiteKey}} data-start="auto"></div>
           <div id="FriendlyCaptchaChecking" class="" role="status" aria-live="polite" aria-atomic="true">
