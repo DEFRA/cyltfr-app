@@ -40,6 +40,10 @@ describe('google analytics search selection', () => {
     require('../search-selection.js')
   })
 
+  afterEach(() => {
+    jest.useRealTimers()
+  })
+
   test('should send gtag event when address and reason are selected', () => {
     jest.useFakeTimers()
     globalThis.gtag = jest.fn()
@@ -60,8 +64,6 @@ describe('google analytics search selection', () => {
 
     jest.runAllTimers()
     expect(formElement.submit).toHaveBeenCalled()
-
-    jest.useRealTimers()
   })
 
   test('should send gtag error event when address is not selected', () => {
@@ -111,7 +113,6 @@ describe('google analytics search selection', () => {
   test('should not throw error on form submit when gtag is not available', () => {
     addressSelect.value = '0'
     reasonRadio.checked = true
-    globalThis.gtag = undefined
 
     expect(() => {
       const submitEvent = new Event('submit')
