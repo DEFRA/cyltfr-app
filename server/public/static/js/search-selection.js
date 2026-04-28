@@ -1,5 +1,7 @@
 // Google Analytics for search page
 (() => {
+  const gtagSubmitDelay = 300
+
   const getErrorType = (hasAddressSelection, hasReasonSelection) => {
     if (!hasAddressSelection && !hasReasonSelection) {
       return 'no adrs or type'
@@ -43,7 +45,7 @@
       const searchTypeSelection = `gtag_adrs_search_${selectedReason.replace(/-/g, '_')}`
       globalThis.gtag('event', searchTypeSelection)
 
-      setTimeout(() => form.submit(), 300)
+      setTimeout(() => form.submit(), gtagSubmitDelay)
     }
   })
 })()
