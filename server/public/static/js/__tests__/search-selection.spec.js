@@ -41,18 +41,27 @@ describe('google analytics search selection', () => {
   })
 
   test('should send gtag event when address and reason are selected', () => {
+    jest.useFakeTimers()
     globalThis.gtag = jest.fn()
+    formElement.submit = jest.fn()
     addressSelect.value = '0'
     reasonRadio.checked = true
     reasonRadio.value = 'live'
 
     const submitEvent = new Event('submit')
+    submitEvent.preventDefault = jest.fn()
     formElement.dispatchEvent(submitEvent)
 
+    expect(submitEvent.preventDefault).toHaveBeenCalled()
     expect(globalThis.gtag).toHaveBeenCalledWith('event', 'gtag_adrs_search', {
       search_type: 'live'
     })
     expect(globalThis.gtag).toHaveBeenCalledWith('event', 'gtag_adrs_search_live')
+
+    jest.runAllTimers()
+    expect(formElement.submit).toHaveBeenCalled()
+
+    jest.useRealTimers()
   })
 
   test('should send gtag error event when address is not selected', () => {

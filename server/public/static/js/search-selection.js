@@ -12,7 +12,7 @@
 
   const form = document.getElementById('address-form')
 
-  form.addEventListener('submit', () => {
+  form.addEventListener('submit', (event) => {
     const selectedAddress = form.querySelector('select[name="address"]')?.value
     const selectedReason = form.querySelector('input[name="aboutThisAddress"]:checked')?.value
     const hasAddressSelection = selectedAddress !== undefined && Number(selectedAddress) >= 0
@@ -34,12 +34,16 @@
     }
 
     if (typeof globalThis.gtag === 'function') {
+      event.preventDefault()
+
       globalThis.gtag('event', 'gtag_adrs_search', {
         search_type: selectedReason
       })
 
       const searchTypeSelection = `gtag_adrs_search_${selectedReason.replace(/-/g, '_')}`
       globalThis.gtag('event', searchTypeSelection)
+
+      setTimeout(() => form.submit(), 300)
     }
   })
 })()
