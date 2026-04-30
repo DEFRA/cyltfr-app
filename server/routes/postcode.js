@@ -82,7 +82,7 @@ module.exports = [
         const sessionInfo = airbrakeSessionData(request, { captchaCheckResults })
 
         if (request.server.methods.notify) {
-          request.server.methods.notify(`FriendlyCaptcha server check failed: ${sessionInfo.error.code} - ${sessionInfo.error.detail}`, { sessionInfo })
+          request.server.methods.notify(`FriendlyCaptcha server check failed: ${sessionInfo.error?.code} - ${sessionInfo.error?.detail}`, { sessionInfo })
         }
         const model = new PostcodeViewModel(postcodeInfo.postcode, captchaCheckResults.errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
