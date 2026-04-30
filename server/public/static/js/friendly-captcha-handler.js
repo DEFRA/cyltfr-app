@@ -24,28 +24,42 @@ function setupCaptchaEventListeners (captchaElement) {
   const frcError = document.getElementById('FriendlyCaptchaError')
   const frcErrorSummary = document.getElementById('FriendlyCaptchaErrorSummary')
   const submitButton = document.getElementById('post-code-button')
+  let errTimer
 
   captchaElement.addEventListener('frc:widget.statechange', function (event) {
     const detail = event.detail
     if (detail.state === 'completed') {
+      if (errTimer) {
+        clearTimeout(errTimer)
+        errTimer = null
+      }
       hide(frcChecking)
       show(frcComplete)
-      submitButton.disabled = false
-    } else if ((detail.state === 'error') || (detail.state === 'expired')) {
-      hide(frcChecking)
-      hide(frcComplete)
-      show(frcError)
+      hide(frcError)
       if (frcErrorSummary) {
-        show(frcErrorSummary)
-        if (!document.title.includes('Error: ')) {
-          document.title = 'Error: ' + document.title
-        }
-        const errorSummary = frcErrorSummary.querySelector('.govuk-error-summary')
-        if (errorSummary) {
-          errorSummary.focus()
-        }
+        hide(frcErrorSummary)
       }
       submitButton.disabled = false
+    } else if ((detail.state === 'error') || (detail.state === 'expired')) {
+      if (errTimer) {
+        clearTimeout(errTimer)
+        errTimer = null
+      }
+      errTimer = setTimeout(() => {
+        hide(frcChecking)
+        hide(frcComplete)
+        show(frcError)
+        if (frcErrorSummary) {
+          show(frcErrorSummary)
+          if (!document.title.includes('Error: ')) {
+            document.title = 'Error: ' + document.title
+          }
+          const errorSummary = frcErrorSummary.querySelector('.govuk-error-summary')
+          if (errorSummary) {
+            errorSummary.focus()
+          }
+        }
+      }, 5000)
     } else {
       submitButton.disabled = true
     }
