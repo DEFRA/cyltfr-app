@@ -43,16 +43,25 @@ module.exports = [
     method: 'POST',
     path: '/postcode',
     handler: async (request, h) => {
-      const { postcodeInfo, addresses, error, anyFound } = await Postcode.normalise(request.payload.postcode, request.server.methods.find)
+      const testPostcode = Postcode.findPostcodeInString(request.payload.postcode)
+      const { postcodeInfo, addresses, error, anyFound } = await Postcode.normalise(testPostcode, request.server.methods.find)
 
       if (error) {
         const sessionInfo = airbrakeSessionData(request, { postcodeError: error })
         if (request.server.methods.notify) {
           request.server.methods.notify(`OSApi postcode search raised an error: ${sessionInfo.error?.code} - ${sessionInfo.error?.detail}`, { sessionInfo })
         }
+        const errorMessage = 'An error occured while searching for that postcode. Please try again'
+        const model = new PostcodeViewModel(postcodeInfo.postcode, errorMessage, config.sessionTimeout)
+        return h.view('postcode', model)
       }
-      if (!postcodeInfo.postcode || !postcodeInfo.isValid || !anyFound) {
+      if (!postcodeInfo.postcode || !postcodeInfo.isValidFormat) {
         const errorMessage = 'Enter a full postcode in England'
+        const model = new PostcodeViewModel(postcodeInfo.postcode, errorMessage, config.sessionTimeout)
+        return h.view('postcode', model)
+      }
+      if (!anyFound) {
+        const errorMessage = 'That postcode does not appear to exist'
         const model = new PostcodeViewModel(postcodeInfo.postcode, errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }

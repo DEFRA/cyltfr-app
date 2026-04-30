@@ -1,7 +1,10 @@
+const postcodeRegexStr = '(?<first>(([A-Z][0-9]{1,2})|(([A-Z][A-HJ-Y][0-9]{1,2})|(([A-Z][0-9][A-Z])|([A-Z][A-HJ-Y][0-9]?[A-Z])))))\\s?(?<second>[0-9][A-Z]{2})'
+// const postcodeRegex = /^[A-Z]{1,2}\d[A-Z0-9]?\s?\d[A-Z]{2}$/i
+
 class Postcode {
-  constructor (postcode, isValid, isEngland, region, otherRegion) {
+  constructor (postcode, isValidFormat, isEngland, region, otherRegion) {
     this.postcode = postcode
-    this.isValid = isValid || false
+    this.isValidFormat = isValidFormat || false
     this.isEngland = isEngland
     this.region = region
     this.otherRegion = otherRegion
@@ -12,6 +15,20 @@ class Postcode {
     const normalisedPostcode1 = await normalisePostcode(postcode1)
     const normalisedPostcode2 = await normalisePostcode(postcode2)
     return normalisedPostcode1.postcodeInfo.postcode === normalisedPostcode2.postcodeInfo.postcode
+  }
+
+  static findPostcodeInString (input) {
+    const matchRegexp = new RegExp(`${postcodeRegexStr}`, 'i')
+    let retval = null
+    try {
+      const matches = input.match(matchRegexp)
+      if (matches?.length > 0) {
+        retval = matches[0]
+      }
+    } catch {
+
+    }
+    return retval
   }
 
   static normalise (postcode, find) {
@@ -33,16 +50,16 @@ async function normalisePostcode (postcode, find) {
       )
     )
 
-  const isValid = isValidPostcodeFormat(normalised)
+  const isValidFormat = isValidPostcodeFormat(normalised)
 
-  if (!find) {
-    return { postcodeInfo: new Postcode(normalised, isValid) }
+  if (!find || !isValidFormat) {
+    return { postcodeInfo: new Postcode(normalised, isValidFormat) }
   }
 
   try {
     const { isEngland, region, addresses, otherRegion, anyFound } = await isEnglishPostcode(normalised, find)
     return {
-      postcodeInfo: new Postcode(normalised, isValid, isEngland, region, otherRegion),
+      postcodeInfo: new Postcode(normalised, isValidFormat, isEngland, region, otherRegion),
       anyFound,
       addresses
     }
@@ -119,7 +136,7 @@ function characterFormatting (postcode) {
 }
 
 function isValidPostcodeFormat (postcode) {
-  const postcodeRegex = /^[A-Z]{1,2}\d[A-Z0-9]?\s?\d[A-Z]{2}$/i
+  const postcodeRegex = new RegExp(`^${postcodeRegexStr}$`, 'i')
   return postcodeRegex.test(postcode)
 }
 
