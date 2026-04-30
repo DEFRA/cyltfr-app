@@ -46,6 +46,7 @@ function setupCaptchaEventListeners (captchaElement) {
         errTimer = null
       }
       errTimer = setTimeout(() => {
+        errTimer = null
         hide(frcChecking)
         hide(frcComplete)
         show(frcError)
@@ -59,7 +60,8 @@ function setupCaptchaEventListeners (captchaElement) {
             errorSummary.focus()
           }
         }
-      }, 5000)
+        submitButton.disabled = false
+      }, 1000)
     } else {
       submitButton.disabled = true
     }
