@@ -101,7 +101,7 @@ describe('postcode page', () => {
   ])('should return an error view when $description', async ({ postcode }) => {
     const mockPostcodeInfo = {
       postcode: '',
-      isValid: false
+      isValidFormat: false
     }
 
     jest.fn().mockResolvedValue({ postcodeInfo: mockPostcodeInfo, addresses: [] })
@@ -119,7 +119,7 @@ describe('postcode page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(postResponse.result).toMatch(/Enter a full postcode in England/)
+    expect(postResponse.result).toMatch(/An error occured while searching for that postcode/)
   })
 
   test('/search - Address service returns empty address array', async () => {
@@ -128,7 +128,7 @@ describe('postcode page', () => {
     addressService.find.mockImplementationOnce(() => { return Promise.resolve([]) })
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(postResponse.result).toMatch(/Enter a full postcode in England/)
+    expect(postResponse.result).toMatch(/That postcode does not appear to exist/)
   })
 
   test('should return error view when captcha validation fails', async () => {
@@ -169,7 +169,7 @@ describe('postcode page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(postResponse.result).toMatch(/Enter a full postcode in England/)
+    expect(postResponse.result).toMatch(/An error occured while searching for that postcode/)
   })
 
   test('/search - Address service returns empty address array', async () => {
@@ -178,7 +178,7 @@ describe('postcode page', () => {
     addressService.find.mockImplementationOnce(() => { return Promise.resolve([]) })
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(postResponse.result).toMatch(/Enter a full postcode in England/)
+    expect(postResponse.result).toMatch(/That postcode does not appear to exist/)
   })
 
   test('returns an error when url query contains an error parameter', async () => {

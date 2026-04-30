@@ -3,7 +3,7 @@
  */
 
 const { setupCaptchaEventListeners, initRetryButton, onLoad } = require('../friendly-captcha-handler')
-
+const { setTimeout } = require('node:timers/promises')
 describe('setupCaptchaEventListeners', () => {
   let mockCaptchaElement
   let frcChecking
@@ -61,24 +61,26 @@ describe('setupCaptchaEventListeners', () => {
     expect(frcErrorSummary.classList.contains('govuk-!-display-none')).toBeTruthy()
   })
 
-  test('should show error state and disable submit button initially for other states', () => {
+  test('should show error state and disable submit button initially for other states', async () => {
     setupCaptchaEventListeners(mockCaptchaElement)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'fetching' }
     })
     mockCaptchaElement.dispatchEvent(event)
+    await setTimeout(1500)
 
     expect(submitButton.disabled).toBe(true)
-  })
+  }, 2000)
 
-  test('should show error state and focus error summary on captcha error', () => {
+  test('should show error state and focus error summary on captcha error', async () => {
     setupCaptchaEventListeners(mockCaptchaElement)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'error' }
     })
     mockCaptchaElement.dispatchEvent(event)
+    await setTimeout(1500)
 
     expect(frcChecking.classList.contains('govuk-!-display-none')).toBeTruthy()
     expect(frcComplete.classList.contains('govuk-!-display-none')).toBeTruthy()
@@ -86,20 +88,21 @@ describe('setupCaptchaEventListeners', () => {
     expect(frcErrorSummary.classList.contains('govuk-!-display-none')).toBeFalsy()
     expect(submitButton.disabled).toBe(false)
     expect(errorSummaryElement.focus).toHaveBeenCalled()
-  })
+  }, 2000)
 
-  test('should prefix document title with "Error: " on captcha error', () => {
+  test('should prefix document title with "Error: " on captcha error', async () => {
     setupCaptchaEventListeners(mockCaptchaElement)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'error' }
     })
     mockCaptchaElement.dispatchEvent(event)
+    await setTimeout(1500)
 
     expect(document.title).toBe('Error: Where do you want to check?')
-  })
+  }, 2000)
 
-  test('should not duplicate "Error: " prefix if already present', () => {
+  test('should not duplicate "Error: " prefix if already present', async () => {
     document.title = 'Error: Where do you want to check?'
     setupCaptchaEventListeners(mockCaptchaElement)
 
@@ -107,17 +110,19 @@ describe('setupCaptchaEventListeners', () => {
       detail: { state: 'error' }
     })
     mockCaptchaElement.dispatchEvent(event)
+    await setTimeout(1500)
 
     expect(document.title).toBe('Error: Where do you want to check?')
-  })
+  }, 2000)
 
-  test('should handle expired state same as error state', () => {
+  test('should handle expired state same as error state', async () => {
     setupCaptchaEventListeners(mockCaptchaElement)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'expired' }
     })
     mockCaptchaElement.dispatchEvent(event)
+    await setTimeout(1500)
 
     expect(frcChecking.classList.contains('govuk-!-display-none')).toBeTruthy()
     expect(frcComplete.classList.contains('govuk-!-display-none')).toBeTruthy()
@@ -126,7 +131,7 @@ describe('setupCaptchaEventListeners', () => {
     expect(submitButton.disabled).toBe(false)
     expect(document.title).toContain('Error: ')
     expect(errorSummaryElement.focus).toHaveBeenCalled()
-  })
+  }, 2000)
 
   test('should handle missing optional elements gracefully', () => {
     // Remove optional elements
