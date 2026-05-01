@@ -3,6 +3,7 @@ const config = require('../config')
 const { osPostcodeUrl, osSearchKey } = config
 const fs = require('fs/promises')
 const path = require('path')
+const STATUS_CODES = require('http2').constants
 
 async function simulatedFind (inputPostcode) {
   const simulatedData = require('../routes/simulated/data/address-service.json')
@@ -47,7 +48,7 @@ function processPayload (results, payload) {
 
 function checkIfErrorIsActuallyNoResults (error) {
   let retVal = false
-  if ((error.data.payload.error.statuscode === 400) && (error.data.payload.error.message.includes('Requested postcode must contain a minimum of the sector plus 1 digit of the district'))) {
+  if ((error.data.payload.error.statuscode === STATUS_CODES.HTTP_STATUS_BAD_REQUEST) && (error.data.payload.error.message.includes('Requested postcode must contain a minimum of the sector plus 1 digit of the district'))) {
     retVal = true
   }
   return retVal

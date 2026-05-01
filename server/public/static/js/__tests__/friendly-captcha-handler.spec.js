@@ -102,6 +102,20 @@ describe('setupCaptchaEventListeners', () => {
     expect(document.title).toBe('Error: Where do you want to check?')
   }, 2000)
 
+  test('should prefix document title with "Error: " on multiple captcha errors', async () => {
+    setupCaptchaEventListeners(mockCaptchaElement)
+
+    const event = new CustomEvent('frc:widget.statechange', {
+      detail: { state: 'error' }
+    })
+    mockCaptchaElement.dispatchEvent(event)
+    await setTimeout(250)
+    mockCaptchaElement.dispatchEvent(event)
+    await setTimeout(1500)
+
+    expect(document.title).toBe('Error: Where do you want to check?')
+  }, 2500)
+
   test('should not duplicate "Error: " prefix if already present', async () => {
     document.title = 'Error: Where do you want to check?'
     setupCaptchaEventListeners(mockCaptchaElement)
