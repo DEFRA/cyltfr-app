@@ -45,6 +45,14 @@ function processPayload (results, payload) {
   })
 }
 
+function checkIfErrorIsActuallyNoResults (error) {
+  let retVal = false
+  if ((error.data.payload.error.statuscode === 400) && (error.data.payload.error.message.includes('Requested postcode must contain a minimum of the sector plus 1 digit of the district'))) {
+    retVal = true
+  }
+  return retVal
+}
+
 async function find (postcode) {
   const results = []
   let offset = 0
@@ -53,10 +61,20 @@ async function find (postcode) {
 
   while (totalresults > (maxresults + offset)) {
     offset += maxresults
-    const payload = await callOsApi(postcode, offset)
-    processPayload(results, payload)
-    maxresults = payload.header.maxresults
-    totalresults = payload.header.totalresults
+    try {
+      const payload = await callOsApi(postcode, offset)
+      processPayload(results, payload)
+      maxresults = payload.header.maxresults
+      totalresults = payload.header.totalresults
+    } catch (error) {
+      if (checkIfErrorIsActuallyNoResults(error)) {
+        processPayload(results, {})
+        maxresults = 0
+        totalresults = 0
+      } else {
+        throw error
+      }
+    }
   }
 
   return results

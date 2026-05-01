@@ -119,7 +119,7 @@ describe('postcode page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(postResponse.result).toMatch(/An error occured while searching for that postcode/)
+    expect(postResponse.result).toMatch(/An error occurred while searching for that postcode/)
   })
 
   test('/search - Address service returns empty address array', async () => {
@@ -169,7 +169,7 @@ describe('postcode page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(postResponse.result).toMatch(/An error occured while searching for that postcode/)
+    expect(postResponse.result).toMatch(/An error occurred while searching for that postcode/)
   })
 
   test('/search - Address service returns empty address array', async () => {

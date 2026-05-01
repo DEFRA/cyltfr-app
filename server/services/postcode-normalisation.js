@@ -86,6 +86,13 @@ async function isEnglishPostcode (postcode, find) {
     // throw new Error('No addresses found for postcode')
   }
 
+  addresses = addresses.sort((a, b) => {
+    if (a.country_code !== b.country_code) {
+      return a.country_code.localeCompare(b.country_code)
+    }
+    return a.address.localeCompare(b.address)
+  })
+
   const primaryCountryCode = addresses[0].country_code
   let region = null
 
