@@ -85,20 +85,10 @@ async function isEnglishPostcode (postcode, find) {
     }
   }
 
-  // Sort addresses by country, so that E appears at the top.
-  // This so our primary country code always picks up E if it's present
-  addresses = addresses.sort((a, b) => {
-    const countryA = a.country_code || ''
-    const countryB = b.country_code || ''
-
-    if (countryA !== countryB) {
-      return countryA.localeCompare(countryB)
-    }
-
-    const addressA = a.address || ''
-    const addressB = b.address || ''
-    return addressA.localeCompare(addressB)
-  })
+  let isEnglandAddress = addresses.find(country => country.country_code === 'E')
+  if (!isEnglandAddress) {
+    isEnglandAddress = addresses[0]
+  }
 
   const COUNTRY_CODE_TO_REGION = {
     E: 'england',
@@ -106,7 +96,7 @@ async function isEnglishPostcode (postcode, find) {
     S: 'scotland',
     N: 'northern-ireland'
   }
-  const primaryCountryCode = addresses[0].country_code
+  const primaryCountryCode = isEnglandAddress.country_code
 
   const region = COUNTRY_CODE_TO_REGION[primaryCountryCode]
   if (!region) {
@@ -122,7 +112,7 @@ async function isEnglishPostcode (postcode, find) {
 
   const regionInfo = {
     region,
-    isEngland: addresses[0].country_code === 'E',
+    isEngland: isEnglandAddress.country_code === 'E',
     otherRegion
   }
 
