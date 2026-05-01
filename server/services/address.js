@@ -48,6 +48,9 @@ function processPayload (results, payload) {
 
 function checkIfErrorIsActuallyNoResults (error) {
   let retVal = false
+  if (!error.data) {
+    error.data = error.response
+  }
   if ((error.data.payload.error.statuscode === STATUS_CODES.HTTP_STATUS_BAD_REQUEST) && (error.data.payload.error.message.includes('Requested postcode must contain a minimum of the sector plus 1 digit of the district'))) {
     retVal = true
   }
