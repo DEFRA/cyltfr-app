@@ -83,40 +83,41 @@ async function isEnglishPostcode (postcode, find) {
       addresses: [],
       otherRegion: null
     }
-    // throw new Error('No addresses found for postcode')
   }
 
+  // Sort addresses by country, so that E appears at the top.
+  // This so our primary country code always picks up E if it's present
   addresses = addresses.sort((a, b) => {
-    if (a.country_code !== b.country_code) {
-      return a.country_code.localeCompare(b.country_code)
+    const countryA = a.country_code || ''
+    const countryB = b.country_code || ''
+
+    if (countryA !== countryB) {
+      return countryA.localeCompare(countryB)
     }
-    return a.address.localeCompare(b.address)
+
+    const addressA = a.address || ''
+    const addressB = b.address || ''
+    return addressA.localeCompare(addressB)
   })
 
+  const COUNTRY_CODE_TO_REGION = {
+    E: 'england',
+    W: 'wales',
+    S: 'scotland',
+    N: 'northern-ireland'
+  }
   const primaryCountryCode = addresses[0].country_code
-  let region = null
 
-  if (primaryCountryCode === 'E') {
-    region = 'england'
-  } else if (primaryCountryCode === 'W') {
-    region = 'wales'
-  } else if (primaryCountryCode === 'S') {
-    region = 'scotland'
-  } else if (primaryCountryCode === 'N') {
-    region = 'northern-ireland'
-  } else {
-    throw new Error('Unknown country code')
+  const region = COUNTRY_CODE_TO_REGION[primaryCountryCode]
+  if (!region) {
+    throw new Error(`Unknown country code: ${primaryCountryCode}`)
   }
 
   const secondaryCountryCode = addresses.find(country => country.country_code !== 'E')?.country_code
-  let otherRegion
 
-  if (secondaryCountryCode === 'W') {
-    otherRegion = 'wales'
-  } else if (secondaryCountryCode === 'S') {
-    otherRegion = 'scotland'
-  } else {
-    otherRegion = null
+  const otherRegion = COUNTRY_CODE_TO_REGION[secondaryCountryCode]
+  if (!otherRegion) {
+    throw new Error(`Unknown country code: ${secondaryCountryCode}`)
   }
 
   const regionInfo = {

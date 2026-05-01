@@ -1,6 +1,7 @@
 /* eslint-disable no-unexpected-multiline */
 /* eslint-disable @stylistic/func-call-spacing */
 const { Postcode } = require('../postcode-normalisation')
+const fakeData = require('./data/LD71DT.json')
 
 describe('postcode-normalisation', () => {
   test.each(['cv37 6yz', 'CV37 6YZ', 'CV376YZ', 'cv376yz', 'CV376yz', 'cv37 6YZ', '  c&v3 7  ;  * 6^y #Z /'])
@@ -57,4 +58,26 @@ describe('postcode-normalisation', () => {
   ('compare returns false for invalid value "%s"', async (input) => {
     expect(await Postcode.compare('CV37 6YZ', input)).toBe(false)
   })
+
+  test('Postcode normalisation doesn\'t return non-english addresses', async () => {
+    const postcode = await Postcode.normalise('LD71 1DT', fakeFind)
+    expect(postcode.postcodeInfo.isValidFormat).toBe(true)
+    expect(postcode.addresses.length).toBe(1)
+    expect(postcode.postcodeInfo.region).toBe('england')
+    expect(postcode.postcodeInfo.otherRegion).toBe('wales')
+  })
+
+  const fakeFind = (_postcode) => {
+    return fakeData
+      .map(item => {
+        return {
+          uprn: item.DPA.UPRN,
+          postcode: item.DPA.POSTCODE ? item.DPA.POSTCODE : item.DPA.POSTCODE_LOCATOR,
+          address: item.DPA.ADDRESS,
+          country_code: item.DPA.COUNTRY_CODE,
+          x: item.DPA.X_COORDINATE,
+          y: item.DPA.Y_COORDINATE
+        }
+      })
+  }
 })
