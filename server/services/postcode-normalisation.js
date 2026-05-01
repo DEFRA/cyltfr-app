@@ -115,9 +115,9 @@ async function isEnglishPostcode (postcode, find) {
 
   const secondaryCountryCode = addresses.find(country => country.country_code !== 'E')?.country_code
 
-  const otherRegion = COUNTRY_CODE_TO_REGION[secondaryCountryCode]
+  let otherRegion = COUNTRY_CODE_TO_REGION[secondaryCountryCode]
   if (!otherRegion) {
-    throw new Error(`Unknown country code: ${secondaryCountryCode}`)
+    otherRegion = null
   }
 
   const regionInfo = {
