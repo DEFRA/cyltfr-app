@@ -386,7 +386,7 @@ describe('/captchacheck test', () => {
     expect(results.tokenValid).toBeFalsy()
     expect(results.error.code).toBe('unknown_error')
     expect(results.error.detail).toBe('Unknown error')
-    expect(results.errorMessage).toBe('An error occured during the FriendlyCaptcha check. Please try again.')
+    expect(results.errorMessage).toBe('An error occurred during the FriendlyCaptcha check. Please try again.')
     expect(util.post.mock.calls).toHaveLength(1)
   })
 

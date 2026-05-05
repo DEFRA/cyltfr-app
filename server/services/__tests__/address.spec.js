@@ -179,6 +179,27 @@ describe('Address service handling http errors from OSApi', () => {
     await expect(addressService.find('DUMMY')).rejects.toThrow()
   })
 
+  test('find does not throw an error if HTTP_STATUS_BAD_REQUEST and not found message indicated', async () => {
+    const errObj = {
+      statusCode: STATUS_CODES.HTTP_STATUS_BAD_REQUEST,
+      statuscode: STATUS_CODES.HTTP_STATUS_BAD_REQUEST,
+      message: 'Requested postcode must contain a minimum of the sector plus 1 digit of the district'
+    }
+    mockWreck.get.mockResolvedValueOnce({
+      payload: {
+        error: errObj,
+        header: {
+          maxresults: 100,
+          totalresults: 1
+        }
+      },
+      res: errObj,
+      data: errObj
+    })
+
+    await expect(addressService.find('DUMMY')).resolves.toHaveLength(0)
+  })
+
   test('returns non-Json data', async () => {
     mockWreck.get.mockResolvedValueOnce('<xml><blah>This is some non-json formatted data</blah></xml>')
 

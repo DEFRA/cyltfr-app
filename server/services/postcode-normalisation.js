@@ -83,38 +83,36 @@ async function isEnglishPostcode (postcode, find) {
       addresses: [],
       otherRegion: null
     }
-    // throw new Error('No addresses found for postcode')
   }
 
-  const primaryCountryCode = addresses[0].country_code
-  let region = null
+  let isEnglandAddress = addresses.find(country => country.country_code === 'E')
+  if (!isEnglandAddress) {
+    isEnglandAddress = addresses[0]
+  }
 
-  if (primaryCountryCode === 'E') {
-    region = 'england'
-  } else if (primaryCountryCode === 'W') {
-    region = 'wales'
-  } else if (primaryCountryCode === 'S') {
-    region = 'scotland'
-  } else if (primaryCountryCode === 'N') {
-    region = 'northern-ireland'
-  } else {
-    throw new Error('Unknown country code')
+  const COUNTRY_CODE_TO_REGION = {
+    E: 'england',
+    W: 'wales',
+    S: 'scotland',
+    N: 'northern-ireland'
+  }
+  const primaryCountryCode = isEnglandAddress.country_code
+
+  const region = COUNTRY_CODE_TO_REGION[primaryCountryCode]
+  if (!region) {
+    throw new Error(`Unknown country code: ${primaryCountryCode}`)
   }
 
   const secondaryCountryCode = addresses.find(country => country.country_code !== 'E')?.country_code
-  let otherRegion
 
-  if (secondaryCountryCode === 'W') {
-    otherRegion = 'wales'
-  } else if (secondaryCountryCode === 'S') {
-    otherRegion = 'scotland'
-  } else {
+  let otherRegion = COUNTRY_CODE_TO_REGION[secondaryCountryCode]
+  if (!otherRegion) {
     otherRegion = null
   }
 
   const regionInfo = {
     region,
-    isEngland: addresses[0].country_code === 'E',
+    isEngland: isEnglandAddress.country_code === 'E',
     otherRegion
   }
 

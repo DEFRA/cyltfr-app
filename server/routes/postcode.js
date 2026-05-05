@@ -5,6 +5,7 @@ const { redirectToHomeCounty } = require('../helpers')
 const { captchaCheck } = require('../services/captchacheck')
 const { airbrakeSessionData } = require('../models/error-session-data')
 const { Postcode } = require('../services/postcode-normalisation')
+const errors = require('../models/errors.json')
 
 module.exports = [
   {
@@ -49,19 +50,19 @@ module.exports = [
       if (error) {
         const sessionInfo = airbrakeSessionData(request, { postcodeError: error })
         if (request.server.methods.notify) {
-          request.server.methods.notify(`OSApi postcode search raised an error: ${sessionInfo.error?.code} - ${sessionInfo.error?.detail}`, { sessionInfo })
+          request.server.methods.notify(`OSApi postcode search raised an error: ${error?.data?.payload?.error?.statuscode}`, { sessionInfo })
         }
-        const errorMessage = 'An error occured while searching for that postcode. Please try again'
+        const errorMessage = errors.addressByPostcode.message
         const model = new PostcodeViewModel(postcodeInfo.postcode, errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }
       if (!postcodeInfo.postcode || !postcodeInfo.isValidFormat) {
-        const errorMessage = 'Enter a full postcode in England'
+        const errorMessage = errors.postcodeInvalid.message
         const model = new PostcodeViewModel(postcodeInfo.postcode, errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }
       if (!anyFound) {
-        const errorMessage = 'That postcode does not appear to exist'
+        const errorMessage = errors.addressNotFound.message
         const model = new PostcodeViewModel(postcodeInfo.postcode, errorMessage, config.sessionTimeout)
         return h.view('postcode', model)
       }

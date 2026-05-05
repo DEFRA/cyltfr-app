@@ -84,6 +84,6 @@ describe('OSApi calls', () => {
     setupMockUtil(null, null, new Error('Error in OSApi call'))
     const response = await server.inject(postOptions)
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    expect(server.methods.notify).toHaveBeenCalledWith('OSApi postcode search raised an error: undefined - undefined', expect.any(Object))
+    expect(server.methods.notify).toHaveBeenCalledWith('OSApi postcode search raised an error: undefined', expect.any(Object))
   })
 })

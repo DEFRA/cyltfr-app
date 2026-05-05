@@ -34,9 +34,7 @@ function airbrakeSessionData (request, info) {
       }
     }
     if (info.postcodeError) {
-      sessionInfo.OSApi = {
-        response: info.postcodeError.response
-      }
+      sessionInfo.OSApi = info.postcodeError
     }
   }
   return sessionInfo
