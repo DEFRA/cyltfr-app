@@ -1,10 +1,10 @@
-$govuk-assets-path: '/assets/';
-
-@import "govuk-frontend/dist/govuk/index";
-@import "./depth-gauges";
-@import "./risk-page";
-@import "./risk-data";
-@import "./border-utils";
+@use "govuk-frontend/dist/govuk/index" as * with (
+  $govuk-assets-path: '/assets/'
+);
+@use "./depth-gauges";
+@use "./risk-page";
+@use "./risk-data";
+@use "./border-utils";
 
 .nojs-hidden {
   display: none;

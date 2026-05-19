@@ -1,3 +1,5 @@
+@use 'govuk-frontend/dist/govuk/helpers/index' as *;
+
 .gem-c-contents-list__list-item--numbered .gem-c-contents-list__link {
   display: table;
 }

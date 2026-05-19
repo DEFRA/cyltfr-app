@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 sass --style=expanded \
+  --quiet-deps \
   --load-path=node_modules/ \
   client/sass:server/public/build/stylesheets
   

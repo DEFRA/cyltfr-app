@@ -1,4 +1,5 @@
-@import 'govuk-frontend/dist/govuk/settings/_colours-palette.scss';
+@use 'govuk-frontend/dist/govuk/settings/colours-palette' as *;
+@use 'govuk-frontend/dist/govuk/helpers/index' as *;
 
 $border-width-scale: (
   "1": 1px
