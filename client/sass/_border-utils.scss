@@ -8,7 +8,7 @@ $border-width-scale: (
 $_border-directions: ("top", "right", "bottom", "left") !default;
 
 $_colours: (
-  "mid-grey": govuk-colour("mid-grey")
+  "mid-grey": govuk-colour("black", $variant: "tint-80")
 ) !default;
 
 @mixin _generate-border-overrides($property) {
