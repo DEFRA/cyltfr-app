@@ -11,8 +11,9 @@
  * the "complete" state, then enables the submit button.
  *
  * When an error or expiry occurs, hides checking/complete states, shows the error
- * state with error summary, updates document title with "Error: " prefix, and
- * focuses the error summary for accessibility.
+ * state with error summary, updates document title with "Error: " prefix, focuses
+ * the error summary for accessibility, and keeps the submit button disabled to
+ * prevent form submission with an invalid token.
  *
  * For all other states (fetching, unstarted), the submit button remains disabled.
  *
@@ -60,7 +61,7 @@ function setupCaptchaEventListeners (captchaElement) {
             errorSummary.focus()
           }
         }
-        submitButton.disabled = false
+        submitButton.disabled = true
       }, 1000)
     } else {
       submitButton.disabled = true

@@ -86,7 +86,7 @@ describe('setupCaptchaEventListeners', () => {
     expect(frcComplete.classList.contains('govuk-!-display-none')).toBeTruthy()
     expect(frcError.classList.contains('govuk-!-display-none')).toBeFalsy()
     expect(frcErrorSummary.classList.contains('govuk-!-display-none')).toBeFalsy()
-    expect(submitButton.disabled).toBe(false)
+    expect(submitButton.disabled).toBe(true)
     expect(errorSummaryElement.focus).toHaveBeenCalled()
   }, 2000)
 
@@ -142,7 +142,7 @@ describe('setupCaptchaEventListeners', () => {
     expect(frcComplete.classList.contains('govuk-!-display-none')).toBeTruthy()
     expect(frcError.classList.contains('govuk-!-display-none')).toBeFalsy()
     expect(frcErrorSummary.classList.contains('govuk-!-display-none')).toBeFalsy()
-    expect(submitButton.disabled).toBe(false)
+    expect(submitButton.disabled).toBe(true)
     expect(document.title).toContain('Error: ')
     expect(errorSummaryElement.focus).toHaveBeenCalled()
   }, 2000)
