@@ -118,10 +118,9 @@ function onLoad () {
   }
 }
 
+onLoad()
+
 // Export for testing (UMD pattern)
-// Only auto-invoke onLoad() in a real browser context, not when require()'d by Jest/Node
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { setupCaptchaEventListeners, initRetryButton, onLoad }
-} else {
-  onLoad()
 }
