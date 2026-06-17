@@ -86,7 +86,6 @@
     ],
     "automock": false,
     "testEnvironment": "node",
-    "resetModules": true,
     "collectCoverage": true,
     "collectCoverageFrom": [
       "server/**/*.js",
