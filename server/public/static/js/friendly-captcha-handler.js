@@ -118,10 +118,7 @@ function onLoad () {
   }
 }
 
-// Only auto-initialise in a real browser environment, not under Jest/Node
-if (typeof module === 'undefined') {
-  onLoad()
-}
+onLoad()
 
 // Export for testing (UMD pattern)
 if (typeof module !== 'undefined' && module.exports) {
