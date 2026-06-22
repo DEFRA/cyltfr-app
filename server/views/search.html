@@ -2,6 +2,7 @@
 
 {% from "components/select/macro.njk" import govukSelect %} 
 {% from "components/error-summary/macro.njk" import govukErrorSummary %} 
+{% from "components/radios/macro.njk" import govukRadios %}
 {% set pageTitle = "Select an address" %}  
 
 {% block containerStart %}
@@ -16,12 +17,7 @@
       <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
 
       <div class="govuk-inset-text">
-        <p>
-          This service will tell you the flood risk of an area, not a specific property.
-        </p>
-        <p>
-          We need to ask for the property number so we know where you want to check.
-        </p>
+        <p>This service will tell you the flood risk of an area, not a specific property.</p>
       </div>
 
       {% if otherRegion %}
@@ -36,7 +32,7 @@
       </div>
       {% endif %}
 
-      <form method="post">
+      <form method="post" id="address-form">
         <dl class="govuk-form-group" id="postcode">
           <dt class="govuk-label">Postcode</dt>
           <dd class="govuk-body">
@@ -62,6 +58,48 @@
           </strong>
         </div>
         {% endif %}
+
+        <br>
+
+        {{ govukRadios({
+          name: "aboutThisAddress",
+          value: aboutThisAddress,
+          idPrefix: "about-this-address",
+          fieldset: {
+            legend: {
+              html: "<span id=\"about-this-address-heading\">About this address</span>",
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            html: "<p class=\"govuk-body\">We ask you to choose an address so we can find the area you want to check.</p><p class=\"govuk-body\">Telling us why you chose this address helps us to improve this service for you.</p>"
+          },
+          errorMessage: searchReasonErrorMessage and {
+            text: searchReasonErrorMessage
+          },
+          items: [
+            {
+              value: "live",
+              text: "I, or someone I know lives here",
+              id: "live"
+            },
+            {
+              value: "move",
+              text: "I am thinking of moving to this area",
+              id: "move"
+            },
+            {
+              value: "work",
+              text: "I am checking this for work or study",
+              id: "work"
+            },
+            {
+              value: "not-spec",
+              text: "Prefer not to say",
+              id: "not-spec"
+            }
+          ]
+        }) }}
 
         <button type="submit" class="govuk-button">Continue</button>
       </form>

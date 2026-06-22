@@ -52,7 +52,7 @@ describe('GET /reservoirs', () => {
     checkCookie(getResponse)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     postOptions.url = '/search#'
-    postOptions.payload = 'address=0'
+    postOptions.payload = 'address=0&aboutThisAddress=live'
 
     postResponse = await server.inject(postOptions)
     checkCookie(postResponse)
