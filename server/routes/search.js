@@ -47,7 +47,9 @@ module.exports = [
         // getWarnings doesnt throw an error so no need to catch it
         const warnings = await getWarnings(postcodeInfo.postcode, request)
 
-        return h.view('search', new SearchViewModel(addresses[0].postcode, addresses, null, warnings, backLinkUri, postcodeInfo.otherRegion))
+        const previousAboutThisAddress = request.yar.get('aboutThisAddress')
+
+        return h.view('search', new SearchViewModel(addresses[0].postcode, addresses, null, warnings, backLinkUri, postcodeInfo.otherRegion, { aboutThisAddress: previousAboutThisAddress }))
       } catch (err) {
         return boom.serverUnavailable(errors.addressByPostcode.message, err)
       }
@@ -73,15 +75,20 @@ module.exports = [
       const addresses = request.yar.get('addresses')
       const postcodeInfo = request.yar.get('postcodeInfo')
       let errorMessage
+      let searchReasonErrorMessage
 
       if (!addresses || !postcodeInfo) {
         return h.redirect(redirectPath)
       }
 
-      const { address } = request.payload
+      const { address, aboutThisAddress } = request.payload
 
       if (address < 0) {
         errorMessage = 'Select an address'
+      }
+
+      if (!aboutThisAddress) {
+        searchReasonErrorMessage = 'Select an option for this address'
       }
 
       // throw for postcode mismatch when address is within addresses index range
@@ -89,10 +96,22 @@ module.exports = [
         return h.redirect(redirectPath)
       }
 
-      if (errorMessage) {
+      if (errorMessage || searchReasonErrorMessage) {
         // getWarnings doesnt throw an error so no need to catch it and its only used in errors anyway
         const warnings = await getWarnings(postcodeInfo.postcode, request)
-        const model = new SearchViewModel(postcodeInfo.postcode, addresses, errorMessage, warnings, backLinkUri, postcodeInfo.otherRegion)
+        const model = new SearchViewModel(
+          postcodeInfo.postcode,
+          addresses,
+          errorMessage,
+          warnings,
+          backLinkUri,
+          postcodeInfo.otherRegion,
+          {
+            aboutThisAddress,
+            searchReasonErrorMessage,
+            selectedAddress: address
+          }
+        )
         return h.view('search', model)
       }
 
@@ -103,7 +122,8 @@ module.exports = [
 
       const addressRecord = addresses[address]
       request.yar.set({
-        address: addressRecord
+        address: addressRecord,
+        aboutThisAddress
       })
       if (addressRecord.country_code !== 'E') {
         return redirectToHomeCounty(h, postcodeInfo.postcode, addressRecord.country_code)
@@ -118,7 +138,8 @@ module.exports = [
           postcode: joi.any()
         }),
         payload: joi.object().keys({
-          address: joi.number().required()
+          address: joi.number().required(),
+          aboutThisAddress: joi.string().valid('live', 'move', 'work', 'not-spec').allow('').optional()
         })
       }
     }
