@@ -1,6 +1,7 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const floodService = require('../../services/flood')
+const SearchViewModel = require('../../models/search-view')
 const captchaCheck = require('../../services/captchacheck')
 const DEFAULT_POSTCODE = 'CV376YZ'
 const SEARCH_REDIRECT = '/search#'
@@ -29,6 +30,14 @@ afterAll(async () => {
 })
 
 describe('search page route', () => {
+  test('search view model defaults are applied', () => {
+    const model = new SearchViewModel('CV376YZ')
+
+    expect(model.postcode).toEqual('CV376YZ')
+    expect(model.addressSelect.items[0]).toMatchObject({ text: '0 addresses found', value: -1 })
+    expect(model.addresses).toEqual('[]')
+  })
+
   test('/address - No banner warnings', async () => {
     const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
     const noFloodWarning = { }
@@ -147,7 +156,7 @@ describe('search page route', () => {
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
 
     postOptions.url = getOptions.url
-    postOptions.payload = 'address=99'
+    postOptions.payload = 'address=99&aboutThisAddress=live'
     const tab2SelectResponse = await server.inject(postOptions)
     expect(tab2SelectResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(tab2SelectResponse.headers.location).toMatch('/postcode#')
@@ -175,7 +184,7 @@ describe('search page route', () => {
 
     // Tab 1: selects address=7 — now out of range since session holds BS20 6AQ's 2 addresses
     tab1PostOptions.url = tab1GetOptions.url
-    tab1PostOptions.payload = 'address=7'
+    tab1PostOptions.payload = 'address=7&aboutThisAddress=live'
     const tab1SelectResponse = await server.inject(tab1PostOptions)
     expect(tab1SelectResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(tab1SelectResponse.headers.location).toMatch('/postcode#')
@@ -187,7 +196,7 @@ describe('search page route', () => {
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     postOptions.url = getOptions.url
-    postOptions.payload = 'address=0'
+    postOptions.payload = 'address=0&aboutThisAddress=live'
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(postResponse.headers.location).toMatch('/risk')
@@ -201,10 +210,40 @@ describe('search page route', () => {
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     postOptions.url = getOptions.url
+    postOptions.payload = 'address=-1&aboutThisAddress=live'
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.payload).toMatch('Select an address')
+  })
+
+  test('/search - no search reason selected', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const postcodeResponse = await server.inject(postOptions)
+    expect(postcodeResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    postOptions.url = getOptions.url
+    postOptions.payload = 'address=0'
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.payload).toMatch('Select an option for this address')
+    expect(postResponse.payload).toMatch(/<option\s+value="0"\s+selected>/)
+  })
+
+  test('/search - no address and no search reason selected', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const postcodeResponse = await server.inject(postOptions)
+    expect(postcodeResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    postOptions.url = getOptions.url
     postOptions.payload = 'address=-1'
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(postResponse.payload).toMatch('Select an address')
+    expect(postResponse.payload).toMatch('Select an option for this address')
   })
 
   test('/search - NI address to redirect to england-only', async () => {

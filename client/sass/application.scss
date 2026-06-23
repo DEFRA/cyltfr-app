@@ -5,6 +5,7 @@
 @use "./risk-page";
 @use "./risk-data";
 @use "./border-utils";
+@use "./cookies";
 
 .nojs-hidden {
   display: none;
@@ -40,8 +41,4 @@
   header.govuk-header, footer.govuk-footer, .govuk-phase-banner , .govuk-button {
     display: none;
   }
-}
-
-.cookies-link {
-  color:govuk-functional-colour("success");
 }
