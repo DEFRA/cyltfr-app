@@ -1,4 +1,5 @@
-@import 'govuk-frontend/dist/govuk/settings/_colours-palette.scss';
+@use 'govuk-frontend/dist/govuk/settings/colours-palette' as *;
+@use 'govuk-frontend/dist/govuk/helpers/index' as *;
 
 $border-width-scale: (
   "1": 1px
@@ -7,7 +8,7 @@ $border-width-scale: (
 $_border-directions: ("top", "right", "bottom", "left") !default;
 
 $_colours: (
-  "mid-grey": govuk-colour("mid-grey")
+  "mid-grey": govuk-colour("black", $variant: "tint-80")
 ) !default;
 
 @mixin _generate-border-overrides($property) {
