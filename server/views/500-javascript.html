@@ -1,10 +1,12 @@
 {% extends 'layout.html' %}
 
+{% set pageTitle = "Sorry, JavaScript is required to use this service" %}
+
 {% block content %}
 <div id="500-address-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Sorry, JavaScript is required to use this service</h1>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
       <p class="govuk-body">Please enable JavaScript in your browser in order to successfully use this service</p>
       <p class="govuk-body">Information about all current flood warnings is available on the 24&#45;hour Floodline. Please call 0345 988 1188.</p>
     </div>

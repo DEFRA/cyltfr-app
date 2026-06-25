@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
 
+{% set pageTitle = "This service is for postcodes in England only" %}
+
 {% block containerStart %}
 <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
 {% endblock %}
@@ -8,7 +10,7 @@
 <div id="england-only-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">This service is for postcodes in England only</h1>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
       {% if isWales %}
       <p class="govuk-body">The postcode you entered is in Wales.</p>
       <p class="govuk-body">

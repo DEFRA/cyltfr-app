@@ -1,10 +1,12 @@
 {% extends 'layout.html' %}
 
+{% set pageTitle = "Page not found" %}
+
 {% block content %}
 <div id="404-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Page not found</h1>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
       <p class="govuk-body">Please check that you have entered the correct web address.</p>
     </div>
   </div>
