@@ -66,7 +66,7 @@
         }) }}
         <!-- Holding Comments -->
         {% if hasHoldingComments %}
-          {% set holdingCommentsHtml %}
+          {% set holdingCommentContent %}
             {% for comment in holdingComments %}
               <div class="{{ 'govuk-!-margin-bottom-4' if not loop.last }}">{{ comment }}</div>
             {% endfor %}
@@ -74,7 +74,7 @@
 
           {{ govukWarningText({
             iconFallbackText: "Warning",
-            html: holdingCommentsHtml
+            html: holdingCommentContent
           }) }}
         {% endif %}
       </div>
