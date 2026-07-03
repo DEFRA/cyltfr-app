@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% from "components/back-link/macro.njk" import govukBackLink %}
 {% from "components/details/macro.njk" import govukDetails %}
 
 {% set pageTitle = "Groundwater: understand your flood risk" %}
@@ -13,7 +14,13 @@
 
 {% block containerStart %}
 <div class="top-page-links">
-  <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back to summary</a>
+  {{ govukBackLink({
+    text: "Back to summary",
+    href: backLink,
+    attributes: {
+      "data-id": "risk-address"
+    }
+  }) }}
 </div>
 {% endblock %}
 
