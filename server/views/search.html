@@ -22,10 +22,12 @@
 <div id="address-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% if errorSummary %} {{ govukErrorSummary(errorSummary) }} {% endif %}
+
+      {% if errorSummary %}
+        {{ govukErrorSummary(errorSummary) }}
+      {% endif %}
 
       <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
-
       <div class="govuk-inset-text">
         <p>This service will tell you the flood risk of an area, not a specific property.</p>
       </div>
@@ -55,7 +57,7 @@
         {{ govukSelect(addressSelect) }}
         {% if banner %}
           {% set bannerWarningContent %}
-            Warning: {{ banner.message }}
+            Warning. {{ banner.message }}
             {% if banner.url %}
               &nbsp;<a class="govuk-link" rel="noopener" href="{{ banner.url }}" target="_blank" data-journey-click="ltfri:search:live-flood-warnings">View details</a>
             {% endif %}

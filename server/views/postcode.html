@@ -84,9 +84,18 @@
             <p class="govuk-body govuk-hint govuk-!-margin-bottom-5">
               This can take a few seconds. Do not refresh the page.
             </p>
-            <button type="submit" id="post-code-button" class="govuk-button" disabled="true">Continue</button>
+            {{ govukButton({
+              text: "Continue",
+              type: "submit",
+              id: "post-code-button",
+              disabled: true
+            }) }}
         {% else %}
-          <button type="submit" id="post-code-button" class="govuk-button">Continue</button>
+          {{ govukButton({
+            text: "Continue",
+            type: "submit",
+            id: "post-code-button"
+          }) }}
         {% endif %}
       </form>
 
