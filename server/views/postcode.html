@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 
+{% from "components/back-link/macro.njk" import govukBackLink %}
 {% from "components/input/macro.njk" import govukInput %}
 {% from "components/tag/macro.njk" import govukTag %}
 {% from "components/button/macro.njk" import govukButton %}
@@ -8,7 +9,13 @@
 {% set pageTitle = "Where do you want to check?" %}
 
 {% block containerStart %}
-<a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back</a>
+{{ govukBackLink({
+  text: "Back",
+  href: backLink,
+  attributes: {
+    "data-id": "risk-address"
+  }
+}) }}
 {% endblock %}
 
 {% block content %}

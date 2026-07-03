@@ -1,9 +1,16 @@
 {% extends 'layout.html' %}
+{% from "components/back-link/macro.njk" import govukBackLink %}
 
 {% set pageTitle = "This service is for postcodes in England only" %}
 
 {% block containerStart %}
-<a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+{{ govukBackLink({
+  text: "Back",
+  href: backLinkUri,
+  attributes: {
+    "data-id": "risk-address"
+  }
+}) }}
 {% endblock %}
 
 {% block content %}
