@@ -34,7 +34,7 @@
       </div>
 
       {% if otherRegion %}
-        {% set otherRegionContent %}
+        {% set otherRegionHtml %}
           Addresses outside England have been removed.
           <br><br>
           <a class="govuk-link" href="/england-only?postcode={{ postcode | urlencode }}&region={{ otherRegion | urlencode }}#">Find flood information for {{ otherRegion | title }}.</a>
@@ -42,7 +42,7 @@
 
         {{ govukWarningText({
           iconFallbackText: "Warning",
-          html: otherRegionContent
+          html: otherRegionHtml
         }) }}
       {% endif %}
 
@@ -57,7 +57,7 @@
 
         {{ govukSelect(addressSelect) }}
         {% if banner %}
-          {% set bannerWarningContent %}
+          {% set bannerWarningHtml %}
             Warning. {{ banner.message }}
             {% if banner.url %}
               &nbsp;<a class="govuk-link" rel="noopener" href="{{ banner.url }}" target="_blank" data-journey-click="ltfri:search:live-flood-warnings">View details</a>
@@ -65,7 +65,7 @@
           {% endset %}
           {{ govukWarningText({
             iconFallbackText: "Warning",
-            html: bannerWarningContent
+            html: bannerWarningHtml
           }) }}
         {% endif %}
 

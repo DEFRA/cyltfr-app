@@ -1,6 +1,6 @@
 {% from "components/details/macro.njk" import govukDetails %}
 
-{% set floodRatingsContent %}
+{% set floodRatingsHtml %}
 <dl class="govuk-list govuk-list--spaced">
   <div>
     <dt class="govuk-body govuk-!-margin-top-4">
@@ -42,6 +42,6 @@
 
 {{ govukDetails({
   summaryText: "What the flood risk ratings mean",
-  html: floodRatingsContent,
+  html: floodRatingsHtml,
   classes: "govuk-!-margin-bottom-6 govuk-!-margin-top-2"
 }) }}
