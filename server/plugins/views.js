@@ -41,7 +41,7 @@ module.exports = {
       assetPath: '/assets',
       serviceRef: 'LTF-App',
       serviceName: 'Check your long term flood risk',
-      serviceUrl: config.isProd ? 'https://www.gov.uk/check-long-term-flood-risk' : '/postcode',
+      serviceUrl: (config.isProd || config.isTest) ? 'https://www.gov.uk/check-long-term-flood-risk' : '/postcode',
       pageTitle: 'Check your long term flood risk',
       G4AnalyticsAccount,
       GTagManagerId,
