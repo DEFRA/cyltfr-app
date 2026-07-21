@@ -1,10 +1,12 @@
 {% extends 'layout.html' %}
 
+{% set pageTitle = "Sorry, part of this service is unavailable" %}
+
 {% block content %}
 <div id="500-address-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Sorry, part of this service is unavailable</h1>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
       <p class="govuk-body">We can&#39;t currently use your postcode to find out your flood risk. Please try again later.</p>
       <p class="govuk-body">Information about all current flood warnings is available on the 24&#45;hour Floodline. Please call 0345 988 1188.</p>
     </div>
