@@ -1,3 +1,5 @@
+{% from "components/back-link/macro.njk" import govukBackLink %}
+
 {% set pageTitle = "Unsupported browser" %}
 {% set currentpage = "unsupported" %}
 
@@ -42,7 +44,13 @@
 {% block content %}
 <div class="govuk-width-container">
   <div class="top-page-links">
-    <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back</a>
+    {{ govukBackLink({
+      text: "Back",
+      href: backLink,
+      attributes: {
+        "data-id": "risk-address"
+      }
+    }) }}
   </div>
 </div>
 <div class="govuk-main-wrapper">

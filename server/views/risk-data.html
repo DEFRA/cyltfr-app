@@ -1,10 +1,18 @@
 {% extends 'layout.html' %}
 
+{% from "components/back-link/macro.njk" import govukBackLink %}
+
 {% set pageTitle = "Get flood risk data" %}
 
 {% block containerStart %}
 <div class="top-page-links">
-  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+  {{ govukBackLink({
+    text: "Back",
+    href: backLinkUri,
+    attributes: {
+      "data-id": "risk-address"
+    }
+  }) }}
 </div>
 {% endblock %}
 

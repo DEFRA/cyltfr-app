@@ -1,11 +1,19 @@
 {% extends 'layout.html' %}
 
+{% from "components/back-link/macro.njk" import govukBackLink %}
+
 {% set pageTitle = "Rivers and the sea: possible flood depths" %}
 {% set currentpage = "rivers-and-sea" %}
 
 {% block containerStart %}
 <div class="top-page-links">
-  <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back</a>
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink,
+    attributes: {
+      "data-id": "risk-address"
+    }
+  }) }}
 </div>
 {% endblock %}
 

@@ -1,15 +1,22 @@
 {% extends 'layout.html' %}
 
+{% from "components/back-link/macro.njk" import govukBackLink %}
+{% from "components/button/macro.njk" import govukButton %}
 {% from "components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "components/radios/macro.njk" import govukRadios %}
-{% from "components/back-link/macro.njk" import govukBackLink %}
 {% from "components/table/macro.njk" import govukTable %}
 
 {% set pageTitle = "Cookies" %}
 
 {% block containerStart %}
 <div class="top-page-links">
-  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+  {{ govukBackLink({
+    text: "Back",
+    href: backLinkUri,
+    attributes: {
+      "data-id": "risk-address"
+    }
+  }) }}
 </div>
 {% endblock %}
 
@@ -157,7 +164,10 @@
               }
             ]
           }) }}
-          <button class="govuk-button" type="submit">Save cookie settings</button>
+          {{ govukButton({
+            text: "Save cookie settings",
+            type: "submit"
+          }) }}
         </form>
       </div>
     </div>

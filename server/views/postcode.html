@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 
+{% from "components/back-link/macro.njk" import govukBackLink %}
 {% from "components/input/macro.njk" import govukInput %}
 {% from "components/tag/macro.njk" import govukTag %}
 {% from "components/button/macro.njk" import govukButton %}
@@ -8,7 +9,13 @@
 {% set pageTitle = "Where do you want to check?" %}
 
 {% block containerStart %}
-<a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back</a>
+{{ govukBackLink({
+  text: "Back",
+  href: serviceUrl,
+  attributes: {
+    "data-id": "risk-address"
+  }
+}) }}
 {% endblock %}
 
 {% block content %}
@@ -84,9 +91,18 @@
             <p class="govuk-body govuk-hint govuk-!-margin-bottom-5">
               This can take a few seconds. Do not refresh the page.
             </p>
-            <button type="submit" id="post-code-button" class="govuk-button" disabled="true">Continue</button>
+            {{ govukButton({
+              text: "Continue",
+              type: "submit",
+              id: "post-code-button",
+              disabled: true
+            }) }}
         {% else %}
-          <button type="submit" id="post-code-button" class="govuk-button">Continue</button>
+          {{ govukButton({
+            text: "Continue",
+            type: "submit",
+            id: "post-code-button"
+          }) }}
         {% endif %}
       </form>
 

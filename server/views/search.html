@@ -1,35 +1,49 @@
-{% extends 'layout.html' %} 
+{% extends 'layout.html' %}
 
-{% from "components/select/macro.njk" import govukSelect %} 
-{% from "components/error-summary/macro.njk" import govukErrorSummary %} 
+{% from "components/back-link/macro.njk" import govukBackLink %}
+{% from "components/select/macro.njk" import govukSelect %}
+{% from "components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "components/radios/macro.njk" import govukRadios %}
-{% set pageTitle = "Select an address" %}  
+{% from "components/warning-text/macro.njk" import govukWarningText %}
+{% from "components/button/macro.njk" import govukButton %}
+
+{% set pageTitle = "Select an address" %}
 
 {% block containerStart %}
-<a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back</a>
-{% endblock %} {% block content %}
+{{ govukBackLink({
+  text: "Back",
+  href: backLink,
+  attributes: {
+    "data-id": "risk-address"
+  }
+}) }}
+{% endblock %}
 
+{% block content %}
 <div id="address-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% if errorSummary %} {{ govukErrorSummary(errorSummary) }} {% endif %}
+
+      {% if errorSummary %}
+        {{ govukErrorSummary(errorSummary) }}
+      {% endif %}
 
       <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
-
       <div class="govuk-inset-text">
         <p>This service will tell you the flood risk of an area, not a specific property.</p>
       </div>
 
       {% if otherRegion %}
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-visually-hidden">Warning</span>
+        {% set otherRegionHtml %}
           Addresses outside England have been removed.
-          <br /><br />
+          <br><br>
           <a class="govuk-link" href="/england-only?postcode={{ postcode | urlencode }}&region={{ otherRegion | urlencode }}#">Find flood information for {{ otherRegion | title }}.</a>
-        </strong>
-      </div>
+        {% endset %}
+
+        {{ govukWarningText({
+          iconFallbackText: "Warning",
+          html: otherRegionHtml
+        }) }}
       {% endif %}
 
       <form method="post" id="address-form">
@@ -41,22 +55,18 @@
           </dd>
         </dl>
 
-        {{ govukSelect(addressSelect) }} {% if banner %}
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
-            {{ banner.message }} {% if banner.url %} &nbsp;<a
-              class="govuk-link"
-              rel="noopener"
-              href="{{ banner.url }}"
-              target="_blank"
-              data-journey-click="ltfri:search:live-flood-warnings"
-              >View details</a
-            >
+        {{ govukSelect(addressSelect) }}
+        {% if banner %}
+          {% set bannerWarningHtml %}
+            Warning. {{ banner.message }}
+            {% if banner.url %}
+              &nbsp;<a class="govuk-link" rel="noopener" href="{{ banner.url }}" target="_blank" data-journey-click="ltfri:search:live-flood-warnings">View details</a>
             {% endif %}
-          </strong>
-        </div>
+          {% endset %}
+          {{ govukWarningText({
+            iconFallbackText: "Warning",
+            html: bannerWarningHtml
+          }) }}
         {% endif %}
 
         <br>
@@ -101,7 +111,10 @@
           ]
         }) }}
 
-        <button type="submit" class="govuk-button">Continue</button>
+        {{ govukButton({
+          text: "Continue",
+          type: "submit"
+        }) }}
       </form>
     </div>
   </div>
