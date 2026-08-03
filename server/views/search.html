@@ -46,6 +46,21 @@
         }) }}
       {% endif %}
 
+      {% if banner %}
+        {% set bannerWarningHtml %}
+          Warning. {{ banner.message }}
+          {% if banner.url %}
+            &nbsp;<a class="govuk-link" rel="noopener" href="{{ banner.url }}" target="_blank" data-journey-click="ltfri:search:live-flood-warnings">View details</a>
+          {% endif %}
+        {% endset %}
+        {{ govukWarningText({
+          iconFallbackText: "Warning",
+          html: bannerWarningHtml
+        }) }}
+      {% endif %}
+
+      {{ govukSelect(addressSelect) }}
+
       <form method="post" id="address-form">
         <dl class="govuk-form-group" id="postcode">
           <dt class="govuk-label">Postcode</dt>
@@ -54,20 +69,6 @@
             <a href="/postcode" class="govuk-link">Change Postcode</a>
           </dd>
         </dl>
-
-        {{ govukSelect(addressSelect) }}
-        {% if banner %}
-          {% set bannerWarningHtml %}
-            Warning. {{ banner.message }}
-            {% if banner.url %}
-              &nbsp;<a class="govuk-link" rel="noopener" href="{{ banner.url }}" target="_blank" data-journey-click="ltfri:search:live-flood-warnings">View details</a>
-            {% endif %}
-          {% endset %}
-          {{ govukWarningText({
-            iconFallbackText: "Warning",
-            html: bannerWarningHtml
-          }) }}
-        {% endif %}
 
         <br>
 
