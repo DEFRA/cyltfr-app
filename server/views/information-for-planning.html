@@ -1,8 +1,9 @@
 {% extends 'layout.html' %}
 
 {% from "components/back-link/macro.njk" import govukBackLink %}
+{% from "components/details/macro.njk" import govukDetails %}
 
-{% set pageTitle = "Are you looking for information to support a planning application?" %}
+{% set pageTitle = "Do you need information for a planning application?" %}
 
 {% block containerStart %}
 <div class="top-page-links">
@@ -22,14 +23,17 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
-        <p class="govuk-body">The climate change and depth scenarios shown on this map may help to inform risk assessments. 
-          Further assessment is likely to be needed to assess planned development.</p>
-        <p class="govuk-body">You can:</p>
-          <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-6">
-            <li>carry on to the <a href="/map" class="govuk-link">flood risk map</a></li>
-            <li>read <a href="https://www.gov.uk/guidance/flood-risk-assessments-climate-change-allowances" class="govuk-link">when and how to use climate change allowances in flood risk assessments</a></li>
-            <li>use the <a href="https://flood-map-for-planning.service.gov.uk" class="govuk-link">flood risk information for planning service</a></li>
-          </ul>
+        <p class="govuk-body">The rivers, sea and surface water information on this service is not suitable for flood risk assessments.</p>
+        <p class="govuk-body">Use the <a href="https://flood-map-for-planning.service.gov.uk" class="govuk-link">flood risk information for planning service</a> if you need information to support a planning application.</p>
+        <p class="govuk-body">Reservoir flood risk information on the long term flood risk map can be used to support planning applications.</p>
+        <p class="govuk-body">Carry on to the <a href="/map" class="govuk-link">long term flood risk map</a></p>
+        {{ govukDetails({
+          summaryText: "Why the rivers, sea and surface water information is not suitable",
+          html: "<p class='govuk-body'>The long term flood risk service estimates how likely flooding is. It takes flood defences into account and is meant to help people understand overall risk.</p>
+          <p class='govuk-body'>The flood risk for planning service uses a fixed set of rules to decide if an area is at risk. It ignores the benefit of any existing flood defences.</p>
+          <p class='govuk-body'>This is because flood defences could fail in the future, and planning needs to consider what might happen if they do.</p>
+          <p class='govuk-body'>Because the services answer different questions, the maps may show different results.</p>"
+        }) }}
       </div>
     </div>
   </div>
