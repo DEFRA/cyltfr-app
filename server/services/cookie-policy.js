@@ -15,9 +15,11 @@ function removeAnalyticsCookies (request, h) {
   }
 }
 
-function buildUpdatedPolicy (existingPolicy = {}, analytics) {
+function buildUpdatedPolicy (existingPolicy, analytics) {
+  const safeExistingPolicy = existingPolicy ?? {}
+
   return {
-    ...existingPolicy,
+    ...safeExistingPolicy,
     analytics,
     confirmed: true
   }
