@@ -1,10 +1,12 @@
 {% extends 'layout.html' %}
 
+{% set pageTitle = "Sorry, there is a problem with the service" %}
+
 {% block content %}
 <div id="500-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
       <p class="govuk-body">Thank you for your patience. We&#39;re working hard to fix the problem and will have the
         service running again as quickly as possible.</p>
       <p class="govuk-body">Information about long term flood risk is available on the 24&#45;hour Floodline. Please

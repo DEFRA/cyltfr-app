@@ -1,15 +1,22 @@
 {% extends 'layout.html' %}
 
+{% from "components/back-link/macro.njk" import govukBackLink %}
+{% from "components/button/macro.njk" import govukButton %}
 {% from "components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "components/radios/macro.njk" import govukRadios %}
-{% from "components/back-link/macro.njk" import govukBackLink %}
 {% from "components/table/macro.njk" import govukTable %}
 
 {% set pageTitle = "Cookies" %}
 
-{% block beforeContent %}
+{% block containerStart %}
 <div class="top-page-links">
-  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+  {{ govukBackLink({
+    text: "Back",
+    href: backLinkUri,
+    attributes: {
+      "data-id": "risk-address"
+    }
+  }) }}
 </div>
 {% endblock %}
 
@@ -19,7 +26,7 @@
       <div class="govuk-grid-column-two-thirds">
 
         {% if updated %}
-          {% set html %}
+          {% set notificationHtml %}
             <p class="govuk-notification-banner__heading">
               You've set your cookie preferences. <a href="{{ backLinkUri }}" class="cookies-link">
               Go back to the page you were looking at</a>.
@@ -28,23 +35,18 @@
       
           {{ govukNotificationBanner({
             type: "success",
-            html: html
+            html: notificationHtml
           }) }}
         {% endif %}
 
-        <h1 class="govuk-heading-l">Cookies</h1>
-        <p class="govuk-body">
-          Cookies are small files saved on your phone, tablet or computer when you visit a website.
-        </p>
-        <p class="govuk-body govuk-body">We use cookies to make Check your long term flood risk work and collect information about how you
-          use our service.
-        </p>
-        <h2 class="govuk-heading-m">Essential cookies</h2>
-        <p class="govuk-body">
-          Essential cookies keep your information secure while you use Check your long term flood risk. We do not need to ask
-          permission to use them.
-        </p>
+        <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
+        <p class="govuk-body">Cookies are small files saved on your phone, tablet or computer when you visit a website.</p>
+        <p class="govuk-body">We use cookies to make Check your long term flood risk work and collect information about how you use our service.</p>
+        <h2 class="govuk-heading-l">Essential cookies</h2>
+        <p class="govuk-body">Essential cookies keep your information secure while you use Check your long term flood risk. 
+          We do not need to ask permission to use them.</p>
         {{ govukTable({
+          classes: "cookies-table",
           caption: "Essential cookies",
           captionClasses: "govuk-visually-hidden",
           firstCellIsHeader: true,
@@ -55,7 +57,7 @@
           ],
           rows: [
             [
-              { text: "session" },
+              { text: "cyltfr_session" },
               { text: "Used to store page state" },
               { text: "When you close your browser" }
             ],
@@ -65,31 +67,38 @@
               { text: "1 year" }
             ],
             [
-              { text: "cookies_preferences_set" },
-              { text: "Stores your cookie preferences and lets us know you’ve set them" },
-              { text: "1 year" }
+              { text: "AWSALBTG" },
+              { text: "Keeps your connection to the same website service while you use the site" },
+              { text: "7 days" }
+            ],
+            [
+              { text: "AWSALBTHCORS" },
+              { text: "Helps the website work properly when connecting to related online services" },
+              { text: "7 days" }
             ]
           ]
         }) }}
 
-        <h2 class="govuk-heading-m">Analytics cookies (optional)</h2>
-        <p class="govuk-body">
-          With your permission, we use Google Analytics to collect data about how you use Check your long term flood risk. This
-          information helps us to improve our service.
-        </p>
-        <p class="govuk-body">
-          Google is not allowed to use or share our analytics data with anyone.
-        </p>
-        <p class="govuk-body">
-          Google Analytics stores anonymised information about:
-        </p>
+        <h2 class="govuk-heading-l">Third party cookies</h2>
+        <p class="govuk-body">We use <a href="https://www.smartsurvey.co.uk/" class="govuk-link">Smart Survey</a> to collect feedback comments. 
+          You can find out more in the <a href="https://www.smartsurvey.co.uk/privacy-policy" class="govuk-link">Smart Survey privacy policy</a>. 
+          SmartSurvey uses cookies to help its website work effectively.</p>
+
+        <h2 class="govuk-heading-l">Analytics cookies (optional)</h2>
+        <p class="govuk-body">With your permission, we use Google Analytics to collect data about how you use Check your long term flood risk. 
+          This information helps us to improve our service.</p>
+        <p class="govuk-body">Google is not allowed to use or share our analytics data with anyone.</p>
+        <p class="govuk-body">Google Analytics stores anonymised information about:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>how you got to Check your long term flood risk</li>
           <li>the pages you visit on Check your long term flood risk and how long you spend on them</li>
           <li>any errors you see while using Check your long term flood risk</li>
+          <li>the flood risk information and links that are shown to you</li>
+          <li>how you use the page (for example, the links and buttons you click)</li>
         </ul>
 
         {{ govukTable({
+          classes: "cookies-table",
           firstCellIsHeader: true,
           head: [
             { text: "Name" },
@@ -103,30 +112,12 @@
               { text: "2 years" }
             ],
             [
-              { text: "_gid" },
-              { text: "Checks if you've visited Check your long term flood risk. This helps us count how many people visit our site." },
-              { text: "24 hours" }
-            ],
-            [
-              { text: "_gat" },
-              { text: "Used to reduce the number of requests made to Google Analytics." },
-              { text: "1 minute" }
-            ],
-            [
-              { text: "_gat_govuk_shared" },
-              { text: "This helps Google to manage the rate at which they track your site interactions (when high traffic occurs)." },
-              { text: "1 minute" }
+              { text: "_ga_4256E4WPQJ" },
+              { text: "Used by Google Analytics to find and track an individual session with your device" },
+              { text: "2 years" }
             ]
           ]
         }) }}
-        <h2 class="govuk-heading-m">
-          Third party cookies
-        </h2>
-        <h3 class="govuk-heading-s">
-          Our feedback survey
-        </h3>
-        <p class="govuk-body">We use <a href="https://www.smartsurvey.co.uk/" class="govuk-link">Smart Survey</a> to collect feedback comments. You can find out more in the <a href="https://www.smartsurvey.co.uk/privacy-policy"   class="govuk-link">Smart Survey privacy policy</a>.
-        </p>
 
         <form method="POST">
           {{ govukRadios({
@@ -153,7 +144,10 @@
               }
             ]
           }) }}
-          <button class="govuk-button" type="submit">Save cookie settings</button>
+          {{ govukButton({
+            text: "Save cookie settings",
+            type: "submit"
+          }) }}
         </form>
       </div>
     </div>

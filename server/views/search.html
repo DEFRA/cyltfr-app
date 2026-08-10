@@ -1,55 +1,120 @@
 {% extends 'layout.html' %}
 
+{% from "components/back-link/macro.njk" import govukBackLink %}
 {% from "components/select/macro.njk" import govukSelect %}
 {% from "components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "components/radios/macro.njk" import govukRadios %}
+{% from "components/warning-text/macro.njk" import govukWarningText %}
+{% from "components/button/macro.njk" import govukButton %}
 
 {% set pageTitle = "Select an address" %}
 
-{% block beforeContent %}
-<a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back</a>
+{% block containerStart %}
+{{ govukBackLink({
+  text: "Back",
+  href: backLink,
+  attributes: {
+    "data-id": "risk-address"
+  }
+}) }}
 {% endblock %}
 
 {% block content %}
 <div id="address-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+
       {% if errorSummary %}
         {{ govukErrorSummary(errorSummary) }}
       {% endif %}
 
       <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
-
       <div class="govuk-inset-text">
         <p>This service will tell you the flood risk of an area, not a specific property.</p>
-        <p>We need to ask for the property number so we know where you want to check.</p>
       </div>
 
-      <form method="post">
+      {% if otherRegion %}
+        {% set otherRegionHtml %}
+          Addresses outside England have been removed.
+          <br><br>
+          <a class="govuk-link" href="/england-only?postcode={{ postcode | urlencode }}&region={{ otherRegion | urlencode }}#">Find flood information for {{ otherRegion | title }}.</a>
+        {% endset %}
+
+        {{ govukWarningText({
+          iconFallbackText: "Warning",
+          html: otherRegionHtml
+        }) }}
+      {% endif %}
+
+      <form method="post" id="address-form">
         <dl class="govuk-form-group" id="postcode">
           <dt class="govuk-label">Postcode</dt>
           <dd class="govuk-body">
-            <strong style="text-transform: uppercase;">{{ postcode }}</strong>
+            <strong style="text-transform: uppercase">{{ postcode }}</strong>
             <a href="/postcode" class="govuk-link">Change Postcode</a>
           </dd>
         </dl>
 
         {{ govukSelect(addressSelect) }}
-
         {% if banner %}
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
-            {{ banner.message }}
+          {% set bannerWarningHtml %}
+            Warning. {{ banner.message }}
             {% if banner.url %}
-            &nbsp;<a class="govuk-link" rel="noopener" href="{{ banner.url }}" target="_blank"
-              data-journey-click="ltfri:search:live-flood-warnings">View details</a>
+              &nbsp;<a class="govuk-link" rel="noopener" href="{{ banner.url }}" target="_blank" data-journey-click="ltfri:search:live-flood-warnings">View details</a>
             {% endif %}
-          </strong>
-        </div>
+          {% endset %}
+          {{ govukWarningText({
+            iconFallbackText: "Warning",
+            html: bannerWarningHtml
+          }) }}
         {% endif %}
 
-        <button type="submit" class="govuk-button">Continue</button>
+        <br>
+
+        {{ govukRadios({
+          name: "aboutThisAddress",
+          value: aboutThisAddress,
+          idPrefix: "about-this-address",
+          fieldset: {
+            legend: {
+              html: "<span id=\"about-this-address-heading\">About this address</span>",
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            html: "<p class=\"govuk-body\">We ask you to choose an address so we can find the area you want to check.</p><p class=\"govuk-body\">Telling us why you chose this address helps us to improve this service for you.</p>"
+          },
+          errorMessage: searchReasonErrorMessage and {
+            text: searchReasonErrorMessage
+          },
+          items: [
+            {
+              value: "live",
+              text: "I, or someone I know lives here",
+              id: "live"
+            },
+            {
+              value: "move",
+              text: "I am thinking of moving to this area",
+              id: "move"
+            },
+            {
+              value: "work",
+              text: "I am checking this for work or study",
+              id: "work"
+            },
+            {
+              value: "not-spec",
+              text: "Prefer not to say",
+              id: "not-spec"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue",
+          type: "submit"
+        }) }}
       </form>
     </div>
   </div>

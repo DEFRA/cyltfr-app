@@ -1,10 +1,10 @@
-$govuk-assets-path: '/assets/';
-
-@import "govuk-frontend/dist/govuk/settings/index";
-@import "govuk-frontend/dist/govuk/helpers/index";
-@import './map-controls.scss';
-@import './map-key.scss';
-@import './map-scenario-bars.scss';
+@use "govuk-frontend/dist/govuk/settings/index" as * with (
+  $govuk-assets-path: '/assets/'
+);
+@use "govuk-frontend/dist/govuk/helpers/index" as *;
+@use './map-controls.scss';
+@use './map-key.scss';
+@use './map-scenario-bars.scss';
 @import url(//fonts.googleapis.com/css?family=Source+Sans+Pro);
 
 $small-mobile-width: 400px;
@@ -37,9 +37,7 @@ body {
 }
 
 .esri-view .esri-view-surface:focus {
-  outline-color: #ffdd00 !important;
-  --esri-view-outline-color: #ffdd00 !important;
-  --esri-view-outline: 10px solid var(--esri-view-outline-color) !important;
+  --esri-view-outline: 10px solid #{govuk-functional-colour("focus")} !important;
 }
 
 .esri-view .esri-view-surface:focus::after {
@@ -47,7 +45,7 @@ body {
   left: -10px;
   right: -10px;
   bottom: -10px;
-  border: 5px solid black;
+  border: 5px solid govuk-colour("black");
   z-index: -1;
 }
 

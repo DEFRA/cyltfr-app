@@ -2,7 +2,8 @@ const { floodWarningsUrl } = require('../config')
 const { errorSummaryTitle } = require('../helpers')
 
 class SearchViewModel {
-  constructor (postcode, addresses = [], errorMessage, warnings, backLinkUri) {
+  constructor (postcode, addresses = [], errorMessage, warnings, backLinkUri, otherRegion, options = {}) {
+    const { aboutThisAddress, searchReasonErrorMessage, selectedAddress } = options
     this.postcode = postcode
 
     const defaultOption = {
@@ -26,6 +27,10 @@ class SearchViewModel {
       items
     }
 
+    if (selectedAddress !== undefined && selectedAddress !== null) {
+      this.addressSelect.value = String(selectedAddress)
+    }
+
     if (warnings?.message && warnings?.severity < 4) {
       this.banner = {
         url: floodWarningsUrl + '/location?q=' + encodeURIComponent(postcode),
@@ -33,25 +38,41 @@ class SearchViewModel {
       }
     }
 
+    const errorList = []
+
     if (errorMessage) {
       this.addressSelect.errorMessage = {
         text: errorMessage
       }
 
+      errorList.push({
+        text: errorMessage,
+        href: '#address'
+      })
+    }
+
+    this.aboutThisAddress = aboutThisAddress
+
+    if (searchReasonErrorMessage) {
+      this.searchReasonErrorMessage = searchReasonErrorMessage
+      errorList.push({
+        text: searchReasonErrorMessage,
+        href: '#about-this-address-heading'
+      })
+    }
+
+    if (errorList.length) {
       this.errorSummary = {
         titleText: errorSummaryTitle,
-        errorList: [
-          {
-            text: errorMessage,
-            href: '#address'
-          }
-        ]
+        errorList
       }
     }
 
     this.addresses = JSON.stringify(addresses)
 
     this.backLink = backLinkUri
+
+    this.otherRegion = otherRegion
   }
 }
 

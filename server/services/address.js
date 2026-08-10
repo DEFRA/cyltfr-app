@@ -3,6 +3,7 @@ const config = require('../config')
 const { osPostcodeUrl, osSearchKey } = config
 const fs = require('fs/promises')
 const path = require('path')
+const STATUS_CODES = require('http2').constants
 
 async function simulatedFind (inputPostcode) {
   const simulatedData = require('../routes/simulated/data/address-service.json')
@@ -37,12 +38,23 @@ async function callOsApi (postcode, offset = 0) {
 }
 
 function processPayload (results, payload) {
-  const allItems = payload.results.map(item => item.DPA ? item.DPA : item.LPI).filter(item => item.POSTAL_ADDRESS_CODE !== 'N')
+  const allItems = payload.results?.map(item => item.DPA ? item.DPA : item.LPI).filter(item => item.POSTAL_ADDRESS_CODE !== 'N') || []
   allItems.forEach((item) => {
     if (!(results.find(result => result.UPRN === item.UPRN))) {
       results.push(item)
     }
   })
+}
+
+function checkIfErrorIsActuallyNoResults (error) {
+  let retVal = false
+  if (!error.data) {
+    error.data = error.response
+  }
+  if ((error.data.payload.error.statuscode === STATUS_CODES.HTTP_STATUS_BAD_REQUEST) && (error.data.payload.error.message.includes('Requested postcode must contain a minimum of the sector plus 1 digit of the district'))) {
+    retVal = true
+  }
+  return retVal
 }
 
 async function find (postcode) {
@@ -53,10 +65,20 @@ async function find (postcode) {
 
   while (totalresults > (maxresults + offset)) {
     offset += maxresults
-    const payload = await callOsApi(postcode, offset)
-    processPayload(results, payload)
-    maxresults = payload.header.maxresults
-    totalresults = payload.header.totalresults
+    try {
+      const payload = await callOsApi(postcode, offset)
+      processPayload(results, payload)
+      maxresults = payload.header.maxresults
+      totalresults = payload.header.totalresults
+    } catch (error) {
+      if (checkIfErrorIsActuallyNoResults(error)) {
+        processPayload(results, {})
+        maxresults = 0
+        totalresults = 0
+      } else {
+        throw error
+      }
+    }
   }
 
   return results

@@ -32,15 +32,15 @@ describe('server methods', () => {
   })
 
   beforeEach(async () => {
-    const { getOptions, postOptions } = mockSearchOptions('DN20 0RP', cookie)
+    const { getOptions, postOptions } = mockSearchOptions('DN200RP', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('DN20 0RP')}`)
+    expect(postResponse.headers.location).toMatch('/search#')
 
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    postOptions.url = `/search?postcode=${encodeURIComponent('DN20 0RP')}`
-    postOptions.payload = 'address=0'
+    postOptions.url = '/search#'
+    postOptions.payload = 'address=0&aboutThisAddress=live'
 
     postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
@@ -55,27 +55,29 @@ describe('server methods', () => {
 
   describe('cache disabled', () => {
     test('should return updated cached address', async () => {
-      const response = await server.methods.find('CV37 6YZ')
+      const response = await server.methods.find('CV376YZ')
 
       expect(response).toEqual([
         expect.objectContaining({
           uprn: '100070216073',
           postcode: 'CV37 6YZ',
           address: '11, BANCROFT PLACE, STRATFORD-UPON-AVON, CV37 6YZ',
-          country: 'ENGLAND'
+          country: 'ENGLAND',
+          country_code: 'E'
         })
       ])
 
-      addressService.updateAddress('CV37 6YZ', [
+      addressService.updateAddress('CV376YZ', [
         {
           uprn: '100070216073',
           postcode: 'CV37 6YZ',
           address: '12, BANCROFT PLACE, STRATFORD-UPON-AVON, CV37 6YZ',
-          country: 'ENGLAND'
+          country: 'ENGLAND',
+          country_code: 'E'
         }
       ])
 
-      const changedResponse = await server.methods.find('CV37 6YZ')
+      const changedResponse = await server.methods.find('CV376YZ')
 
       expect(changedResponse).toEqual([
         expect.objectContaining({

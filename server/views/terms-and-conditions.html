@@ -1,10 +1,18 @@
 {% extends 'layout.html' %}
 
+{% from "components/back-link/macro.njk" import govukBackLink %}
+
 {% set pageTitle = "Terms and conditions" %}
 
-{% block beforeContent %}
+{% block containerStart %}
 <div class="top-page-links">
-  <a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+  {{ govukBackLink({
+    text: "Back",
+    href: backLinkUri,
+    attributes: {
+      "data-id": "risk-address"
+    }
+  }) }}
 </div>
 {% endblock %}
 
@@ -12,16 +20,16 @@
 <div id="terms-and-conditions-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">{{ pageTitle }}</h1>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
 
       <p class="govuk-body">This page and any pages it links to explains the Environment Agency's terms of use. You must agree to them to use the services made available through its web pages.</p>
       <p class="govuk-body">They replace the standard GOV.UK terms and conditions linked to the Help page.</p>
 
-      <h2 class="govuk-heading-m">Who we are</h2>
+      <h2 class="govuk-heading-l">Who we are</h2>
 
       <p class="govuk-body">The Check your long term flood risk service is managed by the Environment Agency who are referred to as 'we'.</p>
 
-      <h2 class="govuk-heading-m">Using the service</h2>
+      <h2 class="govuk-heading-l">Using the service</h2>
 
       <p class="govuk-body">
         You agree to use the service only for lawful purposes. You must also use it in a way that doesn't infringe the rights of, or restrict or inhibit the use and enjoyment of, the service by anyone else.
@@ -47,7 +55,7 @@
       
       <p class="govuk-body">The most up to date version of our content and data is always on our pages.</p>
 
-      <h2 class="govuk-heading-m">Linking to the Check your long term flood risk service</h2>
+      <h2 class="govuk-heading-l">Linking to the Check your long term flood risk service</h2>
 
       <p class="govuk-body">
         We welcome and encourage other websites to link to the Check your long term flood risk service.
@@ -62,7 +70,7 @@
         <li>say your website is associated with or endorsed by the Environment Agency or another government department or agency</li>
       </ul>
 
-      <h2 class="govuk-heading-m">Disclaimer</h2>
+      <h2 class="govuk-heading-l">Disclaimer</h2>
 
       <p class="govuk-body">
         While we make every effort to keep our content and data up to date, we don't provide any guarantees, conditions or warranties that the information will be:
@@ -113,7 +121,7 @@
         <li>any other liability which cannot be excluded or limited under applicable law</li>
       </ul>
 
-      <h2 class="govuk-heading-m">Requests to remove content</h2>
+      <h2 class="govuk-heading-l">Requests to remove content</h2>
 
       <p class="govuk-body">
         You can ask for content to be removed from our pages. We'll only do this in certain cases, for example if it breaches copyright laws, contains sensitive personal data or material that may be considered obscene or defamatory.
@@ -127,13 +135,13 @@
         We remove content at our discretion. You can still request information under the <a class="govuk-link" href="https://www.gov.uk/make-a-freedom-of-information-request">Freedom of Information Act</a> and the <a class="govuk-link" href="https://www.gov.uk/data-protection">Data Protection Act</a>.
       </p>
 
-      <h2 class="govuk-heading-m">Information about you and your visits to our pages</h2>
+      <h2 class="govuk-heading-l">Information about you and your visits to our pages</h2>
       
       <p class="govuk-body">
         We collect information about you in accordance with our <a class="govuk-link" href="https://www.gov.uk/government/organisations/environment-agency/about/personal-information-charter">personal information charter</a> and our <a class="govuk-link" href="/cookies">cookie policy</a>. By using the site, you agree to us collecting this information and confirm that any data you provide is accurate.
       </p>
 
-      <h2 class="govuk-heading-m">Virus protection</h2>
+      <h2 class="govuk-heading-l">Virus protection</h2>
 
       <p class="govuk-body">
         We make every effort to check and test our pages for viruses at every stage of production. You must make sure that the way you use our pages doesn't expose you to the risk of viruses, malicious computer code or other forms of interference which can damage your computer system.
@@ -143,7 +151,7 @@
         We're not responsible for any loss, disruption or damage to your data or computer system that might happen when you use our content or data.
       </p>
 
-      <h2 class="govuk-heading-m">Viruses, hacking and other offences</h2>
+      <h2 class="govuk-heading-l">Viruses, hacking and other offences</h2>
 
       <p class="govuk-body">
         When using our content or data, you must not introduce viruses, trojans, worms, logic bombs or any other material that's malicious or technologically harmful.
@@ -157,7 +165,7 @@
         You must not attack the site in any way. This includes denial-of-service attacks. We'll report any attacks or attempts to gain unauthorised access to our servers to the relevant law enforcement authorities and share information about you with them.
       </p>
 
-      <h2 class="govuk-heading-m">Governing law</h2>
+      <h2 class="govuk-heading-l">Governing law</h2>
 
       <p class="govuk-body">
         These terms and conditions are governed by and construed in accordance with the laws of England and Wales.
@@ -167,7 +175,7 @@
         Any dispute you have which relates to these terms and conditions, or your use of the site (whether it be contractual or non-contractual), will be subject to the exclusive jurisdiction of the courts of England and Wales.
       </p>
 
-      <h2 class="govuk-heading-m">General</h2>
+      <h2 class="govuk-heading-l">General</h2>
 
       <p class="govuk-body">
         We might decide not to exercise or enforce any right available to us under these terms and conditions. We can always decide to exercise or enforce that right at a later date.
@@ -181,7 +189,7 @@
         If any of these terms and conditions are held to be invalid, unenforceable or illegal for any reason, the remaining terms and conditions will still apply.
       </p>
 
-      <h2 class="govuk-heading-m">Long term flood risk information</h2>
+      <h2 class="govuk-heading-l">Long term flood risk information</h2>
 
       <p class="govuk-body">
         All information, particularly the likelihood of surface water flooding, is a broad indicator of an area's flood risk. As such it is not suitable for identifying whether an individual property will flood. This service uses computer models to assess an area's long term flood risk from rivers, the sea, surface water, reservoirs and some groundwater. It does not include flood risk from sources such as blocked drains and burst pipes.
@@ -205,7 +213,7 @@
         Flooding can be caused by other water sources, for example surface water, overwhelmed sewers or drains, or groundwater from underground aquifers.
       </p>
 
-      <h2 class="govuk-heading-m">Use of long term flood risk information</h2>
+      <h2 class="govuk-heading-l">Use of long term flood risk information</h2>
 
       <p class="govuk-body">
         It is not possible to say for certain what the flood risk is at any specific place or time, but we use the best information available to provide an indication. We do this to help people and insurers make informed choices about living with or managing flood risk.
@@ -227,7 +235,7 @@
         Any information provided in respect of proposed improvements to flood defences or natural river channels should be considered as general information for the area in which your property/site is located. It is not specific to individual properties or sites.
       </p>
 
-      <h2 class="govuk-heading-m">Changes to these terms and conditions</h2>
+      <h2 class="govuk-heading-l">Changes to these terms and conditions</h2>
 
       <p class="govuk-body">
         Please check these terms and conditions regularly. We can update them at any time without notice.

@@ -1,10 +1,12 @@
 {% extends 'layout.html' %}
 
+{% set pageTitle = "The Friendly Captcha verification has expired" %}
+
 {% block content %}
 <div id="500-address-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">The Friendly Captcha verification has expired</h1>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
       <p class="govuk-body">Sorry, your session has timed out due to inactivity</p>
       <p class="govuk-body">To use this service you need to <a href="/postcode">click</a> to start Friendly Captcha verification</p>
     </div>

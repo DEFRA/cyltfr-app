@@ -1,9 +1,10 @@
 const STATUS_CODES = require('http2').constants
 const createServer = require('../../../server')
 const floodService = require('../../services/flood')
-const addressService = require('../../services/address')
-const DEFAULT_POSTCODE = 'CV37 6YZ'
-const SEARCH_REDIRECT = '/search?postcode='
+const SearchViewModel = require('../../models/search-view')
+const captchaCheck = require('../../services/captchacheck')
+const DEFAULT_POSTCODE = 'CV376YZ'
+const SEARCH_REDIRECT = '/search#'
 const { mockOptions, mockSearchOptions } = require('../../../test/mock')
 let server, cookie
 
@@ -11,11 +12,13 @@ jest.mock('../../config')
 jest.mock('../../services/flood')
 jest.mock('../../services/address')
 jest.mock('../../services/risk')
+jest.mock('../../services/captchacheck')
 
 beforeAll(async () => {
   server = await createServer()
   await server.initialize()
   const initial = mockOptions()
+  captchaCheck.captchaCheck.mockResolvedValue({ tokenValid: true })
 
   const homepageresponse = await server.inject(initial)
   expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
@@ -27,6 +30,14 @@ afterAll(async () => {
 })
 
 describe('search page route', () => {
+  test('search view model defaults are applied', () => {
+    const model = new SearchViewModel('CV376YZ')
+
+    expect(model.postcode).toEqual('CV376YZ')
+    expect(model.addressSelect.items[0]).toMatchObject({ text: '0 addresses found', value: -1 })
+    expect(model.addresses).toEqual('[]')
+  })
+
   test('/address - No banner warnings', async () => {
     const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
     const noFloodWarning = { }
@@ -122,9 +133,9 @@ describe('search page route', () => {
     const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
     floodService.__updateReturnValue({})
     const postResponse = await server.inject(postOptions)
+    // "/search?postcode=CV376YZ#"
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(postResponse.headers.location).toMatch(SEARCH_REDIRECT)
-
     getOptions.url = '/search'
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
@@ -138,59 +149,45 @@ describe('search page route', () => {
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
   })
 
-  test('/search - Invalid postcode - fails regexp', async () => {
-    const { getOptions } = mockSearchOptions('invalid', cookie)
-    floodService.__updateReturnValue({})
-    const getResponse = await server.inject(getOptions)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_BAD_REQUEST)
-  })
-
-  test('/search - Invalid postcode - passes regexp', async () => {
-    const { getOptions } = mockSearchOptions('XX11 1XX', cookie)
-    floodService.__updateReturnValue({})
-    const getResponse = await server.inject(getOptions)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-  })
-
-  test('/search - Address service error', async () => {
-    const { getOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
-    floodService.__updateReturnValue({})
-    addressService.find.mockImplementationOnce(() => { throw new Error('An error') })
-    const getResponse = await server.inject(getOptions)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(getResponse.headers.location).toMatch('/postcode?error=postcode_does_not_exist')
-  })
-
-  test('/search - Address service returns empty address array', async () => {
-    const { getOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
-    floodService.__updateReturnValue({})
-    addressService.find.mockImplementationOnce(() => { return Promise.resolve([]) })
-    const getResponse = await server.inject(getOptions)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-  })
-
-  test('/search - Address service returns empty address array with POST', async () => {
+  test('/search - Postcode selection out of range', async () => {
     const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
     floodService.__updateReturnValue({})
-    addressService.find.mockImplementationOnce(() => { return Promise.resolve([]) })
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+
     postOptions.url = getOptions.url
-    postOptions.payload = 'address=-1'
-    const postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    postOptions.payload = 'address=99&aboutThisAddress=live'
+    const tab2SelectResponse = await server.inject(postOptions)
+    expect(tab2SelectResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(tab2SelectResponse.headers.location).toMatch('/postcode#')
   })
 
-  test('/search - Address service returns empty address array with POST and selection', async () => {
-    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+  test('/search - Multi-tab: stale address index after session overwritten by second tab', async () => {
+    const tab1Postcode = 'W6 0WU'
+    const { getOptions: tab1GetOptions, postOptions: tab1PostOptions } = mockSearchOptions(tab1Postcode, cookie)
     floodService.__updateReturnValue({})
-    addressService.find.mockImplementationOnce(() => { return Promise.resolve([]) })
-    const getResponse = await server.inject(getOptions)
-    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    postOptions.url = getOptions.url
-    postOptions.payload = 'address=0'
-    const postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+
+    // Tab 1: search W6 0WU (8 addresses, valid indices 0-7)
+    const tab1PostResponse = await server.inject(tab1PostOptions)
+    expect(tab1PostResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(tab1PostResponse.headers.location).toMatch(SEARCH_REDIRECT)
+    const tab1GetResponse = await server.inject(tab1GetOptions)
+    expect(tab1GetResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+
+    // Tab 2: search a different postcode — overwrites session addresses with BS20 6AQ (2 addresses)
+    const tab2Postcode = 'BS20 6AQ'
+    const { postOptions: tab2PostOptions } = mockSearchOptions(tab2Postcode, cookie)
+    floodService.__updateReturnValue({})
+    const tab2PostResponse = await server.inject(tab2PostOptions)
+    expect(tab2PostResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(tab2PostResponse.headers.location).toMatch(SEARCH_REDIRECT)
+
+    // Tab 1: selects address=7 — now out of range since session holds BS20 6AQ's 2 addresses
+    tab1PostOptions.url = tab1GetOptions.url
+    tab1PostOptions.payload = 'address=7&aboutThisAddress=live'
+    const tab1SelectResponse = await server.inject(tab1PostOptions)
+    expect(tab1SelectResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(tab1SelectResponse.headers.location).toMatch('/postcode#')
   })
 
   test('/search - select an address', async () => {
@@ -199,18 +196,82 @@ describe('search page route', () => {
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     postOptions.url = getOptions.url
-    postOptions.payload = 'address=0'
+    postOptions.payload = 'address=0&aboutThisAddress=live'
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
     expect(postResponse.headers.location).toMatch('/risk')
   })
 
-  test('/search - NI address to redirect to england-only', async () => {
-    const { getOptions } = mockSearchOptions('BT11BT', cookie)
+  test('/search - no address selected', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
     floodService.__updateReturnValue({})
+    const postcodeResponse = await server.inject(postOptions)
+    expect(postcodeResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    postOptions.url = getOptions.url
+    postOptions.payload = 'address=-1&aboutThisAddress=live'
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.payload).toMatch('Select an address')
+  })
+
+  test('/search - no search reason selected', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const postcodeResponse = await server.inject(postOptions)
+    expect(postcodeResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    postOptions.url = getOptions.url
+    postOptions.payload = 'address=0'
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.payload).toMatch('Select an option for this address')
+    expect(postResponse.payload).toMatch(/<option\s+value="0"\s+selected>/)
+  })
+
+  test('/search - no address and no search reason selected', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const postcodeResponse = await server.inject(postOptions)
+    expect(postcodeResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    const getResponse = await server.inject(getOptions)
+    expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    postOptions.url = getOptions.url
+    postOptions.payload = 'address=-1'
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.payload).toMatch('Select an address')
+    expect(postResponse.payload).toMatch('Select an option for this address')
+  })
+
+  test('/search - NI address to redirect to england-only', async () => {
+    const { postOptions } = mockSearchOptions('BT84AA', cookie)
+    floodService.__updateReturnValue({})
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch('/england-only?postcode=BT84AA&region=northern-ireland')
+  })
+
+  test('/search - Wales address to redirect to england-only', async () => {
+    const { postOptions } = mockSearchOptions('NP183EZ', cookie)
+    floodService.__updateReturnValue({})
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    expect(postResponse.headers.location).toMatch('/england-only?postcode=NP183EZ&region=wales')
+  })
+
+  test('/search - Captcha failure redirects to postcode page', async () => {
+    const { getOptions, postOptions } = mockSearchOptions(DEFAULT_POSTCODE, cookie)
+    floodService.__updateReturnValue({})
+    const postcodeResponse = await server.inject(postOptions)
+    expect(postcodeResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
+    captchaCheck.captchaCheck.mockResolvedValueOnce({ tokenValid: false })
+
     const getResponse = await server.inject(getOptions)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(getResponse.headers.location).toMatch('/england-only')
+    expect(getResponse.headers.location).toMatch('/postcode#')
   })
 
   test('Accept & strip unknown query parameters', async () => {

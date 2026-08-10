@@ -73,6 +73,23 @@ function mapPage () {
     }
   })
 
+  // In the event the cookie banner is still present on the map page and then a user accept or rejects then hides the banner
+  // This redirects the focus correctly to the first element in the tabbing order
+  document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('js-hide')) {
+      e.preventDefault()
+
+      const nextTabindex =
+        document.getElementById('sw-extent-radio') ||
+        document.getElementById('rs-extent-radio') ||
+        document.getElementById('reservoirs-radio')
+
+      if (nextTabindex) {
+        nextTabindex.focus()
+      }
+    }
+  })
+
   // Locates the ESRI components so that tabindex can be added
   const observer = new MutationObserver((mutations) => {
     mutations.forEach(() => {
@@ -91,7 +108,7 @@ function mapPage () {
         }
       }
 
-      // Function to update tabindex for zoom buttons within the shadow root
+      // Function to update tabindex and role for zoom buttons within the shadow root
       function setTabIndexForShadowRootButton (calciteButtonSelector, tabindexValue) {
         const calciteButton = document.querySelector(calciteButtonSelector)
 
@@ -99,6 +116,11 @@ function mapPage () {
           if (calciteButton.getAttribute('tabindex') !== String(tabindexValue)) {
             calciteButton.setAttribute('tabindex', tabindexValue)
           }
+
+          if (calciteButton.getAttribute('role') !== 'button') {
+            calciteButton.setAttribute('role', 'button')
+          }
+
           // Access shadow root
           const shadowRoot = calciteButton.shadowRoot
           if (shadowRoot) {
@@ -107,6 +129,7 @@ function mapPage () {
               const shadowButton = shadowRoot.querySelector('button')
               if (shadowButton) {
                 shadowButton.setAttribute('tabindex', tabindexValue)
+                shadowButton.setAttribute('role', 'button')
                 // Override focus behavior of calcite-button so functional part of button is focused
                 calciteButton.addEventListener('focus', () => {
                   shadowButton.focus()

@@ -1,0 +1,30 @@
+.cookies-link {
+  color:govuk-functional-colour("success");
+}
+
+.cookies-table {
+  max-width: 100%;
+  overflow-x: hidden;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.cookies-table .govuk-table__header,
+.cookies-table .govuk-table__cell {
+  word-break: break-word;
+}
+
+.cookies-table .govuk-table__header:nth-child(1),
+.cookies-table .govuk-table__cell:nth-child(1) {
+  width: 25%;
+}
+
+.cookies-table .govuk-table__header:nth-child(2),
+.cookies-table .govuk-table__cell:nth-child(2) {
+  width: 50%;
+}
+
+.cookies-table .govuk-table__header:nth-child(3),
+.cookies-table .govuk-table__cell:nth-child(3) {
+  width: 25%;
+}

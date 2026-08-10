@@ -1,14 +1,24 @@
 {% extends 'layout.html' %}
 
-{% block beforeContent %}
-<a href="{{ backLinkUri }}" class="govuk-back-link" data-id="risk-address">Back</a>
+{% from "components/back-link/macro.njk" import govukBackLink %}
+
+{% set pageTitle = "This service is for postcodes in England only" %}
+
+{% block containerStart %}
+{{ govukBackLink({
+  text: "Back",
+  href: backLinkUri,
+  attributes: {
+    "data-id": "risk-address"
+  }
+}) }}
 {% endblock %}
 
 {% block content %}
 <div id="england-only-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">This service is for postcodes in England only</h1>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
       {% if isWales %}
       <p class="govuk-body">The postcode you entered is in Wales.</p>
       <p class="govuk-body">

@@ -23,6 +23,6 @@ describe('/Accessibility statement test', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK) // 200
-    expect(response.payload).toMatch(/<p class="govuk-body">\n\s\s\s\s\s\s\s\sThe website has the following content which is out of scope of the accessibility regulations:\n\s\s\s\s\s\s<\/p>\n\s\s\s\s\s\s<ul class="govuk-list govuk-list--bullet">\n\s\s\s\s\s\s\s\s<li>maps<\/li>\n\s\s\s\s\s\s\s\s<li>third party content which is out of our control, for example a corporate logo on the map the website uses\n\s\s\s\s\s\s\s\s<\/li>\n\s\s\s\s\s\s\s\s<li>PDF content that was published before 23 September 2018<\/li>\n\s\s\s\s\s\s<\/ul>/g)
+    expect(response.payload).toMatch(/<p class="govuk-body">The website has the following content which is out of scope of the accessibility regulations:<\/p>\n\s+<ul class="govuk-list govuk-list--bullet">\n\s+<li>maps<\/li>\n\s+<li>third party content which is out of our control, for example a corporate logo on the map the website uses<\/li>\n\s+<\/ul>/g)
   })
 })

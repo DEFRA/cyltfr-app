@@ -5,7 +5,6 @@
 {% block header %}
 {% endblock %}
 
-
 {% block head %}
 {{ super() }}
 <meta charset="UTF-8">
@@ -13,13 +12,11 @@
 <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="/assets/images/favicon.ico" type="image/x-icon">
 <link href="{{ assetPath }}/stylesheets/map-page.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{ assetPath }}/esri/themes/light/main.css">
-<!-- added to include updated favicon-->
-<link rel="icon" sizes="any" href="/assets/rebrand/images/favicon.svg" type="image/svg+xml">
 {% endblock %}
 
-{% block main %}
+{% block container %}
 <div class="map-container">
-  <div id="map" aria-label="Use your arrows to navigate the map. To zoom in and out cycle back to the zoom buttons."></div>
+  <div id="map" role="region" aria-label="Use your arrows to navigate the map. To zoom in and out cycle back to the zoom buttons."></div>
   {% include 'partials/map-page/map-controls.html' %}
   <!-- Key -->
   <!-- map-key inline styling required for ability to click off key on devices -->
@@ -27,7 +24,7 @@
     <div class="defra-map-key__container" id="defra-map-key__container">
       <div id="riversAndSeaContainer" class="tech-map-key">
         <h1 id="mapKeyLabel" class="defra-map-key__title">
-          <span role="text">Rivers and sea map<span class="govuk-visually-hidden">for map features</span></span>
+          <span>Rivers and sea map<span class="govuk-visually-hidden">for map features</span></span>
           <button class="defra-map-key__close" id="close-key">
             <svg id="close-btn" aria-hidden="true" focusable="false" viewBox="0 0 20 20">
               <path d="M10,8.6L15.6,3L17,4.4L11.4,10L17,15.6L15.6,17L10,11.4L4.4,17L3,15.6L8.6,10L3,4.4L4.4,3L10,8.6Z"></path>

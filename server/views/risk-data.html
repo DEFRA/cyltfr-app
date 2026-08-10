@@ -1,12 +1,26 @@
 {% extends 'layout.html' %}
 
+{% from "components/back-link/macro.njk" import govukBackLink %}
+
 {% set pageTitle = "Get flood risk data" %}
+
+{% block containerStart %}
+<div class="top-page-links">
+  {{ govukBackLink({
+    text: "Back",
+    href: backLinkUri,
+    attributes: {
+      "data-id": "risk-address"
+    }
+  }) }}
+</div>
+{% endblock %}
 
 {% block content %}
 <div id="risk-data-page">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Get flood risk data</h1>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
       <nav data-module="gem-track-click" aria-label="Contents" class="gem-c-contents-list" role="navigation">
         <h2 class="gem-c-contents-list__title">
           Contents

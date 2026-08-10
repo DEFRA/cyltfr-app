@@ -41,12 +41,15 @@ exports.plugin = {
     })
 
     // Add server.method.notify to allow manual airbrake notification
-    server.method(result.value.notify, (error) => {
-      airbrake.notify(error, (err) => {
-        if (err) {
-          server.log(['error', 'info'], err)
-        }
-      })
+    server.method(result.value.notify, (error, session) => {
+      const notification = session ? { error, session } : { error }
+      airbrake
+        .notify(notification)
+        .then((notice) => {
+          if (!notice.id) {
+            server.log(['error'], { message: `Airbrake notification failed: ${notice.error}`, error: notice.error })
+          }
+        })
     })
   },
   name: 'airbrake'

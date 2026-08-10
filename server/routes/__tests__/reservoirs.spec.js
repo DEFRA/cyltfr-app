@@ -43,16 +43,16 @@ describe('GET /reservoirs', () => {
     expect(homepageresponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     checkCookie(homepageresponse)
 
-    const { getOptions, postOptions } = mockSearchOptions('CV37 6YZ', cookie)
+    const { getOptions, postOptions } = mockSearchOptions('CV376YZ', cookie)
     let postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_FOUND)
-    expect(postResponse.headers.location).toMatch(`/search?postcode=${encodeURIComponent('CV37 6YZ')}`)
+    expect(postResponse.headers.location).toMatch('/search#')
 
     const getResponse = await server.inject(getOptions)
     checkCookie(getResponse)
     expect(getResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-    postOptions.url = `/search?postcode=${encodeURIComponent('CV37 6YZ')}`
-    postOptions.payload = 'address=0'
+    postOptions.url = '/search#'
+    postOptions.payload = 'address=0&aboutThisAddress=live'
 
     postResponse = await server.inject(postOptions)
     checkCookie(postResponse)

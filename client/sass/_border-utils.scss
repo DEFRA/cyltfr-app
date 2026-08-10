@@ -1,0 +1,40 @@
+@use 'govuk-frontend/dist/govuk/settings/index' as *;
+@use 'govuk-frontend/dist/govuk/helpers/index' as *;
+
+$border-width-scale: (
+  "1": 1px
+) !default;
+
+$_border-directions: ("top", "right", "bottom", "left") !default;
+
+$_colours: (
+  "mid-grey": govuk-colour("black", $variant: "tint-80")
+) !default;
+
+@mixin _generate-border-overrides($property) {
+  @each $color-name, $colour-value in $_colours {
+    @each $scale-name, $scale-value in $border-width-scale {
+      .govuk-\!-#{$property}-#{$scale-name}-#{$color-name} {
+        border: $scale-value solid $colour-value !important;
+      }
+
+      @each $direction in $_border-directions {
+        .govuk-\!-#{$property}-#{$direction}-#{$scale-name}-#{$color-name} {
+          border-#{$direction}: $scale-value solid $colour-value !important;
+        }
+      }
+
+      .govuk-\!-#{$property}-vertical-#{$scale-name}-#{$color-name} {
+        border-top: $scale-value solid $colour-value !important;
+        border-bottom: $scale-value solid $colour-value !important;
+      }
+
+      .govuk-\!-#{$property}-horizontal-#{$scale-name}-#{$color-name} {
+        border-left: $scale-value solid $colour-value !important;
+        border-right: $scale-value solid $colour-value !important;
+      }
+    }
+  }
+}
+
+@include _generate-border-overrides("border");

@@ -1,12 +1,18 @@
 {
   "addressByPostcode": {
-    "message": "An error occurred finding the addresses by postcode"
+    "message": "An error occurred while searching for that postcode. Please try again"
+  },
+  "addressNotFound": {
+    "message": "That postcode does not appear to exist"
+  },
+  "postcodeInvalid": {
+    "message": "Enter a full postcode in England"
   },
   "addressById": {
     "message": "An error occurred finding the address by id"
   },
   "friendlyCaptchaError": {
-    "message": "An error occured during the FriendlyCaptcha check. Please try again."
+    "message": "An error occurred during the FriendlyCaptcha check. Please try again."
   },
   "sessionTimeoutError": {
     "message": "Session timed out"

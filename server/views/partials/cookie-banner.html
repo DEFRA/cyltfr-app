@@ -8,11 +8,11 @@
 {% endset %}
 
 {% set acceptHtml %}
-  <p class="govuk-body">You’ve accepted analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+  <p class="govuk-body">You’ve accepted analytics cookies. You can <a class="govuk-link" href="/cookies" tabindex="1">change your cookie settings</a> at any time.</p>
 {% endset %}
 
 {% set rejectedHtml %}
-  <p class="govuk-body">You’ve rejected analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+  <p class="govuk-body">You’ve rejected analytics cookies. You can <a class="govuk-link" href="/cookies" tabindex="1">change your cookie settings</a> at any time.</p>
 {% endset %}
 
 {{ govukCookieBanner({
@@ -28,18 +28,27 @@
           type: "submit",
           name: "analytics",
           value: "true",
-          classes: "js-cookies-button-accept"
+          classes: "js-cookies-button-accept",
+          attributes: {
+            tabindex: "1"
+          }
         },
         {
           text: "Reject analytics cookies",
           type: "submit",
           name: "analytics",
           value: "false",
-          classes: "js-cookies-button-reject"
+          classes: "js-cookies-button-reject",
+          attributes: {
+            tabindex: "1"
+          }
         },
         {
           text: "View cookies",
-          href: "/cookies"
+          href: "/cookies",
+          attributes: {
+            tabindex: "1"
+          }
         }
       ],
       "classes": "js-question-banner"
@@ -51,7 +60,10 @@
           text: "Hide cookie message",
           href: "#",
           type: "button",
-          "classes": "js-hide"
+          "classes": "js-hide",
+          attributes: {
+            tabindex: "1"
+          }
         }
       ],
       hidden: true,
@@ -64,7 +76,10 @@
           text: "Hide cookie message",
           href: "#",
           type: "button",
-          "classes": "js-hide"
+          "classes": "js-hide",
+          attributes: {
+            tabindex: "1"
+          }
         }
       ],
       "classes": "js-cookies-rejected",

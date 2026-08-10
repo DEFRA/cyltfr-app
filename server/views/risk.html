@@ -1,11 +1,20 @@
 {% extends 'layout.html' %}
+
+{% from "components/back-link/macro.njk" import govukBackLink %}
 {% from "components/details/macro.njk" import govukDetails %}
+{% from "components/warning-text/macro.njk" import govukWarningText %}
 
 {% set pageTitle = "Flood risk summary" %}
 
-{% block beforeContent %}
+{% block containerStart %}
 <div class="top-page-links">
-  <a href="{{ backLink }}" class="govuk-back-link" data-id="risk-address">Back to select an address</a>
+  {{ govukBackLink({
+    text: "Back to select an address",
+    href: backLink,
+    attributes: {
+      "data-id": "risk-address"
+    }
+  }) }}
 </div>
 {% endblock %}
 
@@ -15,9 +24,7 @@
   <div class="page-summary ">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl govuk-!-padding-top-0">
-          Flood risk summary
-        </h1>
+        <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
         <p class="govuk-body"><strong>Your selected location:</strong> {{ fullAddress }}</p>
         <p class="govuk-body">This information tells you the flood risk of the land around a building, not the building itself.</p>
 
@@ -60,14 +67,15 @@
         }) }}
         <!-- Holding Comments -->
         {% if hasHoldingComments %}
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
+          {% set holdingCommentContent %}
             {% for comment in holdingComments %}
-            <div class="{{ 'govuk-!-margin-bottom-4' if not loop.last }}">{{ comment }}</div>
+              <div class="{{ 'govuk-!-margin-bottom-4' if not loop.last }}">{{ comment }}</div>
             {% endfor %}
-          </strong>
-        </div>
+          {% endset %}
+          {{ govukWarningText({
+            iconFallbackText: "Warning",
+            html: holdingCommentContent
+          }) }}
         {% endif %}
       </div>
 

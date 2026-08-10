@@ -1,3 +1,5 @@
+@use 'govuk-frontend/dist/govuk/helpers/index' as *;
+
 .top-page-links {
   display: flex;
   justify-content: space-between;
@@ -60,11 +62,11 @@
   background-color: #A92323;
 }
 .govuk-tag--medium {
-  color: #000000;
+  color: govuk-colour("black");
   background-color: #F56E00;
 }
 .govuk-tag--low {
-  color: #000000;
+  color: govuk-colour("black");
   background-color: #FFDF26;
 }
 .govuk-tag--very-low {
@@ -72,12 +74,12 @@
   background-color: #235C26;
 }
 .govuk-tag--no-data {
-  color: #0b0c0c;
-  background-color: #b0b3b580;
+  color: govuk-colour("black");
+  background-color: govuk-colour("black", $variant: 'tint-80')
 }
 
 .label-border {
-  outline: solid 3px #0b0c0c;
+  outline: solid 3px govuk-colour("black");
 }
 .label-mod {
   padding: 8px 12px 8px 12px;
