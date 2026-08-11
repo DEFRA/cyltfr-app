@@ -59,9 +59,8 @@
         }) }}
       {% endif %}
 
-      {{ govukSelect(addressSelect) }}
-
       <form method="post" id="address-form">
+        {{ govukSelect(addressSelect) }}
         <dl class="govuk-form-group" id="postcode">
           <dt class="govuk-label">Postcode</dt>
           <dd class="govuk-body">
