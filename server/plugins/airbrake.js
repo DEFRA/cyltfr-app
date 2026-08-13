@@ -19,7 +19,7 @@ async function notifyAirbrake (airbrake, notification, server) {
 }
 
 function createRequestErrorHandler (airbrake, server) {
-  return async (req, event, tags) => {
+  return async (req, event, _tags) => {
     const error = event.error || event.data
     if (error && typeof error === 'object') {
       error.component = 'hapi'
