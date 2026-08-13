@@ -47,6 +47,16 @@ async function createServer () {
       plugin: require('./plugins/airbrake'),
       options: config.errbit.options
     })
+  } else {
+    const notifyMethod = async (error, session) => {
+      let logMessage = ''
+      if (session) {
+        logMessage = JSON.stringify(session)
+      }
+      logMessage = `Notify called: ${error.message}: ${JSON.stringify(error)}\n${logMessage}`
+      server.log(['error'], { message: logMessage, error })
+    }
+    server.method('notify', notifyMethod)
   }
   return server
 }
