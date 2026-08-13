@@ -180,14 +180,15 @@ describe('postcode page', () => {
     addressService.find.mockImplementationOnce(() => { throw new Error('An error') })
     const onErrorHandler = jest.fn()
     server.events.on(
-      { name: 'log', count: 1, filter: 'error' },
+      { name: 'log', filter: 'error' },
       onErrorHandler
     )
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(postResponse.result).toMatch(/An error occurred while searching for that postcode/)
-    expect(onErrorHandler).toHaveBeenCalled()
+    expect(onErrorHandler).toHaveBeenCalledTimes(1)
+    server.events.removeListener('log', onErrorHandler)
   })
 
   test('/search - Address service returns empty address array', async () => {
