@@ -232,6 +232,11 @@ describe('postcode page', () => {
         description: 'should not set captchabypass if query parameter is absent',
         query: '',
         expected: false
+      },
+      {
+        description: 'should not set captchabypass if query parameter is empty',
+        query: '?captchabypass=',
+        expected: false
       }
     ]
     testCases.forEach(({ description, query, expected }) => {
@@ -245,9 +250,24 @@ describe('postcode page', () => {
         }
         const response = await server.inject(options)
         expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-        const sessionCaptchaBypass = response.request.yar.get('captchabypass')
+        const sessionCaptchaBypass = await response.request.yar.get('captchabypass')
         expect(sessionCaptchaBypass).toEqual(expected)
       })
+    })
+    test('Does not allow captcha bypass if no bypass config is set', async () => {
+      const options = {
+        method: 'GET',
+        url: '/postcode?captchabypass=',
+        headers: {
+          cookie
+        }
+      }
+      config.friendlyCaptchaBypass = ''
+
+      const response = await server.inject(options)
+      expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+      const sessionCaptchaBypass = await response.request.yar.get('captchabypass')
+      expect(sessionCaptchaBypass).toEqual(false)
     })
   })
 })
