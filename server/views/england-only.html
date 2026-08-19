@@ -42,6 +42,15 @@
         Find <a class="govuk-link" href="https://www.nidirect.gov.uk/articles/check-the-risk-of-flooding-in-your-area"
           data-journey-click="ltfri:other-areas:northern-ireland">flood information for
           Northern Ireland</a>.</p>
+      {% elseif isChannelIslands %}
+      <p class="govuk-body">The postcode you entered is in the Channel Islands.</p>
+      <p class="govuk-body">The Channel Islands are not covered by this service. Contact your local authority for flood risk information.</p>
+      {% elseif isIsleOfMan %}
+      <p class="govuk-body">The postcode you entered is in the Isle of Man.</p>
+      <p class="govuk-body">The Isle of Man is not covered by this service. Contact your local authority for flood risk information.</p>
+      {% elseif isOutsideLandBoundaries %}
+      <p class="govuk-body">The postcode you entered is not in England.</p>
+      <p class="govuk-body">This service only covers postcodes in England.</p>
       {% else %}
       <p class="govuk-body">Find <a class="govuk-link"
           href="https://naturalresources.wales/evidence-and-data/maps/long-term-flood-risk/?lang=en"
