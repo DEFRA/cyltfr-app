@@ -17,9 +17,7 @@ module.exports = {
       isWales: ['wales', 'W'].includes(request.query.region),
       isScotland: ['scotland', 'S'].includes(request.query.region),
       isNorthernIreland: ['northern-ireland', 'N'].includes(request.query.region),
-      isChannelIslands: ['channel-islands', 'L'].includes(request.query.region),
-      isIsleOfMan: ['isle-of-man', 'M'].includes(request.query.region),
-      isOutsideLandBoundaries: ['outside-land-boundaries', 'J'].includes(request.query.region),
+      isOutsideEngland: ['channel-islands', 'L', 'isle-of-man', 'M', 'outside-land-boundaries', 'J'].includes(request.query.region),
       backLinkUri
     }
 
