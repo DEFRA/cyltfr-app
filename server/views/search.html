@@ -48,7 +48,7 @@
 
       {% if banner %}
         {% set bannerWarningHtml %}
-          Warning. {{ banner.message }}
+          {{ banner.message }}
           {% if banner.url %}
             &nbsp;<a class="govuk-link" rel="noopener" href="{{ banner.url }}" target="_blank" data-journey-click="ltfri:search:live-flood-warnings">View details</a>
           {% endif %}
