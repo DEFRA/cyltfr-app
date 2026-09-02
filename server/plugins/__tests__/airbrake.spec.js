@@ -247,4 +247,37 @@ describe('airbrake private helpers', () => {
 
     expect(hasErrorLog(server.log.mock.calls)).toBe(true)
   })
+
+  test('createNotifyMethod handles circular references in session and error logs', async () => {
+    const server = createServerStub()
+    const airbrake = {
+      notify: jest.fn().mockResolvedValue({ id: 'notice-7' })
+    }
+    const notifyMethod = airbrakePlugin._private.createNotifyMethod(airbrake, server)
+    const error = new Error('circular logging')
+    const session = { route: '/risk' }
+
+    error.self = error
+    session.self = session
+
+    await expect(notifyMethod(error, session)).resolves.toBeUndefined()
+
+    expect(server.log).toHaveBeenCalledWith(
+      ['error'],
+      expect.objectContaining({
+        message: expect.stringContaining('[Circular]'),
+        error
+      })
+    )
+  })
+
+  test('createCircularJsonFilter marks repeated object references as circular', () => {
+    const filter = airbrakePlugin._private.createCircularJsonFilter()
+    const root = { nested: {} }
+    root.nested.parent = root
+
+    const output = JSON.stringify(root, filter)
+
+    expect(output).toContain('[Circular]')
+  })
 })

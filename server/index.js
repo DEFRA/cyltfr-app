@@ -1,6 +1,7 @@
 const hapi = require('@hapi/hapi')
 const config = require('./config')
 const cache = require('./cache')
+const { stringifyForLog } = require('./util')
 
 async function createServer () {
   // Create the hapi server
@@ -51,9 +52,9 @@ async function createServer () {
     const notifyMethod = async (error, session) => {
       let logMessage = ''
       if (session) {
-        logMessage = JSON.stringify(session)
+        logMessage = stringifyForLog(session)
       }
-      logMessage = `Notify called: ${error.message}: ${JSON.stringify(error)}\n${logMessage}`
+      logMessage = `Notify called: ${error.message}: ${stringifyForLog(error)}\n${logMessage}`
       server.log(['error'], { message: logMessage, error })
     }
     server.method('notify', notifyMethod)
