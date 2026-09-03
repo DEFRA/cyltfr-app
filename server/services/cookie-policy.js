@@ -7,8 +7,8 @@ function getCookiePolicy (request) {
 
 function getCookieDomain (hostname) {
   const names = hostname?.split('.')
-  names.shift()
-  return ('.' + names.join('.'))
+  if (names) names.shift()
+  return ('.' + names?.join('.'))
 }
 
 function removeAnalyticsCookies (request, h) {
@@ -20,7 +20,7 @@ function removeAnalyticsCookies (request, h) {
         isHttpOnly: false,
         isSameSite: 'Lax',
         path: '/',
-        domain: getCookieDomain(request.info.hostname)
+        domain: getCookieDomain(request?.info?.hostname)
       })
     }
   }
