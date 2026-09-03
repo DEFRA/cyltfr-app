@@ -43,8 +43,8 @@ describe('cookie-policy', () => {
 
     removeAnalyticsCookies(request, h)
 
-    expect(h.unstate).toHaveBeenCalledWith(GA_COOKIE)
-    expect(h.unstate).toHaveBeenCalledWith(GA_COOKIE_ID)
+    expect(h.unstate).toHaveBeenCalledWith(GA_COOKIE, expect.anything())
+    expect(h.unstate).toHaveBeenCalledWith(GA_COOKIE_ID, expect.anything())
     expect(h.unstate).not.toHaveBeenCalledWith('session_cookie')
   })
 
