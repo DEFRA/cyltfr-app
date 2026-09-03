@@ -1,19 +1,15 @@
-/* eslint-disable no-unexpected-multiline */
-/* eslint-disable @stylistic/func-call-spacing */
 const { Postcode } = require('../postcode-normalisation')
 const fakeData = require('./data/LD71DT.json')
 
 describe('postcode-normalisation', () => {
-  test.each(['cv37 6yz', 'CV37 6YZ', 'CV376YZ', 'cv376yz', 'CV376yz', 'cv37 6YZ', '  c&v3 7  ;  * 6^y #Z /'])
-  ('normalise returns valid postcode CV376YZ for input "%s"', async (input) => {
+  test.each(['cv37 6yz', 'CV37 6YZ', 'CV376YZ', 'cv376yz', 'CV376yz', 'cv37 6YZ', '  c&v3 7  ;  * 6^y #Z /'])('normalise returns valid postcode CV376YZ for input "%s"', async (input) => {
     const expectedResult = new Postcode('CV376YZ', true, false, null, null)
     const findFunction = jest.fn()
     expect((await Postcode.normalise(input, findFunction)).postcodeInfo).toStrictEqual(expectedResult)
     expect(findFunction).toHaveBeenCalled()
   })
 
-  test.each(['invalid'])
-  ('normalise returns invalid postcode for input "%s", does not call find function', async (input) => {
+  test.each(['invalid'])('normalise returns invalid postcode for input "%s", does not call find function', async (input) => {
     const expectedResult = new Postcode('INVALID', false, undefined, undefined, undefined)
     const findFunction = jest.fn()
     expect((await Postcode.normalise(input, findFunction)).postcodeInfo).toStrictEqual(expectedResult)
@@ -54,8 +50,7 @@ describe('postcode-normalisation', () => {
     expect(await Postcode.compare('CV37 6YZ', 'AB12 3CD')).toBe(false)
   })
 
-  test.each(['', null, undefined])
-  ('compare returns false for invalid value "%s"', async (input) => {
+  test.each(['', null, undefined])('compare returns false for invalid value "%s"', async (input) => {
     expect(await Postcode.compare('CV37 6YZ', input)).toBe(false)
   })
 

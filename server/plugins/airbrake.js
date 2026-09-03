@@ -2,6 +2,7 @@
 
 const schema = require('./airbrake-schema.js')
 const Airbrake = require('@airbrake/node')
+const { createCircularJsonFilter, stringifyForLog } = require('../util')
 
 function logAirbrakeFailure (server, noticeError) {
   server.log(['error'], { message: `Airbrake notification failed: ${noticeError}`, error: noticeError })
@@ -45,9 +46,9 @@ function createNotifyMethod (airbrake, server) {
     const notification = session ? { error, session } : { error }
     let logMessage = ''
     if (session) {
-      logMessage = JSON.stringify(session)
+      logMessage = stringifyForLog(session)
     }
-    logMessage = `Notify called: ${error.message}: ${JSON.stringify(error)}\n${logMessage}`
+    logMessage = `Notify called: ${error.message}: ${stringifyForLog(error)}\n${logMessage}`
     server.log(['error'], { message: logMessage, error })
 
     await notifyAirbrake(airbrake, notification, server)
@@ -85,6 +86,8 @@ exports.plugin = {
 exports._private = {
   createNotifyMethod,
   createRequestErrorHandler,
+  createCircularJsonFilter,
   logAirbrakeFailure,
-  notifyAirbrake
+  notifyAirbrake,
+  stringifyForLog
 }
