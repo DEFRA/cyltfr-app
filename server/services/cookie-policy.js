@@ -5,12 +5,23 @@ function getCookiePolicy (request) {
   return state.cookies_policy
 }
 
+function getCookieDomain (hostname) {
+  const names = hostname?.split('.')
+  names.shift()
+  return ('.' + names.join('.'))
+}
+
 function removeAnalyticsCookies (request, h) {
   const { state = {} } = request
 
   for (const cookieName of Object.keys(state)) {
     if (googleCookiesRegex.test(cookieName)) {
-      h.unstate(cookieName)
+      h.unstate(cookieName, {
+        isHttpOnly: false,
+        isSameSite: 'Lax',
+        path: '/',
+        domain: getCookieDomain(request.info.hostname)
+      })
     }
   }
 }
