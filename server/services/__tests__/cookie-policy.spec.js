@@ -43,8 +43,8 @@ describe('cookie-policy', () => {
 
     removeAnalyticsCookies(request, h)
 
-    expect(h.unstate).toHaveBeenCalledWith(GA_COOKIE, expect.anything())
-    expect(h.unstate).toHaveBeenCalledWith(GA_COOKIE_ID, expect.anything())
+    expect(h.unstate).toHaveBeenCalledWith(GA_COOKIE)
+    expect(h.unstate).toHaveBeenCalledWith(GA_COOKIE_ID)
     expect(h.unstate).not.toHaveBeenCalledWith('session_cookie')
   })
 
@@ -56,6 +56,52 @@ describe('cookie-policy', () => {
     removeAnalyticsCookies({}, h)
 
     expect(h.unstate).not.toHaveBeenCalled()
+  })
+
+  test('removes analytics cookies using ipv6 forwarded host with port', () => {
+    const request = {
+      state: {
+        [GA_COOKIE]: 'a'
+      },
+      headers: {
+        'X-Forwarded-Host': '[2001:db8::1]:443'
+      },
+      response: {
+        headers: {},
+        header: jest.fn(function (key, value) {
+          this.headers[key] = value
+        })
+      }
+    }
+
+    removeAnalyticsCookies(request, { unstate: jest.fn() })
+
+    expect(request.response.headers['set-cookie']).toBe(
+      '_ga=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'
+    )
+  })
+
+  test('removes analytics cookies using ipv6 forwarded host without port', () => {
+    const request = {
+      state: {
+        [GA_COOKIE]: 'a'
+      },
+      headers: {
+        'X-Forwarded-Host': '2001:db8::1'
+      },
+      response: {
+        headers: {},
+        header: jest.fn(function (key, value) {
+          this.headers[key] = value
+        })
+      }
+    }
+
+    removeAnalyticsCookies(request, { unstate: jest.fn() })
+
+    expect(request.response.headers['set-cookie']).toBe(
+      '_ga=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'
+    )
   })
 
   test('builds updated policy', () => {
