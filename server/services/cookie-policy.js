@@ -5,6 +5,46 @@ function getCookiePolicy (request) {
   return state?.cookies_policy
 }
 
+function getHostName (request) {
+  const forwarded = request?.headers?.['X-Forwarded-Host']
+  const host = forwarded || request?.info?.hostname
+
+  if (!host) {
+    return host
+  }
+
+  if (host.startsWith('[') && host.includes(']')) {
+    return host.slice(1, host.indexOf(']'))
+  }
+
+  if (host.includes(':') && host.split(':').length > 2) {
+    return host
+  }
+
+  return host.split(':')[0]
+}
+
+function removeAnalyticsCookies (request, h) {
+  const { state = {} } = request
+  let domainNames = new Set()
+
+  for (const cookieName of Object.keys(state)) {
+    if (googleCookiesRegex.test(cookieName)) {
+      if (domainNames.size === 0) {
+        domainNames = buildDeletableDomains(getHostName(request))
+      }
+      // Ask hapi to remove the cookie
+      h.unstate(cookieName)
+
+      // Also set the cookie headers for all possible domains as well, as they won't be cleared by the browser if the domain isn't correct.
+      addCookieHeader(request, `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`)
+      domainNames.forEach((domainName) => {
+        addCookieHeader(request, `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${domainName}`)
+      })
+    }
+  }
+}
+
 function buildDeletableDomains (hostname) {
   const domains = new Set()
 
@@ -32,57 +72,17 @@ function buildDeletableDomains (hostname) {
   return domains
 }
 
-function removeAnalyticsCookies (request, h) {
-  const { state = {} } = request
-  let domainNames = new Set()
+function addCookieHeader (request, header) {
+  const responseHeaders = request.response?.headers || {}
 
-  for (const cookieName of Object.keys(state)) {
-    if (googleCookiesRegex.test(cookieName)) {
-      if (domainNames.size === 0) {
-        domainNames = buildDeletableDomains(getHostName(request))
-      }
-      // Ask hapi to remove the cookie
-      h.unstate(cookieName)
-
-      // Also set the cookie headers for all possible domains as well, as they won't be cleared by the browser if the domain isn't correct.
-      addCookieHeader(`${cookieName}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`)
-      domainNames.forEach((domainName) => {
-        addCookieHeader(`${cookieName}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${domainName}`)
-      })
+  if (Object.keys(responseHeaders).includes('set-cookie')) {
+    const existing = responseHeaders['set-cookie']
+    if (existing) {
+      header = (Array.isArray(existing) ? existing : [existing]).concat(header)
     }
   }
-
-  function addCookieHeader (header) {
-    const responseHeaders = request.response?.headers || {}
-
-    if (Object.keys(responseHeaders).includes('set-cookie')) {
-      const existing = responseHeaders['set-cookie']
-      if (existing) {
-        header = (Array.isArray(existing) ? existing : [existing]).concat(header)
-      }
-    }
-    if (request.response?.header) {
-      request.response.header('set-cookie', header)
-    }
-  }
-
-  function getHostName (request) {
-    const forwarded = request?.headers?.['X-Forwarded-Host']
-    const host = forwarded || request?.info?.hostname
-
-    if (!host) {
-      return host
-    }
-
-    if (host.startsWith('[') && host.includes(']')) {
-      return host.slice(1, host.indexOf(']'))
-    }
-
-    if (host.includes(':') && host.split(':').length > 2) {
-      return host
-    }
-
-    return host.split(':')[0]
+  if (request.response?.header) {
+    request.response.header('set-cookie', header)
   }
 }
 
