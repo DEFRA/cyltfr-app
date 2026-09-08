@@ -37,7 +37,15 @@
         {% set otherRegionHtml %}
           Addresses outside England have been removed.
           <br><br>
-          <a class="govuk-link" href="/england-only?postcode={{ postcode | urlencode }}&region={{ otherRegion | urlencode }}#">Find flood information for {{ otherRegion | title }}.</a>
+          {% if isWales %}
+            <a class="govuk-link"
+              href="https://naturalresources.wales/evidence-and-data/maps/long-term-flood-risk/?lang=en"
+              data-journey-click="ltfri:search:other-areas:wales">Find flood information for Wales</a>.
+          {% elseif isScotland %}
+            <a class="govuk-link"
+              href="https://www.sepa.org.uk/environment/water/flooding/flood-maps/"
+              data-journey-click="ltfri:search:other-areas:scotland">Find flood information for Scotland</a>.
+          {% endif %}
         {% endset %}
 
         {{ govukWarningText({
