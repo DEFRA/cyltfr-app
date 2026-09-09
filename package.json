@@ -54,7 +54,7 @@
     "hapi-pino": "13.0.0",
     "hapi-rate-limit": "8.0.0",
     "https-proxy-agent": "7.0.6",
-    "joi": "18.2.3",
+    "joi": "18.2.8",
     "mutation-observer": "1.0.3",
     "node-fetch": "2.7.0",
     "nunjucks": "3.2.4"
