@@ -17,7 +17,7 @@ jobs:
           fail-on-severity: moderate
           comment-summary-in-pr: always
 
-  dependency-review-push:
+  dependency-review-on-push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
