@@ -18,6 +18,7 @@ jobs:
           comment-summary-in-pr: always
 
   dependency-review-push:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Dependency Review
