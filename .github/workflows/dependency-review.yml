@@ -2,8 +2,6 @@ name: DEPENDENCY REVIEW
 
 on:
   push:
-    branches:
-      - development
   pull_request:
 
 jobs:
