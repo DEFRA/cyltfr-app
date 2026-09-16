@@ -103,6 +103,7 @@ function riskViewModel (risk, address, backLinkUri) {
   const riversAndSeaLevel = Levels.indexOf(riverAndSeaRisk)
   const surfaceWaterLevel = Levels.indexOf(surfaceWaterRisk)
   const surfaceWaterIsFirst = surfaceWaterLevel >= riversAndSeaLevel
+  this.hasElevatedFloodRisk = riversAndSeaLevel > 0 || surfaceWaterLevel > 0
 
   processHighestRisk.call(this, surfaceWaterLevel, riversAndSeaLevel)
 

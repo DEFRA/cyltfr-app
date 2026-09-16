@@ -101,3 +101,8 @@
   font-size: 22px;
 }
 
+.action-box {
+  border: 1px solid govuk-functional-colour("border");
+  border-left: 1px solid govuk-functional-colour("border");
+  padding: 20px;
+}

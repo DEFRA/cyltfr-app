@@ -3,6 +3,7 @@
 {% from "components/back-link/macro.njk" import govukBackLink %}
 {% from "components/details/macro.njk" import govukDetails %}
 {% from "components/warning-text/macro.njk" import govukWarningText %}
+{% from "components/button/macro.njk" import govukButton %}
 
 {% set pageTitle = "Flood risk summary" %}
 
@@ -31,9 +32,26 @@
         {% include highestRisk %}
 
         {% if isFloodWarningArea %}
-        <h2 class="govuk-heading-l">Get flood warnings by text, phone or email</h2>
-        <p class="govuk-body">You can <a class="govuk-link" href="https://www.gov.uk/sign-up-for-flood-warnings" 
-          previewlistener="true">sign up for free flood warnings</a>, and get messages by text, phone or email.</p>
+        <div class="action-box govuk-inset-text govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Get free flood warnings</h2>
+          <p class="govuk-body">You can get flood warnings by text, phone or email for this location.</p>
+          {{ govukButton({
+            text: "Get flood warnings",
+            id: "get-flood-warnings-button",
+            href: "https://www.gov.uk/get-flood-warnings"
+          }) }}
+        </div>
+
+        {% elif hasElevatedFloodRisk %}
+        <div class="action-box govuk-inset-text govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Prepare for flooding</h2>
+          <p class="govuk-body">Take steps now to help you protect your home, belongings and loved ones.</p>
+          {{ govukButton({
+            text: "Prepare for future flooding",
+            id: "prepare-for-flooding-button",
+            href: "https://www.gov.uk/prepare-for-flooding"
+          }) }}
+        </div>
         {% endif %}
 
         {{ govukDetails({
