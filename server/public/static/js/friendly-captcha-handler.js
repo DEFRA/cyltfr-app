@@ -18,7 +18,7 @@
  *
  * @param {HTMLElement} captchaElement - The FriendlyCaptcha widget container element
  */
-function setupCaptchaEventListeners (captchaElement) {
+function setupCaptchaEventListeners (captchaElement, errTimeout = 30000) {
   const frcChecking = document.getElementById('FriendlyCaptchaChecking')
   const frcComplete = document.getElementById('FriendlyCaptchaComplete')
   const frcError = document.getElementById('FriendlyCaptchaError')
@@ -61,7 +61,7 @@ function setupCaptchaEventListeners (captchaElement) {
           }
         }
         submitButton.disabled = false
-      }, 30000)
+      }, errTimeout)
     } else {
       submitButton.disabled = true
     }
