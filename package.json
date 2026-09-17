@@ -1,6 +1,6 @@
 {
   "name": "risk-app",
-  "version": "5.9.0",
+  "version": "5.9.1",
   "description": "Long term flood risk information",
   "main": "index.js",
   "engines": {
@@ -43,13 +43,13 @@
     "@hapi/catbox-memory": "6.0.2",
     "@hapi/catbox-redis": "7.0.2",
     "@hapi/h2o2": "10.0.4",
-    "@hapi/hapi": "21.4.8",
+    "@hapi/hapi": "21.4.10",
     "@hapi/inert": "7.1.2",
     "@hapi/vision": "7.0.3",
     "@hapi/wreck": "18.1.2",
     "@hapi/yar": "11.0.3",
     "blipp": "4.0.2",
-    "dotenv": "17.4.1",
+    "dotenv": "17.4.2",
     "govuk-frontend": "6.3.0",
     "hapi-pino": "13.0.0",
     "hapi-rate-limit": "8.0.0",
@@ -60,16 +60,16 @@
     "nunjucks": "3.2.4"
   },
   "devDependencies": {
-    "css-loader": "7.1.4",
+    "css-loader": "7.1.5",
     "eslint": "9.39.4",
     "husky": "9.1.7",
-    "jest": "30.3.0",
-    "jest-environment-jsdom": "30.4.1",
+    "jest": "30.5.1",
+    "jest-environment-jsdom": "30.5.1",
     "lint-staged": "16.4.0",
     "neostandard": "0.13.0",
     "nodemon": "3.1.14",
-    "sass": "1.99.0",
-    "webpack": "5.105.4",
+    "sass": "1.104.0",
+    "webpack": "5.110.3",
     "webpack-cli": "6.0.1"
   },
   "husky": {
