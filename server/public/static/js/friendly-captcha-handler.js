@@ -61,7 +61,7 @@ function setupCaptchaEventListeners (captchaElement) {
           }
         }
         submitButton.disabled = false
-      }, 1000)
+      }, 30000)
     } else {
       submitButton.disabled = true
     }
