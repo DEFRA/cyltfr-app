@@ -103,9 +103,10 @@ function riskViewModel (risk, address, backLinkUri) {
   const riversAndSeaLevel = Levels.indexOf(riverAndSeaRisk)
   const surfaceWaterLevel = Levels.indexOf(surfaceWaterRisk)
   const surfaceWaterIsFirst = surfaceWaterLevel >= riversAndSeaLevel
+  this.highestFloodRisk = Levels[Math.max(riversAndSeaLevel, surfaceWaterLevel)]
   this.hasElevatedFloodRisk = riversAndSeaLevel > 0 || surfaceWaterLevel > 0
 
-  processHighestRisk.call(this, surfaceWaterLevel, riversAndSeaLevel)
+  processHighestRisk.call(this, this.highestFloodRisk)
 
   if (surfaceWaterIsFirst) {
     this.firstSource = 'surface-water.html'
@@ -130,11 +131,12 @@ function riskViewModel (risk, address, backLinkUri) {
 
 module.exports = riskViewModel
 
-function processHighestRisk (surfaceWaterLevel, riversAndSeaLevel) {
+function processHighestRisk (highestFloodRisk) {
   this.highestRisk = 'partials/blank.html'
-  if ((surfaceWaterLevel < riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl.html' }
-  if ((surfaceWaterLevel > riversAndSeaLevel) && (surfaceWaterLevel > 0)) { this.highestRisk = 'partials/sw.html' }
-  if ((surfaceWaterLevel === riversAndSeaLevel) && (riversAndSeaLevel > 0)) { this.highestRisk = 'partials/rsl-sw.html' }
+  if (highestFloodRisk !== RiskLevel.VeryLow) {
+    const highestFloodRiskStyle = highestFloodRisk.toLowerCase().replaceAll(' ', '-')
+    this.highestRisk = `partials/highest-risk-${highestFloodRiskStyle}.html`
+  }
 }
 
 function processReservoirs (reservoirDryRisk, risk, reservoirWetRisk) {
