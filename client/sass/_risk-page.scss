@@ -81,6 +81,10 @@
 .label-border {
   outline: solid 3px govuk-colour("black");
 }
+.label-space {
+  margin-left: 4px;
+  margin-top: 4px;
+}
 .label-mod {
   padding: 8px 12px 8px 12px;
   white-space: nowrap;
@@ -101,3 +105,8 @@
   font-size: 22px;
 }
 
+.action-box {
+  border: 1px solid govuk-functional-colour("border");
+  border-left: 1px solid govuk-functional-colour("border");
+  padding: 20px;
+}
