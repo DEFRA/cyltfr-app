@@ -134,8 +134,8 @@ module.exports = riskViewModel
 function processHighestRisk (highestFloodRisk) {
   this.highestRisk = 'partials/blank.html'
   if (highestFloodRisk !== RiskLevel.VeryLow) {
-    const highestFloodRiskStyle = highestFloodRisk.toLowerCase().replaceAll(' ', '-')
-    this.highestRisk = `partials/highest-risk-${highestFloodRiskStyle}.html`
+    const riskPartialName = highestFloodRisk.toLowerCase().replaceAll(' ', '-')
+    this.highestRisk = `partials/highest-risk-${riskPartialName}.html`
   }
 }
 
