@@ -59,14 +59,14 @@ role="navigation">
     <h2 class="govuk-heading-l govuk-!-padding-top-6 govuk-!-margin-bottom-4">How likely a surface water flood is</h2>
     {% if surfaceWaterRiskOverride or surfaceWaterRiskOverrideCC %}
       <p class="govuk-body govuk-!-padding-top-4">The yearly chance of surface water flooding is:
-        <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod-depth">
+        <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-border">
           <span>{{ surfaceWaterRisk }}</span>
         </strong>
       </p>
     {% else %}
       <p class="govuk-body govuk-!-padding-top-4">The yearly chance of surface water flooding is:</p>
       <p class="govuk-body">
-        <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-mod-depth">
+        <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-border label-space-right">
           <span>{{ surfaceWaterRisk }}</span>
         </strong>
           {% if surfaceWaterRisk === surfaceWaterRiskCC %}
@@ -74,7 +74,7 @@ role="navigation">
           {% else %}
             increasing to
           {% endif %}
-          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-mod-depth">
+          <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-border label-space-left label-space-right">
             <span>{{ surfaceWaterRiskCC }}</span>
           </strong>
           between 2040 to 2060

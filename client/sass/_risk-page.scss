@@ -1,5 +1,7 @@
 @use 'govuk-frontend/dist/govuk/helpers/index' as *;
 
+$tablet-width: 768px;
+
 .top-page-links {
   display: flex;
   justify-content: space-between;
@@ -81,9 +83,18 @@
 .label-border {
   outline: solid 3px govuk-colour("black");
 }
-.label-space {
+.label-space-right {
+  margin-right: 4px;
+}
+.label-space-left {
   margin-left: 4px;
-  margin-top: 4px;
+}
+.highest-risk-label {
+  margin-left: 4px;
+
+  @media (max-width: $tablet-width) {
+    margin-top: 4px;
+  }
 }
 .label-mod {
   padding: 8px 12px 8px 12px;
