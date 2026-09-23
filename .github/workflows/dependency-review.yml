@@ -3,6 +3,11 @@ name: DEPENDENCY REVIEW
 on:
   pull_request:
   workflow_call:
+    inputs:
+      base-ref:
+        type: string
+      head-ref:
+        type: string
 
 jobs:
   dependency-review:
@@ -12,6 +17,6 @@ jobs:
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # 5.0.0
         with:
           fail-on-severity: moderate
-          comment-summary-in-pr: ${{ github.event_name == 'pull_request' && 'always' || 'never' }}
-          base-ref: ${{ github.event_name == 'push' && github.event.before || '' }}
-          head-ref: ${{ github.event_name == 'push' && github.sha || '' }}
+          comment-summary-in-pr: always
+          base-ref: ${{ inputs.base-ref }}
+          head-ref: ${{ inputs.head-ref }}

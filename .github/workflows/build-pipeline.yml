@@ -13,9 +13,16 @@ jobs:
   dependency-review:
     uses: ./.github/workflows/dependency-review.yml
     secrets: inherit
+    with:
+      base-ref: ${{ github.event.before }}
+      head-ref: ${{ github.sha }}
 
   docker:
     needs: [unit-tests, dependency-review]
     if: needs.unit-tests.result == 'success' && needs.dependency-review.result == 'success'
     uses: ./.github/workflows/docker.yml
     secrets: inherit
+    # Needed for docker.yml's OIDC login
+    permissions:
+      id-token: write
+      contents: read
