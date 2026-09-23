@@ -81,9 +81,11 @@
 .label-border {
   outline: solid 3px govuk-colour("black");
 }
-.label-space {
+.label-space-left {
   margin-left: 4px;
-  margin-top: 4px;
+}
+.label-space-right {
+  margin-right: 4px;
 }
 .label-mod {
   padding: 8px 12px 8px 12px;
@@ -100,6 +102,9 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 10px;
+}
+.text-with-label {
+  line-height: 1.8;
 }
 .card-title__font-size {
   font-size: 22px;

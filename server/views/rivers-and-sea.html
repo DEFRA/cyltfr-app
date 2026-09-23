@@ -60,14 +60,14 @@ role="navigation">
       <h2 class="govuk-heading-l govuk-!-padding-top-6 govuk-!-margin-bottom-4">How likely a river or sea flood is</h2>
       {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC or riverAndSeaRiskCC === "Unavailable" %}
         <p class="govuk-body govuk-!-padding-top-4">The yearly chance of flooding from rivers and the sea is:
-          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod-depth">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-border label-space-left">
             <span>{{ riverAndSeaRisk }}</span>
           </strong>
         </p>
       {% else %}
         <p class="govuk-body govuk-!-padding-top-4">The yearly chance of rivers and sea flooding is:</p>
-        <p class="govuk-body">
-          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod-depth">
+        <p class="govuk-body text-with-label">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-border label-space-right">
             <span>{{ riverAndSeaRisk }}</span>
           </strong>
           {% if riverAndSeaRisk === riverAndSeaRiskCC %}
@@ -75,10 +75,10 @@ role="navigation">
           {% else %}
           increasing to
           {% endif %}
-          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod-depth">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-border label-space-left label-space-right">
             <span>{{ riverAndSeaRiskCC }}</span>
           </strong>
-          between 2036 to 2069
+          <span>between 2036 to 2069</span>
         </p>
       {% endif %}
       
