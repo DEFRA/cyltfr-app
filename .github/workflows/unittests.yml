@@ -2,6 +2,10 @@ name: UNITTEST
 
 on:
   push:
+    # ignored to avoid duplicate runs as development is covered by build-pipeline.yml using this workflow
+    branches-ignore:
+      - development
+  workflow_call:
 
 jobs:
   unit-tests:

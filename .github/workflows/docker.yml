@@ -1,13 +1,7 @@
 name: DOCKER
 
 on:
-  workflow_run:
-    workflows:
-      - UNITTEST
-    types:
-      - completed
-    branches:
-      - development
+  workflow_call:
   workflow_dispatch:
     inputs:
       buildtarget:
@@ -22,8 +16,6 @@ env:
 
 jobs:
   build:
-    # Build after successful tests from this repository, or when manually dispatched.
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'development' && github.event.workflow_run.head_repository.full_name == github.repository) }}
     runs-on: ubuntu-latest
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
@@ -33,8 +25,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # Use the tested commit for workflow_run events, or the selected commit for manual runs
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 0  # Shallow clones block `git describe --always --tags` from working later in 'Set all tags'
       # Configure our AWS credentials and region environment variables for use in other GitHub Actions
       # https://github.com/aws-actions/configure-aws-credentials

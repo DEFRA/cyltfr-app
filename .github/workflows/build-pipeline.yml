@@ -1,0 +1,21 @@
+name: BUILD PIPELINE
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  unit-tests:
+    uses: ./.github/workflows/unittests.yml
+    secrets: inherit
+
+  dependency-review:
+    uses: ./.github/workflows/dependency-review.yml
+    secrets: inherit
+
+  docker:
+    needs: [unit-tests, dependency-review]
+    if: needs.unit-tests.result == 'success' && needs.dependency-review.result == 'success'
+    uses: ./.github/workflows/docker.yml
+    secrets: inherit

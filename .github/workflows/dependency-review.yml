@@ -1,8 +1,8 @@
 name: DEPENDENCY REVIEW
 
 on:
-  push:
   pull_request:
+  workflow_call:
 
 jobs:
   dependency-review:
