@@ -65,7 +65,7 @@ role="navigation">
       </p>
     {% else %}
       <p class="govuk-body govuk-!-padding-top-4">The yearly chance of surface water flooding is:</p>
-      <p class="govuk-body">
+      <p class="govuk-body text-with-label">
         <strong class="govuk-tag govuk-tag--{{ surfaceWaterStyle }} label-border label-space-right">
           <span>{{ surfaceWaterRisk }}</span>
         </strong>
@@ -77,7 +77,7 @@ role="navigation">
           <strong class="govuk-tag govuk-tag--{{ surfaceWaterCCStyle }} label-border label-space-left label-space-right">
             <span>{{ surfaceWaterRiskCC }}</span>
           </strong>
-          between 2040 to 2060
+            <span>between 2040 to 2060</span>
       </p>
     {% endif %}
 

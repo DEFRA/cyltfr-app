@@ -1,7 +1,5 @@
 @use 'govuk-frontend/dist/govuk/helpers/index' as *;
 
-$tablet-width: 768px;
-
 .top-page-links {
   display: flex;
   justify-content: space-between;
@@ -89,13 +87,6 @@ $tablet-width: 768px;
 .label-space-left {
   margin-left: 4px;
 }
-.highest-risk-label {
-  margin-left: 4px;
-
-  @media (max-width: $tablet-width) {
-    margin-top: 4px;
-  }
-}
 .label-mod {
   padding: 8px 12px 8px 12px;
   white-space: nowrap;
@@ -111,6 +102,12 @@ $tablet-width: 768px;
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 10px;
+}
+.highest-risk-label {
+  margin-left: 4px;
+}
+.text-with-label {
+  line-height: 1.8;
 }
 .card-title__font-size {
   font-size: 22px;
