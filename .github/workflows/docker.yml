@@ -10,6 +10,7 @@ on:
         type: choice
         options:
           - development
+          - 
 
 env:
   REPOSITORY: long_term_flood_risk/app
