@@ -1,10 +1,7 @@
 name: DOCKER
 
 on:
-  push:
-    branches:
-      - main
-      - development
+  workflow_call:
   workflow_dispatch:
     inputs:
       buildtarget:
@@ -12,16 +9,15 @@ on:
         required: false
         type: choice
         options:
-        - development
-        -
-  
+          - development
+
 env:
   REPOSITORY: long_term_flood_risk/app
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
-     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
       id-token: write
       contents: read
@@ -96,4 +92,4 @@ jobs:
             echo "| title      | ${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.title'] }} |"
             echo "| url        | ${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.url'] }} |"
             echo "| version    | ${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }} |"
-          } >> $GITHUB_STEP_SUMMARY        
+          } >> $GITHUB_STEP_SUMMARY
