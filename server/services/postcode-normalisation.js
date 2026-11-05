@@ -94,7 +94,10 @@ async function isEnglishPostcode (postcode, find) {
     E: 'england',
     W: 'wales',
     S: 'scotland',
-    N: 'northern-ireland'
+    N: 'northern-ireland',
+    L: 'channel-islands',
+    M: 'isle-of-man',
+    J: 'outside-land-boundaries'
   }
   const primaryCountryCode = isEnglandAddress.country_code
 

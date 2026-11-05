@@ -47,7 +47,7 @@ describe('setupCaptchaEventListeners', () => {
   })
 
   test('should enable submit button and show complete state when captcha completes', () => {
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'completed' }
@@ -62,25 +62,25 @@ describe('setupCaptchaEventListeners', () => {
   })
 
   test('should show error state and disable submit button initially for other states', async () => {
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'fetching' }
     })
     mockCaptchaElement.dispatchEvent(event)
-    await setTimeout(1500)
+    await setTimeout(700)
 
     expect(submitButton.disabled).toBe(true)
   }, 2000)
 
   test('should show error state and focus error summary on captcha error', async () => {
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'error' }
     })
     mockCaptchaElement.dispatchEvent(event)
-    await setTimeout(1500)
+    await setTimeout(700)
 
     expect(frcChecking.classList.contains('govuk-!-display-none')).toBeTruthy()
     expect(frcComplete.classList.contains('govuk-!-display-none')).toBeTruthy()
@@ -91,52 +91,52 @@ describe('setupCaptchaEventListeners', () => {
   }, 2000)
 
   test('should prefix document title with "Error: " on captcha error', async () => {
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'error' }
     })
     mockCaptchaElement.dispatchEvent(event)
-    await setTimeout(1500)
+    await setTimeout(700)
 
     expect(document.title).toBe('Error: Where do you want to check?')
   }, 2000)
 
   test('should prefix document title with "Error: " on multiple captcha errors', async () => {
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'error' }
     })
     mockCaptchaElement.dispatchEvent(event)
-    await setTimeout(250)
+    await setTimeout(200)
     mockCaptchaElement.dispatchEvent(event)
-    await setTimeout(1500)
+    await setTimeout(700)
 
     expect(document.title).toBe('Error: Where do you want to check?')
   }, 2500)
 
   test('should not duplicate "Error: " prefix if already present', async () => {
     document.title = 'Error: Where do you want to check?'
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'error' }
     })
     mockCaptchaElement.dispatchEvent(event)
-    await setTimeout(1500)
+    await setTimeout(700)
 
     expect(document.title).toBe('Error: Where do you want to check?')
   }, 2000)
 
   test('should handle expired state same as error state', async () => {
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'expired' }
     })
     mockCaptchaElement.dispatchEvent(event)
-    await setTimeout(1500)
+    await setTimeout(700)
 
     expect(frcChecking.classList.contains('govuk-!-display-none')).toBeTruthy()
     expect(frcComplete.classList.contains('govuk-!-display-none')).toBeTruthy()
@@ -154,7 +154,7 @@ describe('setupCaptchaEventListeners', () => {
     frcError.remove()
     frcErrorSummary.remove()
 
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'completed' }
@@ -169,7 +169,7 @@ describe('setupCaptchaEventListeners', () => {
   })
 
   test('should disable submit button for unstarted state', () => {
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'unstarted' }
@@ -180,7 +180,7 @@ describe('setupCaptchaEventListeners', () => {
   })
 
   test('should disable submit button for fetching state', () => {
-    setupCaptchaEventListeners(mockCaptchaElement)
+    setupCaptchaEventListeners(mockCaptchaElement, 500)
 
     const event = new CustomEvent('frc:widget.statechange', {
       detail: { state: 'fetching' }

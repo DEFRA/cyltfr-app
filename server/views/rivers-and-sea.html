@@ -58,16 +58,16 @@ role="navigation">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-l govuk-!-padding-top-6 govuk-!-margin-bottom-4">How likely a river or sea flood is</h2>
-      {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC or riverAndSeaRiskCC === "Unavailable" %}
+      {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC %}
         <p class="govuk-body govuk-!-padding-top-4">The yearly chance of flooding from rivers and the sea is:
-          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod-depth">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-border label-space-left">
             <span>{{ riverAndSeaRisk }}</span>
           </strong>
         </p>
       {% else %}
         <p class="govuk-body govuk-!-padding-top-4">The yearly chance of rivers and sea flooding is:</p>
-        <p class="govuk-body">
-          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-mod-depth">
+        <p class="govuk-body text-with-label">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskStyle }} label-border label-space-right">
             <span>{{ riverAndSeaRisk }}</span>
           </strong>
           {% if riverAndSeaRisk === riverAndSeaRiskCC %}
@@ -75,10 +75,10 @@ role="navigation">
           {% else %}
           increasing to
           {% endif %}
-          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-mod-depth">
+          <strong class="govuk-tag govuk-tag--{{ riversSeaRiskCCStyle }} label-border label-space-left label-space-right">
             <span>{{ riverAndSeaRiskCC }}</span>
           </strong>
-          between 2036 to 2069
+          <span>between 2036 to 2069</span>
         </p>
       {% endif %}
       
@@ -88,7 +88,7 @@ role="navigation">
         previewlistener="true">View a rivers and sea map</a> to see where any flood water might spread to.</p>
 
       <h2 class="govuk-heading-l govuk-!-padding-top-6">How deep any flood water could be</h2>
-      {% if riverAndSeaRisk == "Unavailable" %}
+      {% if riverAndSeaRiskOverride or riverAndSeaRiskOverrideCC %}
         <p class="govuk-body">This data is currently unavailable. We'll publish the data when it becomes available.</p>
       {% else %}
         <p class="govuk-body">Even a small amount of water can cause serious damage so it's a good idea to know how deep 
@@ -108,7 +108,7 @@ role="navigation">
 
       <h2 class="govuk-heading-l govuk-!-padding-top-6">What to do next</h2>
       {% if isFloodWarningArea %}
-      <p class="govuk-body">Sign up to <a class="govuk-link" href="https://www.gov.uk/sign-up-for-flood-warnings" 
+      <p class="govuk-body">Sign up to <a class="govuk-link" href="https://www.gov.uk/get-flood-warnings" 
         previewlistener="true">get flood warnings by phone, text or email</a>.</p>
       {% endif %}
       <p class="govuk-body">Read about how to <a class="govuk-link" href="https://www.gov.uk/prepare-for-flooding" 

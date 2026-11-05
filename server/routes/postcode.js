@@ -29,7 +29,7 @@ module.exports = [
       if (config.friendlyCaptchaEnabled) {
         if ('captchabypass' in request.query) {
           // set captchabypass flag
-          request.yar.set('captchabypass', (request.query.captchabypass === config.friendlyCaptchaBypass))
+          request.yar.set('captchabypass', ((request.query.captchabypass === config.friendlyCaptchaBypass) && !!config.friendlyCaptchaBypass))
           console.log('Captcha Bypass set to : %s', request.yar.get('captchabypass'))
         }
         return h.view('postcode', new PostcodeViewModel(postcode, null, config.sessionTimeout, null, request.yar.get('captchabypass')))

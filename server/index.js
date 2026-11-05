@@ -1,6 +1,7 @@
 const hapi = require('@hapi/hapi')
 const config = require('./config')
 const cache = require('./cache')
+const { stringifyForLog } = require('./util')
 
 async function createServer () {
   // Create the hapi server
@@ -47,6 +48,16 @@ async function createServer () {
       plugin: require('./plugins/airbrake'),
       options: config.errbit.options
     })
+  } else {
+    const notifyMethod = async (error, session) => {
+      let logMessage = ''
+      if (session) {
+        logMessage = stringifyForLog(session)
+      }
+      logMessage = `Notify called: ${error.message}: ${stringifyForLog(error)}\n${logMessage}`
+      server.log(['error'], { message: logMessage, error })
+    }
+    server.method('notify', notifyMethod)
   }
   return server
 }

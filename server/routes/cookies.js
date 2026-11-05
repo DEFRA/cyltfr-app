@@ -1,5 +1,10 @@
 const joi = require('joi')
 const { defineBackLink } = require('../services/defineBackLink.js')
+const {
+  getCookiePolicy,
+  removeAnalyticsCookies,
+  buildUpdatedPolicy
+} = require('../services/cookie-policy')
 
 module.exports = [
   {
@@ -26,15 +31,19 @@ module.exports = [
     method: 'POST',
     path: '/cookies',
     handler: async (request, h) => {
-      const { payload, state = {} } = request
+      const { payload } = request
       const { analytics, async } = payload
-      const { cookies_policy: cookiesPolicy = {} } = state
+      const cookiesPolicy = getCookiePolicy(request)
 
       // Update cookie analytics preference
-      cookiesPolicy.analytics = analytics
+      const updatedPolicy = buildUpdatedPolicy(cookiesPolicy, analytics)
 
       // And update cookie state
-      h.state('cookies_policy', cookiesPolicy)
+      h.state('cookies_policy', updatedPolicy)
+
+      if (!analytics) {
+        removeAnalyticsCookies(request, h)
+      }
 
       if (async) {
         return h.response('ok')

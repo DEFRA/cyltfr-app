@@ -73,6 +73,8 @@ class SearchViewModel {
     this.backLink = backLinkUri
 
     this.otherRegion = otherRegion
+    this.isWales = ['wales', 'W'].includes(otherRegion)
+    this.isScotland = ['scotland', 'S'].includes(otherRegion)
   }
 }
 
