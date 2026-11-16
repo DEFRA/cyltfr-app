@@ -17,6 +17,7 @@ module.exports = {
       isWales: ['wales', 'W'].includes(request.query.region),
       isScotland: ['scotland', 'S'].includes(request.query.region),
       isNorthernIreland: ['northern-ireland', 'N'].includes(request.query.region),
+      isOutsideEngland: ['channel-islands', 'L', 'isle-of-man', 'M', 'outside-land-boundaries', 'J'].includes(request.query.region),
       backLinkUri
     }
 
@@ -26,7 +27,7 @@ module.exports = {
     description: 'Get the england only page',
     validate: {
       query: joi.object().keys({
-        region: joi.string().allow('', 'wales', 'northern-ireland', 'scotland'),
+        region: joi.string().allow('', 'wales', 'northern-ireland', 'scotland', 'channel-islands', 'isle-of-man', 'outside-land-boundaries'),
         premises: joi.string().allow(''),
         postcode: joi.string().allow('')
       }).required()

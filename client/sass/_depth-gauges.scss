@@ -2,6 +2,8 @@
 
 $left-offset: -3.65em;
 $mobile-width: 480px;
+$depth-gauge-background: #929292;
+$depth-gauge-fill: #003078;
 
 .defra-flood-impact-list {
   font-family: "GDS Transport", arial, sans-serif;
@@ -112,7 +114,7 @@ $mobile-width: 480px;
   width: 15px;
   top: 11px;
   bottom: -20px;
-  background-color: #b1b4b6;
+  background-color: $depth-gauge-background;
   margin-left: -1.5px;
   margin-bottom: -1px;
   left: 8%;
@@ -158,7 +160,7 @@ $mobile-width: 480px;
   height: 5px;
   border-top: 0px solid white;
   border-bottom: 0px solid white;
-  background-color: #b1b4b6;
+  background-color: $depth-gauge-background;
   margin-left: -10px;
   top: 8px;
   left: 8%;
@@ -195,14 +197,15 @@ $mobile-width: 480px;
 }
 
 .defra-flood-impact-list-v13__row--current:before {
-  background-color: govuk-colour("blue");
+  background-color: $depth-gauge-fill;
 }
 
 .defra-flood-impact-list-v13__row--current .defra-flood-impact-list-v13__value:before {
-  background-color: govuk-colour("blue");
+  background-color: $depth-gauge-fill;
   border: 0px;
 }
 
+// Apply colours to gauges when windows high contrast mode is enabled
 @media (forced-colors: active) {
   .defra-flood-impact-list-v13__row--current:before {
     background-color: CanvasText;

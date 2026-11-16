@@ -141,6 +141,7 @@ describe('postcode page', () => {
       }
     }
 
+    const oldNotify = server.methods.notify
     server.methods.notify = jest.fn()
     captchaCheck.captchaCheck.mockResolvedValue(mockCaptchaCheck)
 
@@ -160,6 +161,7 @@ describe('postcode page', () => {
     expect(server.methods.notify).toHaveBeenCalledWith('FriendlyCaptcha server check failed: response_invalid - [12345]', expect.any(Object))
     expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(response.result).toContain('Captcha validation failed. Please try again.')
+    server.methods.notify = oldNotify
   })
 
   test('/search - Address service error', async () => {
@@ -170,6 +172,23 @@ describe('postcode page', () => {
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
     expect(postResponse.result).toMatch(/An error occurred while searching for that postcode/)
+  })
+
+  test('/search - Address service error does logging', async () => {
+    const { postOptions } = mockSearchOptions('CV376YZ', cookie)
+    floodService.__updateReturnValue({})
+    addressService.find.mockImplementationOnce(() => { throw new Error('An error') })
+    const onErrorHandler = jest.fn()
+    server.events.on(
+      { name: 'log', filter: 'error' },
+      onErrorHandler
+    )
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+    expect(postResponse.result).toMatch(/An error occurred while searching for that postcode/)
+    expect(onErrorHandler).toHaveBeenCalledTimes(1)
+    server.events.removeListener('log', onErrorHandler)
   })
 
   test('/search - Address service returns empty address array', async () => {
@@ -213,6 +232,11 @@ describe('postcode page', () => {
         description: 'should not set captchabypass if query parameter is absent',
         query: '',
         expected: false
+      },
+      {
+        description: 'should not set captchabypass if query parameter is empty',
+        query: '?captchabypass=',
+        expected: false
       }
     ]
     testCases.forEach(({ description, query, expected }) => {
@@ -226,9 +250,24 @@ describe('postcode page', () => {
         }
         const response = await server.inject(options)
         expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
-        const sessionCaptchaBypass = response.request.yar.get('captchabypass')
+        const sessionCaptchaBypass = await response.request.yar.get('captchabypass')
         expect(sessionCaptchaBypass).toEqual(expected)
       })
+    })
+    test('Does not allow captcha bypass if no bypass config is set', async () => {
+      const options = {
+        method: 'GET',
+        url: '/postcode?captchabypass=',
+        headers: {
+          cookie
+        }
+      }
+      config.friendlyCaptchaBypass = ''
+
+      const response = await server.inject(options)
+      expect(response.statusCode).toEqual(STATUS_CODES.HTTP_STATUS_OK)
+      const sessionCaptchaBypass = await response.request.yar.get('captchabypass')
+      expect(sessionCaptchaBypass).toEqual(false)
     })
   })
 })

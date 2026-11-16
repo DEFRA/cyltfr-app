@@ -16,6 +16,32 @@ if (config.http_proxy) {
 }
 const customUaHeader = 'hapi-wreck/18 (cyltfr-app)'
 const { performance } = require('node:perf_hooks')
+
+function isObjectLike (value) {
+  return value !== null && typeof value === 'object'
+}
+
+function createCircularJsonFilter () {
+  const seen = new WeakSet()
+
+  return (_key, value) => {
+    if (!isObjectLike(value)) {
+      return value
+    }
+
+    if (seen.has(value)) {
+      return '[Circular]'
+    }
+
+    seen.add(value)
+    return value
+  }
+}
+
+function stringifyForLog (value) {
+  return JSON.stringify(value, createCircularJsonFilter())
+}
+
 const get = (url, options = {}, ext = false) => {
   const thisWreck = (ext && wreckExt) ? wreckExt : wreck
   const startTick = performance.now()
@@ -86,5 +112,7 @@ module.exports = {
   get,
   getJson,
   post,
-  postJson
+  postJson,
+  createCircularJsonFilter,
+  stringifyForLog
 }
