@@ -114,19 +114,13 @@ function createFeatureLayers (layers) {
     const maps = layer.maps
     for (const featureMap of maps) {
       if (featureMap.url) {
-        const vectorTileLayer = new VectorTileLayer({
+        layers.push(new VectorTileLayer({
           id: featureMap.ref,
           url: featureMap.url,
           apiKey: window.mapConfig.mapToken,
           opacity: window.mapConfig.mapTransparency,
           visible: false
-        })
-        if (featureMap.styleOverride) {
-          vectorTileLayer.load().then((vl) => {
-            vl.currentStyleInfo.style = featureMap.styleOverride
-          })
-        }
-        layers.push(vectorTileLayer)
+        }))
       }
     }
   }
