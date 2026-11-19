@@ -32,26 +32,13 @@
         {% include highestRisk %}
 
         {% if isFloodWarningArea %}
-        <div class="action-box govuk-inset-text govuk-!-margin-top-0 govuk-!-margin-bottom-6">
-          <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Get free flood warnings</h2>
-          <p class="govuk-body">You can get flood warnings by text, phone or email for this location.</p>
-          {{ govukButton({
-            text: "Get flood warnings",
-            id: "get-flood-warnings-button",
-            href: "https://www.gov.uk/get-flood-warnings"
-          }) }}
-        </div>
+
+        {% include "partials/get-flood-warnings.html" %}
 
         {% elif hasElevatedFloodRisk %}
-        <div class="action-box govuk-inset-text govuk-!-margin-top-0 govuk-!-margin-bottom-6">
-          <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Prepare for flooding</h2>
-          <p class="govuk-body">Take steps now to help you protect your home, belongings and loved ones.</p>
-          {{ govukButton({
-            text: "Prepare for future flooding",
-            id: "prepare-for-flooding-button",
-            href: "https://www.gov.uk/prepare-for-flooding"
-          }) }}
-        </div>
+
+        {% include "partials/prepare-for-flooding.html" %}
+
         {% endif %}
 
         {{ govukDetails({
