@@ -1,0 +1,21 @@
+<div class="govuk-summary-card govuk-!-margin-top-3" id="surface-water">
+  <div class="govuk-summary-card__title-wrapper card-padding-left">
+    <h2 class="govuk-summary-card__title card-title__font-size">Get free flood warnings</h2>
+  </div>
+  <div class="govuk-summary-card__content">
+    <p class="govuk-body">You can get flood warnings by text, phone or email for this location.</p>
+    {{ govukButton({
+      text: "Get flood warnings",
+      id: "get-flood-warnings-button",
+      href: "https://www.gov.uk/get-flood-warnings"
+    }) }}
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">If you have already done that</h3>
+    <p class="govuk-body">Take steps now to help you protect your home, belongings and loved ones.</p>
+    {{ govukButton({
+      text: "Prepare for future flooding",
+      id: "secondary-prepare-for-flooding-button",
+      classes: "govuk-button--secondary",
+      href: "https://www.gov.uk/prepare-for-flooding"
+    }) }}
+  </div>
+</div>
