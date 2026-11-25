@@ -6,4 +6,5 @@
 
 ### Node update
 
+LTFRI-1744 Review github actions for testing, building and tagging images
 LTFRI-2680 Patch Node containers to address High security vulnerability
